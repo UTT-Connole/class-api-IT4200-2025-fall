@@ -4,6 +4,9 @@ Brayden is da bomb!!!
 
 Brayden is also a fantastic ultimate frisbee player
 
+
+Gage got here first!!
+
 Its chewsday init?
 
 hello!!
