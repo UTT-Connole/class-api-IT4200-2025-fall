@@ -4,6 +4,7 @@ Brayden is da bomb!!!
 
 Brayden is also a fantastic ultimate frisbee player
 
+change
 
 Gage got here first!!
 
@@ -54,7 +55,12 @@ IT'S GONNA BLOW!!!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████                          
+              ██████ 
+
+
+
+
+              Hehe                         
 >>>>>>> origin/main
 
 Theisen was here
