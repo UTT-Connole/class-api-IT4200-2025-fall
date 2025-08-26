@@ -2,27 +2,16 @@
 
 Brayden is da bomb!!!
 
+Its chewsday init?
+hello!!
 
 
 
+Aaron is an okay violist
+
+What's a violin
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7355608
 IT'S GONNA BLOW!!!!!                                              
                                               
                                 ██    ██      
