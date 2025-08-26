@@ -2,5 +2,12 @@
 
 Brayden is da bomb!!!
 
+Its chewsday init?
+hello!!
 
-This is will cause conflict. Line 6 rules. It's my line don't touch it. -DC
+
+
+Aaron is an okay violist
+
+What's a violin?
+it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
