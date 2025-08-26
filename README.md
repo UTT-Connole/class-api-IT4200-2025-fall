@@ -18,7 +18,6 @@ Aaron is an okay violist
 
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -32,7 +31,6 @@ What's a violin
 
 
 Porter is dope
-=======
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
 
 IT'S GONNA BLOW!!!!!                                              
@@ -61,7 +59,6 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
->>>>>>> origin/main
 
 Theisen was here
 
