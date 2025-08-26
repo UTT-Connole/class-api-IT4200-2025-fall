@@ -10,4 +10,4 @@ hello!!
 Aaron is an okay violist
 
 What's a violin?
-it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
+it's pieces of wood that are crafted togeather to form an instrument that can cost more than your car.
