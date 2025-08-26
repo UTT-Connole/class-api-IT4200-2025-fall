@@ -3,6 +3,7 @@
 Brayden is da bomb!!!
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ⠀⠀⠀⠀⣀⣤
 ⠀⠀⠀⠀⣿⠿⣶
 ⠀⠀⠀⠀⣿⣿⣀
@@ -177,6 +178,10 @@ Brayden is da bomb!!!
 ⠀⠀⠀⠀⣶⠿⠿⠛
 
 =======
+=======
+
+Gage got here first!!
+>>>>>>> refs/remotes/origin/main
 Its chewsday init?
 hello!!
 
@@ -184,5 +189,13 @@ hello!!
 
 Aaron is an okay violist
 
+<<<<<<< HEAD
 What's a violin
 >>>>>>> origin/main
+=======
+
+What's a violin
+What's a violin?
+it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
+
+>>>>>>> refs/remotes/origin/main
