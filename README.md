@@ -2,6 +2,7 @@
 
 Brayden is da bomb!!!
 
+<<<<<<< HEAD
 ⠀⠀⠀⠀⣀⣤
 ⠀⠀⠀⠀⣿⠿⣶
 ⠀⠀⠀⠀⣿⣿⣀
@@ -175,3 +176,13 @@ Brayden is da bomb!!!
 ⠀⠀⠀⠀⠀⣀⣿⣿
 ⠀⠀⠀⠀⣶⠿⠿⠛
 
+=======
+Its chewsday init?
+hello!!
+
+
+
+Aaron is an okay violist
+
+What's a violin
+>>>>>>> origin/main
