@@ -4,6 +4,7 @@ Brayden is da bomb!!!
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ⠀⠀⠀⠀⣀⣤
 ⠀⠀⠀⠀⣿⠿⣶
 ⠀⠀⠀⠀⣿⣿⣀
@@ -182,20 +183,56 @@ Brayden is da bomb!!!
 
 Gage got here first!!
 >>>>>>> refs/remotes/origin/main
+=======
+Brayden is also a fantastic ultimate frisbee player
+
+
+Gage got here first!!
+
+>>>>>>> origin
 Its chewsday init?
+
 hello!!
 
-
+Only in the Merge conflict
 
 Aaron is an okay violist
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 What's a violin
 >>>>>>> origin/main
 =======
 
 What's a violin
+=======
+>>>>>>> origin
 What's a violin?
+
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
 
+<<<<<<< HEAD
 >>>>>>> refs/remotes/origin/main
+=======
+IT'S GONNA BLOW!!!!!                                              
+                                              
+                                ██    ██      
+                    ██████      ██  ██        
+                  ██      ██                  
+                ██          ████░░    ████    
+                ██                            
+              ██████            ██  ██        
+              ██████            ██    ██      
+          ██████████████                      
+        ██████░░░░░░░░▓▓██                    
+      ██████░░░░░░░░  ▓▓▓▓██                  
+      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
+      ████████████▓▓▓▓▓▓████                  
+        ██████████████████                    
+          ██████████████                      
+              ██████                          
+>>>>>>> origin
