@@ -4,13 +4,13 @@ Brayden is da bomb!!!
 
 Brayden is also a fantastic ultimate frisbee player
 
-change
+changegit
 
 Gage got here first!!
 
 Its chewsday init?
 
-hello!!
+hello world!!
 
 Only in the Merge conflict
 
@@ -18,21 +18,6 @@ Aaron is an okay violist
 
 What's a violin?
 
-<<<<<<< HEAD
-What's a violin
-
-
-
-
-
-
-
-
-
-
-
-Porter is dope
-=======
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
 
 IT'S GONNA BLOW!!!!!                                              
@@ -56,4 +41,3 @@ IT'S GONNA BLOW!!!!!
         ██████████████████                    
           ██████████████                      
               ██████                          
->>>>>>> origin/main
