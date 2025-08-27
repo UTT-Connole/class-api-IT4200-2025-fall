@@ -20,6 +20,8 @@ What's a violin?
 
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
 
+Wood with strings that go brrr.
+
 IT'S GONNA BLOW!!!!!                                              
                                               
                                 ██    ██      
