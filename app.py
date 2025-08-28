@@ -1,5 +1,6 @@
 from flask import Flask
 import random
+import json
 
 app = Flask(__name__)
 
@@ -98,6 +99,14 @@ def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
 >>>>>>> origin/main
+
+
+@app.route('/campus-locations')
+def campus_locations(): 
+	locs = ["Holland", "Smith", "HPC"]
+	choice = random.choice(locs)
+	res = json.dumps({"location": choice})
+	return res
 
 if __name__ == '__main__':
 	app.run(debug=True)
