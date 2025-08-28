@@ -23,7 +23,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -58,12 +57,7 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
@@ -86,30 +80,38 @@ Seventy bottle of beer on the wall.
 
 
 Plant lives matter
-=======
 Plant lives matter
 
 Seventy bottle of beer on the wall.
 
-------------
 Route "Gill"
 
 This askes the user a question and returns two different strings based on the answer.
 
 You must seek the Holy Grail
-_____________________________
+
 
 Pull requests, a coder's delight,  
 A beacon shining in the night.  
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
-<<<<<<< HEAD
->>>>>>> origin/main
 
+Here is a list of Endpoints so far. Please add yours as you add them.
 
-
-
-
-
-67
+/kasen
+/clint
+/gill
+/pet-name
+/dallin
+/brayden 
+/braydens
+/bryson
+/aaron
+/Skylands
+/porter
+/cam
+/randomRestaurant
+/campus-locations
+/rf
+/breyton
