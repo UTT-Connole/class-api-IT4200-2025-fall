@@ -23,7 +23,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -58,12 +57,11 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
-<<<<<<< HEAD
-
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
 
+Brayden's update to his PR
 
 hello
 
@@ -74,13 +72,6 @@ Suh Dude
 Hi there ya'll :))
 hi
 
-
-
+Plant lives matter
 
 Seventy bottle of beer on the wall.
-
-
-Plant lives matter
-=======
->>>>>>> origin/main
->>>>>>> origin/main
