@@ -35,11 +35,11 @@ def home():
 	else:
 		return 'Wrong Answer'
 
-<<<<<<< HEAD
+
 @app.route('/porter')
 def home():
 	return 'Dope'
-=======
+
 @app.route('/cam')
 def cam():
 	return 'Play Oneshot!'
@@ -56,7 +56,7 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
->>>>>>> origin/main
+
 
 @app.route('/pet-name')
 def generate_pet_name():
