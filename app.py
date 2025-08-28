@@ -7,10 +7,9 @@ adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
 
-@app.route('/')
+@app.route('/gill')
 def home():
 	return 'Hello, Flask!'
-
 
 @app.route('/dallin')
 def home():
@@ -18,7 +17,36 @@ def home():
 
 @app.route('/brayden')
 def brayden():
-	return 'SupDudes'
+	return 'Sup Dudes'
+
+@app.route('/braydens')
+def brayden():
+	return 'Sup Dude'
+
+@app.route('/Skylands')
+def home():
+	user_input = input('Enter somthing: ')
+	if user_input == 'Conquretron':
+		return 'K. A. O. S.'
+	else:
+		return 'Wrong Answer'
+
+@app.route('/cam')
+def cam():
+	return 'Play Oneshot!'
+
+restaurants = [
+    "Chipotle",
+    "Chick-fil-A",
+    "Subway",
+    "Olive Garden",
+    "Five Guys",
+    "Panera Bread"
+]
+@app.route('/randomRestaurant')
+def choose():
+    restaurant = random.choice(restaurants)
+    return jsonify({"restaurant": restaurant})
 
 @app.route('/pet-name')
 def generate_pet_name():
