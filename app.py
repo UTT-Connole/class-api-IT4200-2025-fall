@@ -11,6 +11,10 @@ nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pi
 def home():
 	return 'my test app'
 
+@app.route('/aaron')
+def home():
+	return 'What?'
+
 @app.route('/brayden')
 def brayden():
 	return 'Sup Dudes'
@@ -27,6 +31,11 @@ def home():
 	else:
 		return 'Wrong Answer'
 
+<<<<<<< HEAD
+@app.route('/porter')
+def home():
+	return 'Dope'
+=======
 
 @app.route('/dallin')
 def home():
@@ -63,6 +72,7 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
+>>>>>>> origin/main
 
 if __name__ == '__main__':
 	app.run(debug=True)
