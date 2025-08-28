@@ -57,7 +57,6 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
-<<<<<<< HEAD
 
 Theisen was here
 
@@ -74,6 +73,6 @@ Suh Dude
 Hi there ya'll :))
 hi
 
-
+Ya'at'eeh
 
 Seventy bottle of beer on the wall.

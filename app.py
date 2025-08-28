@@ -8,7 +8,7 @@ def home():
 
 @app.route('/aaron')
 def home():
-	return 'What?'
+	return 'What? again what?'
 
 @app.route('/brayden')
 def brayden():
