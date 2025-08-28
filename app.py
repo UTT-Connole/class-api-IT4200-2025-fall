@@ -6,6 +6,14 @@ app = Flask(__name__)
 def home():
 	return 'my test app'
 
+@app.route('/brayden')
+def brayden():
+	return 'Sup Dudes'
+
+@app.route('/braydens')
+def brayden():
+	return 'Sup Dude'
+
 @app.route('/Skylands')
 def home():
 	user_input = input('Enter somthing: ')
