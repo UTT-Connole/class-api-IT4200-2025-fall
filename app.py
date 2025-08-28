@@ -22,5 +22,9 @@ def home():
 	else:
 		return 'Wrong Answer'
 
+@app.route('/cam')
+def cam():
+	return 'Play Oneshot!'
+
 if __name__ == '__main__':
 	app.run(debug=True)
