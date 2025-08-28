@@ -65,9 +65,19 @@ def home():
 def home():
 	return 'Dope'
 
-@app.route('/cam')
-def cam():
-	return 'Play Oneshot!'
+@app.route('/magic8ball')
+def magic8ball():
+	answers = [
+		"It is certain",
+		"Without a doubt",
+		"Most likely",
+		"Ask again later",
+		"Can't predict now",
+		"My sources say no",
+		"Outlook not so good",
+		"Don't count on it"
+	]
+	return answers[random.randrange(1,9)]
 
 restaurants = [
     "Chipotle",
