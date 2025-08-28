@@ -23,7 +23,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -58,12 +57,7 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
@@ -86,7 +80,6 @@ Seventy bottle of beer on the wall.
 
 
 Plant lives matter
-=======
 Plant lives matter
 
 Seventy bottle of beer on the wall.
@@ -104,12 +97,9 @@ A beacon shining in the night.
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
-<<<<<<< HEAD
->>>>>>> origin/main
 
 
 
 
 
-
-67
+I got rid of all of the arrows and stuff from the merge requests
