@@ -2,6 +2,8 @@
 
 Brayden is da bomb!!!
 
+
+Gage got here first!!
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -16,8 +18,12 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+What's a violin
+
+What's a violin
 What's a violin?
 
+<<<<<<< HEAD
 What's a violin
 
 
@@ -48,23 +54,8 @@ IT'S GONNA BLOW!!!!!
           ██████████████                      
               ██████ 
 
+
+
+
               Hehe                         
-
-Theisen was here
-
-This is a nice line that no one else should touch pls and thank you.
-
-
-hello
-
-HELLO!!
-
-Suh Dude
-
-Hi there ya'll :))
-hi
-
-
-
-
-Seventy bottle of beer on the wall.
+>>>>>>> origin/main
