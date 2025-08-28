@@ -53,10 +53,11 @@ IT'S GONNA BLOW!!!!!
           ██████████████                      
               ██████ 
 
-
-
-
               Hehe                         
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
@@ -96,6 +97,13 @@ A beacon shining in the night.
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
+<<<<<<< HEAD
+
+
+
+
+I'm golden like Pony Boy
+=======
 Lines of code, both old and new,  
 Reviewed by peers with a careful view.  
 Suggestions made, improvements sought,  
@@ -127,8 +135,17 @@ Single and ready to Mergel
 So raise a toast to this noble quest,  
 For pull requests bring out our best.  
 In every line, a dream takes flight,  
+<<<<<<< HEAD
+<<<<<<< HEAD
+A coder's world, shining bright.  
+>>>>>>> origin/main
+=======
+A coder's world, shining bright.
+>>>>>>> origin/main
+=======
 
 A coder's world, shining bright.  
 
 A coder's world, shining bright.
 
+>>>>>>> origin/main
