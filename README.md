@@ -69,4 +69,13 @@ HELLO!!
 Suh Dude
 
 Hi there ya'll :))
+<<<<<<< HEAD
 >>>>>>> origin/main
+=======
+hi
+
+
+
+
+Seventy bottle of beer on the wall.
+>>>>>>> 43076019731d8f1eb65b36cda4cb23fe4e0316a2
