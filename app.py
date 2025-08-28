@@ -11,12 +11,22 @@ nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pi
 def home():
 	return 'Hello, Flask!'
 
+<<<<<<< HEAD
 @app.route('/pet-name')
 def generate_pet_name():
     adj = random.choice(adjectives)
     noun = random.choice(nouns)
     return f'{adj} {noun}'
 
+=======
+@app.route('/dallin')
+def home():
+	return 'You are lost!'
+
+@app.route('/brayden')
+def brayden():
+	return 'SupDudes'
+>>>>>>> origin/main
 
 if __name__ == '__main__':
 	app.run(debug=True)
