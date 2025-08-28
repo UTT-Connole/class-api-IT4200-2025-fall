@@ -6,13 +6,13 @@ Brayden is da bomb!!!
 Gage got here first!!
 Brayden is also a fantastic ultimate frisbee player
 
-change
+changegit
 
 Gage got here first!!
 
 Its chewsday init?
 
-hello!!
+hello world!!
 
 Only in the Merge conflict
 
@@ -23,20 +23,14 @@ What's a violin
 What's a violin
 What's a violin?
 
+<<<<<<< HEAD
 What's a violin
-
-
-
-
-
-
-
-
-
 
 
 Porter is dope
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
+
+Wood with strings that go brrr.
 
 IT'S GONNA BLOW!!!!!                                              
                                               
@@ -51,17 +45,17 @@ IT'S GONNA BLOW!!!!!
         ██████░░░░░░░░▓▓██                    
       ██████░░░░░░░░  ▓▓▓▓██                  
       ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
     ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
     ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
       ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████                          
               ██████ 
 
 
 
 
               Hehe                         
+>>>>>>> origin/main
