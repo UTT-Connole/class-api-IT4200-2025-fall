@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import random
+
 import json
 import os
 import requests
 from user_agents import parse
 from datetime import date
+
+import jsonify
+(hopfully not messing things up)
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
