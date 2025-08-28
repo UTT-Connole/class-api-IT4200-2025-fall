@@ -8,7 +8,7 @@ def home():
 
 @app.route('/dallin')
 def home():
-	return 'You are lost!'
+	return 'Please dont erase me'
 
 if __name__ == '__main__':
 	app.run(debug=True)
