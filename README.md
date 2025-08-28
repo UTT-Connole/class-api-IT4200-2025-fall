@@ -23,7 +23,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -58,4 +57,23 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
->>>>>>> origin/main
+<<<<<<< HEAD
+
+Theisen was here
+
+This is a nice line that no one else should touch pls and thank you.
+
+Brayden's update to his PR
+
+hello
+
+HELLO!!
+
+Suh Dude
+
+Hi there ya'll :))
+hi
+
+
+
+Seventy bottle of beer on the wall.
