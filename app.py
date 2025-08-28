@@ -8,6 +8,8 @@ adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
 
+
+
 @app.route('/gill')
 def home():
     user_input = input('What is your quest?')
@@ -17,6 +19,14 @@ def home():
 	    return 'You are doomed'
 
 
+
+@app.route('/pet-name')
+def generate_pet_name():
+    adj = random.choice(adjectives)
+    noun = random.choice(nouns)
+    return f'{adj} {noun}'
+
+
 @app.route('/dallin')
 def home():
 	return 'Please dont erase me'
@@ -24,6 +34,7 @@ def home():
 @app.route('/brayden')
 def brayden():
 	return 'SupDudes'
+
 
 @app.route('/pet-name')
 def generate_pet_name():
