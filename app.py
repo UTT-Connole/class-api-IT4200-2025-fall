@@ -4,6 +4,11 @@ import random
 app = Flask(__name__)
 
 
+<<<<<<< HEAD
+@app.route('/kasen')
+def kasen():
+	return 'please work'
+=======
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
@@ -92,6 +97,7 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
+>>>>>>> origin/main
 
 if __name__ == '__main__':
 	app.run(debug=True)
