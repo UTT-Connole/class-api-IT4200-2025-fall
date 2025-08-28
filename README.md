@@ -72,9 +72,24 @@ Suh Dude
 Hi there ya'll :))
 hi
 
+
+
+Seventy bottle of beer on the wall.
+
+
+Plant lives matter
+=======
 Plant lives matter
 
 Seventy bottle of beer on the wall.
+
+------------
+Route "Gill"
+
+This askes the user a question and returns two different strings based on the answer.
+
+You must seek the Holy Grail
+_____________________________
 
 Pull requests, a coder's delight,  
 A beacon shining in the night.  
@@ -112,4 +127,8 @@ Single and ready to Mergel
 So raise a toast to this noble quest,  
 For pull requests bring out our best.  
 In every line, a dream takes flight,  
+
+A coder's world, shining bright.  
+
 A coder's world, shining bright.
+
