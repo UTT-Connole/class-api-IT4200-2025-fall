@@ -6,5 +6,9 @@ app = Flask(__name__)
 def home():
 	return 'Hello, Flask!'
 
+@app.route('/kasen')
+def kasen():
+	return 'yo yo yo'
+
 if __name__ == '__main__':
 	app.run(debug=True)
