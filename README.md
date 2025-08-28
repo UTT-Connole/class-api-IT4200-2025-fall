@@ -58,6 +58,54 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
+Theisen was here
+
+This is a nice line that no one else should touch pls and thank you.
+
+Brayden's update to his PR
+
+hello
+
+HELLO!!
+
+Suh Dude
+Chat, are we cooked?
+
+Hi there ya'll :))
+hi
+
+
+
+Seventy bottle of beer on the wall.
+
+
+Plant lives matter
+=======
+Plant lives matter
+
+Seventy bottle of beer on the wall.
+
+------------
+Route "Gill"
+
+This askes the user a question and returns two different strings based on the answer.
+
+You must seek the Holy Grail
+_____________________________
+
+Pull requests, a coder's delight,  
+A beacon shining in the night.  
+From branch to branch, the changes flow,  
+A tale of teamwork starts to grow.  
+
+<<<<<<< HEAD
+>>>>>>> origin/main
 
 
 
