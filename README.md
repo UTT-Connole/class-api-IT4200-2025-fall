@@ -106,7 +106,10 @@ A testament to what teamwork shows.
 Pull requests, a coder's art,  
 Uniting minds, though miles apart.  
 
+Seventy bottle of beer on the wall.
+Single and ready to Mergel
+
 So raise a toast to this noble quest,  
 For pull requests bring out our best.  
 In every line, a dream takes flight,  
-A coder's world, shining bright.  
+A coder's world, shining bright.
