@@ -4,11 +4,11 @@ Brayden is da bomb!!!
 
 Brayden is also a fantastic ultimate frisbee player
 
+changegit
 
 Gage got here first!!
 
 Its chewsday init?
-got it
 
 hello world!!
 
@@ -19,7 +19,7 @@ Aaron is an okay violist
 What's a violin?
 
 What's a violin
-Bryson was here
+
 
 Porter is dope
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
@@ -61,4 +61,4 @@ HELLO!!
 
 Suh Dude
 
-hi
+Hi there ya'll :))
