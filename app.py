@@ -27,6 +27,9 @@ def generate_pet_name():
     return f'{adj} {noun}'
 
 
+@app.route('/bryson')
+def bryson():
+	return 'bingus'
 
 if __name__ == '__main__':
 	app.run(debug=True)
