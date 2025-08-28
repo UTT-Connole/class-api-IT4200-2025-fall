@@ -23,7 +23,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-<<<<<<< HEAD
 What's a violin
 
 
@@ -58,7 +57,6 @@ IT'S GONNA BLOW!!!!!
 
 
               Hehe                         
-<<<<<<< HEAD
 
 Theisen was here
 
@@ -81,6 +79,3 @@ Seventy bottle of beer on the wall.
 
 
 Plant lives matter
-=======
->>>>>>> origin/main
->>>>>>> origin/main
