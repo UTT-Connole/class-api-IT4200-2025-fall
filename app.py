@@ -259,6 +259,10 @@ def get_weather():
 
 
 
+@app.route('/aaron')
+def aaron():
+	return 'Skoden'
+
 if __name__ == '__main__':
 	app.run(debug=True)
 
