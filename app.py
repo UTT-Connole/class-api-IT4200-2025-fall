@@ -77,7 +77,6 @@ def home():
 	else:
 		return 'Wrong Answer'
 
-
 @app.route('/porter')
 def home():
 	return 'Dope'
@@ -107,6 +106,10 @@ def campus_locations():
 	choice = random.choice(locs)
 	res = json.dumps({"location": choice})
 	return res
+
+@app.route('/rf')
+def home():
+	return 'Sup Dawwg!'
 
 if __name__ == '__main__':
 	app.run(debug=True)
