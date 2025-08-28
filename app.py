@@ -112,6 +112,9 @@ def campus_locations():
 def home():
 	return 'Sup Dawwg!'
 
+@app.route('breyton')
+def breyton():
+	return 'yo'
 
 if __name__ == '__main__':
 	app.run(debug=True)
