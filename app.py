@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/gill')
 def home():
-	return 'test test'
+	return 'my test app'
 
 if __name__ == '__main__':
 	app.run(debug=True)
