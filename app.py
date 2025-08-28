@@ -10,6 +10,14 @@ def home():
 def home():
 	return 'What?'
 
+@app.route('/brayden')
+def brayden():
+	return 'Sup Dudes'
+
+@app.route('/braydens')
+def brayden():
+	return 'Sup Dude'
+
 @app.route('/Skylands')
 def home():
 	user_input = input('Enter somthing: ')
