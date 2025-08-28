@@ -2,6 +2,8 @@
 
 Brayden is da bomb!!!
 
+
+Gage got here first!!
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -16,11 +18,12 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
-What's a violin?
-<<<<<<< HEAD
-it's pieces of wood that are crafted togeather to form an instrument that can cost more than your car.
-=======
+What's a violin
 
+What's a violin
+What's a violin?
+
+<<<<<<< HEAD
 What's a violin
 
 
@@ -49,38 +52,64 @@ IT'S GONNA BLOW!!!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-<<<<<<< HEAD
-              ██████                          
->>>>>>> 17ed7319ae222015153cbe6d0690b65ab7a05a90
-=======
               ██████ 
 
-              Hehe                         
 
+
+
+              Hehe                         
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
 
+Brayden's update to his PR
 
 hello
 
 HELLO!!
 
 Suh Dude
+Chat, are we cooked?
 
 Hi there ya'll :))
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
 hi
 
 
 
+Seventy bottle of beer on the wall.
+
+
+Plant lives matter
+=======
+Plant lives matter
 
 Seventy bottle of beer on the wall.
-<<<<<<< HEAD
->>>>>>> 43076019731d8f1eb65b36cda4cb23fe4e0316a2
-=======
 
-siiiuuu
->>>>>>> 97cba9d (Santi Siiuuu)
+------------
+Route "Gill"
+
+This askes the user a question and returns two different strings based on the answer.
+
+You must seek the Holy Grail
+_____________________________
+
+Pull requests, a coder's delight,  
+A beacon shining in the night.  
+From branch to branch, the changes flow,  
+A tale of teamwork starts to grow.  
+
+<<<<<<< HEAD
+>>>>>>> origin/main
+
+
+
+
+
+
+67
