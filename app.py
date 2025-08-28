@@ -10,5 +10,9 @@ def home():
 def home():
 	return 'You are lost!'
 
+@app.route('/brayden')
+def brayden():
+	return 'SupDudes'
+
 if __name__ == '__main__':
 	app.run(debug=True)
