@@ -7,9 +7,17 @@ adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
 
-@app.route('/')
+@app.route('/gill')
 def home():
-	return 'test test'
+	return 'my test app'
+
+@app.route('/Skylands')
+def home():
+	user_input = input('Enter somthing: ')
+	if user_input == 'Conquretron':
+		return 'K. A. O. S.'
+	else:
+		return 'Wrong Answer'
 
 
 @app.route('/dallin')
