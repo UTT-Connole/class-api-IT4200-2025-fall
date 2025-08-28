@@ -9,26 +9,22 @@ Gage got here first!!
 
 Its chewsday init?
 
-hello!!
+
+hello world!!
 
 Only in the Merge conflict
 
 Aaron is an okay violist
 
-What's a violin
-
-
-
-
-
-
-
-Bryson is an amazing programmer
-
-
 What's a violin?
 
+What's a violin
+Bryson was here
+
+Porter is dope
 it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
+
+Wood with strings that go brrr.
 
 IT'S GONNA BLOW!!!!!                                              
                                               
@@ -43,11 +39,24 @@ IT'S GONNA BLOW!!!!!
         ██████░░░░░░░░▓▓██                    
       ██████░░░░░░░░  ▓▓▓▓██                  
       ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
     ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
     ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
       ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████                          
+              ██████ 
+
+              Hehe                         
+
+Theisen was here
+
+This is a nice line that no one else should touch pls and thank you.
+
+
+hello
+
+HELLO!!
+
+Suh Dude
