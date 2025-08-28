@@ -8,7 +8,11 @@ def home():
 
 @app.route('/brayden')
 def brayden():
-	return 'SupDudes'
+	return 'Sup Dudes'
+
+@app.route('/braydens')
+def brayden():
+	return 'Sup Dude'
 
 if __name__ == '__main__':
 	app.run(debug=True)
