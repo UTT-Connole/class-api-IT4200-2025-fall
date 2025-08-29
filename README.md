@@ -2,6 +2,8 @@
 
 Brayden is da bomb!!!
 
+
+Gage got here first!!
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -16,6 +18,9 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+What's a violin
+
+What's a violin
 What's a violin?
 
 What's a violin
@@ -48,26 +53,78 @@ IT'S GONNA BLOW!!!!!
           ██████████████                      
               ██████ 
 
+
+
+
               Hehe                         
 
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
 
+Brayden's update to his PR
 
 hello
 
 HELLO!!
 
 Suh Dude
+Chat, are we cooked?
 
 Hi there ya'll :))
 hi
 
 
 
+Seventy bottle of beer on the wall.
+
+
+Plant lives matter
+Plant lives matter
 
 Seventy bottle of beer on the wall.
+
+Route "Gill"
+
+This askes the user a question and returns two different strings based on the answer.
+
+You must seek the Holy Grail
+
+
+Pull requests, a coder's delight,  
+A beacon shining in the night.  
+From branch to branch, the changes flow,  
+A tale of teamwork starts to grow.  
+
+
+ pace-yourself
+
+
+
+
+I got rid of all of the arrows and stuff from the merge requests
+
+Here is a list of Endpoints so far. Please add yours as you add them.
+
+Seventy bottle of beer on the wall.
+
+/client
+/kasen
+/clint
+/gill
+/pet-name
+/dallin
+/brayden 
+/braydens
+/bryson
+/aaron
+/Skylands
+/porter
+/cam
+/randomRestaurant
+/campus-locations
+/rf
+/breyton
 
 ---
 
