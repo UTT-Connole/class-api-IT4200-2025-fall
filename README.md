@@ -68,3 +68,11 @@ hi
 
 
 Seventy bottle of beer on the wall.
+
+---
+
+## /Client endpoint
+This endpoint when called, will return the Browser and OS of the client calling the endpoint.
+To implement this endpoint, it requires installing from a requirements.txt supplied on this branch, to be merged.
+### To install requirments.txt
+Run the following `pip install -r requirements.txt`
