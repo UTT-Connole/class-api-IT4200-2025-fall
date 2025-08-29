@@ -99,7 +99,10 @@ A tale of teamwork starts to grow.
 
  pace-yourself
 
-Seventy bottle of beer on the wall.
+* Endpoint "Fortune"
+  * Selects a predetermined fortune from a list of fortunes
+  * Contains untold developer wisdom and mood readings
+
 
 
 I got rid of all of the arrows and stuff from the merge requests
@@ -114,7 +117,7 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /dallin
 /brayden 
 /braydens
-/bryson
+/fortune
 /aaron
 /Skylands
 /porter
