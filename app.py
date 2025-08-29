@@ -17,6 +17,7 @@ nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pi
 @app.route('/clint')
 def home():
 	return 'Hello, Clint!'
+
 @app.route('/gill')
 def home():
     user_input = input('What is your quest?')
@@ -24,7 +25,6 @@ def home():
         return "You may pass"
     else:
 	    return 'You are doomed'
-
 
 
 @app.route('/pet-name')
@@ -43,13 +43,6 @@ def brayden():
 	return 'SupDudes'
 
 
-@app.route('/pet-name')
-def generate_pet_name():
-    adj = random.choice(adjectives)
-    noun = random.choice(nouns)
-    return f'{adj} {noun}'
-
-
 @app.route('/bryson')
 def bryson():
 	return 'bingus'
@@ -65,10 +58,6 @@ def home():
 @app.route('/brayden')
 def brayden():
 	return 'Sup Dudes'
-
-@app.route('/braydens')
-def brayden():
-	return 'Sup Dude'
 
 @app.route('/Skylands')
 def home():
@@ -112,6 +101,9 @@ def campus_locations():
 def home():
 	return 'Sup Dawwg!'
 
+@app.route('breyton')
+def breyton():
+	return 'yo'
 
 if __name__ == '__main__':
 	app.run(debug=True)
