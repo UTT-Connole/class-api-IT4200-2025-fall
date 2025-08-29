@@ -134,3 +134,8 @@ This endpoint when called, will return the Browser and OS of the client calling 
 To implement this endpoint, it requires installing from requirements.txt
 ### To install requirments.txt
 Run the following `pip install -r requirements.txt`
+
+## /Kasen endpoint
+This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
+## /dadJokes 
+This endpoint will deliver a dad joke from a selection of three
