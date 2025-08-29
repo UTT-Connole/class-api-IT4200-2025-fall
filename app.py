@@ -5,6 +5,10 @@ from user_agents import parse
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+	return render_template('index.html'), 200
+
 @app.route('/kasen')
 def kasen():
 	return 'please work'
@@ -14,11 +18,11 @@ nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pi
 
 
 @app.route('/clint')
-def home():
+def home1():
 	return 'Hello, Clint!'
 
 @app.route('/gill')
-def home():
+def home2():
     user_input = input('What is your quest?')
     if user_input == 'We seek the Holy Grail':
         return "You may pass"
@@ -34,7 +38,7 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home():
+def home3():
 	return 'Please dont erase me'
 
 #realized that I didn't follow the instructions. Here's a random weather conditions generator
@@ -53,25 +57,20 @@ def weather():
 def brayden():
 	return 'SupDudes'
 
-
 @app.route('/bryson')
 def bryson():
 	return 'bingus'
 
 @app.route('/gill')
-def home():
+def home4():
 	return 'my test app'
 
 @app.route('/aaron')
-def home():
+def home5():
 	return 'What?'
 
-@app.route('/brayden')
-def brayden():
-	return 'Sup Dudes'
-
 @app.route('/Skylands')
-def home():
+def home6():
 	user_input = input('Enter somthing: ')
 	if user_input == 'Conquretron':
 		return 'K. A. O. S.'
@@ -79,7 +78,7 @@ def home():
 		return 'Wrong Answer'
 
 @app.route('/porter')
-def home():
+def home7():
 	return 'Dope'
 
 @app.route('/cam')
@@ -94,6 +93,7 @@ restaurants = [
     "Five Guys",
     "Panera Bread"
 ]
+
 @app.route('/randomRestaurant')
 def choose():
     restaurant = random.choice(restaurants)
@@ -108,10 +108,10 @@ def campus_locations():
 	return res
 
 @app.route('/rf')
-def home():
+def home8():
 	return 'Sup Dawwg!'
 
-@app.route('breyton')
+@app.route('/breyton')
 def breyton():
 	return 'yo'
 
