@@ -10,6 +10,10 @@
             color: #f0f0f0;
             text-align: center;
             padding: 50px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             color: #ff4c4c;
@@ -19,6 +23,11 @@
             font-size: 22px;
             margin: 20px 0;
         }
+        p1 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #ff00d0;
+        }
         a {
             color: #00bfff;
             text-decoration: none;
@@ -26,17 +35,51 @@
         a:hover {
             text-decoration: underline;
         }
-        img {
-            margin-top: 20px;
-            max-width: 300px;
+
+        .gif-container img {
+            max-width: 275px;
+            border-radius: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .gif-container img:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        a {
+            display: inline-block;
+            margin-top: 40px;
+            color: #00bfff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .btn {
+            margin-top: 50px; /* space between image and button */
+            padding: 12px 24px;
+            background-color: #000000;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #cb0505;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Kasen's Page!</h1>
-    <p>This is a simple page built with Flask and HTML.</p>
-    <img src="https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif" alt="Cool animation">
-    <br>
-    <a href="/">Go Back Home</a>
+    <h1>A Page Where There Is No Rules</h1>
+    <p>Feel Free To Make What Your Heart Desires</p>
+    <p1>(just don't break the page)</p1>
+    
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif" alt="GIF 1">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTBwMmtmOWVpNzAyMXdlNXM1NG0zdG4yMmNhcWxhNHI1MmtpcnJsbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zfuOq2rFBE7Kg/giphy.gif" alt="GIF 2">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2ZmYTZyM3Z3NnRqbm1lcm9qM3g0c2czNzBjMnZlOXFndGFta21udSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1rNWZu4QQqCUaq434T/giphy.gif" alt="GIF 3">
+    </div>
+    <a href="/" class="btn">Go Back Home</a>
 </body>
 </html>
