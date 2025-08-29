@@ -128,6 +128,15 @@ def home8():
 def breyton():
 	return 'yo'
 
+@app.route('/dadJoke')
+def dad_joke():
+    jokes = [
+        "Why don't skeletons fight each other? They don't have the guts.",
+        "I'm afraid for the calendar. Its days are numbered.",
+        "Why did the math book look sad? Because it had too many problems."
+    ]
+    return jsonify({"joke": random.choice(jokes)})
+
 #This endpoint will return client data
 @app.route('/client')
 def index():
