@@ -92,7 +92,7 @@ def choose():
 
 @app.route('/campus-locations')
 def campus_locations(): 
-	locs = ["Holland", "Smith", "HPC"]
+	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center"]
 	choice = random.choice(locs)
 	res = json.dumps({"location": choice})
 	return res
