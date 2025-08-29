@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import random
 import json
 from user_agents import parse
+from datetime import date
 
 app = Flask(__name__)
 
@@ -57,9 +58,21 @@ def weather():
 def brayden():
 	return 'SupDudes'
 
-@app.route('/bryson')
-def bryson():
-	return 'bingus'
+
+@app.route('/fortune', methods=['GET'])
+def get_fortune():
+	fortunes = [
+		{"fortune": "You will find someone merged right before you.", "mood": "despair"},
+		{"fortune": "Today is a good day to git merge --force.", "mood": "optimistic"},
+		{"fortune": "A new conflict will be upon you soon.", "mood": "mysterious"},
+		{"fortune": "You will have good luck with pull requests.", "mood": "motivated"},
+		{"fortune": "You should have a snack break.", "mood": "hungry"}
+		]
+	chosen = random.choice(fortunes)
+	chosen["date"] = str(date.today())
+	return jsonify(chosen)
+
+
 
 @app.route('/gill')
 def home4():
