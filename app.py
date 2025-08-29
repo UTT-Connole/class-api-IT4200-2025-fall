@@ -11,7 +11,7 @@ def home():
 
 @app.route('/kasen')
 def kasen():
-	return 'please work'
+	return render_template('kasen.html'), 200
 
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
