@@ -5,8 +5,6 @@ from user_agents import parse
 
 app = Flask(__name__)
 
-
-
 @app.route('/kasen')
 def kasen():
 	return 'please work'
@@ -38,6 +36,18 @@ def generate_pet_name():
 @app.route('/dallin')
 def home():
 	return 'Please dont erase me'
+
+#realized that I didn't follow the instructions. Here's a random weather conditions generator
+@app.route('/weather')
+def weather():
+	conditions = [
+		{"condition": "Sunny", "temperature": "25°C", "humidity": "40%"},
+		{"condition": "Rainy", "temperature": "18°C", "humidity": "85%"},
+		{"condition": "Windy", "temperature": "20°C", "humidity": "50%"},
+		{"condition": "Cloudy", "temperature": "22°C", "humidity": "60%"},
+		{"condition": "Snowy", "temperature": "-5°C", "humidity": "70%"}
+	]
+	return random.choice(conditions)
 
 @app.route('/brayden')
 def brayden():
@@ -88,7 +98,6 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
 
 
 @app.route('/campus-locations')
