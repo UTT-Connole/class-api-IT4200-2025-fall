@@ -121,7 +121,7 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /aaron
 /Skylands
 /porter
-/cam
+/magic8ball
 /randomRestaurant
 /campus-locations
 /rf
@@ -139,3 +139,6 @@ Run the following `pip install -r requirements.txt`
 This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
 ## /dadJokes 
 This endpoint will deliver a dad joke from a selection of three
+
+## /magic8ball endpoint
+This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
