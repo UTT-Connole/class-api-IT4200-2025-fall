@@ -99,14 +99,12 @@ A tale of teamwork starts to grow.
 
  pace-yourself
 
-
+Seventy bottle of beer on the wall.
 
 
 I got rid of all of the arrows and stuff from the merge requests
 
 Here is a list of Endpoints so far. Please add yours as you add them.
-
-Seventy bottle of beer on the wall.
 
 /client
 /kasen
@@ -130,6 +128,6 @@ Seventy bottle of beer on the wall.
 
 ## /Client endpoint
 This endpoint when called, will return the Browser and OS of the client calling the endpoint.
-To implement this endpoint, it requires installing from a requirements.txt supplied on this branch, to be merged.
+To implement this endpoint, it requires installing from requirements.txt
 ### To install requirments.txt
 Run the following `pip install -r requirements.txt`
