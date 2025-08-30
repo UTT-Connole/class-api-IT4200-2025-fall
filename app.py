@@ -10,7 +10,9 @@ app = Flask(__name__)
 def home():
 	return render_template('index.html'), 200
 
-
+@app.route('/kasen')
+def kasen():
+	return 'please work'
 
 @app.route('/kasen')
 def kasen():
@@ -137,26 +139,6 @@ def campus_locations():
 def home8():
 	return 'Sup Dawwg!'
 
-# favorite quote generator
-import random
-import json
-@app.route('/quote')
-def quote():
-	quotes = [
-		"The only way to do great work is to love what you do. - Steve Jobs",
-		"Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-		"You miss 100% of the shots you don't take. - Wayne Gretzky"
-	]
-	selected_quote = random.choice(quotes)
-	return {
-		"quote": selected_quote		
-	}	
-# return a random quote from the list in JSON format
-quote_data = quote()
-print(json.dumps(quote_data, indent=4))
-
-
-
 @app.route('/breyton')
 def breyton():
 	return 'yo'
@@ -190,29 +172,3 @@ def page_not_found(e):
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-
-@app.route('/dadJokeGenerator')
-def dad_joke_generator():
-	jokes = [
-		"Why don't scientists trust atoms? Because they make up everything!",
-		"What do you call fake spaghetti? An impasta!",
-		"Why did the scarecrow win an award? Because he was outstanding in his field!",
-		"I'm on a whiskey diet. I've lost three days already!",
-		"Why don't skeletons fight each other? They don't have the guts."
-	]
-	return jsonify({"joke": random.choice(jokes)})
-
-
-@app.route("/santi-endpoint", methods=["GET"])
-def santi_endpoint():
-    return jsonify({
-        "message": "Hello from Santi!",
-        "tip": "Stay hydrated and keep coding 💻"
-    })
-
-@app.route("/steal_yo_name")
-def steal_yo_name():
-	names = ["La-a", "Abcde", "Quadraic", "Socrotent"]
-	new_name = random.randrange(1,4)
-	return "I like yo name, its mine now. Have this one instead: " + (new_name) + "."
