@@ -138,14 +138,13 @@ In every line, a dream takes flight,
 <<<<<<< HEAD
 <<<<<<< HEAD
 A coder's world, shining bright.  
->>>>>>> origin/main
-=======
+
 A coder's world, shining bright.
->>>>>>> origin/main
-=======
+
 
 A coder's world, shining bright.  
 
 A coder's world, shining bright.
 
->>>>>>> origin/main
+## /Theisen Endpoint(dadJokeGenerator)
+This endpoint will return one of 5 dad jokes listed.
