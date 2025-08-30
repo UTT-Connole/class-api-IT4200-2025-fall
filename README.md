@@ -2,7 +2,6 @@
 
 Brayden is da bomb!!!
 
-<<<<<<< HEAD
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -22,10 +21,8 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
-=======
 pretty hangry
 
->>>>>>> 1e351c0 (hunger)
 
 
 
@@ -38,11 +35,9 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden got here first!!
-
 Gage did not got here first!!
 
 Got here late
-
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -258,7 +253,6 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
-Siiiuuu
-
 ## /steal_yo_name endpoint
+
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
