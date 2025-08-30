@@ -167,3 +167,15 @@ def page_not_found(e):
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
+@app.route('/dadJokeGenerator')
+def dad_joke_generator():
+	jokes = [
+		"Why don't scientists trust atoms? Because they make up everything!",
+		"What do you call fake spaghetti? An impasta!",
+		"Why did the scarecrow win an award? Because he was outstanding in his field!",
+		"I'm on a whiskey diet. I've lost three days already!",
+		"Why don't skeletons fight each other? They don't have the guts."
+	]
+	return jsonify({"joke": random.choice(jokes)})
+
