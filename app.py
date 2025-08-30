@@ -10,9 +10,16 @@ app = Flask(__name__)
 def home():
 	return render_template('index.html'), 200
 
+
+
+@app.route('/kasen')
+def kasen():
+	return 'please work'
+
 @app.route('/kasen')
 def kasen():
 	return render_template('kasen.html'), 200
+
 
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
@@ -167,3 +174,15 @@ def page_not_found(e):
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
+
+@app.route('/dadJokeGenerator')
+def dad_joke_generator():
+	jokes = [
+		"Why don't scientists trust atoms? Because they make up everything!",
+		"What do you call fake spaghetti? An impasta!",
+		"Why did the scarecrow win an award? Because he was outstanding in his field!",
+		"I'm on a whiskey diet. I've lost three days already!",
+		"Why don't skeletons fight each other? They don't have the guts."
+	]
+	return jsonify({"joke": random.choice(jokes)})
