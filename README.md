@@ -69,7 +69,8 @@ hello
 HELLO!!
 
 Suh Dude
-Chat, are we cooked?
+Chat, are we cooked??
+I hope this works!
 
 Hi there ya'll :))
 hi
@@ -77,26 +78,3 @@ hi
 
 
 Seventy bottle of beer on the wall.
-
-
-Plant lives matter
-
-Plant lives matter
-
-Seventy bottle of beer on the wall.
-
-------------
-Route "Gill"
-
-This askes the user a question and returns two different strings based on the answer.
-
-You must seek the Holy Grail
-_____________________________
-
-Pull requests, a coder's delight,  
-A beacon shining in the night.  
-From branch to branch, the changes flow,  
-A tale of teamwork starts to grow.  
-
-## Endpoint: /diceRoll
-Rolls random int between 1-6
