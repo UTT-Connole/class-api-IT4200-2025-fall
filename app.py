@@ -5,11 +5,9 @@ import json
 app = Flask(__name__)
 
 
-<<<<<<< HEAD
 @app.route('/kasen')
 def kasen():
 	return 'please work'
-=======
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
@@ -24,7 +22,10 @@ def home():
     else:
 	    return 'You are doomed'
 
-
+@app.route('/diceRoll')
+def roll_dice():
+	dice_result = random.randint(1,6)
+	return jsonify({"dice": dice_result})
 
 @app.route('/pet-name')
 def generate_pet_name():
@@ -97,7 +98,6 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
->>>>>>> origin/main
 
 
 @app.route('/campus-locations')
