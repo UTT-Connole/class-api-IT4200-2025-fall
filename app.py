@@ -206,3 +206,11 @@ def dad_joke_generator():
 		"Why don't skeletons fight each other? They don't have the guts."
 	]
 	return jsonify({"joke": random.choice(jokes)})
+
+
+@app.route("/santi-endpoint", methods=["GET"])
+def santi_endpoint():
+    return jsonify({
+        "message": "Hello from Santi!",
+        "tip": "Stay hydrated and keep coding 💻"
+    })
