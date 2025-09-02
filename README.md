@@ -64,9 +64,6 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
-What's a violin
-What's a violin
-What's a violin
 What's a violin?
 What's a violin
 Brayden is da bomb!!!
@@ -85,6 +82,12 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 What's a violin
+
+What's a violin!
+What's a violin?
+What's a violin!
+What's a violin?
+What's a violin!
 
 
 Porter is dope
