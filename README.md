@@ -260,4 +260,5 @@ This endpoint will return a random magic 8 ball message string. Possible message
 
 Siiiuuu
 
-
+## /steal_yo_name endpoint
+This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
