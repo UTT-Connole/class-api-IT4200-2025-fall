@@ -1,28 +1,37 @@
-from flask import Flask
+from flask import Flask, render_template, request, jsonify
 import random
-=======
 import json
+from user_agents import parse
+from datetime import date
 
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+	return render_template('index.html'), 200
+
 
 
 @app.route('/kasen')
 def kasen():
-	return 'please work'
+	return render_template('kasen.html'), 200
+
+
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
 
-
+@app.route('/clint')
+def home1():
+	return 'Hello, Clint!'
 
 @app.route('/gill')
-def home():
+def home2():
     user_input = input('What is your quest?')
     if user_input == 'We seek the Holy Grail':
         return "You may pass"
     else:
 	    return 'You are doomed'
-
 
 
 @app.route('/pet-name')
@@ -33,7 +42,7 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home():
+def home3():
 	return 'Please dont erase me'
 
 #realized that I didn't follow the instructions. Here's a random weather conditions generator
@@ -53,49 +62,54 @@ def brayden():
 	return 'SupDudes'
 
 
-@app.route('/pet-name')
-def generate_pet_name():
-    adj = random.choice(adjectives)
-    noun = random.choice(nouns)
-    return f'{adj} {noun}'
+@app.route('/fortune', methods=['GET'])
+def get_fortune():
+	fortunes = [
+		{"fortune": "You will find someone merged right before you.", "mood": "despair"},
+		{"fortune": "Today is a good day to git merge --force.", "mood": "optimistic"},
+		{"fortune": "A new conflict will be upon you soon.", "mood": "mysterious"},
+		{"fortune": "You will have good luck with pull requests.", "mood": "motivated"},
+		{"fortune": "You should have a snack break.", "mood": "hungry"}
+		]
+	chosen = random.choice(fortunes)
+	chosen["date"] = str(date.today())
+	return jsonify(chosen)
 
 
-@app.route('/bryson')
-def bryson():
-	return 'bingus'
 
 @app.route('/gill')
-def home():
+def home4():
 	return 'my test app'
 
 @app.route('/aaron')
-def home():
+def home5():
 	return 'What?'
 
-@app.route('/brayden')
-def brayden():
-	return 'Sup Dudes'
-
-@app.route('/braydens')
-def brayden():
-	return 'Sup Dude'
-
 @app.route('/Skylands')
-def home():
+def home6():
 	user_input = input('Enter somthing: ')
 	if user_input == 'Conquretron':
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
 
-
 @app.route('/porter')
-def home():
+def home7():
 	return 'Dope'
 
-@app.route('/cam')
-def cam():
-	return 'Play Oneshot!'
+@app.route('/magic8ball')
+def magic8ball():
+	answers = [
+		"It is certain",
+		"Without a doubt",
+		"Most likely",
+		"Ask again later",
+		"Can't predict now",
+		"My sources say no",
+		"Outlook not so good",
+		"Don't count on it"
+	]
+	return answers[random.randrange(1,9)]
 
 restaurants = [
     "Chipotle",
@@ -105,6 +119,7 @@ restaurants = [
     "Five Guys",
     "Panera Bread"
 ]
+
 @app.route('/randomRestaurant')
 def choose():
     restaurant = random.choice(restaurants)
@@ -113,10 +128,85 @@ def choose():
 
 @app.route('/campus-locations')
 def campus_locations(): 
-	locs = ["Holland", "Smith", "HPC"]
+	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center"]
 	choice = random.choice(locs)
 	res = json.dumps({"location": choice})
 	return res
 
+@app.route('/rf')
+def home8():
+	return 'Sup Dawwg!'
+
+# favorite quote generator
+import random
+import json
+@app.route('/quote')
+def quote():
+	quotes = [
+		"The only way to do great work is to love what you do. - Steve Jobs",
+		"Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+		"You miss 100% of the shots you don't take. - Wayne Gretzky"
+	]
+	selected_quote = random.choice(quotes)
+	return {
+		"quote": selected_quote		
+	}	
+# return a random quote from the list in JSON format
+quote_data = quote()
+print(json.dumps(quote_data, indent=4))
+
+
+
+@app.route('/breyton')
+def breyton():
+	return 'yo'
+
+@app.route('/dadJoke')
+def dad_joke():
+    jokes = [
+        "Why don't skeletons fight each other? They don't have the guts.",
+        "I'm afraid for the calendar. Its days are numbered.",
+        "Why did the math book look sad? Because it had too many problems."
+    ]
+    return jsonify({"joke": random.choice(jokes)})
+
+#This endpoint will return client data
+@app.route('/client')
+def index():
+	user_agent_string = request.headers.get('User-Agent')
+	user_agent = parse(user_agent_string)
+	return jsonify({
+		"Browser": user_agent.browser.family,
+		"Version": user_agent.browser.version_string,
+		"OS": user_agent.os.family,
+		"OS Version": user_agent.os.version_string
+	})
+
+@app.errorhandler(404)
+def page_not_found(e):
+	print("User entered invalid URL")
+	return render_template('404.html'), 404
+	
+
 if __name__ == '__main__':
 	app.run(debug=True)
+
+
+@app.route('/dadJokeGenerator')
+def dad_joke_generator():
+	jokes = [
+		"Why don't scientists trust atoms? Because they make up everything!",
+		"What do you call fake spaghetti? An impasta!",
+		"Why did the scarecrow win an award? Because he was outstanding in his field!",
+		"I'm on a whiskey diet. I've lost three days already!",
+		"Why don't skeletons fight each other? They don't have the guts."
+	]
+	return jsonify({"joke": random.choice(jokes)})
+
+
+@app.route("/santi-endpoint", methods=["GET"])
+def santi_endpoint():
+    return jsonify({
+        "message": "Hello from Santi!",
+        "tip": "Stay hydrated and keep coding 💻"
+    })
