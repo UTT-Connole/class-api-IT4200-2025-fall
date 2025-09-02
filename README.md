@@ -237,6 +237,7 @@ This askes the user a question and returns two different strings based on the an
 
 You must seek the Holy Grail
 
+Your mother was a hamster and your father smelt of elderberries!
 
 Pull requests, a coder's delight,  
 A beacon shining in the night.  
