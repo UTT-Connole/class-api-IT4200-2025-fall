@@ -256,3 +256,4 @@ This endpoint will return a random magic 8 ball message string. Possible message
 Siiiuuu
 
 
+My dudes, we should remove all of the nonsense that is on this read me file and just have the endpoints. do you agree?
