@@ -2,6 +2,7 @@
 
 Brayden is da bomb!!!
 
+<<<<<<< HEAD
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -21,6 +22,8 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+=======
+>>>>>>> 6f1b053 (newest rebase)
 pretty hangry
 
 
