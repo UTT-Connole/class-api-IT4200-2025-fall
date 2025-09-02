@@ -210,3 +210,9 @@ def santi_endpoint():
         "message": "Hello from Santi!",
         "tip": "Stay hydrated and keep coding 💻"
     })
+
+@app.route("/steal_yo_name")
+def steal_yo_name():
+	names = ["La-a", "Abcde", "Quadraic", "Socrotent"]
+	new_name = random.randrange(1,4)
+	return "I like yo name, its mine now. Have this one instead: " + (new_name) + "."
