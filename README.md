@@ -78,17 +78,14 @@ Hi there ya'll :))
 hi
 
 
-<<<<<<< HEAD
 Ya'at'eeh
 Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
-
-=======
+wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 
 Seventy bottle of beer on the wall.
 
 
 Plant lives matter
->>>>>>> origin/main
 Plant lives matter
 
 Seventy bottle of beer on the wall.
