@@ -14,10 +14,6 @@ def home():
 
 @app.route('/kasen')
 def kasen():
-	return 'please work'
-
-@app.route('/kasen')
-def kasen():
 	return render_template('kasen.html'), 200
 
 
