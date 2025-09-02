@@ -253,3 +253,6 @@ This endpoint will return a random magic 8 ball message string. Possible message
 Siiiuuu
 
 
+## /campus-locations
+Returns a random location on the Utah Tech Campus 
+
