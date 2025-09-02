@@ -10,6 +10,7 @@ app = Flask(__name__)
 def home():
 	return render_template('index.html'), 200
 
+<<<<<<< HEAD
 
 
 @app.route('/kasen')
@@ -56,6 +57,11 @@ def weather():
 		{"condition": "Snowy", "temperature": "-5°C", "humidity": "70%"}
 	]
 	return random.choice(conditions)
+=======
+@app.route('/aaron')
+def home():
+	return 'What? again what?'
+>>>>>>> 59eb957 (testing)
 
 @app.route('/brayden')
 def brayden():
