@@ -181,6 +181,7 @@ hi
 
 Seventy bottle of beer on the wall.
 
+milk is better
 No, there are 75 bottles of milk on the  wall
 And soda is lame
 
@@ -203,6 +204,8 @@ A tale of teamwork starts to grow.
 
 
  pace-yourself
+
+I love milk so much!!
 
 * Endpoint "Fortune"
   * Selects a predetermined fortune from a list of fortunes
@@ -262,3 +265,7 @@ This endpoint will return a random magic 8 ball message string. Possible message
 ## /Theisen Endpoint(dadJokeGenerator)
 This endpoint will return one of 5 dad jokes listed.
 Siiiuuu
+
+## /steal_yo_name endpoint
+
+This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
