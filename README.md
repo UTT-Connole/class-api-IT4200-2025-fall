@@ -4,6 +4,9 @@ Brayden is da bomb!!!
 
 
 Gage got here first!!
+
+Got here late
+
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -155,3 +158,5 @@ This endpoint will return one of 5 dad jokes listed.
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
 Siiiuuu
+
+
