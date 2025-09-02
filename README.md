@@ -131,12 +131,7 @@ Brayden is da bomb!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████ 
-
-
-
-
-              Hehe                         
+              ██████                        
 
 StS Bomb card is peak
 
@@ -155,7 +150,7 @@ HELLO!!
 
 
 Suh Dude
-Chat, are we cooked?
+Chat, are we cooked? Yes we are
 
 Hi there ya'll :))
 hi
