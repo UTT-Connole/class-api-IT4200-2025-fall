@@ -2,6 +2,36 @@
 
 Brayden is da bomb!!!
 
+                                ██    ██      
+                    ██████      ██  ██        
+                  ██      ██                  
+                ██          ████░░    ████    
+                ██                            
+              ██████            ██  ██        
+              ██████            ██    ██      
+          ██████████████                      
+        ██████░░░░░░░░▓▓██                    
+      ██████░░░░░░░░  ▓▓▓▓██                  
+      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
+      ████████████▓▓▓▓▓▓████                  
+        ██████████████████                    
+          ██████████████                      
+              ██████ 
+
+
+
+
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 Brayden got here first!!
 
 Gage did not got here first!!
@@ -16,6 +46,20 @@ Its chewsday init?
 
 hello world!!
 
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 Only in the Merge conflict
 
 Aaron is an okay violist
@@ -25,6 +69,21 @@ What's a violin
 What's a violin
 What's a violin?
 What's a violin
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 What's a violin
 
 
@@ -33,8 +92,20 @@ it's pieces of wood that that crafted togeather to form an instrument that can c
 
 Wood with strings that go brrr.
 
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 IT'S GONNA BLOW!!!!!                                              
                                               
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -75,6 +146,29 @@ Chat, are we cooked?
 
 Hi there ya'll :))
 hi
+
+                                ██    ██      
+                    ██████      ██  ██        
+                  ██      ██                  
+                ██          ████░░    ████    
+                ██                            
+              ██████            ██  ██        
+              ██████            ██    ██      
+          ██████████████                      
+        ██████░░░░░░░░▓▓██                    
+      ██████░░░░░░░░  ▓▓▓▓██                  
+      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
+      ████████████▓▓▓▓▓▓████                  
+        ██████████████████                    
+          ██████████████                      
+              ██████ 
+
+
+
 
 
 
