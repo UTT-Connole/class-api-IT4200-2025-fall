@@ -127,7 +127,14 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /rf
 /breyton
 
----
+
+So raise a toast to this noble quest,  
+For pull requests bring out our best.  
+In every line, a dream takes flight,  
+
+A coder's world, shining bright.  
+
+A coder's world, shining bright.
 
 ## /Client endpoint
 This endpoint when called, will return the Browser and OS of the client calling the endpoint.
@@ -140,8 +147,16 @@ This endpoint is a new webpage that has a few gifs. I added buttons that go back
 ## /dadJokes 
 This endpoint will deliver a dad joke from a selection of three
 
-## /magic8ball endpoint
-This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
 ## /Theisen Endpoint(dadJokeGenerator)
 This endpoint will return one of 5 dad jokes listed.
+
+## /magic8ball endpoint
+This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
+
+<<<<<<< HEAD
+## /Theisen Endpoint(dadJokeGenerator)
+This endpoint will return one of 5 dad jokes listed.
+=======
+Siiiuuu
+>>>>>>> refs/remotes/origin/main
