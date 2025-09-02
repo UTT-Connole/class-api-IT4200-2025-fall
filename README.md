@@ -46,10 +46,6 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Only in the Merge conflict
 
-
-
-This better make a confict
-
 Aaron is an okay violist
 
 ## Pokémon
