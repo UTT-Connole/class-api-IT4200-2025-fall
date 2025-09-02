@@ -64,6 +64,10 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+What's a violin
+What's a violin
+What's a violin
+Violins is not allowed in class.
 What's a violin?
 What's a violin
 Brayden is da bomb!!!
@@ -133,6 +137,8 @@ Brayden is da bomb!!!
 
 
               Hehe                         
+
+StS Bomb card is peak
 
 Theisen was here
 
