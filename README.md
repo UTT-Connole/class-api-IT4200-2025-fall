@@ -67,8 +67,12 @@ Aaron is an okay violist
 What's a violin
 What's a violin
 What's a violin
+<<<<<<< HEAD
 Violins is not allowed in class.
 What's a violin?
+=======
+What's a viola?
+>>>>>>> 4567fb5 (trying to find conflicts)
 What's a violin
 Brayden is da bomb!!!
 Brayden is da bomb!!!
