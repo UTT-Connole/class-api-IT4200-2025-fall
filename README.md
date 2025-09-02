@@ -52,11 +52,7 @@ IT'S GONNA BLOW!!!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
-
-
-
-
-              Hehe                         
+                        
 
 Theisen was here
 
@@ -69,7 +65,7 @@ hello
 HELLO!!
 
 Suh Dude
-Chat, are we cooked?
+Chat, are we cooked? Yes we are
 
 Hi there ya'll :))
 hi
