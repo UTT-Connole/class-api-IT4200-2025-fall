@@ -146,6 +146,8 @@ HELLO!!
 
 
 
+
+
 Suh Dude
 Chat, are we cooked?
 
@@ -179,8 +181,8 @@ hi
 
 Seventy bottle of beer on the wall.
 
-No, there are 75 bottles of milk on the  wall
-And soda is lame
+No there are 75 bottles of milk on the  wall
+
 
 Plant lives matter
 Plant lives matter
@@ -257,8 +259,6 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
-## /steal_yo_name endpoint
-
-This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
 ## /Theisen Endpoint(dadJokeGenerator)
 This endpoint will return one of 5 dad jokes listed.
+Siiiuuu
