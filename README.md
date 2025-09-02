@@ -94,7 +94,7 @@ IT'S GONNA BLOW!!!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████ 
+              ██████                        
 
 
 
@@ -122,7 +122,7 @@ Suh Dude
 Chat, are we cooked? Absolutely.
 
 Suh Dude
-(hopfully not messing things up)
+(hopfully not messing things up) Yes we are
 
 Hi there ya'll :))
 hi
