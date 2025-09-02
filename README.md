@@ -186,6 +186,8 @@ This askes the user a question and returns two different strings based on the an
 
 You must seek the Holy Grail
 
+As long as I remember, the rain's been fallin down
+_____________________________
 
 Pull requests, a coder's delight,  
 A beacon shining in the night.  
@@ -229,6 +231,7 @@ For pull requests bring out our best.
 In every line, a dream takes flight,  
 
 A coder's world, shining bright.  
+<<<<<<< HEAD
 
 A coder's world, shining bright.
 
@@ -251,5 +254,4 @@ This endpoint will return one of 5 dad jokes listed.
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
 Siiiuuu
-
 

@@ -75,11 +75,16 @@ def get_fortune():
 	chosen["date"] = str(date.today())
 	return jsonify(chosen)
 
+@app.route('/gill2')
+def will_it_rain():
+    chance_of_rain == input("choose a number")
+    if chance_of_rain > 50:
+        prediction = "Yes, it might rain today."
+    elif chance_of_rain > 20:
+        prediction = "Maybe. Keep an umbrella just in case."
+    else:
+        prediction = "Nope, it's unlikely to rain today."
 
-
-@app.route('/gill')
-def home4():
-	return 'my test app'
 
 @app.route('/aaron')
 def home5():
