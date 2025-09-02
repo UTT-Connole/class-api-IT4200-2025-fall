@@ -2,6 +2,7 @@
 
 Brayden is da bomb!!!
 
+<<<<<<< HEAD
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -21,6 +22,10 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+=======
+pretty hangry
+
+>>>>>>> 1e351c0 (hunger)
 
 
 
