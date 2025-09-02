@@ -2,16 +2,15 @@
 
 Brayden is da bomb!!!
 
+Brayden got here first!!
 
-Gage got here first!!
+Gage did not got here first!!
 
 Got here late
 
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
-
-Gage got here first!!
 
 Its chewsday init?
 
