@@ -135,6 +135,26 @@ def magic8ball():
 	]
 	return answers[random.randrange(1,9)]
 
+@app.route('/generatePassword')
+def generatePassword(Length, Complexity):
+	letters = 'abcdefghijklmnopqrstuvwxyz'
+	numbers = '0123456789'
+	symbols = '~!@#$%^&*()-_=+[{]}\|;:,<.>/?'
+	password = ''
+	characters = ''
+	if Complexity == 'basic':
+		characters = letters
+	elif Complexity == 'simple':
+		characters = letters + numbers
+	elif Complexity == 'complex':
+		characters = letters + letters.upper() + numbers + symbols
+	else:
+		print("Choose a valid option: basic, simple, or complex.")
+		return -1
+	for i in range(Length):
+		password += random.choice(characters)
+	return jsonify({"password": password})
+
 restaurants = [
     "Chipotle",
     "Chick-fil-A",
