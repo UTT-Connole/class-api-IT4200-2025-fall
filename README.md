@@ -104,7 +104,7 @@ What's a violin
 
 What's a violin!
 What's a violin?
-What's a violin!
+What's a violin?!
 What's a violin?
 What's a violin!
 
@@ -209,7 +209,7 @@ cool story
 
 Seventy bottle of beer on the wall.
 
-milk is better
+whole milk is better
 No, there are 75 bottles of milk on the  wall
 And soda is lame
 
@@ -253,6 +253,7 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /Skylands
 /porter
 /magic8ball
+/generatePassword
 /randomRestaurant
 /campus-locations
 /rf
