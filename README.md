@@ -307,4 +307,7 @@ Siiiuuu
 
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
 
+## /Skylands
+This endpoint is broken and should be disregarded.
+
 Not too hungry today
