@@ -27,13 +27,6 @@ pretty hangry
 
 
 
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
 Brayden got here first!!
 Gage did not got here first!!
 
@@ -64,6 +57,45 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+## Pokémon
+
+Pokémon is a media franchise created by Satoshi Tajiri and Ken Sugimori, first released by Nintendo, Game Freak, and Creatures in 1996. The franchise centers around fictional creatures called "Pokémon", which humans, known as Pokémon Trainers, catch and train to battle each other for sport.
+
+### Main Concepts
+
+- **Pokémon**: Creatures with various abilities, types, and evolutions. There are currently over 1,000 unique Pokémon species.
+- **Types**: Each Pokémon has one or two types (such as Water, Fire, Grass, Electric, Psychic, etc.), which determine strengths and weaknesses in battles.
+- **Battles**: Trainers use their Pokémon to battle others, using moves and strategies based on type advantages.
+- **Evolution**: Many Pokémon can evolve into more powerful forms, often by leveling up, using special items, or meeting certain conditions.
+
+### Popular Pokémon
+
+- **Pikachu**: The franchise mascot, an Electric-type Pokémon.
+- **Charizard**: A powerful Fire/Flying-type, final evolution of Charmander.
+- **Bulbasaur, Squirtle, and Charmander**: The original starter Pokémon from the first games.
+
+### Games
+
+The main series consists of role-playing games (RPGs) where players travel through regions, catch Pokémon, defeat Gym Leaders, and challenge the Pokémon League. Notable games include:
+- Pokémon Red/Blue/Yellow (Gen 1)
+- Pokémon Gold/Silver/Crystal (Gen 2)
+- Pokémon Ruby/Sapphire/Emerald (Gen 3)
+- Pokémon Sword/Shield (Gen 8)
+- Pokémon Scarlet/Violet (Gen 9)
+
+### Other Media
+
+- **Anime**: Follows Ash Ketchum and his friends as they travel the world, catch Pokémon, and compete in tournaments.
+- **Trading Card Game**: A collectible card game where players build decks and battle.
+- **Movies, Manga, and Merchandise**: Pokémon has a vast array of movies, comics, toys, and other products.
+
+### Fun Facts
+
+- The name "Pokémon" is a contraction of "Pocket Monsters" (ポケットモンスター).
+- The franchise is one of the highest-grossing media franchises in the world.
+- "Gotta Catch 'Em All!" is the iconic slogan.
+
+For more information, visit the [official Pokémon website](https://www.pokemon.com/).
 What's a violin
 What's a violin
 What's a violin
