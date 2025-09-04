@@ -37,7 +37,7 @@ def home1():
 
 @app.route('/gill')
 def home2():
-    user_input = input('What is your quest?')
+    user_input = ('We seek the Holy Grail')
     if user_input == 'We seek the Holy Grail':
         return "You may pass"
     else:
@@ -99,9 +99,6 @@ def roll_dice(sides):
                 "result":result
         })
 
-@app.route('/gill')
-def home4():
-	return 'my test app'
 
 	return 'Hello, Flask!'
 
@@ -138,6 +135,26 @@ def magic8ball():
 		"Don't count on it"
 	]
 	return answers[random.randrange(1,9)]
+
+@app.route('/generatePassword')
+def generatePassword(Length, Complexity):
+	letters = 'abcdefghijklmnopqrstuvwxyz'
+	numbers = '0123456789'
+	symbols = '~!@#$%^&*()-_=+[{]}\|;:,<.>/?'
+	password = ''
+	characters = ''
+	if Complexity == 'basic':
+		characters = letters
+	elif Complexity == 'simple':
+		characters = letters + numbers
+	elif Complexity == 'complex':
+		characters = letters + letters.upper() + numbers + symbols
+	else:
+		print("Choose a valid option: basic, simple, or complex.")
+		return -1
+	for i in range(Length):
+		password += random.choice(characters)
+	return jsonify({"password": password})
 
 restaurants = [
     "Chipotle",
