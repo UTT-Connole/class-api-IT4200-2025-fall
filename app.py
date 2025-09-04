@@ -1,15 +1,23 @@
 from flask import Flask, render_template, request, jsonify
 import random
 import json
+import os
+import requests
 from user_agents import parse
 from datetime import date
 
 app = Flask(__name__)
+OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+
 
 @app.route('/')
 def home():
 	return render_template('index.html'), 200
 
+
+@app.route('/pokemon')
+def pokemon():
+	return jsonify({"pokemon": "Jigglypuff"})
 
 @app.route('/kasen')
 def kasen():
@@ -81,11 +89,25 @@ def get_fortune():
 	chosen["date"] = str(date.today())
 	return jsonify(chosen)
 
-
+@app.route('/roll/<int:sides>', methods=['GET'])
+def roll_dice(sides):
+        if sides < 2:
+                return jsonify({"error": "Number of sides must be 2 or greater"}), 400
+        result = random.randint(1,sides)
+        return jsonify({
+                "sides": sides,
+                "result":result
+        })
 
 @app.route('/gill')
 def home4():
 	return 'my test app'
+
+	return 'Hello, Flask!'
+
+@app.route('/dallin')
+def home():
+	return 'You are lost!'
 
 @app.route('/aaron')
 def home():
@@ -98,11 +120,15 @@ def home6():
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
-
+	
 @app.route('/porter')
 def home7():
 	return 'Dope'
 
+
+@app.route('/cam')
+def cam():
+	return 'Play Oneshot!'
 @app.route('/magic8ball')
 def magic8ball():
 	answers = [
@@ -134,7 +160,7 @@ def choose():
 
 @app.route('/campus-locations')
 def campus_locations(): 
-	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center"]
+	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center", "Burns Arena"]
 	choice = random.choice(locs)
 	res = json.dumps({"location": choice})
 	return res
@@ -177,6 +203,34 @@ def page_not_found(e):
 @app.route('/aaron')
 def aaron():
 	return 'Skoden'
+
+@app.route('/weather-current', methods=['GET'])
+def get_weather():
+    city = "Saint George, Utah, US"
+    url = "http://api.openweathermap.org/data/2.5/weather"
+    params = {
+        "q": city,
+        "appid": OWM_API_KEY,
+        "units": "imperial"  # Fahrenheit
+    }
+
+    resp = requests.get(url, params=params)
+    if not resp.ok:
+        return jsonify({"error": "Failed to fetch weather"}), resp.status_code
+
+    data = resp.json()
+
+    # Return only the essentials
+    result = {
+        "city": data.get("name"),
+        "date": str(date.today()),
+        "temp_f": data.get("main", {}).get("temp")
+    }
+
+    return jsonify(result)
+
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
