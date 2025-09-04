@@ -11,6 +11,10 @@ def home():
 	return render_template('index.html'), 200
 
 
+@app.route('/pokemon')
+def pokemon():
+	return jsonify({"pokemon": "Jigglypuff"})
+
 @app.route('/kasen')
 def kasen():
 	return 'please work'
