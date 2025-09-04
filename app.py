@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import random
+
 import json
 import os
 import requests
 from user_agents import parse
 from datetime import date
+
+import jsonify
+(hopfully not messing things up)
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
@@ -113,15 +117,25 @@ def home6():
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
+
 	
+
+
+
+
+
+(updating app.py)
 @app.route('/porter')
 def home7():
 	return 'Dope'
 
 
+
 @app.route('/cam')
 def cam():
 	return 'Play Oneshot!'
+
+(updating app.py)
 @app.route('/magic8ball')
 def magic8ball():
 	answers = [
@@ -139,6 +153,7 @@ def magic8ball():
 @app.route('/cam')
 def cam():
 	return 'Play Oneshot!'
+
 
 @app.route('/generatePassword')
 def generatePassword(Length, Complexity):
@@ -159,6 +174,7 @@ def generatePassword(Length, Complexity):
 	for i in range(Length):
 		password += random.choice(characters)
 	return jsonify({"password": password})
+ (updating app.py)
 
 restaurants = [
     "Chipotle",
@@ -175,12 +191,17 @@ def choose():
     return jsonify({"restaurant": restaurant})
 
 
+(updating app.py)
 @app.route('/pet-name')
 def generate_pet_name():
     adj = random.choice(adjectives)
     noun = random.choice(nouns)
     return f'{adj} {noun}'
->>>>>>> c10a1d5 (updating app.py)
+
+(updating app.py)
+
+
+(updating app.py)
 
 
 @app.route('/campus-locations')
