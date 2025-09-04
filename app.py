@@ -11,12 +11,18 @@ def home():
 	return render_template('index.html'), 200
 
 
+@app.route('/pokemon')
+def pokemon():
+	return jsonify({"pokemon": "Jigglypuff"})
 
 @app.route('/kasen')
 def kasen():
-	return render_template('kasen.html'), 200
+	return 'please work'
 
 
+@app.route('/kasen')
+def kasen():
+	return 'please work'
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
@@ -57,6 +63,10 @@ def weather():
 	]
 	return random.choice(conditions)
 
+@app.route('/aaron')
+def home():
+	return 'What? again what?'
+
 @app.route('/brayden')
 def brayden():
 	return 'SupDudes'
@@ -81,9 +91,15 @@ def get_fortune():
 def home4():
 	return 'my test app'
 
+	return 'Hello, Flask!'
+
+@app.route('/dallin')
+def home():
+	return 'You are lost!'
+
 @app.route('/aaron')
-def home5():
-	return 'What?'
+def home():
+	return 'What? again what?'
 
 @app.route('/Skylands')
 def home6():
@@ -92,11 +108,15 @@ def home6():
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
-
+	
 @app.route('/porter')
 def home7():
 	return 'Dope'
 
+
+@app.route('/cam')
+def cam():
+	return 'Play Oneshot!'
 @app.route('/magic8ball')
 def magic8ball():
 	answers = [
@@ -137,26 +157,6 @@ def campus_locations():
 def home8():
 	return 'Sup Dawwg!'
 
-# favorite quote generator
-import random
-import json
-@app.route('/quote')
-def quote():
-	quotes = [
-		"The only way to do great work is to love what you do. - Steve Jobs",
-		"Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-		"You miss 100% of the shots you don't take. - Wayne Gretzky"
-	]
-	selected_quote = random.choice(quotes)
-	return {
-		"quote": selected_quote		
-	}	
-# return a random quote from the list in JSON format
-quote_data = quote()
-print(json.dumps(quote_data, indent=4))
-
-
-
 @app.route('/breyton')
 def breyton():
 	return 'yo'
@@ -188,9 +188,12 @@ def page_not_found(e):
 	return render_template('404.html'), 404
 	
 
+@app.route('/aaron')
+def aaron():
+	return 'Skoden'
+
 if __name__ == '__main__':
 	app.run(debug=True)
-
 
 @app.route('/dadJokeGenerator')
 def dad_joke_generator():
@@ -203,10 +206,3 @@ def dad_joke_generator():
 	]
 	return jsonify({"joke": random.choice(jokes)})
 
-
-@app.route("/santi-endpoint", methods=["GET"])
-def santi_endpoint():
-    return jsonify({
-        "message": "Hello from Santi!",
-        "tip": "Stay hydrated and keep coding 💻"
-    })

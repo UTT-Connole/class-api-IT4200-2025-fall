@@ -21,23 +21,16 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+pretty hangry
 
 
 
 
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
+
 Brayden got here first!!
-
 Gage did not got here first!!
 
 Got here late
-
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -64,9 +57,49 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+## Pokémon
+
+Pokémon is a media franchise created by Satoshi Tajiri and Ken Sugimori, first released by Nintendo, Game Freak, and Creatures in 1996. The franchise centers around fictional creatures called "Pokémon", which humans, known as Pokémon Trainers, catch and train to battle each other for sport.
+
+### Main Concepts
+
+- **Pokémon**: Creatures with various abilities, types, and evolutions. There are currently over 1,000 unique Pokémon species.
+- **Types**: Each Pokémon has one or two types (such as Water, Fire, Grass, Electric, Psychic, etc.), which determine strengths and weaknesses in battles.
+- **Battles**: Trainers use their Pokémon to battle others, using moves and strategies based on type advantages.
+- **Evolution**: Many Pokémon can evolve into more powerful forms, often by leveling up, using special items, or meeting certain conditions.
+
+### Popular Pokémon
+
+- **Pikachu**: The franchise mascot, an Electric-type Pokémon.
+- **Charizard**: A powerful Fire/Flying-type, final evolution of Charmander.
+- **Bulbasaur, Squirtle, and Charmander**: The original starter Pokémon from the first games.
+
+### Games
+
+The main series consists of role-playing games (RPGs) where players travel through regions, catch Pokémon, defeat Gym Leaders, and challenge the Pokémon League. Notable games include:
+- Pokémon Red/Blue/Yellow (Gen 1)
+- Pokémon Gold/Silver/Crystal (Gen 2)
+- Pokémon Ruby/Sapphire/Emerald (Gen 3)
+- Pokémon Sword/Shield (Gen 8)
+- Pokémon Scarlet/Violet (Gen 9)
+
+### Other Media
+
+- **Anime**: Follows Ash Ketchum and his friends as they travel the world, catch Pokémon, and compete in tournaments.
+- **Trading Card Game**: A collectible card game where players build decks and battle.
+- **Movies, Manga, and Merchandise**: Pokémon has a vast array of movies, comics, toys, and other products.
+
+### Fun Facts
+
+- The name "Pokémon" is a contraction of "Pocket Monsters" (ポケットモンスター).
+- The franchise is one of the highest-grossing media franchises in the world.
+- "Gotta Catch 'Em All!" is the iconic slogan.
+
+For more information, visit the [official Pokémon website](https://www.pokemon.com/).
 What's a violin
 What's a violin
 What's a violin
+Violins is not allowed in class.
 What's a violin?
 What's a violin
 Brayden is da bomb!!!
@@ -85,6 +118,12 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 What's a violin
+
+What's a violin!
+What's a violin?
+What's a violin!
+What's a violin?
+What's a violin!
 
 
 Porter is dope
@@ -131,15 +170,21 @@ Brayden is da bomb!!!
 
               Hehe                         
 
+StS Bomb card is peak
+
 Theisen was here
 
-This is a nice line that no one else should touch pls and thank you.
+This is a nice line that no one else should touch pls and thank you. I touched it 
 
 Brayden's update to his PR
 
 hello
 
 HELLO!!
+
+
+
+
 
 Suh Dude
 Chat, are we cooked?
@@ -168,12 +213,17 @@ hi
               ██████ 
 
 
-
-
-
+ya'at'eeh
+Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
+wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
+cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
+cool stroy
 
 Seventy bottle of beer on the wall.
 
+milk is better
+No, there are 75 bottles of milk on the  wall
+And soda is lame
 
 Plant lives matter
 Plant lives matter
@@ -194,10 +244,6 @@ A tale of teamwork starts to grow.
 
 
  pace-yourself
-
-* Endpoint "Fortune"
-  * Selects a predetermined fortune from a list of fortunes
-  * Contains untold developer wisdom and mood readings
 
 
 
@@ -249,6 +295,7 @@ This endpoint will return one of 5 dad jokes listed.
 
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
+
 Siiiuuu
 
 What’s the smartest insect? A spelling bee!
@@ -257,3 +304,16 @@ What’s the smartest insect? A spelling bee!
 here for the rebase
 Siiiuuu
 
+
+
+## /Fortune endpoint (Bryson Francis)
+Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
+
+
+Siiiuuu
+
+## /steal_yo_name endpoint
+
+This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
+
+Not too hungry today
