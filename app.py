@@ -1,23 +1,29 @@
 from flask import Flask, render_template, request, jsonify
 import random
-
 import json
 import os
 import requests
 from user_agents import parse
 from datetime import date
 
-import jsonify
-(hopfully not messing things up)
-
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
+#Moved global variables to top for organization
+adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
+nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
+restaurants = [
+    "Chipotle",
+    "Chick-fil-A",
+    "Subway",
+    "Olive Garden",
+    "Five Guys",
+    "Panera Bread"
+]
 
 @app.route('/')
 def home():
 	return render_template('index.html'), 200
-
 
 @app.route('/pokemon')
 def pokemon():
@@ -25,15 +31,7 @@ def pokemon():
 
 @app.route('/kasen')
 def kasen():
-	return 'please work'
-
-
-@app.route('/kasen')
-def kasen():
-	return 'please work'
-adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
-nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
-
+	return render_template('kasen.html'), 200
 
 @app.route('/clint')
 def home1():
@@ -47,7 +45,6 @@ def home2():
     else:
 	    return 'You are doomed'
 
-
 @app.route('/pet-name')
 def generate_pet_name():
     adj = random.choice(adjectives)
@@ -56,7 +53,7 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home():
+def home11():
 	user_input = input('Are you sure you want to delete the internet? (yes/no): ')
 	if user_input.lower() == 'yes':
 		return 'Deleting the internet... Goodbye world'
@@ -72,13 +69,12 @@ def weather():
 	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
 @app.route('/aaron')
-def home():
+def home12():
 	return 'What? again what?'
 
 @app.route('/brayden')
 def brayden():
 	return 'SupDudes'
-
 
 @app.route('/fortune', methods=['GET'])
 def get_fortune():
@@ -103,13 +99,6 @@ def roll_dice(sides):
                 "result":result
         })
 
-
-	return 'Hello, Flask!'
-
-@app.route('/aaron')
-def home():
-	return 'What? again what?'
-
 @app.route('/Skylands')
 def home6():
 	user_input = input('Enter somthing: ')
@@ -118,24 +107,11 @@ def home6():
 	else:
 		return 'Wrong Answer'
 
-	
 
-
-
-
-
-(updating app.py)
 @app.route('/porter')
 def home7():
 	return 'Dope'
 
-
-
-@app.route('/cam')
-def cam():
-	return 'Play Oneshot!'
-
-(updating app.py)
 @app.route('/magic8ball')
 def magic8ball():
 	answers = [
@@ -154,12 +130,11 @@ def magic8ball():
 def cam():
 	return 'Play Oneshot!'
 
-
 @app.route('/generatePassword')
 def generatePassword(Length, Complexity):
 	letters = 'abcdefghijklmnopqrstuvwxyz'
 	numbers = '0123456789'
-	symbols = '~!@#$%^&*()-_=+[{]}\|;:,<.>/?'
+	symbols = '~!@#$%^&*()-_=+[{]}|;:,<.>/?'
 	password = ''
 	characters = ''
 	if Complexity == 'basic':
@@ -174,35 +149,12 @@ def generatePassword(Length, Complexity):
 	for i in range(Length):
 		password += random.choice(characters)
 	return jsonify({"password": password})
- (updating app.py)
 
-restaurants = [
-    "Chipotle",
-    "Chick-fil-A",
-    "Subway",
-    "Olive Garden",
-    "Five Guys",
-    "Panera Bread"
-]
 
 @app.route('/randomRestaurant')
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
-
-(updating app.py)
-@app.route('/pet-name')
-def generate_pet_name():
-    adj = random.choice(adjectives)
-    noun = random.choice(nouns)
-    return f'{adj} {noun}'
-
-(updating app.py)
-
-
-(updating app.py)
-
 
 @app.route('/campus-locations')
 def campus_locations(): 
@@ -244,11 +196,10 @@ def index():
 def page_not_found(e):
 	print("User entered invalid URL")
 	return render_template('404.html'), 404
-	
 
-@app.route('/aaron')
-def aaron():
-	return 'Skoden'
+@app.route('/dave')
+def dave():
+	return render_template('dave.html'), 200
 
 
 @app.route('/weather-current', methods=['GET'])
@@ -275,9 +226,6 @@ def get_weather():
     }
 
     return jsonify(result)
-
-
-
 
 @app.route('/aaron')
 def aaron():
