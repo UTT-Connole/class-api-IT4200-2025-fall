@@ -44,16 +44,11 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
 Only in the Merge conflict
+
+
+
+This better make a confict
 
 Aaron is an okay violist
 
@@ -312,6 +307,3 @@ Siiiuuu
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
 
 Not too hungry today
-
-## /Weather-current
-This give the current weather for St. George 
