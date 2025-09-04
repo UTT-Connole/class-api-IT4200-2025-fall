@@ -201,6 +201,7 @@ Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ff
 wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 cryptowall (60d574055ae164cc32df9e5c9402deefa9d07e5034328d7b41457d35b7312a0e)
 thanos (cd0f55dd00111251cd580c7e7cc1d17448faf27e4ef39818d75ce330628c7787)
+<<<<<<< HEAD
 satana (4785c134b128df624760c02ad23c7e345a234a99828c3fecf58fbd6d5449897f)
 rex (32856e998ff1a8b89e30c9658721595d403ff0eece70dc803a36d1939e429f8d)
 redboot (7fa2bf61405ac573a21334e34bf713dcb5d1fc0c72674e6cebc48d33a4a14d44)
@@ -220,14 +221,24 @@ Seventy bottle of beer on the wall.
 
 Route "Gill"
 
-This askes the user a question and returns two different strings based on the answer.
+We want another shrubbery.
+A
+A
+A
+A
+A
+A
+A
+A
+A
+MAKE IT BREAK PLZ :)
 
-You must seek the Holy Grail
+
+I REALLY NEED THIS TO CREATE A MERGE CONFLICT :)
 
 Your mother was a hamster and your father smelt of elderberries!
 
 Pull requests, a coder's delight,  
-A beacon shining in the night.  
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
@@ -236,7 +247,9 @@ I am litterally just trying to get line in to get a grade my dudes
 
 
  pace-yourself
-
+Sorry
+ pace-yourself
+Hey does it break here?
 
 
 I got rid of all of the arrows and stuff from the merge requests

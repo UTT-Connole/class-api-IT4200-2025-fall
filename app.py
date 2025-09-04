@@ -37,7 +37,7 @@ def home1():
 
 @app.route('/gill')
 def home2():
-    user_input = input('What is your quest?')
+    user_input = ('We seek the Holy Grail')
     if user_input == 'We seek the Holy Grail':
         return "You may pass"
     else:
@@ -99,9 +99,6 @@ def roll_dice(sides):
                 "result":result
         })
 
-@app.route('/gill')
-def home4():
-	return 'my test app'
 
 	return 'Hello, Flask!'
 
