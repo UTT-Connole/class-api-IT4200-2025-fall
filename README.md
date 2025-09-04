@@ -301,7 +301,6 @@ This endpoint will return a random magic 8 ball message string. Possible message
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
 
-
 Siiiuuu
 
 ## /steal_yo_name endpoint
@@ -309,3 +308,6 @@ Siiiuuu
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
 
 Not too hungry today
+
+## /Weather-current
+This give the current weather for St. George 
