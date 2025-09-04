@@ -15,9 +15,13 @@ def home():
 
 @app.route('/kasen')
 def kasen():
+<<<<<<< HEAD
+	return 'please work'
+=======
 	return render_template('kasen.html'), 200
 
 
+>>>>>>> origin/main
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
@@ -88,8 +92,13 @@ def home4():
 	return 'my test app'
 
 @app.route('/aaron')
+<<<<<<< HEAD
+def home():
+	return 'What? again what?'
+=======
 def home5():
 	return 'What?'
+>>>>>>> origin/main
 
 @app.route('/Skylands')
 def home6():
