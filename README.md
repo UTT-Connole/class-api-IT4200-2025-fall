@@ -8,7 +8,7 @@ Please be aware of the following problems that prevent running that needed to be
 ---
 Brayden is da bomb!!!
 
-<<<<<<< HEAD
+
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -28,8 +28,7 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
-=======
->>>>>>> 6f1b053 (newest rebase)
+
 pretty hangry
 
 
@@ -106,12 +105,12 @@ For more information, visit the [official Pokémon website](https://www.pokemon.
 What's a violin
 What's a violin
 What's a violin
-<<<<<<< HEAD
+
 Violins is not allowed in class.
 What's a violin?
-=======
+
 What's a viola?
->>>>>>> 4567fb5 (trying to find conflicts)
+
 What's a violin
 
 Brayden is da bomb!!!
