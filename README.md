@@ -152,6 +152,7 @@ Brayden is da bomb!!!
 
 
               Hehe                         
+<<<<<<< HEAD
 
 StS Bomb card is peak
 
