@@ -64,6 +64,10 @@ Only in the Merge conflict
 
 Aaron is an okay violist
 
+What's a violin
+What's a violin
+What's a violin
+Violins is not allowed in class.
 What's a violin?
 What's a violin
 Brayden is da bomb!!!
@@ -133,6 +137,8 @@ Brayden is da bomb!!!
 
 
               Hehe                         
+
+StS Bomb card is peak
 
 Theisen was here
 
@@ -205,12 +211,6 @@ A tale of teamwork starts to grow.
 
  pace-yourself
 
-I love milk so much!!
-
-* Endpoint "Fortune"
-  * Selects a predetermined fortune from a list of fortunes
-  * Contains untold developer wisdom and mood readings
-
 
 
 I got rid of all of the arrows and stuff from the merge requests
@@ -262,8 +262,11 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
-## /Theisen Endpoint(dadJokeGenerator)
-This endpoint will return one of 5 dad jokes listed.
+
+## /Fortune endpoint (Bryson Francis)
+Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
+
+
 Siiiuuu
 
 ## /steal_yo_name endpoint
