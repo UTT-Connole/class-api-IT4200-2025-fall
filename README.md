@@ -214,6 +214,7 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /gill
 /pet-name
 /dallin
+/weather
 /brayden 
 /braydens
 /fortune
@@ -255,4 +256,14 @@ This endpoint will return a random magic 8 ball message string. Possible message
 
 Siiiuuu
 
+## /dallin
+This endpoint prompts the user with a question to confirm if they want to delete the internet. When accessed, it asks the user to input 'yes' or 'no'.
+If the user inputs 'yes', it returns a message indicating that the internet is being deleted.
+If the user inputs 'no', it cancels the operation and returns a message stating that the operation was canceled.
 
+## /weather
+Description: This endpoint generates random weather conditions along with a temperature and humidity level.
+It randomly selects a weather condition from a predefined list: "Sunny", "Rainy", "Windy", "Cloudy", or "Snowy".
+It also generates a random temperature between -30°C and 50°C.
+Additionally, it generates a random humidity level between 10% and 100%.
+Response: The endpoint returns a JSON object containing the weather condition, temperature, and humidity.
