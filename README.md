@@ -224,14 +224,6 @@ ya'at'eeh
 
 Ya'at'eeh
 
-Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
-Ya'at'eeh
-
-
-Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
-wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
-cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
-
 Seventy bottle of beer on the wall.
 
 whole milk is better
@@ -395,3 +387,23 @@ Gage got here last (im pretty sure)
 (i am last!)
 
 67
+
+Sandals, oh sandals, what a sight,  
+With straps that pinch and soles too light.  
+In summer's heat, they seem so grand,  
+But blisters form, oh, isn't it bland?  
+
+They flop and they flounder, a clumsy dance,  
+With every step, they take a chance.  
+A toe exposed, a heel laid bare,  
+In the world of footwear, they’re hardly rare.  
+
+Rainy days bring a soggy fate,  
+As puddles splash, they hesitate.  
+No arch support, no cozy embrace,  
+In the realm of comfort, they lose the race.  
+
+So here’s to shoes that hug the feet,  
+With sturdy soles and a comfy seat.  
+Sandals may shine in the summer sun,  
+But give me real shoes, and I’ll have more fun!  

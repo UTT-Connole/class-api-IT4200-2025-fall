@@ -298,3 +298,16 @@ def music():
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
+	@app.route('/sandals-fortune', methods=['GET'])
+	def sandals_fortune():
+		fortunes = [
+			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
+			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
+			{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
+			{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
+			{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
+		]
+		chosen = random.choice(fortunes)
+		chosen["date"] = str(date.today())
+		return jsonify(chosen)
