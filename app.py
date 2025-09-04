@@ -113,6 +113,7 @@ def home6():
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
+	
 @app.route('/porter')
 def home7():
 	return 'Dope'
@@ -134,11 +135,10 @@ def magic8ball():
 		"Don't count on it"
 	]
 	return answers[random.randrange(1,9)]
-=======
+
 @app.route('/cam')
 def cam():
 	return 'Play Oneshot!'
->>>>>>> c10a1d5 (updating app.py)
 
 @app.route('/generatePassword')
 def generatePassword(Length, Complexity):
@@ -173,8 +173,6 @@ restaurants = [
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-<<<<<<< HEAD
-=======
 
 
 @app.route('/pet-name')
