@@ -1,15 +1,23 @@
 from flask import Flask, render_template, request, jsonify
 import random
 import json
+import os
+import requests
 from user_agents import parse
 from datetime import date
 
 app = Flask(__name__)
+OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+
 
 @app.route('/')
 def home():
 	return render_template('index.html'), 200
 
+
+@app.route('/pokemon')
+def pokemon():
+	return jsonify({"pokemon": "Jigglypuff"})
 
 @app.route('/kasen')
 def kasen():
@@ -29,7 +37,7 @@ def home1():
 
 @app.route('/gill')
 def home2():
-    user_input = input('What is your quest?')
+    user_input = ('We seek the Holy Grail')
     if user_input == 'We seek the Holy Grail':
         return "You may pass"
     else:
@@ -44,20 +52,20 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home3():
-	return 'Please dont erase me'
+def home():
+	user_input = input('Are you sure you want to delete the internet? (yes/no): ')
+	if user_input.lower() == 'yes':
+		return 'Deleting the internet... Goodbye world'
+	else:
+		return 'Operation canceled. For now.'
 
-#realized that I didn't follow the instructions. Here's a random weather conditions generator
 @app.route('/weather')
 def weather():
-	conditions = [
-		{"condition": "Sunny", "temperature": "25°C", "humidity": "40%"},
-		{"condition": "Rainy", "temperature": "18°C", "humidity": "85%"},
-		{"condition": "Windy", "temperature": "20°C", "humidity": "50%"},
-		{"condition": "Cloudy", "temperature": "22°C", "humidity": "60%"},
-		{"condition": "Snowy", "temperature": "-5°C", "humidity": "70%"}
-	]
-	return random.choice(conditions)
+	conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+	condition = random.choice(conditions)
+	temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
+	humidity = f"{random.randint(10, 100)}%"  # Random humidity between 10% and 100%
+	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
 @app.route('/aaron')
 def home():
@@ -81,17 +89,18 @@ def get_fortune():
 	chosen["date"] = str(date.today())
 	return jsonify(chosen)
 
+@app.route('/roll/<int:sides>', methods=['GET'])
+def roll_dice(sides):
+        if sides < 2:
+                return jsonify({"error": "Number of sides must be 2 or greater"}), 400
+        result = random.randint(1,sides)
+        return jsonify({
+                "sides": sides,
+                "result":result
+        })
 
-
-@app.route('/gill')
-def home4():
-	return 'my test app'
 
 	return 'Hello, Flask!'
-
-@app.route('/dallin')
-def home():
-	return 'You are lost!'
 
 @app.route('/aaron')
 def home():
@@ -132,6 +141,26 @@ def magic8ball():
 	]
 	return answers[random.randrange(1,9)]
 
+@app.route('/generatePassword')
+def generatePassword(Length, Complexity):
+	letters = 'abcdefghijklmnopqrstuvwxyz'
+	numbers = '0123456789'
+	symbols = '~!@#$%^&*()-_=+[{]}\|;:,<.>/?'
+	password = ''
+	characters = ''
+	if Complexity == 'basic':
+		characters = letters
+	elif Complexity == 'simple':
+		characters = letters + numbers
+	elif Complexity == 'complex':
+		characters = letters + letters.upper() + numbers + symbols
+	else:
+		print("Choose a valid option: basic, simple, or complex.")
+		return -1
+	for i in range(Length):
+		password += random.choice(characters)
+	return jsonify({"password": password})
+
 restaurants = [
     "Chipotle",
     "Chick-fil-A",
@@ -149,7 +178,7 @@ def choose():
 
 @app.route('/campus-locations')
 def campus_locations(): 
-	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center"]
+	locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center", "Burns Arena"]
 	choice = random.choice(locs)
 	res = json.dumps({"location": choice})
 	return res
@@ -192,6 +221,34 @@ def page_not_found(e):
 @app.route('/aaron')
 def aaron():
 	return 'Skoden'
+
+@app.route('/weather-current', methods=['GET'])
+def get_weather():
+    city = "Saint George, Utah, US"
+    url = "http://api.openweathermap.org/data/2.5/weather"
+    params = {
+        "q": city,
+        "appid": OWM_API_KEY,
+        "units": "imperial"  # Fahrenheit
+    }
+
+    resp = requests.get(url, params=params)
+    if not resp.ok:
+        return jsonify({"error": "Failed to fetch weather"}), resp.status_code
+
+    data = resp.json()
+
+    # Return only the essentials
+    result = {
+        "city": data.get("name"),
+        "date": str(date.today()),
+        "temp_f": data.get("main", {}).get("temp")
+    }
+
+    return jsonify(result)
+
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
