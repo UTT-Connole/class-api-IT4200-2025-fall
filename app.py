@@ -89,7 +89,15 @@ def get_fortune():
 	chosen["date"] = str(date.today())
 	return jsonify(chosen)
 
-
+@app.route('/roll/<int:sides>', methods=['GET'])
+def roll_dice(sides):
+        if sides < 2:
+                return jsonify({"error": "Number of sides must be 2 or greater"}), 400
+        result = random.randint(1,sides)
+        return jsonify({
+                "sides": sides,
+                "result":result
+        })
 
 @app.route('/gill')
 def home4():
