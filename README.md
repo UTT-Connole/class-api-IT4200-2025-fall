@@ -2,26 +2,7 @@
 
 Brayden is da bomb!!!
 
-                                ██    ██      
-                    ██████      ██  ██        
-                  ██      ██                  
-                ██          ████░░    ████    
-                ██                            
-              ██████            ██  ██        
-              ██████            ██    ██      
-          ██████████████                      
-        ██████░░░░░░░░▓▓██                    
-      ██████░░░░░░░░  ▓▓▓▓██                  
-      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
-      ████████████▓▓▓▓▓▓████                  
-        ██████████████████                    
-          ██████████████                      
-              ██████ 
-pretty hangry
+
 
 
 
@@ -31,13 +12,19 @@ Brayden got here first!!
 Gage did not got here first!!
 
 Got here late
+
+Gage got here first!!
+
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
 
+Gage got here first!!
+
 Its chewsday init?
 
 hello world
+
 
 Brayden is da bomb!!!
 Brayden is da bomb!!!
@@ -55,13 +42,25 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
+
+Only in the Merge conflict
+
+Aaron is an okay violist
+
+
 What's a violin
 
-What's a violin!
+What's a violin
 What's a violin?
+
 What's a violin?!
 What's a violin?
 What's a violin!
+
+
+
+What's a violin
+
 
 
 Porter is dope
@@ -69,20 +68,8 @@ it's pieces of wood that that crafted togeather to form an instrument that can c
 
 Wood with strings that go brrr.
 
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
 IT'S GONNA BLOW!!!!!                                              
                                               
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -111,8 +98,8 @@ Brayden is da bomb!!!
 
 StS Bomb card is peak
 
-
 4e4d3fb (hopfully not messing things up)
+
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you. I touched it 
@@ -121,12 +108,9 @@ Brayden's update to his PR
 
 hello
 
+what up
+
 HELLO!!
-
-
-
-
-
 
 Suh Dude
 Chat, are we cooked? Absolutely.
@@ -136,7 +120,6 @@ Suh Dude
 
 Hi there ya'll :))
 hi
-
 
 Plant lives matter
 
@@ -240,6 +223,7 @@ ya'at'eeh
 
 
 Ya'at'eeh
+
 Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
 Ya'at'eeh
 
@@ -248,19 +232,22 @@ Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ff
 wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
 
- (hope)
-
 Seventy bottle of beer on the wall.
 
 whole milk is better
 No, there are 75 bottles of milk on the  wall
 And soda is lame
 
+
+Seventy bottle of beer on the wall.
+
 Plant lives matter
+
 Plant lives matter
 
 Seventy bottle of beer on the wall.
 
+------------
 Route "Gill"
 
 We want another shrubbery.
@@ -276,13 +263,19 @@ A
 MAKE IT BREAK PLZ :)
 
 
+
 I REALLY NEED THIS TO CREATE A MERGE CONFLICT :)
 
 Your mother was a hamster and your father smelt of elderberries!
 
+You must seek the Holy Grail
+_____________________________
+
+
 Pull requests, a coder's delight,  
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
+
 
 
 I am litterally just trying to get line in to get a grade my dudes
@@ -293,10 +286,13 @@ changes
 changes
 changes
 
+
+
  pace-yourself
 Sorry
  pace-yourself
 Hey does it break here?
+
 
 
 I got rid of all of the arrows and stuff from the merge requests
@@ -322,9 +318,9 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /breyton
 
 
-So raise a toast to this noble quest,  
-For pull requests bring out our best.  
-In every line, a dream takes flight,  
+
+
+
 
 A coder's world, shining bright.  
 
@@ -395,9 +391,7 @@ Not too hungry today
  origin/main
  (hopfully not messing things up)
 
-(hopfully not messing things up)
-
-
 Gage got here last (im pretty sure)
 (i am last!)
-(i am last!)
+
+67
