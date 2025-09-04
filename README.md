@@ -301,6 +301,10 @@ This endpoint will return a random magic 8 ball message string. Possible message
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
 
+## /roll endpoint (Bryson Francis)
+Rolls an "x" sided dice and returns the value of the rolled dice. It also returns an error if someone tries to roll a dice lower than 2.
+
+
 Siiiuuu
 
 ## /steal_yo_name endpoint
