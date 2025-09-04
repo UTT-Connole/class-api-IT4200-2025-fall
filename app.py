@@ -52,20 +52,20 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home3():
-	return 'Please dont erase me'
+def home():
+	user_input = input('Are you sure you want to delete the internet? (yes/no): ')
+	if user_input.lower() == 'yes':
+		return 'Deleting the internet... Goodbye world'
+	else:
+		return 'Operation canceled. For now.'
 
-#realized that I didn't follow the instructions. Here's a random weather conditions generator
 @app.route('/weather')
 def weather():
-	conditions = [
-		{"condition": "Sunny", "temperature": "25°C", "humidity": "40%"},
-		{"condition": "Rainy", "temperature": "18°C", "humidity": "85%"},
-		{"condition": "Windy", "temperature": "20°C", "humidity": "50%"},
-		{"condition": "Cloudy", "temperature": "22°C", "humidity": "60%"},
-		{"condition": "Snowy", "temperature": "-5°C", "humidity": "70%"}
-	]
-	return random.choice(conditions)
+	conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+	condition = random.choice(conditions)
+	temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
+	humidity = f"{random.randint(10, 100)}%"  # Random humidity between 10% and 100%
+	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
 @app.route('/aaron')
 def home():
@@ -101,10 +101,6 @@ def roll_dice(sides):
 
 
 	return 'Hello, Flask!'
-
-@app.route('/dallin')
-def home():
-	return 'You are lost!'
 
 @app.route('/aaron')
 def home():
