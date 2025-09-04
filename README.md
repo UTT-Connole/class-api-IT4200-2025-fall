@@ -257,3 +257,6 @@ Siiiuuu
 
 ## /steal_yo_name endpoint
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
+
+## /Skylands endpoint
+This endpoint is completely worthless and should be disregarded at first convenice.
