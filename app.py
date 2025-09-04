@@ -10,15 +10,15 @@ app = Flask(__name__)
 def home():
 	return render_template('index.html'), 200
 
+
 @app.route('/kasen')
 def kasen():
 	return 'please work'
 
+
 @app.route('/kasen')
 def kasen():
-	return render_template('kasen.html'), 200
-
-
+	return 'please work'
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 
@@ -59,6 +59,10 @@ def weather():
 	]
 	return random.choice(conditions)
 
+@app.route('/aaron')
+def home():
+	return 'What? again what?'
+
 @app.route('/brayden')
 def brayden():
 	return 'SupDudes'
@@ -84,8 +88,8 @@ def home4():
 	return 'my test app'
 
 @app.route('/aaron')
-def home5():
-	return 'What?'
+def home():
+	return 'What? again what?'
 
 @app.route('/Skylands')
 def home6():
