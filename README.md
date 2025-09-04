@@ -220,9 +220,7 @@ Seventy bottle of beer on the wall.
 
 Route "Gill"
 
-This askes the user a question and returns two different strings based on the answer.
-
-You must seek the Holy Grail
+We want another shrubbery.
 
 Your mother was a hamster and your father smelt of elderberries!
 
