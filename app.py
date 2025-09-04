@@ -110,6 +110,11 @@ def home7():
 	return 'Dope'
 
 
+@app.route('/random-number')
+def random_number():
+    return jsonify({"number": random.randint(1, 10)})
+
+
 @app.route('/cam')
 def cam():
 	return 'Play Oneshot!'
