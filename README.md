@@ -46,10 +46,6 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Only in the Merge conflict
 
-
-
-This better make a confict
-
 Aaron is an okay violist
 
 ## Pokémon
@@ -98,16 +94,7 @@ What's a violin
 Violins is not allowed in class.
 What's a violin?
 What's a violin
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
+
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
@@ -117,7 +104,7 @@ What's a violin
 
 What's a violin!
 What's a violin?
-What's a violin!
+What's a violin?!
 What's a violin?
 What's a violin!
 
@@ -183,7 +170,7 @@ HELLO!!
 
 
 Suh Dude
-Chat, are we cooked?
+Chat, are we cooked? Absolutely.
 
 Hi there ya'll :))
 hi
@@ -222,7 +209,7 @@ cerber (e67834d1e8b38ec5864cfa101b140aeaba8f1900a6e269e6a94c90fcbfe56678)
 
 Seventy bottle of beer on the wall.
 
-milk is better
+whole milk is better
 No, there are 75 bottles of milk on the  wall
 And soda is lame
 
@@ -237,6 +224,7 @@ This askes the user a question and returns two different strings based on the an
 
 You must seek the Holy Grail
 
+Your mother was a hamster and your father smelt of elderberries!
 
 Pull requests, a coder's delight,  
 A beacon shining in the night.  
@@ -268,6 +256,7 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /Skylands
 /porter
 /magic8ball
+/generatePassword
 /randomRestaurant
 /campus-locations
 /rf
