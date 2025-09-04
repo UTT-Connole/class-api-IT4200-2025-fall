@@ -260,7 +260,6 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /clint
 /gill
 /pet-name
-/dallin
 /brayden 
 /braydens
 /fortune
@@ -290,6 +289,7 @@ Run the following `pip install -r requirements.txt`
 
 ## /Kasen endpoint
 This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
+
 ## /dadJokes 
 This endpoint will deliver a dad joke from a selection of three
 
@@ -307,7 +307,6 @@ Selects a predetermined fortune from a list of fortunes. Contains untold develop
 ## /roll endpoint (Bryson Francis)
 Rolls an "x" sided dice and returns the value of the rolled dice. It also returns an error if someone tries to roll a dice lower than 2.
 
-
 Siiiuuu
 
 ## /steal_yo_name endpoint
@@ -318,3 +317,12 @@ This endpoint will return one of 4 random names. Random name posibilty "La-a", "
 This endpoint is broken and should be disregarded.
 
 Not too hungry today
+
+## /Weather-current
+This give the current weather for St. George 
+
+## /dallin
+This endpoint gives you the option to delete the internet if you wish. 
+
+## /weather
+This endpoint returns a truely random weather condition. 
