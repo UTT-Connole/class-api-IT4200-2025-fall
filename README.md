@@ -21,6 +21,8 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+pretty hangry
+
 
 
 
@@ -33,11 +35,9 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden got here first!!
-
 Gage did not got here first!!
 
 Got here late
-
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
@@ -67,6 +67,7 @@ Aaron is an okay violist
 What's a violin
 What's a violin
 What's a violin
+Violins is not allowed in class.
 What's a violin?
 What's a violin
 Brayden is da bomb!!!
@@ -85,6 +86,12 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 What's a violin
+
+What's a violin!
+What's a violin?
+What's a violin!
+What's a violin?
+What's a violin!
 
 
 Porter is dope
@@ -131,6 +138,8 @@ Brayden is da bomb!!!
 
               Hehe                         
 
+StS Bomb card is peak
+
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
@@ -140,6 +149,10 @@ Brayden's update to his PR
 hello
 
 HELLO!!
+
+
+
+
 
 Suh Dude
 Chat, are we cooked?
@@ -174,6 +187,9 @@ hi
 
 Seventy bottle of beer on the wall.
 
+milk is better
+No, there are 75 bottles of milk on the  wall
+And soda is lame
 
 Plant lives matter
 Plant lives matter
@@ -194,10 +210,6 @@ A tale of teamwork starts to grow.
 
 
  pace-yourself
-
-* Endpoint "Fortune"
-  * Selects a predetermined fortune from a list of fortunes
-  * Contains untold developer wisdom and mood readings
 
 
 
@@ -250,6 +262,13 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
+
+## /Fortune endpoint (Bryson Francis)
+Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
+
+
 Siiiuuu
 
+## /steal_yo_name endpoint
 
+This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
