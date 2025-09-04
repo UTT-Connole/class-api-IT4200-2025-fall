@@ -217,7 +217,8 @@ ya'at'eeh
 Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
 wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
-cool stroy
+thanos (cd0f55dd00111251cd580c7e7cc1d17448faf27e4ef39818d75ce330628c7787)
+cool story
 
 Seventy bottle of beer on the wall.
 
