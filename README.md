@@ -327,6 +327,10 @@ This endpoint gives you the option to delete the internet if you wish.
 
 ## /weather
 This endpoint returns a truely random weather condition. 
-=======
 plz have conflict
+
 I am having a terrible time
+
+
+
+Lost and hungry!
