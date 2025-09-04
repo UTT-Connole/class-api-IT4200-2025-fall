@@ -2,6 +2,7 @@
 
 Brayden is da bomb!!!
 
+
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -21,6 +22,7 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+
 pretty hangry
 
 
@@ -95,8 +97,12 @@ For more information, visit the [official Pokémon website](https://www.pokemon.
 What's a violin
 What's a violin
 What's a violin
+
 Violins is not allowed in class.
 What's a violin?
+
+What's a viola?
+
 What's a violin
 Brayden is da bomb!!!
 Brayden is da bomb!!!
@@ -159,12 +165,7 @@ Brayden is da bomb!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████ 
-
-
-
-
-              Hehe                         
+              ██████                        
 
 StS Bomb card is peak
 
@@ -183,7 +184,7 @@ HELLO!!
 
 
 Suh Dude
-Chat, are we cooked?
+Chat, are we cooked? Yes we are
 
 Hi there ya'll :))
 hi
