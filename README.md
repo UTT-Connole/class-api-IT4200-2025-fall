@@ -37,7 +37,7 @@ changegit
 
 Its chewsday init?
 
-hello world!!
+hello world
 
 Brayden is da bomb!!!
 Brayden is da bomb!!!
@@ -247,6 +247,11 @@ A tale of teamwork starts to grow.
 
  pace-yourself
 
+changes
+changes
+changes
+changes
+changes
 
 
 I got rid of all of the arrows and stuff from the merge requests
