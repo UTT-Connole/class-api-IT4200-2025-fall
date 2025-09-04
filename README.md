@@ -2,21 +2,64 @@
 
 Brayden is da bomb!!!
 
+                                ██    ██      
+                    ██████      ██  ██        
+                  ██      ██                  
+                ██          ████░░    ████    
+                ██                            
+              ██████            ██  ██        
+              ██████            ██    ██      
+          ██████████████                      
+        ██████░░░░░░░░▓▓██                    
+      ██████░░░░░░░░  ▓▓▓▓██                  
+      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
+      ████████████▓▓▓▓▓▓████                  
+        ██████████████████                    
+          ██████████████                      
+              ██████ 
+pretty hangry
 
-Gage got here first!!
+
+
+
+
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden got here first!!
+Gage did not got here first!!
 
 Got here late
-
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
-
-Gage got here first!!
 
 Its chewsday init?
 
 hello world!!
 
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 Only in the Merge conflict
 
 Aaron is an okay violist
@@ -24,9 +67,31 @@ Aaron is an okay violist
 What's a violin
 What's a violin
 What's a violin
+Violins is not allowed in class.
 What's a violin?
 What's a violin
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 What's a violin
+
+What's a violin!
+What's a violin?
+What's a violin!
+What's a violin?
+What's a violin!
 
 
 Porter is dope
@@ -34,8 +99,20 @@ it's pieces of wood that that crafted togeather to form an instrument that can c
 
 Wood with strings that go brrr.
 
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
 IT'S GONNA BLOW!!!!!                                              
                                               
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -61,6 +138,8 @@ IT'S GONNA BLOW!!!!!
 
               Hehe                         
 
+StS Bomb card is peak
+
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you.
@@ -71,16 +150,51 @@ hello
 
 HELLO!!
 
+
+
+
+
 Suh Dude
 Chat, are we cooked?
 
 Hi there ya'll :))
 hi
 
+                                ██    ██      
+                    ██████      ██  ██        
+                  ██      ██                  
+                ██          ████░░    ████    
+                ██                            
+              ██████            ██  ██        
+              ██████            ██    ██      
+          ██████████████                      
+        ██████░░░░░░░░▓▓██                    
+      ██████░░░░░░░░  ▓▓▓▓██                  
+      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
+    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
+      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
+      ████████████▓▓▓▓▓▓████                  
+        ██████████████████                    
+          ██████████████                      
+              ██████ 
 
+
+ya'at'eeh
+Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
+wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
+cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
+
+Ya'at'eeh
+Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
+wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 
 Seventy bottle of beer on the wall.
 
+milk is better
+No, there are 75 bottles of milk on the  wall
+And soda is lame
 
 Plant lives matter
 Plant lives matter
@@ -101,10 +215,6 @@ A tale of teamwork starts to grow.
 
 
  pace-yourself
-
-* Endpoint "Fortune"
-  * Selects a predetermined fortune from a list of fortunes
-  * Contains untold developer wisdom and mood readings
 
 
 
@@ -157,7 +267,13 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
+
+## /Fortune endpoint (Bryson Francis)
+Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
+
+
 Siiiuuu
 
+## /steal_yo_name endpoint
 
-Gage got here last (im pretty sure)
+This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
