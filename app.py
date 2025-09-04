@@ -250,6 +250,7 @@ def page_not_found(e):
 def aaron():
 	return 'Skoden'
 
+
 @app.route('/weather-current', methods=['GET'])
 def get_weather():
     city = "Saint George, Utah, US"
@@ -281,6 +282,19 @@ def get_weather():
 @app.route('/aaron')
 def aaron():
 	return 'Skoden'
+
+@app.route('/music')
+def music():
+    genres = [
+        'Rock',
+        'Jazz',
+        'Indie',
+        'Hip-Hop',
+        'Funk',
+        'Reggae'
+    ]
+    return f"You should listen to some: {random.choice(genres)}"
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
