@@ -238,7 +238,6 @@ I REALLY NEED THIS TO CREATE A MERGE CONFLICT :)
 Your mother was a hamster and your father smelt of elderberries!
 
 Pull requests, a coder's delight,  
-A beacon shining in the night.  
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
