@@ -73,6 +73,7 @@ Pokémon is a media franchise created by Satoshi Tajiri and Ken Sugimori, first 
 - **Pikachu**: The franchise mascot, an Electric-type Pokémon.
 - **Charizard**: A powerful Fire/Flying-type, final evolution of Charmander.
 - **Bulbasaur, Squirtle, and Charmander**: The original starter Pokémon from the first games.
+- **Dragonite**: The best Pokemon.
 
 ### Games
 
