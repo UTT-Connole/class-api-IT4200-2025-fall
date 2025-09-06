@@ -259,3 +259,21 @@ if __name__ == '__main__':
 		chosen = random.choice(fortunes)
 		chosen["date"] = str(date.today())
 		return jsonify(chosen)
+	
+
+@app.route('/dinner')
+def dinner():
+    dinner_options = [
+        "Pizza",
+        "Tacos",
+        "Spaghetti",
+        "Sushi",
+        "Burgers",
+        "Salad",
+        "Stir Fry",
+        "Chicken Alfredo",
+        "BBQ Ribs",
+        "Vegetable Curry"
+    ]
+    choice = random.choice(dinner_options)
+    return jsonify({"dinner": choice})
