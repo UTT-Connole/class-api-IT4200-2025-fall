@@ -6,16 +6,34 @@
     <title>Landing Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+                font-family: Arial, sans-serif;
+                background-color: #222;
+                color: #f0f0f0;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
         }
+            .header-gif {
+                    width: 100vw;
+                    height: 300px;
+                    overflow: hidden;
+                    margin-bottom: 30px;
+                    margin-top: 0;
+                    position: relative;
+                    left: 50%;
+                    right: 50%;
+                    transform: translateX(-50%);
+            }
+            .header-gif img {
+                    width: 100vw;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    margin: 0;
+            }
         h1 {
             color: #ff4c4c;
             font-size: 60px;
@@ -72,9 +90,16 @@
     </style>
 </head>
 <body>
+    <div class="header-gif">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnEwenlveGFtMGM0ejFtcnR5MzFxd3kwaHJqanY2Yml6cDhodmpzaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1n4iuWZFnTeN6qvdpD/giphy.gif" alt="Header GIF">
+    </div>
     <h1>Landing Page</h1>
     <p>Welcome to our dumpster fire.</p>
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTViMWU3Y3pjOGdmeTVydml3cmNqMXFzMzhwM2V3cG01bGRsc255bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13871fiv9kBfkQ/giphy.gif" alt="What have we done?">
+    <div class="gif-container">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTViMWU3Y3pjOGdmeTVydml3cmNqMXFzMzhwM2V3cG01bGRsc255bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13871fiv9kBfkQ/giphy.gif" alt="What have we done?">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzg3Z2N5OHl0ZHQxYWp1OXFzcHZlejZjbTEzcW5pajc1ZGt2Y3h5cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bk8UGCysurqC2gmJ0o/giphy.gif">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6bnZyZmk5NHh0anNibHVodXI1MGl0b2hsZ3FuM3ppd3R2cXY3cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1Be4g2yeiJ1QfqaKvz/giphy.gif">
+    </div>
     <a href="/kasen" class="btn">Go To The Disaster</a>
     <a href="/dave" class="btn">Go To Dave's Page</a>
 </body>

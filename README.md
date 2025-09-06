@@ -6,6 +6,7 @@ Please be aware of the following problems that prevent running that needed to be
 * Duplicate function names, like `home()` has been used several times. This has been hotfixed with `home1(), home2()` and so forth. Recommend using unique function names.
 * Otherwise normal python syntax errors. Remember CS1410 my dudes?
 ---
+
 Brayden is da bomb!!!
 
 
@@ -37,6 +38,16 @@ pretty hangry
 
 
 Brayden got here first!!
+
+
+## Recent Landing Page Updates (by Kasen)
+
+- Added more GIFs to the landing page for extra fun and visual interest.
+- Created a dedicated GIF container to organize and style the GIFs.
+- Introduced a header section at the top of the page featuring an eye-catching GIF that covers the entire header area.
+- Improved layout so the header GIF is flush with the top of the page (no gray space above).
+
+Check out `templates/index.html` to see these changes in action!
 Gage did not got here first!!
 
 Got here late
