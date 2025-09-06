@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import random
 import json
 import os
-#import requests
+import requests
 from user_agents import parse
 from datetime import date
 
