@@ -9,7 +9,11 @@ from datetime import date
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
-#Moved global variables to top for organization
+
+
+@app.route('/kasen')
+def kasen():
+	return 'please work'
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
 nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
 restaurants = [
@@ -44,6 +48,12 @@ def home2():
         return "You may pass"
     else:
 	    return 'You are doomed'
+
+
+@app.route('/diceRoll')
+def roll_dice():
+	dice_result = random.randint(1,6)
+	return jsonify({"dice": dice_result})
 
 @app.route('/pet-name')
 def generate_pet_name():

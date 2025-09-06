@@ -13,7 +13,6 @@ Brayden is da bomb!!!
 
 
 
-
 Brayden got here first!!
 Gage did not got here first!!
 
@@ -59,11 +58,6 @@ What's a violin
 What's a violin
 What's a violin?
 
-What's a violin?!
-What's a violin?
-What's a violin!
-
-
 
 What's a violin
 
@@ -102,10 +96,6 @@ IT'S GONNA BLOW!!!!!
               Hehe                         
 
 
-StS Bomb card is peak
-
-4e4d3fb (hopfully not messing things up)
-
 Theisen was here
 
 This is a nice line that no one else should touch pls and thank you. I touched it 
@@ -119,10 +109,7 @@ what up
 HELLO!!
 
 Suh Dude
-Chat, are we cooked? Absolutely.
 
-Suh Dude
-(hopfully not messing things up)
 
 Hi there ya'll :))
 hi
@@ -238,6 +225,9 @@ And soda is lame
 
 
 Seventy bottle of beer on the wall.
+
+
+doin some rebasing and what not
 
 Plant lives matter
 
@@ -423,5 +413,3 @@ In the realm of comfort, they lose the race.
 
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
-
-
