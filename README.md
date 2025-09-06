@@ -494,4 +494,10 @@ In the realm of comfort, they lose the race.
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
 
-
+## /dinner
+This endpoint helps you decide what to eat for dinner!  
+When called, it returns a random dinner suggestion from a list of popular options.  
+You might get pizza, tacos, sushi, or something else tasty.  
+Great for those nights when you can't make up your mind.  
+Just visit `/dinner` and let fate choose your meal.  
+Perfect for students, families, or anyone feeling indecisive!
