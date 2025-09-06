@@ -1,5 +1,11 @@
 # class-api-IT4200-2025-fall
-
+---
+## Bulid as of latest commit by DaveTheFave is Runnable
+Please be aware of the following problems that prevent running that needed to be fixed to run:
+* Duplicate endpoints, either same name, or complete copied laying around after merge conflicts
+* Duplicate function names, like `home()` has been used several times. This has been hotfixed with `home1(), home2()` and so forth. Recommend using unique function names.
+* Otherwise normal python syntax errors. Remember CS1410 my dudes?
+---
 Brayden is da bomb!!!
 
 
@@ -324,6 +330,9 @@ To implement this endpoint, it requires installing from requirements.txt
 ### To install requirments.txt
 Run the following `pip install -r requirements.txt`
 
+## /Dave endpoint
+This endpoint will direct you to another random website
+
 ## /Kasen endpoint
 This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
 
@@ -412,7 +421,7 @@ As puddles splash, they hesitate.
 No arch support, no cozy embrace,  
 In the realm of comfort, they lose the race.  
 
-So here’s to shoes that hug the feet,  
-With sturdy soles and a comfy seat.  
-Sandals may shine in the summer sun,  
-But give me real shoes, and I’ll have more fun!  
+## /campus-locations
+Returns a random location on the Utah Tech Campus 
+
+
