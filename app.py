@@ -9,11 +9,21 @@ from datetime import date
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
+#Moved global variables to top for organization
+adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
+nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
+restaurants = [
+    "Chipotle",
+    "Chick-fil-A",
+    "Subway",
+    "Olive Garden",
+    "Five Guys",
+    "Panera Bread"
+]
 
 @app.route('/')
 def home():
 	return render_template('index.html'), 200
-
 
 @app.route('/pokemon')
 def pokemon():
@@ -21,15 +31,7 @@ def pokemon():
 
 @app.route('/kasen')
 def kasen():
-	return 'please work'
-
-
-@app.route('/kasen')
-def kasen():
-	return 'please work'
-adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
-nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pickle']
-
+	return render_template('kasen.html'), 200
 
 @app.route('/clint')
 def home1():
@@ -43,7 +45,6 @@ def home2():
     else:
 	    return 'You are doomed'
 
-
 @app.route('/pet-name')
 def generate_pet_name():
     adj = random.choice(adjectives)
@@ -52,29 +53,28 @@ def generate_pet_name():
 
 
 @app.route('/dallin')
-def home3():
-	return 'Please dont erase me'
+def home11():
+	user_input = input('Are you sure you want to delete the internet? (yes/no): ')
+	if user_input.lower() == 'yes':
+		return 'Deleting the internet... Goodbye world'
+	else:
+		return 'Operation canceled. For now.'
 
-#realized that I didn't follow the instructions. Here's a random weather conditions generator
 @app.route('/weather')
 def weather():
-	conditions = [
-		{"condition": "Sunny", "temperature": "25°C", "humidity": "40%"},
-		{"condition": "Rainy", "temperature": "18°C", "humidity": "85%"},
-		{"condition": "Windy", "temperature": "20°C", "humidity": "50%"},
-		{"condition": "Cloudy", "temperature": "22°C", "humidity": "60%"},
-		{"condition": "Snowy", "temperature": "-5°C", "humidity": "70%"}
-	]
-	return random.choice(conditions)
+	conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+	condition = random.choice(conditions)
+	temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
+	humidity = f"{random.randint(10, 100)}%"  # Random humidity between 10% and 100%
+	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
 @app.route('/aaron')
-def home():
+def home12():
 	return 'What? again what?'
 
 @app.route('/brayden')
 def brayden():
 	return 'SupDudes'
-
 
 @app.route('/fortune', methods=['GET'])
 def get_fortune():
@@ -99,17 +99,6 @@ def roll_dice(sides):
                 "result":result
         })
 
-
-	return 'Hello, Flask!'
-
-@app.route('/dallin')
-def home():
-	return 'You are lost!'
-
-@app.route('/aaron')
-def home():
-	return 'What? again what?'
-
 @app.route('/Skylands')
 def home6():
 	user_input = input('Enter somthing: ')
@@ -117,20 +106,12 @@ def home6():
 		return 'K. A. O. S.'
 	else:
 		return 'Wrong Answer'
-	
+
+
 @app.route('/porter')
 def home7():
 	return 'Dope'
 
-
-@app.route('/random-number')
-def random_number():
-    return jsonify({"number": random.randint(1, 10)})
-
-
-@app.route('/cam')
-def cam():
-	return 'Play Oneshot!'
 @app.route('/magic8ball')
 def magic8ball():
 	answers = [
@@ -145,11 +126,15 @@ def magic8ball():
 	]
 	return answers[random.randrange(1,9)]
 
+@app.route('/cam')
+def cam():
+	return 'Play Oneshot!'
+
 @app.route('/generatePassword')
 def generatePassword(Length, Complexity):
 	letters = 'abcdefghijklmnopqrstuvwxyz'
 	numbers = '0123456789'
-	symbols = '~!@#$%^&*()-_=+[{]}\|;:,<.>/?'
+	symbols = '~!@#$%^&*()-_=+[{]}|;:,<.>/?'
 	password = ''
 	characters = ''
 	if Complexity == 'basic':
@@ -165,20 +150,11 @@ def generatePassword(Length, Complexity):
 		password += random.choice(characters)
 	return jsonify({"password": password})
 
-restaurants = [
-    "Chipotle",
-    "Chick-fil-A",
-    "Subway",
-    "Olive Garden",
-    "Five Guys",
-    "Panera Bread"
-]
 
 @app.route('/randomRestaurant')
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
 
 @app.route('/campus-locations')
 def campus_locations(): 
@@ -220,11 +196,11 @@ def index():
 def page_not_found(e):
 	print("User entered invalid URL")
 	return render_template('404.html'), 404
-	
 
-@app.route('/aaron')
-def aaron():
-	return 'Skoden'
+@app.route('/dave')
+def dave():
+	return render_template('dave.html'), 200
+
 
 @app.route('/weather-current', methods=['GET'])
 def get_weather():
@@ -251,20 +227,35 @@ def get_weather():
 
     return jsonify(result)
 
+@app.route('/aaron')
+def aaron():
+	return 'Skoden'
 
+@app.route('/music')
+def music():
+    genres = [
+        'Rock',
+        'Jazz',
+        'Indie',
+        'Hip-Hop',
+        'Funk',
+        'Reggae'
+    ]
+    return f"You should listen to some: {random.choice(genres)}"
 
 
 if __name__ == '__main__':
 	app.run(debug=True)
 
-@app.route('/dadJokeGenerator')
-def dad_joke_generator():
-	jokes = [
-		"Why don't scientists trust atoms? Because they make up everything!",
-		"What do you call fake spaghetti? An impasta!",
-		"Why did the scarecrow win an award? Because he was outstanding in his field!",
-		"I'm on a whiskey diet. I've lost three days already!",
-		"Why don't skeletons fight each other? They don't have the guts."
-	]
-	return jsonify({"joke": random.choice(jokes)})
-
+	@app.route('/sandals-fortune', methods=['GET'])
+	def sandals_fortune():
+		fortunes = [
+			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
+			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
+			{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
+			{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
+			{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
+		]
+		chosen = random.choice(fortunes)
+		chosen["date"] = str(date.today())
+		return jsonify(chosen)
