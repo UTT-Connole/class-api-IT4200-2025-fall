@@ -514,4 +514,4 @@ Just visit `/dinner` and let fate choose your meal.
 Perfect for students, families, or anyone feeling indecisive!
 
 ## /fav_quote
-Returns a quote
+Returns a favorite quote
