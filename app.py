@@ -287,5 +287,6 @@ def fav_quote():
 		"The only way to do great work is to love what you do. - Steve Jobs",
 		"Why fit in when you were born to stand out? - Dr. Seuss"
 		"One day or day one. You decide. - Unknown"
+		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})

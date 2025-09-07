@@ -522,4 +522,4 @@ Perfect for students, families, or anyone feeling indecisive!
 
 ## /fav_quote
 Returns a quote
-One of the favorites
+A few of the favorites
