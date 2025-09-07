@@ -277,3 +277,12 @@ def dinner():
     ]
     choice = random.choice(dinner_options)
     return jsonify({"dinner": choice})
+
+app.route('/fav_quote')
+def fav_quote():
+    fav_quote = [
+        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
+        "Opportunities don't happen, you create them. - Chris Grosser",
+        "If you can dream it, you can do it. - Walt Disney",
+    ]
+    return jsonify({"fav_quote": random.choice(fav_quote)})
