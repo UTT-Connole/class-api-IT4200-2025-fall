@@ -520,6 +520,13 @@ Great for those nights when you can't make up your mind.
 Just visit `/dinner` and let fate choose your meal.  
 Perfect for students, families, or anyone feeling indecisive!
 
+
 ## /fav_quote
 Returns a quote
 A few of the favorites
+
+
+## /diceRoll
+This literally just rools some dice
+Gambling with github and my grade
+

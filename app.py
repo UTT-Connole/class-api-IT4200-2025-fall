@@ -278,6 +278,7 @@ def dinner():
     choice = random.choice(dinner_options)
     return jsonify({"dinner": choice})
 
+
 app.route('/fav_quote')
 def fav_quote():
     fav_quote = [
@@ -290,3 +291,27 @@ def fav_quote():
 		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
+
+@app.route('/diceRoll')
+def roll_dice():
+    dice1 = random.randint(1, 6)
+    dice2 = random.randint(1, 6)
+    total = dice1 + dice2
+
+    # Add messages
+    if dice1 == dice2:
+        message = "Doubles! Lucky roll!"
+    elif total in (7, 11):
+        message = "Winner roll!"
+    elif total == 2:
+        message = "Snake eyes!"
+    else:
+        message = "Rolled the dice!"
+
+    return jsonify({
+        "dice1": dice1,
+        "dice2": dice2,
+        "total": total,
+        "message": message
+    })
+
