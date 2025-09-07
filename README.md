@@ -308,8 +308,16 @@ IT'S GONNA BLOW!!!!!
 (hopfully not messing things up)
 ya'at'eeh
 
-
-Ya'at'eeh
+Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
+wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
+cryptowall (60d574055ae164cc32df9e5c9402deefa9d07e5034328d7b41457d35b7312a0e)
+thanos (cd0f55dd00111251cd580c7e7cc1d17448faf27e4ef39818d75ce330628c7787)
+satana (4785c134b128df624760c02ad23c7e345a234a99828c3fecf58fbd6d5449897f)
+rex (32856e998ff1a8b89e30c9658721595d403ff0eece70dc803a36d1939e429f8d)
+redboot (7fa2bf61405ac573a21334e34bf713dcb5d1fc0c72674e6cebc48d33a4a14d44)
+jigsaw (86a391fe7a237f4f17846c53d71e45820411d1a9a6e0c16f22a11ebc491ff9ff)
+cerber (e67834d1e8b38ec5864cfa101b140aeaba8f1900a6e269e6a94c90fcbfe56678)
+This is the line to edit
 
 Seventy bottle of beer on the wall.
 
