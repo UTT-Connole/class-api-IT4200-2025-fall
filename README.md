@@ -512,3 +512,6 @@ You might get pizza, tacos, sushi, or something else tasty.
 Great for those nights when you can't make up your mind.  
 Just visit `/dinner` and let fate choose your meal.  
 Perfect for students, families, or anyone feeling indecisive!
+
+## /fav_quote
+Returns a quote
