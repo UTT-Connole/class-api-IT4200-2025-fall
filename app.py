@@ -284,5 +284,6 @@ def fav_quote():
         "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
         "Opportunities don't happen, you create them. - Chris Grosser",
         "If you can dream it, you can do it. - Walt Disney",
+		"The only way to do great work is to love what you do. - Steve Jobs",
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
