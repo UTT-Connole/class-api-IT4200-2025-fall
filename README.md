@@ -1,6 +1,14 @@
 # class-api-IT4200-2025-fall
+---
+## Bulid as of latest commit by DaveTheFave is Runnable
+Please be aware of the following problems that prevent running that needed to be fixed to run:
+* Duplicate endpoints, either same name, or complete copied laying around after merge conflicts
+* Duplicate function names, like `home()` has been used several times. This has been hotfixed with `home1(), home2()` and so forth. Recommend using unique function names.
+* Otherwise normal python syntax errors. Remember CS1410 my dudes?
+---
 
 Brayden is da bomb!!!
+
 
                                 ██    ██      
                     ██████      ██  ██        
@@ -21,23 +29,41 @@ Brayden is da bomb!!!
         ██████████████████                    
           ██████████████                      
               ██████ 
+
 pretty hangry
 
 
 
 
 
+
 Brayden got here first!!
+
+
+## Recent Landing Page Updates (by Kasen)
+
+- Added more GIFs to the landing page for extra fun and visual interest.
+- Created a dedicated GIF container to organize and style the GIFs.
+- Introduced a header section at the top of the page featuring an eye-catching GIF that covers the entire header area.
+- Improved layout so the header GIF is flush with the top of the page (no gray space above).
+
+Check out `templates/index.html` to see these changes in action!
 Gage did not got here first!!
 
 Got here late
+
+Gage got here first!!
+
 Brayden is also a fantastic ultimate frisbee player
 
 changegit
 
+Gage got here first!!
+
 Its chewsday init?
 
-hello world!!
+hello world
+
 
 Brayden is da bomb!!!
 Brayden is da bomb!!!
@@ -45,10 +71,6 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Brayden is da bomb!!!
 Only in the Merge conflict
-
-
-
-This better make a confict
 
 Aaron is an okay violist
 
@@ -68,7 +90,6 @@ Pokémon is a media franchise created by Satoshi Tajiri and Ken Sugimori, first 
 - **Pikachu**: The franchise mascot, an Electric-type Pokémon.
 - **Charizard**: A powerful Fire/Flying-type, final evolution of Charmander.
 - **Bulbasaur, Squirtle, and Charmander**: The original starter Pokémon from the first games.
-- **Dragonite**: The best Pokemon.
 
 ### Games
 
@@ -95,31 +116,38 @@ For more information, visit the [official Pokémon website](https://www.pokemon.
 What's a violin
 What's a violin
 What's a violin
+
 Violins is not allowed in class.
 What's a violin?
-What's a violin
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
+
+What's a viola?
+
 What's a violin
 
-What's a violin!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+Brayden is da bomb!!!
+
+Only in the Merge conflict
+
+Aaron is an okay violist
+
+
+What's a violin
+
+What's a violin
+What's a violin?
+
+What's a violin?!
 What's a violin?
 What's a violin!
-What's a violin?
-What's a violin!
+
+
+
+What's a violin
+
 
 
 Porter is dope
@@ -127,20 +155,8 @@ it's pieces of wood that that crafted togeather to form an instrument that can c
 
 Wood with strings that go brrr.
 
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
 IT'S GONNA BLOW!!!!!                                              
                                               
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -159,14 +175,17 @@ Brayden is da bomb!!!
       ████████████▓▓▓▓▓▓████                  
         ██████████████████                    
           ██████████████                      
-              ██████ 
+              ██████                        
 
 
 
 
               Hehe                         
 
+
 StS Bomb card is peak
+
+4e4d3fb (hopfully not messing things up)
 
 Theisen was here
 
@@ -176,18 +195,93 @@ Brayden's update to his PR
 
 hello
 
+what up
+
 HELLO!!
 
-
-
-
+Suh Dude
+Chat, are we cooked? Absolutely.
 
 Suh Dude
-Chat, are we cooked?
+(hopfully not messing things up) Yes we are
 
 Hi there ya'll :))
 hi
 
+Plant lives matter
+
+Seventy bottle of beer on the wall.
+
+Pull requests, a coder's delight,  
+A beacon shining in the night.  
+From branch to branch, the changes flow,  
+A tale of teamwork starts to grow.  
+
+Lines of code, both old and new,  
+Reviewed by peers with a careful view.  
+Suggestions made, improvements sought,  
+A masterpiece from what was wrought.  
+
+Conflicts arise, but fear not the fray,  
+For resolution paves the way.  
+Merge the streams, unite the code,  
+Together we lighten the load.  
+
+A comment here, a note to share,  
+Collaboration fills the air.  
+Each pull request, a story told,  
+Of innovation, brave and bold.  
+
+Tests are run, the checks complete,  
+Ensuring code is strong and neat.  
+Green lights flash, the build is done,  
+The journey ends, a victory won.  
+
+With every merge, the project grows,  
+A testament to what teamwork shows.  
+Pull requests, a coder's art,  
+Uniting minds, though miles apart.  
+
+So raise a toast to this noble quest,  
+For pull requests bring out our best.  
+In every line, a dream takes flight,  
+A coder's world, shining bright.  
+# class-api-IT4200-2025-fall
+
+Brayden is da bomb!!!
+
+
+Gage got here first!!
+Brayden is also a fantastic ultimate frisbee player
+
+changegit
+
+Gage got here first!!
+
+Its chewsday init?
+
+hello world!!
+
+Only in the Merge conflict
+
+Aaron is an okay violist
+
+What's a violin
+
+What's a violin
+What's a violin?
+
+What's a violin
+
+
+Porter is dope
+it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
+
+Wood with strings that go brrr.
+
+IT'S GONNA BLOW!!!!!                                              
+                                              
+(hopfully not messing things up)
                                 ██    ██      
                     ██████      ██  ██        
                   ██      ██                  
@@ -209,7 +303,11 @@ hi
               ██████ 
 
 
+
+
+(hopfully not messing things up)
 ya'at'eeh
+
 Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
 wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
 cryptowall (60d574055ae164cc32df9e5c9402deefa9d07e5034328d7b41457d35b7312a0e)
@@ -223,29 +321,64 @@ This is the line to edit
 
 Seventy bottle of beer on the wall.
 
-milk is better
+whole milk is better
 No, there are 75 bottles of milk on the  wall
 And soda is lame
 
+
+Seventy bottle of beer on the wall.
+
 Plant lives matter
+
 Plant lives matter
 
 Seventy bottle of beer on the wall.
 
+------------
 Route "Gill"
 
-This askes the user a question and returns two different strings based on the answer.
+We want another shrubbery.
+A
+A
+A
+A
+A
+A
+A
+A
+A
+MAKE IT BREAK PLZ :)
+
+
+
+I REALLY NEED THIS TO CREATE A MERGE CONFLICT :)
+
+Your mother was a hamster and your father smelt of elderberries!
 
 You must seek the Holy Grail
+_____________________________
 
 
 Pull requests, a coder's delight,  
-A beacon shining in the night.  
 From branch to branch, the changes flow,  
 A tale of teamwork starts to grow.  
 
 
+
+I am litterally just trying to get line in to get a grade my dudes
+
+changes
+changes
+changes
+changes
+changes
+
+
+
  pace-yourself
+Sorry
+ pace-yourself
+Hey does it break here?
 
 
 
@@ -258,7 +391,6 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /clint
 /gill
 /pet-name
-/dallin
 /brayden 
 /braydens
 /fortune
@@ -266,15 +398,16 @@ Here is a list of Endpoints so far. Please add yours as you add them.
 /Skylands
 /porter
 /magic8ball
+/generatePassword
 /randomRestaurant
 /campus-locations
 /rf
 /breyton
 
 
-So raise a toast to this noble quest,  
-For pull requests bring out our best.  
-In every line, a dream takes flight,  
+
+
+
 
 A coder's world, shining bright.  
 
@@ -286,8 +419,12 @@ To implement this endpoint, it requires installing from requirements.txt
 ### To install requirments.txt
 Run the following `pip install -r requirements.txt`
 
+## /Dave endpoint
+This endpoint will direct you to another random website
+
 ## /Kasen endpoint
 This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
+
 ## /dadJokes 
 This endpoint will deliver a dad joke from a selection of three
 
@@ -298,6 +435,15 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
+Siiiuuu
+
+What’s the smartest insect? A spelling bee!
+
+
+here for the rebase
+Siiiuuu
+
+
 
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
@@ -305,15 +451,75 @@ Selects a predetermined fortune from a list of fortunes. Contains untold develop
 ## /roll endpoint (Bryson Francis)
 Rolls an "x" sided dice and returns the value of the rolled dice. It also returns an error if someone tries to roll a dice lower than 2.
 
-
 Siiiuuu
 
 ## /steal_yo_name endpoint
 
+
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
+
 
 ## /Skylands
 This endpoint is broken and should be disregarded.
 
 Not too hungry today
+
+
+## /Weather-current
+This give the current weather for St. George 
+
+## /dallin
+This endpoint gives you the option to delete the internet if you wish. 
+
+## /weather
+This endpoint returns a truely random weather condition. 
 plz have conflict
+
+I am having a terrible time
+
+
+
+Lost and hungry!
+
+Not too hungry today
+(commiting updates to readme and app.py)
+
+
+
+              Hehe                         
+ origin/main
+ (hopfully not messing things up)
+
+Gage got here last (im pretty sure)
+(i am last!)
+
+67
+
+Sandals, oh sandals, what a sight,  
+With straps that pinch and soles too light.  
+In summer's heat, they seem so grand,  
+But blisters form, oh, isn't it bland?  
+
+They flop and they flounder, a clumsy dance,  
+With every step, they take a chance.  
+A toe exposed, a heel laid bare,  
+In the world of footwear, they’re hardly rare.  
+
+Rainy days bring a soggy fate,  
+As puddles splash, they hesitate.  
+No arch support, no cozy embrace,  
+In the realm of comfort, they lose the race.  
+
+## /campus-locations
+Returns a random location on the Utah Tech Campus 
+
+## /dinner
+This endpoint helps you decide what to eat for dinner!  
+When called, it returns a random dinner suggestion from a list of popular options.  
+You might get pizza, tacos, sushi, or something else tasty.  
+Great for those nights when you can't make up your mind.  
+Just visit `/dinner` and let fate choose your meal.  
+Perfect for students, families, or anyone feeling indecisive!
+
+## /fav_quote
+Returns a quote
