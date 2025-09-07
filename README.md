@@ -120,7 +120,6 @@ What's a violin
 Violins is not allowed in class.
 What's a violin?
 
-What's a viola?
 
 What's a violin
 
