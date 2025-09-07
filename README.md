@@ -516,6 +516,3 @@ Perfect for students, families, or anyone feeling indecisive!
 ## /fav_quote
 Returns a quote
 One of the favorites
-5th tryyyyyy
-
-Why isn't it showing up on github after I commit and push?

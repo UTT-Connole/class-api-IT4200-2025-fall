@@ -286,5 +286,6 @@ def fav_quote():
         "If you can dream it, you can do it. - Walt Disney",
 		"The only way to do great work is to love what you do. - Steve Jobs",
 		"Why fit in when you were born to stand out? - Dr. Seuss"
+		"One day or day one. You decide. - Unknown"
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
