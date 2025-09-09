@@ -244,11 +244,8 @@ def music():
     return f"You should listen to some: {random.choice(genres)}"
 
 
-if __name__ == '__main__':
-	app.run(debug=True)
-
-	@app.route('/sandals-fortune', methods=['GET'])
-	def sandals_fortune():
+@app.route('/sandals-fortune', methods=['GET'])
+def sandals_fortune():
 		fortunes = [
 			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
 			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
@@ -290,3 +287,6 @@ def fav_quote():
 		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
+
+if __name__ == '__main__':
+	app.run(debug=True)
