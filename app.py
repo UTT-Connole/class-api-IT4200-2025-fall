@@ -150,6 +150,38 @@ def generatePassword(Length, Complexity):
 		password += random.choice(characters)
 	return jsonify({"password": password})
 
+@app.route('/placeBetPOC') #meant to ba functioning proof of concept. Automating this without input() function can be done later.
+def placeBetSimple(betName, betOptions): #options is a list of choices players can bet on. 
+	#currently assumes 2 players, but should support more here or on a more automated version.
+	bets = [] #stores player bets
+	betAmounts = [] #stores amounts players bets
+	print("Here are your betting options:") 
+	for j in betOptions: #print all options in betOptions
+		print(j)
+	for i in range(1,3): #loops for 2 players
+		loop = True
+		while loop == True: #loop until player enters valid betting option
+			bet = input(f"player {i}, who are you betting on winning? ")
+			if bet in betOptions:
+				bets.append(bet)
+				print("Bet Stored")
+				loop = False
+			else:
+				print("Try Again. Please enter a valid option listed above.")
+		loop = True
+		while loop == True: #loop until player enters a number above 0
+			betAmount = input(f"player {i}, how much do you bet on {bet}? ")
+			if int(betAmount) > 0:
+				betAmounts.append(betAmount)			
+				print("Bet Amount Stored")
+				loop = False
+			else:
+				print("Please enter a valid number above 0.")
+	return jsonify({"BetName": betName, #returns player choice and how much they bet in json
+				 "p1Choice": bets[0], 
+				 "p1Bet": betAmounts[0],
+				 "p2Choice": bets[1],
+				 "p2Bet": betAmounts[1]})
 
 @app.route('/randomRestaurant')
 def choose():
