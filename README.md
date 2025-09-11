@@ -347,7 +347,8 @@ This endpoint will return one of 5 dad jokes listed.
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 Blackjack Endpoint
 This endpoint deals two cards to the player and dealer, calculates scores, and returns a winner.
-
+Roulette Endpoint
+This endpoint simulates a single spin of a European roulette wheel and returns the result.
 Siiiuuu
 
 What’s the smartest insect? A spelling bee!

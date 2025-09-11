@@ -242,34 +242,21 @@ def music():
         'Reggae'
     ]
     return f"You should listen to some: {random.choice(genres)}"
-@app.route('/blackjack', methods=['GET'])
-def blackjack():
-    suits = ['♥', '♦', '♣', '♠']
-    values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+@app.route('/roulette', methods=['GET'])
+def roulette():
+    colors = ['red', 'black', 'green']
+    numbers = list(range(0, 37))  # European roulette 0–36
 
-    def draw_card():
-        return {"card": f"{random.choice(values)}{random.choice(suits)}"}
+    spin = random.choice(numbers)
+    color = 'green' if spin == 0 else random.choice(['red', 'black'])
 
-    def score(hand):
-        total, aces = 0, 0
-        for c in hand:
-            v = c['card'][:-1]
-            total += 10 if v in ['J','Q','K'] else 11 if v=='A' else int(v)
-            if v=='A': aces+=1
-        while total>21 and aces:
-            total -= 10
-            aces -= 1
-        return total
+    result = {
+        "spin": spin,
+        "color": color,
+        "parity": "even" if spin != 0 and spin % 2 == 0 else "odd" if spin % 2 == 1 else "none"
+    }
 
-    player = [draw_card(), draw_card()]
-    dealer = [draw_card(), draw_card()]
-
-    return jsonify({
-        "player": player,
-        "dealer": dealer,
-        "player_score": score(player),
-        "dealer_score": score(dealer)
-    })
+    return jsonify(result)
 
 if __name__ == '__main__':
 	app.run(debug=True)
