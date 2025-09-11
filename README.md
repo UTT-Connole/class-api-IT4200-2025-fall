@@ -543,3 +543,8 @@ Perfect for students, families, or anyone feeling indecisive!
 ## /fav_quote
 Returns a quote
 A few of the favorites
+
+## /numberguesser - Number Guesser
+This endpoint is a simple game that allows you to guess a randomly generated number between 1 and 10. The endpoint accepts POST with the users guess and returns a JSON if you won or lost. 
+
+You can test this endpoint like so: curl -X POST http://127.0.0.1:5000/numberguesser -d "guess=5"
