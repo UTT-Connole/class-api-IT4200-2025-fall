@@ -67,6 +67,53 @@ def weather():
 	]
 	return random.choice(conditions)
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# In-memory storage for users and bets
+users = {
+    "user1": {"balance": 1000},  # Starting fake currency
+}
+bets = []
+
+@app.route('/hockeybet', methods=['POST'])
+def place_bet():
+    data = request.get_json()
+    username = data.get('username')
+    game_id = data.get('game_id')
+    team = data.get('team')  # Team the user is betting on
+    amount = data.get('amount')
+
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "game_id": game_id,
+        "team": team,
+        "amount": amount
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+@app.route('/hockeybalance/<username>', methods=['GET'])
+def get_balance(username):
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"balance": users[username]['balance']}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 @app.route('/aaron')
 def home():
 	return 'What? again what?'
