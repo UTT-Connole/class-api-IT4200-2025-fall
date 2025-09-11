@@ -69,6 +69,7 @@ def kasen():
 def home1():
 	return 'Hello, Clint!'
 
+
 @app.route('/gill')
 def home2():
     user_input = ('We seek the Holy Grail')
@@ -460,6 +461,18 @@ def create_deck():
     random.shuffle(deck)
     return deck
 
+
+
+
+@app.route('/clint')
+def coin_flip():
+    result = random.choice(['Heads', 'Tails'])
+    print(f"The coin landed on: {result}")
+    return result
+
+
+
+
 def calculate_hand_value(hand):
     value = 0
     aces = 0
@@ -551,3 +564,4 @@ blackjack_game()
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
