@@ -243,19 +243,35 @@ def music():
     ]
     return f"You should listen to some: {random.choice(genres)}"
 
+@app.route('/sandals-fortune', methods=['GET'])
+def sandals_fortune():
+	fortunes = [
+		{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
+		{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
+		{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
+		{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
+		{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
+	]
+	chosen = random.choice(fortunes)
+	chosen["date"] = str(date.today())
+	return jsonify(chosen)
+
+
+@app.route('/charger-facts')
+def charger_facts():
+    facts = [
+        "The 1969 Dodge Charger is an iconic American muscle car known for its aggressive styling and powerful performance.",
+        "It features a distinctive 'coke bottle' body shape with hidden headlights and a full-width grille.",
+        "The Charger was available with several engine options, including the legendary 426 Hemi V8.",
+        "Its rear-wheel-drive layout and heavy-duty suspension made it popular among car enthusiasts and racers.",
+        "The 1969 model year introduced the 'R/T' (Road/Track) performance package for even greater speed and handling.",
+        "The car gained fame as the 'General Lee' in the TV show 'The Dukes of Hazzard.'",
+        "Inside, the Charger offered a spacious cabin with bucket seats and classic muscle car instrumentation.",
+        "The 1969 Charger could accelerate from 0 to 60 mph in under six seconds with the top engine.",
+        "Its bold colors, racing stripes, and chrome accents made it stand out on the road.",
+        "Today, the 1969 Dodge Charger is a highly sought-after collector's car, celebrated for its style and performance."
+    ]
+    return jsonify({"facts": facts})
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-	@app.route('/sandals-fortune', methods=['GET'])
-	def sandals_fortune():
-		fortunes = [
-			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
-			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
-			{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
-			{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
-			{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
-		]
-		chosen = random.choice(fortunes)
-		chosen["date"] = str(date.today())
-		return jsonify(chosen)
