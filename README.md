@@ -543,3 +543,6 @@ Perfect for students, families, or anyone feeling indecisive!
 ## /fav_quote
 Returns a quote
 A few of the favorites
+
+## /gatcha
+Returns random results from a gatcha game

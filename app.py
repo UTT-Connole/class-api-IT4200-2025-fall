@@ -338,7 +338,7 @@ def dinner():
     choice = random.choice(dinner_options)
     return jsonify({"dinner": choice})
 
-app.route('/fav_quote')
+@app.route('/fav_quote')
 def fav_quote():
     fav_quote = [
         "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
@@ -369,6 +369,29 @@ def chips():
             chips = None
     return render_template('chips.html', amount=amount, chips=chips)
 
+@app.route('/gatcha')
+def gatcha():
+    gatcha_balls = {
+        "SSR": "Princess Takanuma",
+        "R": "Dale",
+        "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR": "Super Ultra Mega Mecha Battle Suit Zeta",
+        "C": "Stinky Poo Poo"
+    }
+
+    weights = {
+        "SSR": 5,  # 5% chance
+        "R": 20,   # 20% chance
+        "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR": 1,  # super rare, 1% chance
+        "C": 74    # common, 74% chance
+    }
+
+    pull = random.choices(
+        population=list(gatcha_balls.values()),
+        weights=[weights[key] for key in gatcha_balls.keys()],
+        k=1
+    )[0]
+
+    return pull
 
 if __name__ == '__main__':
 	app.run(debug=True)
