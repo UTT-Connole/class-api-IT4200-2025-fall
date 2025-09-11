@@ -586,6 +586,17 @@ def gatcha():
 
     return pull
 
+@app.route('/unlivable')
+def unlivable():
+    import random
+    listings = [
+        {"location": "Apartment 4B, Underwater Atlantis", "price": "$999", "condition": "Bring scuba gear"},
+        {"location": "Cabin on Mt. Doom", "price": "$2000", "condition": "Volcanic activity included"},
+        {"location": "Igloo in Sahara Desert", "price": "$500", "condition": "Melting fast"},
+        {"location": "Haunted Mansion in Chernobyl", "price": "Free", "condition": "Ghosts not optional"},
+    ]
+    return random.choice(listings)
+
 if __name__ == '__main__':
 	app.run(debug=True)
 
