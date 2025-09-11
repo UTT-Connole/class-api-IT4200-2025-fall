@@ -5,6 +5,7 @@ import os
 import requests
 from user_agents import parse
 from datetime import date
+import random
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
@@ -350,6 +351,118 @@ def fav_quote():
 		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
+
+
+
+def get_card_count_value(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [7, 8, 9]:
+        return 0
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+def create_deck():
+    # 4 of each card in the deck (ignoring suits)
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
+    random.shuffle(deck)
+    return deck
+
+def calculate_hand_value(hand):
+    value = 0
+    aces = 0
+
+    for card in hand:
+        if card in ['J', 'Q', 'K']:
+            value += 10
+        elif card == 'A':
+            aces += 1
+            value += 11  # Count Ace as 11 initially
+        else:
+            value += card
+
+    # Adjust Aces from 11 to 1 if needed
+    while value > 21 and aces:
+        value -= 10
+        aces -= 1
+
+    return value
+
+def display_hand(hand, name, hide_first_card=False):
+    if hide_first_card:
+        print(f"{name}'s hand: [?, {hand[1]}]")
+    else:
+        print(f"{name}'s hand: {hand} (Total: {calculate_hand_value(hand)})")
+
+
+def blackjack_game():
+    print("🃏 Welcome to Blackjack with Card Counting!")
+
+    deck = create_deck()
+    running_count = 0
+
+    player_hand = [deck.pop(), deck.pop()]
+    dealer_hand = [deck.pop(), deck.pop()]
+
+    # Update running count for initial cards
+    for card in player_hand + dealer_hand:
+        running_count += get_card_count_value(card)
+
+    # Show initial hands
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer", hide_first_card=True)
+    print(f"🧮 Running count: {running_count}\n")
+
+    # Player's turn
+    while calculate_hand_value(player_hand) < 21:
+        move = input("Hit or stand? (h/s): ").lower()
+        if move == 'h':
+            card = deck.pop()
+            player_hand.append(card)
+            running_count += get_card_count_value(card)
+
+            display_hand(player_hand, "Player")
+            print(f"🧮 Running count: {running_count}\n")
+
+            if calculate_hand_value(player_hand) > 21:
+                print("💥 You busted! Dealer wins.")
+                return
+        elif move == 's':
+            break
+        else:
+            print("Invalid input. Please enter 'h' or 's'.")
+
+    # Dealer's turn
+    print("\nDealer's turn:")
+    display_hand(dealer_hand, "Dealer")
+    while calculate_hand_value(dealer_hand) < 17:
+        card = deck.pop()
+        dealer_hand.append(card)
+        running_count += get_card_count_value(card)
+        display_hand(dealer_hand, "Dealer")
+        print(f"🧮 Running count: {running_count}\n")
+
+    # Final results
+    print("\n🎯 Final Results:")
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer")
+    print(f"🧮 Final running count: {running_count}\n")
+
+    player_total = calculate_hand_value(player_hand)
+    dealer_total = calculate_hand_value(dealer_hand)
+
+    if dealer_total > 21:
+        print("✅ Dealer busted. You win!")
+    elif player_total > dealer_total:
+        print("✅ You win!")
+    elif player_total < dealer_total:
+        print("❌ Dealer wins.")
+    else:
+        print("🤝 It's a tie!")
+
+blackjack_game()
 
 if __name__ == '__main__':
 	app.run(debug=True)
