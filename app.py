@@ -351,5 +351,24 @@ def fav_quote():
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
 
+
+@app.route('/chips', methods=['GET', 'POST'])
+def chips():
+    chips = None
+    amount = None
+    if request.method == 'POST':
+        try:
+            amount = int(request.form['amount'])
+            denominations = [100, 25, 10, 5, 1]
+            chips = {}
+            remaining = amount
+            for denom in denominations:
+                chips[str(denom)] = remaining // denom
+                remaining = remaining % denom
+        except (ValueError, KeyError):
+            chips = None
+    return render_template('chips.html', amount=amount, chips=chips)
+
+
 if __name__ == '__main__':
 	app.run(debug=True)

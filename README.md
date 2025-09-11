@@ -524,6 +524,14 @@ In the realm of comfort, they lose the race.
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
 
+
+## /charger-facts
+is a page that talks about the 1969 dodge charger and returns cool stuff
+ex. The 1969 Dodge Charger is an iconic American muscle car known for its aggressive styling and powerful performance.
+ex. It features a distinctive "coke bottle" body shape with hidden headlights and a full-width grille.
+ex. The 1969 model year introduced the "R/T" (Road/Track) performance package for even greater speed and handling.
+ex. Today, the 1969 Dodge Charger is a highly sought-after collector's car, celebrated for its style and performance.
+
 ## /dinner
 This endpoint helps you decide what to eat for dinner!  
 When called, it returns a random dinner suggestion from a list of popular options.  
