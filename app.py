@@ -365,7 +365,21 @@ def music():
         'Reggae'
     ]
     return f"You should listen to some: {random.choice(genres)}"
+@app.route('/roulette', methods=['GET'])
+def roulette():
+    colors = ['red', 'black', 'green']
+    numbers = list(range(0, 37))  # European roulette 0–36
 
+    spin = random.choice(numbers)
+    color = 'green' if spin == 0 else random.choice(['red', 'black'])
+
+    result = {
+        "spin": spin,
+        "color": color,
+        "parity": "even" if spin != 0 and spin % 2 == 0 else "odd" if spin % 2 == 1 else "none"
+    }
+
+    return jsonify(result)
 
 @app.route('/sandals-fortune', methods=['GET'])
 def sandals_fortune():

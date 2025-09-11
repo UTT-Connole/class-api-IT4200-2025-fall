@@ -435,6 +435,12 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
+Blackjack Endpoint
+This endpoint deals two cards to the player and dealer, calculates scores, and returns a winner.
+Roulette Endpoint
+This endpoint simulates a single spin of a European roulette wheel and returns the result.
+
+
 ## /generatePassword endpoint
 This endpoint generates a random password with a set length and cmplexity level.
 2 arguments: Length, Complexity
@@ -445,6 +451,7 @@ Complexity: Basic, Simple, or Complex are the only valid options. Basic is only 
 This is a proof of concept endpoint for placing bets. Eventually should be developed to use more variables to be more dynamic with other systems.
 This endpoint takes betName and betOptions: a string for what the bet is about and a list of options for what players can bet on.
 Currently assumes only 2 players will be betting.
+
 
 Siiiuuu
 
