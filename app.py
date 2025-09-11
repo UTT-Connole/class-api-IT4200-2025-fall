@@ -243,35 +243,50 @@ def music():
     ]
     return f"You should listen to some: {random.choice(genres)}"
 
+
 @app.route('/sandals-fortune', methods=['GET'])
 def sandals_fortune():
-	fortunes = [
-		{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
-		{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
-		{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
-		{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
-		{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
-	]
-	chosen = random.choice(fortunes)
-	chosen["date"] = str(date.today())
-	return jsonify(chosen)
+		fortunes = [
+			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
+			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
+			{"fortune": "Beware of the discomfort that sandals bring.", "mood": "dismay"},
+			{"fortune": "Your feet will cry out in pain from those sandals.", "mood": "dismay"},
+			{"fortune": "Sandals will never be stylish, no matter the season.", "mood": "dismay"}
+		]
+		chosen = random.choice(fortunes)
+		chosen["date"] = str(date.today())
+		return jsonify(chosen)
+	
 
-
-@app.route('/charger-facts')
-def charger_facts():
-    facts = [
-        "The 1969 Dodge Charger is an iconic American muscle car known for its aggressive styling and powerful performance.",
-        "It features a distinctive 'coke bottle' body shape with hidden headlights and a full-width grille.",
-        "The Charger was available with several engine options, including the legendary 426 Hemi V8.",
-        "Its rear-wheel-drive layout and heavy-duty suspension made it popular among car enthusiasts and racers.",
-        "The 1969 model year introduced the 'R/T' (Road/Track) performance package for even greater speed and handling.",
-        "The car gained fame as the 'General Lee' in the TV show 'The Dukes of Hazzard.'",
-        "Inside, the Charger offered a spacious cabin with bucket seats and classic muscle car instrumentation.",
-        "The 1969 Charger could accelerate from 0 to 60 mph in under six seconds with the top engine.",
-        "Its bold colors, racing stripes, and chrome accents made it stand out on the road.",
-        "Today, the 1969 Dodge Charger is a highly sought-after collector's car, celebrated for its style and performance."
+@app.route('/dinner')
+def dinner():
+    dinner_options = [
+        "Pizza",
+        "Tacos",
+        "Spaghetti",
+        "Sushi",
+        "Burgers",
+        "Salad",
+        "Stir Fry",
+        "Chicken Alfredo",
+        "BBQ Ribs",
+        "Vegetable Curry"
     ]
-    return jsonify({"facts": facts})
+    choice = random.choice(dinner_options)
+    return jsonify({"dinner": choice})
+
+app.route('/fav_quote')
+def fav_quote():
+    fav_quote = [
+        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
+        "Opportunities don't happen, you create them. - Chris Grosser",
+        "If you can dream it, you can do it. - Walt Disney",
+		"The only way to do great work is to love what you do. - Steve Jobs",
+		"Why fit in when you were born to stand out? - Dr. Seuss"
+		"One day or day one. You decide. - Unknown"
+		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
+    ]
+    return jsonify({"fav_quote": random.choice(fav_quote)})
 
 if __name__ == '__main__':
 	app.run(debug=True)
