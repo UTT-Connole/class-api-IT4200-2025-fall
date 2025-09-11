@@ -5,6 +5,7 @@ import os
 import requests
 from user_agents import parse
 from datetime import date
+import random
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
@@ -99,6 +100,53 @@ def weather():
 	humidity = f"{random.randint(10, 100)}%"  # Random humidity between 10% and 100%
 	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# In-memory storage for users and bets
+users = {
+    "user1": {"balance": 1000},  # Starting fake currency
+}
+bets = []
+
+@app.route('/hockeybet', methods=['POST'])
+def place_bet():
+    data = request.get_json()
+    username = data.get('username')
+    game_id = data.get('game_id')
+    team = data.get('team')  # Team the user is betting on
+    amount = data.get('amount')
+
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "game_id": game_id,
+        "team": team,
+        "amount": amount
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+@app.route('/hockeybalance/<username>', methods=['GET'])
+def get_balance(username):
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"balance": users[username]['balance']}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 @app.route('/aaron')
 def home12():
 	return 'What? again what?'
@@ -129,6 +177,17 @@ def roll_dice(sides):
                 "sides": sides,
                 "result":result
         })
+
+
+        return 'Hello, Flask!'
+
+@app.route('/dallin')
+def home():
+	return 'You are lost!'
+
+@app.route('/aaron')
+def home():
+	return 'What? again what?'
 
 @app.route('/Skylands')
 def home6():
@@ -368,6 +427,127 @@ def chips():
         except (ValueError, KeyError):
             chips = None
     return render_template('chips.html', amount=amount, chips=chips)
+
+@app.route('/numberguesser', methods=['GET', 'POST'])
+def guess_number():
+    target = random.randint(1, 10)  # Randomly pick a number between 1 and 10
+    result = None
+
+    if request.method == 'POST':
+        user_guess = int(request.form['guess'])
+        if user_guess == target:
+            result = f"Congratulations! You guessed the number correctly. It was {target}!"
+        else:
+            result = f"Sorry, that's incorrect! The number was {target}. Try again!"
+
+    return jsonify(result=result)
+
+
+@app.route('/blackjack')
+def get_card_count_value(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [7, 8, 9]:
+        return 0
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+def create_deck():
+
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
+    random.shuffle(deck)
+    return deck
+
+def calculate_hand_value(hand):
+    value = 0
+    aces = 0
+
+    for card in hand:
+        if card in ['J', 'Q', 'K']:
+            value += 10
+        elif card == 'A':
+            aces += 1
+            value += 11  
+        else:
+            value += card
+
+    
+    while value > 21 and aces:
+        value -= 10
+        aces -= 1
+
+    return value
+
+def display_hand(hand, name, hide_first_card=False):
+    if hide_first_card:
+        print(f"{name}'s hand: [?, {hand[1]}]")
+    else:
+        print(f"{name}'s hand: {hand} (Total: {calculate_hand_value(hand)})")
+
+
+def blackjack_game():
+    print("🃏 Welcome to Blackjack with Card Counting!")
+
+    deck = create_deck()
+    running_count = 0
+
+    player_hand = [deck.pop(), deck.pop()]
+    dealer_hand = [deck.pop(), deck.pop()]
+
+    for card in player_hand + dealer_hand:
+        running_count += get_card_count_value(card)
+
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer", hide_first_card=True)
+    print(f"🧮 Running count: {running_count}\n")
+
+    while calculate_hand_value(player_hand) < 21:
+        move = input("Hit or stand? (h/s): ").lower()
+        if move == 'h':
+            card = deck.pop()
+            player_hand.append(card)
+            running_count += get_card_count_value(card)
+
+            display_hand(player_hand, "Player")
+            print(f"🧮 Running count: {running_count}\n")
+
+            if calculate_hand_value(player_hand) > 21:
+                print("💥 You busted! Dealer wins.")
+                return
+        elif move == 's':
+            break
+        else:
+            print("Invalid input. Please enter 'h' or 's'.")
+
+    print("\nDealer's turn:")
+    display_hand(dealer_hand, "Dealer")
+    while calculate_hand_value(dealer_hand) < 17:
+        card = deck.pop()
+        dealer_hand.append(card)
+        running_count += get_card_count_value(card)
+        display_hand(dealer_hand, "Dealer")
+        print(f"🧮 Running count: {running_count}\n")
+
+    print("\n🎯 Final Results:")
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer")
+    print(f"🧮 Final running count: {running_count}\n")
+
+    player_total = calculate_hand_value(player_hand)
+    dealer_total = calculate_hand_value(dealer_hand)
+
+    if dealer_total > 21:
+        print("✅ Dealer busted. You win!")
+    elif player_total > dealer_total:
+        print("✅ You win!")
+    elif player_total < dealer_total:
+        print("❌ Dealer wins.")
+    else:
+        print("🤝 It's a tie!")
+
+blackjack_game()
 
 @app.route('/gatcha')
 def gatcha():
