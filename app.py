@@ -393,6 +393,25 @@ def guess_number():
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
 
+
+@app.route('/blackjack')
+def get_card_count_value(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [7, 8, 9]:
+        return 0
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+def create_deck():
+
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
+    random.shuffle(deck)
+    return deck
+
+
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route('/clint')
 def coin_flip():
@@ -656,10 +675,12 @@ def reveal_cell(game_id):
         g.is_bust = True
         g.cashout_amount = 0.0
     else:
+        print("🤝 It's a tie!")
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
 
+# blackjack_game()
 
 
 
