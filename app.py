@@ -242,7 +242,34 @@ def music():
         'Reggae'
     ]
     return f"You should listen to some: {random.choice(genres)}"
+@app.route('/blackjack', methods=['GET'])
+def blackjack():
+    suits = ['♥', '♦', '♣', '♠']
+    values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
+    def draw_card():
+        return {"card": f"{random.choice(values)}{random.choice(suits)}"}
+
+    def score(hand):
+        total, aces = 0, 0
+        for c in hand:
+            v = c['card'][:-1]
+            total += 10 if v in ['J','Q','K'] else 11 if v=='A' else int(v)
+            if v=='A': aces+=1
+        while total>21 and aces:
+            total -= 10
+            aces -= 1
+        return total
+
+    player = [draw_card(), draw_card()]
+    dealer = [draw_card(), draw_card()]
+
+    return jsonify({
+        "player": player,
+        "dealer": dealer,
+        "player_score": score(player),
+        "dealer_score": score(dealer)
+    })
 
 if __name__ == '__main__':
 	app.run(debug=True)

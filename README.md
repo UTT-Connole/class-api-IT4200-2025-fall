@@ -345,6 +345,8 @@ This endpoint will return one of 5 dad jokes listed.
 
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
+Blackjack Endpoint
+This endpoint deals two cards to the player and dealer, calculates scores, and returns a winner.
 
 Siiiuuu
 
