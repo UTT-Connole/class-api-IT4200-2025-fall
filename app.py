@@ -140,6 +140,13 @@ def get_balance(username):
         return jsonify({"error": "User not found"}), 404
     return jsonify({"balance": users[username]['balance']}), 200
 
+@app.route('/drawAcard')
+def drawAcard():
+	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+	print("card", card)
+	return jsonify(card)
+
 @app.route('/aaron')
 def home12():
     return 'What? again what?'
@@ -240,7 +247,6 @@ def placeBetSimple(betName=None, betOptions=None):
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
 
 
 @app.route('/rf')
