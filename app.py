@@ -35,6 +35,7 @@ nouns = ['Paws', 'Whiskers', 'Shadow', 'Bean', 'Muffin', 'Cookie', 'Nugget', 'Pi
 def home1():
 	return 'Hello, Clint!'
 
+
 @app.route('/gill')
 def home2():
     user_input = input('What is your quest?')
@@ -237,4 +238,14 @@ def dad_joke_generator():
 		"Why don't skeletons fight each other? They don't have the guts."
 	]
 	return jsonify({"joke": random.choice(jokes)})
+
+
+
+@app.route('/clint')
+def coin_flip():
+    result = random.choice(['Heads', 'Tails'])
+    print(f"The coin landed on: {result}")
+    return result
+
+
 
