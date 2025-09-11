@@ -5,6 +5,7 @@ import os
 import requests
 from user_agents import parse
 from datetime import date
+import random
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
@@ -29,6 +30,37 @@ def home():
 def pokemon():
 	return jsonify({"pokemon": "Jigglypuff"})
 
+#Unlivable Realestate Endpoints
+
+@app.route('/api/chernobyl/properties', methods=['GET'])
+def get_chernobyl_properties():
+    """Get Chernobyl real estate listings"""
+    properties = [
+        {
+            "id": 1,
+            "address": "Pripyat Central Square, Apartment Block #1",
+            "price": 0,
+            "radiation_level": "15,000 mSv/year",
+            "distance_from_reactor": "3 km",
+            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+            "warnings": ["Protective gear required", "May cause mutations"]
+        },
+        {
+            "id": 2,
+            "address": "Reactor 4 Penthouse Suite", 
+            "price": -1000000,
+            "radiation_level": "Over 9000 mSv/year",
+            "distance_from_reactor": "0 km",
+            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+            "warnings": ["Immediate death likely", "GPS stops working"]
+        }
+    ]
+    
+    return jsonify({
+        "message": "Chernobyl Real Estate - Where your problems glow away!",
+        "properties": properties
+    })
+
 @app.route('/kasen')
 def kasen():
 	return render_template('kasen.html'), 200
@@ -36,6 +68,7 @@ def kasen():
 @app.route('/clint')
 def home1():
 	return 'Hello, Clint!'
+
 
 @app.route('/gill')
 def home2():
@@ -68,6 +101,53 @@ def weather():
 	humidity = f"{random.randint(10, 100)}%"  # Random humidity between 10% and 100%
 	return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# In-memory storage for users and bets
+users = {
+    "user1": {"balance": 1000},  # Starting fake currency
+}
+bets = []
+
+@app.route('/hockeybet', methods=['POST'])
+def place_bet():
+    data = request.get_json()
+    username = data.get('username')
+    game_id = data.get('game_id')
+    team = data.get('team')  # Team the user is betting on
+    amount = data.get('amount')
+
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "game_id": game_id,
+        "team": team,
+        "amount": amount
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+@app.route('/hockeybalance/<username>', methods=['GET'])
+def get_balance(username):
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"balance": users[username]['balance']}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 @app.route('/aaron')
 def home12():
 	return 'What? again what?'
@@ -98,6 +178,17 @@ def roll_dice(sides):
                 "sides": sides,
                 "result":result
         })
+
+
+        return 'Hello, Flask!'
+
+@app.route('/dallin')
+def home():
+	return 'You are lost!'
+
+@app.route('/aaron')
+def home():
+	return 'What? again what?'
 
 @app.route('/Skylands')
 def home6():
@@ -150,6 +241,38 @@ def generatePassword(Length, Complexity):
 		password += random.choice(characters)
 	return jsonify({"password": password})
 
+@app.route('/placeBetPOC') #meant to ba functioning proof of concept. Automating this without input() function can be done later.
+def placeBetSimple(betName, betOptions): #options is a list of choices players can bet on. 
+	#currently assumes 2 players, but should support more here or on a more automated version.
+	bets = [] #stores player bets
+	betAmounts = [] #stores amounts players bets
+	print("Here are your betting options:") 
+	for j in betOptions: #print all options in betOptions
+		print(j)
+	for i in range(1,3): #loops for 2 players
+		loop = True
+		while loop == True: #loop until player enters valid betting option
+			bet = input(f"player {i}, who are you betting on winning? ")
+			if bet in betOptions:
+				bets.append(bet)
+				print("Bet Stored")
+				loop = False
+			else:
+				print("Try Again. Please enter a valid option listed above.")
+		loop = True
+		while loop == True: #loop until player enters a number above 0
+			betAmount = input(f"player {i}, how much do you bet on {bet}? ")
+			if int(betAmount) > 0:
+				betAmounts.append(betAmount)			
+				print("Bet Amount Stored")
+				loop = False
+			else:
+				print("Please enter a valid number above 0.")
+	return jsonify({"BetName": betName, #returns player choice and how much they bet in json
+				 "p1Choice": bets[0], 
+				 "p1Bet": betAmounts[0],
+				 "p2Choice": bets[1],
+				 "p2Bet": betAmounts[1]})
 
 @app.route('/randomRestaurant')
 def choose():
@@ -258,11 +381,8 @@ def roulette():
 
     return jsonify(result)
 
-if __name__ == '__main__':
-	app.run(debug=True)
-
-	@app.route('/sandals-fortune', methods=['GET'])
-	def sandals_fortune():
+@app.route('/sandals-fortune', methods=['GET'])
+def sandals_fortune():
 		fortunes = [
 			{"fortune": "Sandals are the bane of summer fashion.", "mood": "dismay"},
 			{"fortune": "Wearing sandals will lead to regret.", "mood": "dismay"},
@@ -273,3 +393,224 @@ if __name__ == '__main__':
 		chosen = random.choice(fortunes)
 		chosen["date"] = str(date.today())
 		return jsonify(chosen)
+	
+
+@app.route('/dinner')
+def dinner():
+    dinner_options = [
+        "Pizza",
+        "Tacos",
+        "Spaghetti",
+        "Sushi",
+        "Burgers",
+        "Salad",
+        "Stir Fry",
+        "Chicken Alfredo",
+        "BBQ Ribs",
+        "Vegetable Curry"
+    ]
+    choice = random.choice(dinner_options)
+    return jsonify({"dinner": choice})
+
+@app.route('/fav_quote')
+def fav_quote():
+    fav_quote = [
+        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
+        "Opportunities don't happen, you create them. - Chris Grosser",
+        "If you can dream it, you can do it. - Walt Disney",
+		"The only way to do great work is to love what you do. - Steve Jobs",
+		"Why fit in when you were born to stand out? - Dr. Seuss"
+		"One day or day one. You decide. - Unknown"
+		"Slow is smooth, smooth is fast, fast is sexy. - Old Grunt"
+    ]
+    return jsonify({"fav_quote": random.choice(fav_quote)})
+
+
+@app.route('/chips', methods=['GET', 'POST'])
+def chips():
+    chips = None
+    amount = None
+    if request.method == 'POST':
+        try:
+            amount = int(request.form['amount'])
+            denominations = [100, 25, 10, 5, 1]
+            chips = {}
+            remaining = amount
+            for denom in denominations:
+                chips[str(denom)] = remaining // denom
+                remaining = remaining % denom
+        except (ValueError, KeyError):
+            chips = None
+    return render_template('chips.html', amount=amount, chips=chips)
+
+@app.route('/numberguesser', methods=['GET', 'POST'])
+def guess_number():
+    target = random.randint(1, 10)  # Randomly pick a number between 1 and 10
+    result = None
+
+    if request.method == 'POST':
+        user_guess = int(request.form['guess'])
+        if user_guess == target:
+            result = f"Congratulations! You guessed the number correctly. It was {target}!"
+        else:
+            result = f"Sorry, that's incorrect! The number was {target}. Try again!"
+
+    return jsonify(result=result)
+
+
+@app.route('/blackjack')
+def get_card_count_value(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [7, 8, 9]:
+        return 0
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+def create_deck():
+
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
+    random.shuffle(deck)
+    return deck
+
+
+
+
+@app.route('/clint')
+def coin_flip():
+    result = random.choice(['Heads', 'Tails'])
+    print(f"The coin landed on: {result}")
+    return result
+
+
+
+
+def calculate_hand_value(hand):
+    value = 0
+    aces = 0
+
+    for card in hand:
+        if card in ['J', 'Q', 'K']:
+            value += 10
+        elif card == 'A':
+            aces += 1
+            value += 11  
+        else:
+            value += card
+
+    
+    while value > 21 and aces:
+        value -= 10
+        aces -= 1
+
+    return value
+
+def display_hand(hand, name, hide_first_card=False):
+    if hide_first_card:
+        print(f"{name}'s hand: [?, {hand[1]}]")
+    else:
+        print(f"{name}'s hand: {hand} (Total: {calculate_hand_value(hand)})")
+
+
+def blackjack_game():
+    print("🃏 Welcome to Blackjack with Card Counting!")
+
+    deck = create_deck()
+    running_count = 0
+
+    player_hand = [deck.pop(), deck.pop()]
+    dealer_hand = [deck.pop(), deck.pop()]
+
+    for card in player_hand + dealer_hand:
+        running_count += get_card_count_value(card)
+
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer", hide_first_card=True)
+    print(f"🧮 Running count: {running_count}\n")
+
+    while calculate_hand_value(player_hand) < 21:
+        move = input("Hit or stand? (h/s): ").lower()
+        if move == 'h':
+            card = deck.pop()
+            player_hand.append(card)
+            running_count += get_card_count_value(card)
+
+            display_hand(player_hand, "Player")
+            print(f"🧮 Running count: {running_count}\n")
+
+            if calculate_hand_value(player_hand) > 21:
+                print("💥 You busted! Dealer wins.")
+                return
+        elif move == 's':
+            break
+        else:
+            print("Invalid input. Please enter 'h' or 's'.")
+
+    print("\nDealer's turn:")
+    display_hand(dealer_hand, "Dealer")
+    while calculate_hand_value(dealer_hand) < 17:
+        card = deck.pop()
+        dealer_hand.append(card)
+        running_count += get_card_count_value(card)
+        display_hand(dealer_hand, "Dealer")
+        print(f"🧮 Running count: {running_count}\n")
+
+    print("\n🎯 Final Results:")
+    display_hand(player_hand, "Player")
+    display_hand(dealer_hand, "Dealer")
+    print(f"🧮 Final running count: {running_count}\n")
+
+    player_total = calculate_hand_value(player_hand)
+    dealer_total = calculate_hand_value(dealer_hand)
+
+    if dealer_total > 21:
+        print("✅ Dealer busted. You win!")
+    elif player_total > dealer_total:
+        print("✅ You win!")
+    elif player_total < dealer_total:
+        print("❌ Dealer wins.")
+    else:
+        print("🤝 It's a tie!")
+
+blackjack_game()
+
+@app.route('/gatcha')
+def gatcha():
+    gatcha_balls = {
+        "SSR": "Princess Takanuma",
+        "R": "Dale",
+        "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR": "Super Ultra Mega Mecha Battle Suit Zeta",
+        "C": "Stinky Poo Poo"
+    }
+
+    weights = {
+        "SSR": 5,  # 5% chance
+        "R": 20,   # 20% chance
+        "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR": 1,  # super rare, 1% chance
+        "C": 74    # common, 74% chance
+    }
+
+    pull = random.choices(
+        population=list(gatcha_balls.values()),
+        weights=[weights[key] for key in gatcha_balls.keys()],
+        k=1
+    )[0]
+
+    return pull
+
+@app.route('/unlivable')
+def unlivable():
+    import random
+    listings = [
+        {"location": "Apartment 4B, Underwater Atlantis", "price": "$999", "condition": "Bring scuba gear"},
+        {"location": "Cabin on Mt. Doom", "price": "$2000", "condition": "Volcanic activity included"},
+        {"location": "Igloo in Sahara Desert", "price": "$500", "condition": "Melting fast"},
+        {"location": "Haunted Mansion in Chernobyl", "price": "Free", "condition": "Ghosts not optional"},
+    ]
+    return random.choice(listings)
+
+if __name__ == '__main__':
+	app.run(debug=True)
+
