@@ -372,7 +372,7 @@ def chips():
 
 
 
-
+@app.route('/blackjack')
 def get_card_count_value(card):
     if card in [2, 3, 4, 5, 6]:
         return 1
@@ -384,7 +384,7 @@ def get_card_count_value(card):
         return 0
 
 def create_deck():
-    # 4 of each card in the deck (ignoring suits)
+
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
     random.shuffle(deck)
     return deck
@@ -398,11 +398,11 @@ def calculate_hand_value(hand):
             value += 10
         elif card == 'A':
             aces += 1
-            value += 11  # Count Ace as 11 initially
+            value += 11  
         else:
             value += card
 
-    # Adjust Aces from 11 to 1 if needed
+    
     while value > 21 and aces:
         value -= 10
         aces -= 1
@@ -425,16 +425,13 @@ def blackjack_game():
     player_hand = [deck.pop(), deck.pop()]
     dealer_hand = [deck.pop(), deck.pop()]
 
-    # Update running count for initial cards
     for card in player_hand + dealer_hand:
         running_count += get_card_count_value(card)
 
-    # Show initial hands
     display_hand(player_hand, "Player")
     display_hand(dealer_hand, "Dealer", hide_first_card=True)
     print(f"🧮 Running count: {running_count}\n")
 
-    # Player's turn
     while calculate_hand_value(player_hand) < 21:
         move = input("Hit or stand? (h/s): ").lower()
         if move == 'h':
@@ -453,7 +450,6 @@ def blackjack_game():
         else:
             print("Invalid input. Please enter 'h' or 's'.")
 
-    # Dealer's turn
     print("\nDealer's turn:")
     display_hand(dealer_hand, "Dealer")
     while calculate_hand_value(dealer_hand) < 17:
@@ -463,7 +459,6 @@ def blackjack_game():
         display_hand(dealer_hand, "Dealer")
         print(f"🧮 Running count: {running_count}\n")
 
-    # Final results
     print("\n🎯 Final Results:")
     display_hand(player_hand, "Player")
     display_hand(dealer_hand, "Dealer")
