@@ -29,6 +29,37 @@ def home():
 def pokemon():
 	return jsonify({"pokemon": "Jigglypuff"})
 
+#Unlivable Realestate Endpoints
+
+@app.route('/api/chernobyl/properties', methods=['GET'])
+def get_chernobyl_properties():
+    """Get Chernobyl real estate listings"""
+    properties = [
+        {
+            "id": 1,
+            "address": "Pripyat Central Square, Apartment Block #1",
+            "price": 0,
+            "radiation_level": "15,000 mSv/year",
+            "distance_from_reactor": "3 km",
+            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+            "warnings": ["Protective gear required", "May cause mutations"]
+        },
+        {
+            "id": 2,
+            "address": "Reactor 4 Penthouse Suite", 
+            "price": -1000000,
+            "radiation_level": "Over 9000 mSv/year",
+            "distance_from_reactor": "0 km",
+            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+            "warnings": ["Immediate death likely", "GPS stops working"]
+        }
+    ]
+    
+    return jsonify({
+        "message": "Chernobyl Real Estate - Where your problems glow away!",
+        "properties": properties
+    })
+
 @app.route('/kasen')
 def kasen():
 	return render_template('kasen.html'), 200
