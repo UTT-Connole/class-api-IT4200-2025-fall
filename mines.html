@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mines — Play Money</title>
+  <style>
+    :root{
+      --bg: #0f172a;        /* slate-900 */
+      --panel: #0b1227;     /* deep panel */
+      --card: #0b1430;      
+      --muted: #94a3b8;     /* slate-400 */
+      --text: #e2e8f0;      /* slate-200 */
+      --brand: #7dd3fc;     /* sky-300 */
+      --accent: #c4b5fd;    /* violet-300 */
+      --good: #86efac;      /* green-300 */
+      --bad: #fca5a5;       /* red-300 */
+      --warn: #fde68a;      /* amber-300 */
+      --border: #1f2a44;    
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% -10%, #132047 0%, transparent 60%),
+                  radial-gradient(1200px 800px at 100% 0%, #1a2c66 0%, transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .container{ width: min(1200px, 95vw); }
+
+    header{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .title{ font-weight:800; letter-spacing:.3px; font-size: clamp(20px, 2.4vw, 32px); }
+    .subtitle{ color: var(--muted); font-size: 13px; }
+
+    .panel{ background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--border);
+            border-radius:18px; padding:16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+
+    .grid-outer{ display:grid; grid-template-columns: 3fr 2fr; gap:16px; }
+    @media (max-width: 960px){ .grid-outer{ grid-template-columns: 1fr; } }
+
+    .controls{ display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; }
+    @media (max-width: 720px){ .controls{ grid-template-columns: repeat(2, 1fr); } }
+
+    label{ font-size:12px; color:var(--muted); margin-bottom:6px; display:block; }
+    input[type="number"], input[type="text"]{
+      width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:#0a1226; color:var(--text);
+      outline:none; box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    }
+    input[type="text"]{ font-size:13px }
+
+    .btn{
+      appearance:none; border:none; padding:12px 14px; border-radius:12px; cursor:pointer; font-weight:700; color:#0b1022;
+      background: linear-gradient(180deg, var(--brand), #60a5fa); box-shadow: 0 8px 20px rgba(125, 211, 252, .35);
+      transition: transform .06s ease, filter .2s ease;
+    }
+    .btn:hover{ filter: brightness(1.05) }
+    .btn:active{ transform: translateY(1px) }
+    .btn.secondary{ background: linear-gradient(180deg, var(--accent), #a78bfa); color:#0a0f22; box-shadow: 0 8px 20px rgba(167,139,250,.35); }
+    .btn.ghost{ background: transparent; border:1px solid var(--border); color: var(--text) }
+    .actions{ display:flex; gap:10px; align-items:center; justify-content:flex-end }
+
+    /* Game grid */
+    .board{ display:grid; gap:8px; }
+    .cell{
+      width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:800;
+      background: linear-gradient(180deg, #0c1530, #09102a); border:1px solid var(--border); color:#bcd0ff; user-select:none;
+      transition: transform .05s ease, background .2s ease, border-color .2s ease;
+    }
+    .cell:hover{ transform: translateY(-1px) }
+    .cell.revealed{ background: linear-gradient(180deg, rgba(134,239,172,.18), rgba(134,239,172,.08)); border-color:#1f4732; color:#d1fae5 }
+    .cell.mine{ background: linear-gradient(180deg, rgba(252,165,165,.25), rgba(252,165,165,.1)); border-color:#4b1d1d; color:#fee2e2 }
+    .cell:disabled{ opacity:.6; cursor:not-allowed; transform:none }
+
+    .meta{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; color:var(--muted); font-size:13px; }
+    .badge{ padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px; letter-spacing:.4px; }
+    .badge.good{ background: rgba(134,239,172,.15); color:#86efac; border:1px solid #2a5a3e }
+    .badge.bad{ background: rgba(252,165,165,.15); color:#fca5a5; border:1px solid #5a2a2a }
+
+    .summary{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:14px }
+    .summary div{ padding:10px 12px; background:#0a1226; border:1px solid var(--border); border-radius:12px }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+
+    .error{ color:#fecaca; background: rgba(254, 202, 202, .12); border:1px solid #5f2a2a; padding:10px 12px; border-radius:12px; font-size:13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="title">💣 Mines — 99% quit before they hit it big! 💎</div>
+        <div class="subtitle">Create a game, reveal tiles, cash out before you hit a mine.</div>
+      </div>
+      <div style="min-width:280px" class="panel">
+        <label for="apiBase">API Base</label>
+        <input id="apiBase" type="text" value="http://127.0.0.1:8000" />
+      </div>
+    </header>
+
+    <section class="panel" style="margin-bottom:16px">
+      <div class="controls">
+        <div>
+          <label>Rows</label>
+          <input type="number" id="rows" value="5" min="2" />
+        </div>
+        <div>
+          <label>Cols</label>
+          <input type="number" id="cols" value="5" min="2" />
+        </div>
+        <div>
+          <label>Mines</label>
+          <input type="number" id="mines" value="3" min="1" />
+        </div>
+        <div>
+          <label>Bet (play money)</label>
+          <input type="number" id="bet" value="100" min="0" />
+        </div>
+        <div class="actions">
+          <button class="btn" id="createBtn">Create Game</button>
+        </div>
+      </div>
+      <div id="createError" style="margin-top:10px; display:none" class="error"></div>
+    </section>
+
+    <div class="grid-outer">
+      <section class="panel">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px">
+          <div>
+            <div style="font-size:12px; color:var(--muted)">Game ID</div>
+            <div id="gid" class="mono" style="font-size:12px; word-break:break-all">—</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px; color:var(--muted)">Multiplier</div>
+            <div id="mult" style="font-size:22px; font-weight:800">× 1.0000</div>
+          </div>
+        </div>
+
+        <div id="board" class="board" style="grid-template-columns: repeat(5, 52px);"></div>
+
+        <div class="meta">
+          <div>Revealed: <b id="revealed">0</b> • Safe Total: <b id="safeTotal">0</b> • Cells: <b id="cells">0</b></div>
+          <div class="actions">
+            <button class="btn secondary" id="cashoutBtn" disabled>Cash Out</button>
+            <button class="btn ghost" id="refreshBtn">Refresh</button>
+          </div>
+        </div>
+        <div id="stateBadge" style="margin-top:10px"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="summary">
+          <div><div style="color:var(--muted); font-size:12px">Rows</div><div id="sRows">—</div></div>
+          <div><div style="color:var(--muted); font-size:12px">Cols</div><div id="sCols">—</div></div>
+          <div><div style="color:var(--muted); font-size:12px">Mines</div><div id="sMines">—</div></div>
+          <div><div style="color:var(--muted); font-size:12px">Bet</div><div id="sBet">—</div></div>
+          <div><div style="color:var(--muted); font-size:12px">Status</div><div id="sStatus">—</div></div>
+          <div><div style="color:var(--muted); font-size:12px">Payout</div><div id="sPayout">—</div></div>
+        </div>
+        <div style="margin-top:12px">
+          <div style="color:var(--muted); font-size:12px">Mines (shown after game ends)</div>
+          <div id="sMinesList" class="mono" style="font-size:12px; word-break:break-all">—</div>
+        </div>
+        <div id="panelError" style="margin-top:12px; display:none" class="error"></div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const apiBaseEl = $("apiBase");
+    const rowsEl = $("rows");
+    const colsEl = $("cols");
+    const minesEl = $("mines");
+    const betEl = $("bet");
+
+    const gidEl = $("gid");
+    const multEl = $("mult");
+    const boardEl = $("board");
+    const revealedEl = $("revealed");
+    const safeTotalEl = $("safeTotal");
+    const cellsEl = $("cells");
+    const createErrEl = $("createError");
+    const panelErrEl = $("panelError");
+    const stateBadgeEl = $("stateBadge");
+
+    const sRows = $("sRows");
+    const sCols = $("sCols");
+    const sMines = $("sMines");
+    const sBet = $("sBet");
+    const sStatus = $("sStatus");
+    const sPayout = $("sPayout");
+    const sMinesList = $("sMinesList");
+
+    const createBtn = $("createBtn");
+    const cashoutBtn = $("cashoutBtn");
+    const refreshBtn = $("refreshBtn");
+
+    let game = null;
+
+    function showError(el, msg){ el.style.display='block'; el.textContent = msg; }
+    function clearError(el){ el.style.display='none'; el.textContent = ""; }
+
+    function renderBoard(){
+      const r = game?.rows ?? Number(rowsEl.value);
+      const c = game?.cols ?? Number(colsEl.value);
+      boardEl.style.gridTemplateColumns = `repeat(${c}, 52px)`;
+      boardEl.innerHTML = "";
+
+      const revealed = new Set((game?.revealed_cells || []).map(([rr,cc])=>`${rr}-${cc}`));
+      const isOver = !!game?.is_over;
+      const mines = new Set((game?.mine_positions || []).map(([rr,cc])=>`${rr}-${cc}`));
+
+      for(let ri=0; ri<r; ri++){
+        for(let ci=0; ci<c; ci++){
+          const key = `${ri}-${ci}`;
+          const btn = document.createElement('button');
+          btn.className = 'cell';
+          btn.setAttribute('aria-label', `Cell ${ri},${ci}`);
+          btn.disabled = isOver || revealed.has(key);
+
+          if (revealed.has(key)){
+            btn.classList.add('revealed');
+            btn.textContent = '✓';
+          }
+          if (isOver && mines.has(key)){
+            btn.classList.add('mine');
+            btn.textContent = '💣';
+          }
+
+          btn.addEventListener('click', () => reveal(ri, ci));
+          boardEl.appendChild(btn);
+        }
+      }
+
+      // meta
+      revealedEl.textContent = game ? game.safe_revealed : 0;
+      safeTotalEl.textContent = game ? game.safe_total : 0;
+      cellsEl.textContent = game ? game.total_cells : (Number(rowsEl.value)*Number(colsEl.value));
+      multEl.textContent = `× ${(game?.current_multiplier || 1).toFixed(4)}`;
+
+      // right panel
+      sRows.textContent = game?.rows ?? '—';
+      sCols.textContent = game?.cols ?? '—';
+      sMines.textContent = game?.mines ?? '—';
+      sBet.textContent = game ? Number(game.bet||0).toFixed(2) : '—';
+      sStatus.textContent = game ? (game.is_over ? (game.is_bust? 'Bust' : 'Cashed Out') : 'In progress') : '—';
+      sPayout.textContent = game?.cashout_amount != null ? Number(game.cashout_amount).toFixed(4) : '—';
+      sMinesList.textContent = game?.is_over && game?.mine_positions ? JSON.stringify(game.mine_positions) : '—';
+
+      gidEl.textContent = game?.game_id || '—';
+      cashoutBtn.disabled = !game || game.is_over;
+
+      stateBadgeEl.innerHTML = '';
+      if (game){
+        const span = document.createElement('span');
+        span.className = 'badge ' + (game.is_over ? (game.is_bust ? 'bad' : 'good') : '');
+        span.textContent = game.is_over ? (game.is_bust ? 'BUST' : 'CASHED OUT') : 'IN PROGRESS';
+        stateBadgeEl.appendChild(span);
+      }
+    }
+
+    async function createGame(){
+      clearError(createErrEl);
+      try{
+        const res = await fetch(`${apiBaseEl.value}/games`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({rows:Number(rowsEl.value), cols:Number(colsEl.value), mines:Number(minesEl.value), bet:Number(betEl.value)})
+        });
+        const txt = await res.text();
+        if (!res.ok) throw new Error(txt);
+        game = JSON.parse(txt);
+        renderBoard();
+      }catch(err){ showError(createErrEl, err.message || String(err)); }
+    }
+
+    async function reveal(r,c){
+      clearError(panelErrEl);
+      if (!game || game.is_over) return;
+      try{
+        const res = await fetch(`${apiBaseEl.value}/games/${game.game_id}/reveal`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({row:r, col:c})
+        });
+        const txt = await res.text();
+        if (!res.ok) throw new Error(txt);
+        game = JSON.parse(txt);
+        renderBoard();
+      }catch(err){ showError(panelErrEl, err.message || String(err)); }
+    }
+
+    async function cashout(){
+      clearError(panelErrEl);
+      if (!game || game.is_over) return;
+      try{
+        const res = await fetch(`${apiBaseEl.value}/games/${game.game_id}/cashout`, { method:'POST' });
+        const txt = await res.text();
+        if (!res.ok) throw new Error(txt);
+        game = JSON.parse(txt);
+        renderBoard();
+      }catch(err){ showError(panelErrEl, err.message || String(err)); }
+    }
+
+    async function refresh(){
+      clearError(panelErrEl);
+      if (!game) return;
+      try{
+        const res = await fetch(`${apiBaseEl.value}/games/${game.game_id}`);
+        const txt = await res.text();
+        if (!res.ok) throw new Error(txt);
+        game = JSON.parse(txt);
+        renderBoard();
+      }catch(err){ showError(panelErrEl, err.message || String(err)); }
+    }
+
+    // wire events
+    createBtn.addEventListener('click', createGame);
+    cashoutBtn.addEventListener('click', cashout);
+    refreshBtn.addEventListener('click', refresh);
+
+    // initial paint
+    renderBoard();
+  </script>
+</body>
+</html>
