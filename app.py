@@ -369,6 +369,19 @@ def chips():
             chips = None
     return render_template('chips.html', amount=amount, chips=chips)
 
+@app.route('/numberguesser', methods=['GET', 'POST'])
+def guess_number():
+    target = random.randint(1, 10)  # Randomly pick a number between 1 and 10
+    result = None
+
+    if request.method == 'POST':
+        user_guess = int(request.form['guess'])
+        if user_guess == target:
+            result = f"Congratulations! You guessed the number correctly. It was {target}!"
+        else:
+            result = f"Sorry, that's incorrect! The number was {target}. Try again!"
+
+    return jsonify(result=result)
 
 if __name__ == '__main__':
 	app.run(debug=True)
