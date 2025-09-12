@@ -399,6 +399,88 @@ def coin_flip():
     result = random.choice(['Heads', 'Tails'])
     return result
 
+@app.route('/blackjack', methods=['GET', 'POST'])
+def blackjack():
+    if request.method == 'POST':
+        data = request.get_json()
+        bet_amount = data.get('bet_amount')
+        username = data.get('username')
+
+        if username not in users or users[username]['balance'] < bet_amount:
+            return jsonify({"error": "Insufficient balance or user not found."}), 400
+
+        # Initialize game variables
+        deck = create_deck()
+        player_hand = [draw_card(deck), draw_card(deck)]
+        dealer_hand = [draw_card(deck), draw_card(deck)]
+
+        player_total = calculate_hand_value(player_hand)
+        dealer_total = calculate_hand_value(dealer_hand)
+
+        # Game logic for player actions (hit or stand)
+        while player_total < 21:
+            action = data.get('action')  # 'hit' or 'stand'
+            if action == 'hit':
+                player_hand.append(draw_card(deck))
+                player_total = calculate_hand_value(player_hand)
+            elif action == 'stand':
+                break
+
+        # Dealer's turn
+        while dealer_total < 17:
+            dealer_hand.append(draw_card(deck))
+            dealer_total = calculate_hand_value(dealer_hand)
+
+        # Determine winner
+        result = determine_winner(player_total, dealer_total)
+        if result == 'player':
+            users[username]['balance'] += bet_amount
+            return jsonify({"message": "You win!", "balance": users[username]['balance']})
+        elif result == 'dealer':
+            users[username]['balance'] -= bet_amount
+            return jsonify({"message": "Dealer wins!", "balance": users[username]['balance']})
+        else:
+            return jsonify({"message": "It's a tie!", "balance": users[username]['balance']})
+
+    return render_template('blackjack.html')
+
+def create_deck():
+    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+    return [(rank, suit) for suit in suits for rank in ranks]
+
+def draw_card(deck):
+    return deck.pop(random.randint(0, len(deck) - 1))
+
+def calculate_hand_value(hand):
+    value = 0
+    aces = 0
+    for card in hand:
+        rank = card[0]
+        if rank in ['Jack', 'Queen', 'King']:
+            value += 10
+        elif rank == 'Ace':
+            aces += 1
+            value += 11  # Initially count Ace as 11
+        else:
+            value += int(rank)
+
+    # Adjust for Aces
+    while value > 21 and aces:
+        value -= 10
+        aces -= 1
+
+    return value
+
+def determine_winner(player_total, dealer_total):
+    if player_total > 21:
+        return 'dealer'
+    elif dealer_total > 21 or player_total > dealer_total:
+        return 'player'
+    elif player_total < dealer_total:
+        return 'dealer'
+    else:
+        return 'tie'
 # ===================== MINES GAME (Blueprint) =====================
 # UI:  GET  /mines                 -> serves mines.html (must be next to app.py OR adjust to templates)
 # API: POST /mines/api/games
@@ -577,6 +659,9 @@ def reveal_cell(game_id):
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
+
+
+
 
 @mines_bp.post("/api/games/<game_id>/cashout")
 def cashout(game_id):
