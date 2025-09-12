@@ -140,6 +140,14 @@ def get_balance(username):
         return jsonify({"error": "User not found"}), 404
     return jsonify({"balance": users[username]['balance']}), 200
 
+
+@app.route('/drawAcard')
+def drawAcard():
+	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+	print("card", card)
+	return jsonify(card)
+
 @app.route('/aaron')
 def home12():
     return 'What? again what?'
@@ -160,6 +168,7 @@ def get_fortune():
     chosen = random.choice(fortunes)
     chosen["date"] = str(date.today())
     return jsonify(chosen)
+
 
 @app.route('/roll/<int:sides>', methods=['GET'])
 def roll_dice(sides):
@@ -241,12 +250,7 @@ def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
 
-@app.route('/campus-locations')
-def campus_locations():
-    locs = ["Holland", "Smith", "HPC", "General Education Building", "Gardner Center", "Burns Arena"]
-    choice = random.choice(locs)
-    res = json.dumps({"location": choice})
-    return res
+
 
 @app.route('/rf')
 def home8():
@@ -392,6 +396,25 @@ def guess_number():
         else:
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
+
+
+@app.route('/blackjack')
+def get_card_count_value(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [7, 8, 9]:
+        return 0
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+def create_deck():
+
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
+    random.shuffle(deck)
+    return deck
+
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route('/clint')
@@ -656,10 +679,12 @@ def reveal_cell(game_id):
         g.is_bust = True
         g.cashout_amount = 0.0
     else:
+        print("🤝 It's a tie!")
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
 
+# blackjack_game()
 
 
 
