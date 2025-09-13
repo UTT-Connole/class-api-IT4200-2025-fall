@@ -381,7 +381,7 @@ def hellhole():
 @app.route('/Tucson')
 def Tucson():
     message = {
-        "Location": "Tucson, Arizoan",
+        "Location": "Tucson, Arizona",
         "Description": "We don't take about it"
     }
     return jsonify(message)
