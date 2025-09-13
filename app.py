@@ -378,6 +378,14 @@ def hellhole():
     }
     return jsonify(message)
 
+@app.route('/Tucson')
+def Tucson():
+    message = {
+        "Location": "Tucson, Arizoan",
+        "Description": "We don't take about it"
+    }
+    return jsonify(message)
+
 @app.route('/chips', methods=['GET', 'POST'])
 def chips():
     chips = None
