@@ -368,6 +368,16 @@ def fav_quote():
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
 
+@app.route('/hellhole')
+def hellhole():
+    message = {
+        "location": "Hellhole",
+        "description": "Hellhole is a great place to visit... if you're into nightmares.",
+        "fact": random.choice(hellhole_facts),
+        "timestamp": datetime.utcnow().isoformat() + "Z"
+    }
+    return jsonify(message)
+
 @app.route('/chips', methods=['GET', 'POST'])
 def chips():
     chips = None
