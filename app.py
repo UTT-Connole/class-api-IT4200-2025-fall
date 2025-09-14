@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, redirect
 import random
 import json
 import os
@@ -313,6 +313,11 @@ def index():
 def page_not_found(e):
     print("User entered invalid URL")
     return render_template('404.html'), 404
+
+@app.route('/randompkmon')
+def randompkmon():
+    a = random.randint(1, 1010)
+    return redirect((f'https://www.pokemon.com/us/pokedex/{a}')), 302
 
 @app.route('/dave')
 def dave():
