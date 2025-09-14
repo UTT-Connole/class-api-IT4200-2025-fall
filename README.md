@@ -28,7 +28,7 @@ How to run:
 source .venv/bin/activate  
 pip install -r requirements.txt  
 python app.py  
-# open http://127.0.0.1:8000/api/underwater/properties  
+### open http://127.0.0.1:8000/api/underwater/properties  
 
 Brayden is da bomb!!!
 
