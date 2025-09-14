@@ -63,6 +63,34 @@ def get_chernobyl_properties():
         "message": "Chernobyl Real Estate - Where your problems glow away!",
         "properties": properties
     })
+    
+@app.route('/api/underwater/properties', methods=['GET'])
+def get_underwater_properties():
+    """Get underwater real estate listings"""
+    properties = [
+        {
+            "id": 201,
+            "address": "Atlantis Towers, Suite 1A",
+            "price": 100,
+            "depth": "300 ft below sea level",
+            "amenities": ["Panoramic fish views", "Natural AC", "Scuba-only access"],
+            "warnings": ["Risk of drowning", "Mold is inevitable"]
+        },
+        {
+            "id": 202,
+            "address": "Pacific Ocean Bubble Dome",
+            "price": 50,
+            "depth": "500 ft below sea level",
+            "amenities": ["Shark-watching windows", "Constant waves ASMR"],
+            "warnings": ["Oxygen runs out fast", "Structural leaks possible"]
+        }
+    ]
+
+    return jsonify({
+        "message": "🌊 Underwater Real Estate – Live where others vacation!",
+        "properties": properties
+    })
+
 
 @app.route('/kasen')
 def kasen():

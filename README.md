@@ -20,6 +20,15 @@ Please be aware of the following problems that prevent running that needed to be
 * Duplicate function names, like `home()` has been used several times. This has been hotfixed with `home1(), home2()` and so forth. Recommend using unique function names.
 * Otherwise normal python syntax errors. Remember CS1410 my dudes?
 ---
+## UNLIVABLE REAL ESTATE – UNDERWATER EDITION
+New endpoint includes totally-uninhabitable underwater properties.  
+Scuba gear not included. Oxygen sold separately.  
+
+How to run:  
+source .venv/bin/activate  
+pip install -r requirements.txt  
+python app.py  
+### open http://127.0.0.1:8000/api/underwater/properties  
 
 Brayden is da bomb!!!
 
