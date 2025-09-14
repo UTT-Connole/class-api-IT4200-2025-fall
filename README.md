@@ -95,7 +95,10 @@ Brayden is da bomb!!!
 Brayden is da bomb!!!
 Only in the Merge conflict
 
-Aaron is an okay violist
+Aaron is an okay 
+
+## /randompkmon endpoint
+This endpoint will direct you to a random pokemon listed on pokemon.com's website
 
 ## Pokémon
 
