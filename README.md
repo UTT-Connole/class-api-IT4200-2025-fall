@@ -7,9 +7,12 @@ Gamble your life away.
 99% quit before they hit it big!!!
 
 How to run:
+```
 source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
+```
+
 # open http://127.0.0.1:8000/mines
 
 
