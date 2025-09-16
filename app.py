@@ -11,7 +11,13 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
-app = Flask(__name__)
+
+def create_app():
+    app = Flask(__name__)
+    return app
+
+app = create_app()
+
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 # Moved global variables to top for organization
