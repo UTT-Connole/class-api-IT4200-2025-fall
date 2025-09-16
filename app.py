@@ -11,7 +11,6 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
-app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 # Moved global variables to top for organization
@@ -25,10 +24,20 @@ restaurants = [
     "Five Guys",
     "Panera Bread"
 ]
+app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return render_template('index.html'), 200
+def create_app():
+
+    app = Flask(__name__)
+
+    @app.route('/')
+    def home():
+        return render_template('index.html'), 200
+
+    return app
+
+
+
 
 @app.route('/pokemon')
 def pokemon():
