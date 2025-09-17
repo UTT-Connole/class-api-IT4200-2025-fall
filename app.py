@@ -771,6 +771,103 @@ def cashout(game_id):
 app.register_blueprint(mines_bp)
 # =================== END MINES GAME (Blueprint) ===================
 
+# pokemon battles 
+
+pokemon_rankings = {
+    'mewtwo': 100,
+    'arceus': 98,
+    'rayquaza': 95,
+    'dialga': 92,
+    'palkia': 90,
+    'giratina': 88,
+    'kyogre': 85,
+    'groudon': 83,
+    'ho-oh': 80,
+    'lugia': 78,
+    'charizard': 75,
+    'dragonite': 72,
+    'tyranitar': 70,
+    'metagross': 68,
+    'garchomp': 65
+}
+
+@app.route('/pokemon-ranked', methods=['GET', 'POST'])
+def pokemon_battle():
+    if request.method == 'GET':
+        return render_template('pokemon_battle.html')
+    
+    # POST request handling
+    pokemon_name = request.form.get('pokemon', '').strip().lower()
+    power_rating = request.form.get('power_rating', '').strip()
+    
+    if not pokemon_name:
+        return render_template('pokemon_battle.html', error="Please enter a Pokemon name!")
+    
+    # Check if Pokemon exists in our rankings
+    if pokemon_name not in pokemon_rankings:
+        if not power_rating:
+            # Pokemon not found, ask for power rating
+            return render_template('pokemon_battle.html', 
+                                 pokemon_name=pokemon_name.title(),
+                                 needs_power=True)
+        
+        # Validate power rating
+        try:
+            power_rating = int(power_rating)
+            if not (1 <= power_rating <= 100):
+                return render_template('pokemon_battle.html',
+                                     pokemon_name=pokemon_name.title(),
+                                     needs_power=True,
+                                     error="Power rating must be between 1 and 100!")
+            
+            # Check if power rating is already used
+            if power_rating in pokemon_rankings.values():
+                return render_template('pokemon_battle.html',
+                                     pokemon_name=pokemon_name.title(),
+                                     needs_power=True,
+                                     error=f"Power rating {power_rating} is already taken! Choose a different score.")
+            
+            # Add new Pokemon to rankings
+            pokemon_rankings[pokemon_name] = power_rating
+            
+        except ValueError:
+            return render_template('pokemon_battle.html',
+                                 pokemon_name=pokemon_name.title(),
+                                 needs_power=True,
+                                 error="Power rating must be a valid number!")
+    
+    # Battle logic
+    user_pokemon = pokemon_name
+    user_score = pokemon_rankings[user_pokemon]
+    
+    # Computer picks random Pokemon (excluding user's Pokemon)
+    available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
+    computer_pokemon = random.choice(available_pokemon)
+    computer_score = pokemon_rankings[computer_pokemon]
+    
+    # Determine winner
+    if user_score > computer_score:
+        winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
+        result = "victory"
+    elif computer_score > user_score:
+        winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
+        result = "defeat"
+    else:
+        winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
+        result = "tie"
+    
+    battle_details = {
+        'user_pokemon': user_pokemon.title(),
+        'user_score': user_score,
+        'computer_pokemon': computer_pokemon.title(),
+        'computer_score': computer_score,
+        'winner': winner,
+        'result': result
+    }
+    
+    return render_template('pokemon_battle.html', battle=battle_details)
+
+
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8000, debug=True)
