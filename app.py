@@ -11,6 +11,7 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
+
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 # Moved global variables to top for organization
@@ -866,7 +867,24 @@ def pokemon_battle():
     }
     
     return render_template('pokemon_battle.html', battle=battle_details)
+@app.route('/bet/rps', methods=['GET'])
+def bet_rps():
+    moves = ['rock', 'paper', 'scissors']
+    player = request.args.get('player', '').lower()
+    amount = request.args.get('amount', type=int, default=0)
+    
+    if player not in moves or amount <= 0:
+        return jsonify({"error": "Invalid move or amount"}), 400
 
+    comp = random.choice(moves)
+    win = (player == 'rock' and comp == 'scissors') or \
+          (player == 'scissors' and comp == 'paper') or \
+          (player == 'paper' and comp == 'rock')
+
+    outcome = 'tie' if player == comp else 'win' if win else 'lose'
+    payout = amount if outcome == 'tie' else amount*2 if outcome == 'win' else 0
+
+    return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
