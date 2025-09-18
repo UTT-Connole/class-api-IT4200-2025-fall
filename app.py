@@ -238,3 +238,77 @@ def dad_joke_generator():
 	]
 	return jsonify({"joke": random.choice(jokes)})
 
+@app.route('/clint')
+def spin_wheel():
+    number = random.randint(0, 36)
+    color = 'Green' if number == 0 else ('Red' if number % 2 == 0 else 'Black')
+    return number, color
+
+def get_payout(bet_type, bet_value, result_number, result_color):
+    if bet_type == 'number':
+        return 35 if bet_value == result_number else -1
+    elif bet_type == 'color':
+        return 1 if bet_value.lower() == result_color.lower() else -1
+    else:
+        return -1
+
+def main():
+    print("🎲 Welcome to Python Roulette!")
+    balance = 100
+
+    while balance > 0:
+        print(f"\nYour current balance: ${balance}")
+        bet_type = input("Bet on 'number' or 'color': ").strip().lower()
+
+        if bet_type == 'number':
+            try:
+                bet_value = int(input("Choose a number between 0 and 36: "))
+                if not 0 <= bet_value <= 36:
+                    print("Invalid number. Try again.")
+                    continue
+            except ValueError:
+                print("Invalid input. Try again.")
+                continue
+        elif bet_type == 'color':
+            bet_value = input("Choose a color (Red/Black): ").strip().capitalize()
+            if bet_value not in ['Red', 'Black']:
+                print("Invalid color. Try again.")
+                continue
+        else:
+            print("Invalid bet type. Try again.")
+            continue
+
+        try:
+            wager = int(input("Enter your wager amount: "))
+            if wager > balance or wager <= 0:
+                print("Invalid wager. Try again.")
+                continue
+        except ValueError:
+            print("Invalid input. Try again.")
+            continue
+
+        result_number, result_color = spin_wheel()
+        print(f"\n🎡 The wheel landed on {result_number} ({result_color})")
+
+        payout_multiplier = get_payout(bet_type, bet_value, result_number, result_color)
+        winnings = wager * payout_multiplier if payout_multiplier > 0 else 0
+        balance += winnings - wager
+
+        if payout_multiplier > 0:
+            print(f"🎉 You won ${winnings}!")
+        else:
+            print("😢 You lost your wager.")
+
+        if balance <= 0:
+            print("💸 You're out of money! Game over.")
+            break
+
+        play_again = input("Play again? (y/n): ").strip().lower()
+        if play_again != 'y':
+            print("Thanks for playing!")
+            break
+
+if __name__ == "__main__":
+    main()
+
+
