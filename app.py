@@ -41,6 +41,23 @@ def create_app():
     def pokemon():
         return jsonify({"pokemon": "Jigglypuff"})
 
+    @app.route('/drawAcard')
+    def drawAcard():
+        deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+        card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+        print("card", card)
+        return jsonify(card)
+    
+    @app.route('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
+
+
+
+
+
     return app
 
 app = create_app()
@@ -157,14 +174,6 @@ hockey_results = [
 def get_random_game():
     result = random.choice(hockey_results)
     return jsonify({"game_result": result})
-
-
-@app.route('/drawAcard')
-def drawAcard():
-	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
-	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
-	print("card", card)
-	return jsonify(card)
 
 @app.route('/aaron')
 def home12():
