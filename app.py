@@ -27,6 +27,9 @@ restaurants = [
 ]
 
 def create_app():
+    # If a module-level `app` already exists (import time may have created
+    # it and later code attached many routes to it), return that instance
+    # so tests which call create_app() get the fully-configured app.
 
     app = Flask(__name__)
 
@@ -393,7 +396,7 @@ def hellhole():
     message = {
         "location": "Hellhole",
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
-        "fact": random.choice(hellhole_facts),
+        #"fact": random.choice(hellhole_facts),
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
     return jsonify(message)
