@@ -147,6 +147,8 @@ Selects a predetermined fortune from a list of fortunes. Contains untold develop
 
 ## /roll endpoint (Bryson Francis)
 Rolls an "x" sided dice and returns the value of the rolled dice. It also returns an error if someone tries to roll a dice lower than 2.
+## /Rock-Paper-Scissors Betting (/bet/rps)
+Place a bet on rock, paper, or scissors and see if you win against the computer.
 
 ## /steal_yo_name endpoint
 

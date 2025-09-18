@@ -11,6 +11,7 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
+
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 # Moved global variables to top for organization
@@ -142,43 +143,20 @@ def weather():
     humidity = f"{random.randint(10, 100)}%"      # Random humidity between 10% and 100%
     return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
-# In-memory storage for users and bets
-users = {
-    "user1": {"balance": 1000},  # Starting fake currency
-}
-bets = []
 
-@app.route('/hockeybet', methods=['POST'])
-def place_bet():
-    data = request.get_json()
-    username = data.get('username')
-    game_id = data.get('game_id')
-    team = data.get('team')  # Team the user is betting on
-    amount = data.get('amount')
+# List of fake hockey game results
+hockey_results = [
+    "Ice Sharks 3 - 2 Snow Bears",
+    "Glacier Wolves 1 - 4 Arctic Foxes",
+    "Polar Kings 5 - 5 Frost Giants",
+    "Blizzard Hawks 2 - 0 Frozen Flames",
+    "Northern Lights 6 - 3 Winter Whales"
+]
 
-    # Basic validation
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
-    if users[username]['balance'] < amount:
-        return jsonify({"error": "Insufficient balance"}), 400
-
-    # Deduct amount and store bet
-    users[username]['balance'] -= amount
-    bet = {
-        "username": username,
-        "game_id": game_id,
-        "team": team,
-        "amount": amount
-    }
-    bets.append(bet)
-
-    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
-
-@app.route('/hockeybalance/<username>', methods=['GET'])
-def get_balance(username):
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
-    return jsonify({"balance": users[username]['balance']}), 200
+@app.route('/hockey', methods=['GET'])
+def get_random_game():
+    result = random.choice(hockey_results)
+    return jsonify({"game_result": result})
 
 
 @app.route('/drawAcard')
@@ -869,7 +847,24 @@ def pokemon_battle():
     }
     
     return render_template('pokemon_battle.html', battle=battle_details)
+@app.route('/bet/rps', methods=['GET'])
+def bet_rps():
+    moves = ['rock', 'paper', 'scissors']
+    player = request.args.get('player', '').lower()
+    amount = request.args.get('amount', type=int, default=0)
+    
+    if player not in moves or amount <= 0:
+        return jsonify({"error": "Invalid move or amount"}), 400
 
+    comp = random.choice(moves)
+    win = (player == 'rock' and comp == 'scissors') or \
+          (player == 'scissors' and comp == 'paper') or \
+          (player == 'paper' and comp == 'rock')
+
+    outcome = 'tie' if player == comp else 'win' if win else 'lose'
+    payout = amount if outcome == 'tie' else amount*2 if outcome == 'win' else 0
+
+    return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
