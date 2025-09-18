@@ -47,6 +47,16 @@ def create_app():
         card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
         print("card", card)
         return jsonify(card)
+    
+    @app.route('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
+
+
+
+
 
     return app
 
