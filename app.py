@@ -29,8 +29,6 @@ def create_app():
     # If a module-level `app` already exists (import time may have created
     # it and later code attached many routes to it), return that instance
     # so tests which call create_app() get the fully-configured app.
-    if 'app' in globals() and isinstance(globals()['app'], Flask):
-        return globals()['app']
 
     app = Flask(__name__)
 
