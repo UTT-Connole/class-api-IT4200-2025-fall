@@ -37,10 +37,13 @@ def create_app():
     def pokemon():
         return jsonify({"pokemon": "Jigglypuff"})
 
+    @app.route('/brayden')
+    def brayden():
+        return 'SupDudes'
+
     return app
 
 app = create_app()
-
 
 
 # Unlivable Realestate Endpoints
@@ -189,9 +192,6 @@ def drawAcard():
 def home12():
     return 'What? again what?'
 
-@app.route('/brayden')
-def brayden():
-    return 'SupDudes'
 
 @app.route('/fortune', methods=['GET'])
 def get_fortune():
