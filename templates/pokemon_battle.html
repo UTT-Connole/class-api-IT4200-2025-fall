@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Battles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            text-align: center;
+            color: #2c5aa0;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: #d32f2f;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 5px;
+        }
+        .battle-result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .victory {
+            background-color: #e8f5e8;
+            border: 2px solid #4CAF50;
+            color: #2e7d32;
+        }
+        .defeat {
+            background-color: #ffebee;
+            border: 2px solid #f44336;
+            color: #c62828;
+        }
+        .tie {
+            background-color: #fff3e0;
+            border: 2px solid #ff9800;
+            color: #e65100;
+        }
+        .battle-details {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .pokemon-score {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Battles</h1>
+    
+    <div class="form-container">
+        <form method="POST">
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+            
+            <label for="pokemon">Enter your Pokemon of choice:</label>
+            <input type="text" id="pokemon" name="pokemon" 
+                   value="{% if pokemon_name %}{{ pokemon_name }}{% endif %}" 
+                   required>
+            
+            {% if needs_power %}
+                <label for="power_rating">Your Pokemon is not in the list, add its power level here (1-100):</label>
+                <input type="number" id="power_rating" name="power_rating" 
+                       min="1" max="100" required>
+            {% endif %}
+            
+            <button type="submit">Battle!</button>
+        </form>
+        
+        {% if battle %}
+            <div class="battle-result {{ battle.result }}">
+                <h2>Battle Results!</h2>
+                <div class="battle-details">
+                    <div class="pokemon-score">Your {{ battle.user_pokemon }}: {{ battle.user_score }} points</div>
+                    <div class="pokemon-score">Computer's {{ battle.computer_pokemon }}: {{ battle.computer_score }} points</div>
+                    <h3>{{ battle.winner }}</h3>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

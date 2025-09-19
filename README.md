@@ -1,61 +1,50 @@
 # class-api-IT4200-2025-fall
+---
+## DYLAN's MINES GAMBLING GAME W UI
+Run this really cool mine game.
+Gamble your life away.
 
-Brayden is da bomb!!!
+99% quit before they hit it big!!!
 
-                                ██    ██      
-                    ██████      ██  ██        
-                  ██      ██                  
-                ██          ████░░    ████    
-                ██                            
-              ██████            ██  ██        
-              ██████            ██    ██      
-          ██████████████                      
-        ██████░░░░░░░░▓▓██                    
-      ██████░░░░░░░░  ▓▓▓▓██                  
-      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
-      ████████████▓▓▓▓▓▓████                  
-        ██████████████████                    
-          ██████████████                      
-              ██████ 
-pretty hangry
+How to run:
+```
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+# open http://127.0.0.1:8000/mines
 
 
 
+## Bulid as of latest commit by DaveTheFave is Runnable
+Please be aware of the following problems that prevent running that needed to be fixed to run:
+* Duplicate endpoints, either same name, or complete copied laying around after merge conflicts
+* Duplicate function names, like `home()` has been used several times. This has been hotfixed with `home1(), home2()` and so forth. Recommend using unique function names.
+* Otherwise normal python syntax errors. Remember CS1410 my dudes?
+---
+## UNLIVABLE REAL ESTATE – UNDERWATER EDITION
+New endpoint includes totally-uninhabitable underwater properties.  
+Scuba gear not included. Oxygen sold separately.  
+
+How to run:  
+source .venv/bin/activate  
+pip install -r requirements.txt  
+python app.py  
+### open http://127.0.0.1:8000/api/underwater/properties  
+
+## Recent Landing Page Updates (by Kasen)
+
+- Added more GIFs to the landing page for extra fun and visual interest.
+- Created a dedicated GIF container to organize and style the GIFs.
+- Introduced a header section at the top of the page featuring an eye-catching GIF that covers the entire header area.
+- Improved layout so the header GIF is flush with the top of the page (no gray space above).
+
+Check out `templates/index.html` to see these changes in action!
 
 
-Brayden got here first!!
-Gage did not got here first!!
-
-Got here late
-Brayden is also a fantastic ultimate frisbee player
-
-changegit
-
-Its chewsday init?
-
-hello world!!
-
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Only in the Merge conflict
-
-Aaron is an okay violist
+## /randompkmon endpoint
+This endpoint will direct you to a random pokemon listed on pokemon.com's website
 
 ## Pokémon
 
@@ -73,7 +62,6 @@ Pokémon is a media franchise created by Satoshi Tajiri and Ken Sugimori, first 
 - **Pikachu**: The franchise mascot, an Electric-type Pokémon.
 - **Charizard**: A powerful Fire/Flying-type, final evolution of Charmander.
 - **Bulbasaur, Squirtle, and Charmander**: The original starter Pokémon from the first games.
-- **Dragonite**: The best Pokemon.
 
 ### Games
 
@@ -97,188 +85,23 @@ The main series consists of role-playing games (RPGs) where players travel throu
 - "Gotta Catch 'Em All!" is the iconic slogan.
 
 For more information, visit the [official Pokémon website](https://www.pokemon.com/).
-What's a violin
-What's a violin
-What's a violin
-Violins is not allowed in class.
-What's a violin?
-What's a violin
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-What's a violin
-
-What's a violin!
-What's a violin?
-What's a violin!
-What's a violin?
-What's a violin!
 
 
-Porter is dope
-it's pieces of wood that that crafted togeather to form an instrument that can cost more than your car.
-
-Wood with strings that go brrr.
-
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-IT'S GONNA BLOW!!!!!                                              
-                                              
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-Brayden is da bomb!!!
-                                ██    ██      
-                    ██████      ██  ██        
-                  ██      ██                  
-                ██          ████░░    ████    
-                ██                            
-              ██████            ██  ██        
-              ██████            ██    ██      
-          ██████████████                      
-        ██████░░░░░░░░▓▓██                    
-      ██████░░░░░░░░  ▓▓▓▓██                  
-      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
-      ████████████▓▓▓▓▓▓████                  
-        ██████████████████                    
-          ██████████████                      
-              ██████ 
-
-
-
-
-              Hehe                         
-
-StS Bomb card is peak
-
-Theisen was here
-
-This is a nice line that no one else should touch pls and thank you. I touched it 
-
-Brayden's update to his PR
-
-hello
-
-HELLO!!
-
-
-
-
-
-Suh Dude
-Chat, are we cooked?
-
-Hi there ya'll :))
-hi
-
-                                ██    ██      
-                    ██████      ██  ██        
-                  ██      ██                  
-                ██          ████░░    ████    
-                ██                            
-              ██████            ██  ██        
-              ██████            ██    ██      
-          ██████████████                      
-        ██████░░░░░░░░▓▓██                    
-      ██████░░░░░░░░  ▓▓▓▓██                  
-      ██████▓▓▓▓▓▓▓▓    ▓▓██                  
-    ████████▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓██              
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                
-      ████████▓▓▓▓▓▓▓▓▓▓▓▓██                  
-      ████████████▓▓▓▓▓▓████                  
-        ██████████████████                    
-          ██████████████                      
-              ██████ 
-
-
-ya'at'eeh
-Raccon Stealer V2 (2b574142c27e20f6fd8a1285772104c9e13774631d3173f2eb825dae4a6ffe65)
-wannacry (ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa)
-cryptowall (8710ea46c2db18965a3f13c5fb7c5be8)
-thanos (cd0f55dd00111251cd580c7e7cc1d17448faf27e4ef39818d75ce330628c7787)
-cool story
-
-Seventy bottle of beer on the wall.
-
-milk is better
-No, there are 75 bottles of milk on the  wall
-And soda is lame
-
-Plant lives matter
-Plant lives matter
-
-Seventy bottle of beer on the wall.
-
+------------
 Route "Gill"
 
-This askes the user a question and returns two different strings based on the answer.
+We want another shrubbery.
+A
+A
+A
+A
+A
+A
+A
+A
+A
+MAKE IT BREAK PLZ :)
 
-You must seek the Holy Grail
-
-
-Pull requests, a coder's delight,  
-A beacon shining in the night.  
-From branch to branch, the changes flow,  
-A tale of teamwork starts to grow.  
-
-
- pace-yourself
-
-
-
-I got rid of all of the arrows and stuff from the merge requests
-
-Here is a list of Endpoints so far. Please add yours as you add them.
-
-/client
-/kasen
-/clint
-/gill
-/pet-name
-/dallin
-/brayden 
-/braydens
-/fortune
-/aaron
-/Skylands
-/porter
-/magic8ball
-/randomRestaurant
-/campus-locations
-/rf
-/breyton
-
-
-So raise a toast to this noble quest,  
-For pull requests bring out our best.  
-In every line, a dream takes flight,  
-
-A coder's world, shining bright.  
-
-A coder's world, shining bright.
 
 ## /Client endpoint
 This endpoint when called, will return the Browser and OS of the client calling the endpoint.
@@ -286,8 +109,12 @@ To implement this endpoint, it requires installing from requirements.txt
 ### To install requirments.txt
 Run the following `pip install -r requirements.txt`
 
+## /Dave endpoint
+This endpoint will direct you to another random website
+
 ## /Kasen endpoint
 This endpoint is a new webpage that has a few gifs. I added buttons that go back and forth to each website. (I did this because I got bored)
+
 ## /dadJokes 
 This endpoint will deliver a dad joke from a selection of three
 
@@ -298,17 +125,82 @@ This endpoint will return one of 5 dad jokes listed.
 ## /magic8ball endpoint
 This endpoint will return a random magic 8 ball message string. Possible messages consist of 3 "yes" answers, 2 "unsure" answers, and 3 "no" answers.
 
+Blackjack Endpoint
+This endpoint deals two cards to the player and dealer, calculates scores, and returns a winner.
+Roulette Endpoint
+This endpoint simulates a single spin of a European roulette wheel and returns the result.
+
+
+## /generatePassword endpoint
+This endpoint generates a random password with a set length and cmplexity level.
+2 arguments: Length, Complexity
+Length: A number for how many characters long the password will be.
+Complexity: Basic, Simple, or Complex are the only valid options. Basic is only lowercase letters. Simple is lowercase letters and numbers. Complex is Lower and Uppercase letters, numbers, and symbols.
+
+## /placeBetPOC endpoint
+This is a proof of concept endpoint for placing bets. Eventually should be developed to use more variables to be more dynamic with other systems.
+This endpoint takes betName and betOptions: a string for what the bet is about and a list of options for what players can bet on.
+Currently assumes only 2 players will be betting.
 
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
 
-Siiiuuu
+## /roll endpoint (Bryson Francis)
+Rolls an "x" sided dice and returns the value of the rolled dice. It also returns an error if someone tries to roll a dice lower than 2.
+## /Rock-Paper-Scissors Betting (/bet/rps)
+Place a bet on rock, paper, or scissors and see if you win against the computer.
 
 ## /steal_yo_name endpoint
 
+
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
+
+
+## /Skylands
+This endpoint is broken and should be disregarded.
 
 Not too hungry today
 
+
 ## /Weather-current
 This give the current weather for St. George 
+
+## /dallin
+This endpoint gives you the option to delete the internet if you wish. 
+
+## /weather
+This endpoint returns a truely random weather condition. 
+
+## /campus-locations
+Returns a random location on the Utah Tech Campus 
+
+
+## /charger-facts
+is a page that talks about the 1969 dodge charger and returns cool stuff
+ex. The 1969 Dodge Charger is an iconic American muscle car known for its aggressive styling and powerful performance.
+ex. It features a distinctive "coke bottle" body shape with hidden headlights and a full-width grille.
+ex. The 1969 model year introduced the "R/T" (Road/Track) performance package for even greater speed and handling.
+ex. Today, the 1969 Dodge Charger is a highly sought-after collector's car, celebrated for its style and performance.
+
+## /dinner
+This endpoint helps you decide what to eat for dinner!  
+When called, it returns a random dinner suggestion from a list of popular options.  
+You might get pizza, tacos, sushi, or something else tasty.  
+Great for those nights when you can't make up your mind.  
+Just visit `/dinner` and let fate choose your meal.  
+Perfect for students, families, or anyone feeling indecisive!
+
+## /fav_quote
+Returns a quote
+A few of the favorites
+
+## /numberguesser - Number Guesser
+This endpoint is a simple game that allows you to guess a randomly generated number between 1 and 10. The endpoint accepts POST with the users guess and returns a JSON if you won or lost. 
+
+You can test this endpoint like so: curl -X POST http://127.0.0.1:5000/numberguesser -d "guess=5"
+
+## /gatcha
+Returns random results from a gatcha game
+
+## /add_chips
+Adds three different chips of different value to a currently unused list.
