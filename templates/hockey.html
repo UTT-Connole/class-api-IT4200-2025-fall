@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Hockey Game</title>
+    <style>
+        body {
+	    color: white;
+	    text-shadow: 1px 1px 3px black;
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            color: #00796b;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #004d40;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏒 Random Hockey Game Result</h1>
+    <button onclick="getGameResult()">Get Game Result</button>
+    <div id="result"></div>
+
+    <script>
+	const teamImages = {
+        "Flames": "/static/images/hockey_logos/Flames.png",
+        "Panthers": "/static/images/hockey_logos/Flames.png",
+	"Canuks": "/static/images/hockey_logos/Flames.png",
+	"Mammoth": "/static/images/hockey_logos/Flames.png",
+	"Sharks": "/static/images/hockey_logos/Flames.png",
+	"Penguins": "/static/images/hockey_logos/Flames.png",
+	"Wild": "/static/images/hockey_logos/Flames.png",
+	"Maple Leafs": "/static/images/hockey_logos/Flames.png",
+	"Jets": "/static/images/hockey_logos/Flames.png",
+	"Blues": "/static/images/hockey_logos/Flames.png",
+    };
+
+
+    function getGameResult() {
+        fetch('/api/hockey')
+            .then(response => response.json())
+            .then(data => {
+                const result = data.game_result;
+                document.getElementById('result').textContent = result;
+
+                const match = result.match(/(.+?) (\d+) - (\d+) (.+)/);
+                if (match) {
+                    const team1 = match[1].trim();
+                    const score1 = parseInt(match[2]);
+                    const score2 = parseInt(match[3]);
+                    const team2 = match[4].trim();
+
+                    let winner = score1 > score2 ? team1 : score2 > score1 ? team2 : null;
+
+                    if (winner && teamImages[winner]) {
+                        document.body.style.backgroundImage = `url('${teamImages[winner]}')`;
+                        document.body.style.backgroundSize = 'cover';
+                        document.body.style.backgroundPosition = 'center';
+                    } else {
+                        document.body.style.backgroundImage = '';
+                    }
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = "Error fetching result.";
+                console.error("Fetch error:", error);
+            });
+    }
+</script>
+
+
+</body>
+</html>

@@ -163,17 +163,21 @@ def weather():
 
 # List of fake hockey game results
 hockey_results = [
-    "Ice Sharks 3 - 2 Snow Bears",
-    "Glacier Wolves 1 - 4 Arctic Foxes",
-    "Polar Kings 5 - 5 Frost Giants",
-    "Blizzard Hawks 2 - 0 Frozen Flames",
-    "Northern Lights 6 - 3 Winter Whales"
+    "Flames 3 - 2 Canuks",
+    "Panthers 1 - 4 Mammoth",
+    "Sharks 6 - 5 Penguins",
+    "Wild 2 - 0 Maple Leafs",
+    "Jets 6 - 3 Blues"
 ]
 
-@app.route('/hockey', methods=['GET'])
+@app.route('/api/hockey', methods=['GET'])
 def get_random_game():
     result = random.choice(hockey_results)
     return jsonify({"game_result": result})
+
+@app.route('/hockey')
+def hockey_page():
+    return render_template('hockey.html')
 
 @app.route('/aaron')
 def home12():
