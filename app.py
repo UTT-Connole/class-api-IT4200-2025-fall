@@ -762,6 +762,23 @@ def reveal_cell(game_id):
         print("🤝 It's a tie!")
         g.revealed.add(cell)
 
+
+
+
+@app.route('/clint')
+prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
+roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
+suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
+titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
+
+def generate_wizard_name():
+    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
+    return f"{random.choice(titles)} {name.capitalize()}"
+
+# 🔮 Generate and display one name immediately
+print("✨ Your wizard name is:", generate_wizard_name())
+
+
     return jsonify(g.to_public())
 
 # blackjack_game()
@@ -800,3 +817,4 @@ def add_chips():
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8000, debug=True)
+
