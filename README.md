@@ -204,3 +204,6 @@ Returns random results from a gatcha game
 
 ## /add_chips
 Adds three different chips of different value to a currently unused list.
+
+## /music
+Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1

@@ -347,7 +347,11 @@ def get_weather():
 @app.route('/music')
 def music():
     genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae']
-    return f"You should listen to some: {random.choice(genres)}"
+
+    count = request.args.get("count", default=1, type=int)
+    if count <= 1:
+        return {"recommendation": random.choice(genres)}
+    return {"recommendations": random.sample(genres, min(count, len(genres)))}
 
 @app.route('/roulette', methods=['GET'])
 def roulette():
