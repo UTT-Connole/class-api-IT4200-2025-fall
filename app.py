@@ -252,3 +252,4 @@ def generate_wizard_name():
 
 # 🔮 Generate and display one name immediately
 print("✨ Your wizard name is:", generate_wizard_name())
+
