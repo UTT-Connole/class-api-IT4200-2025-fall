@@ -6,50 +6,102 @@
     <title>Landing Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-            background-color: #f0f0f0;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+                font-family: Arial, sans-serif;
+                background-color: #222;
+                color: #f0f0f0;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
         }
+            .header-gif {
+                    width: 100vw;
+                    height: 300px;
+                    overflow: hidden;
+                    margin-bottom: 30px;
+                    margin-top: 0;
+                    position: relative;
+                    left: 50%;
+                    right: 50%;
+                    transform: translateX(-50%);
+            }
+            .header-gif img {
+                    width: 100vw;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    margin: 0;
+            }
         h1 {
-            font-size: 72px;
             color: #ff4c4c;
+            font-size: 60px;
         }
         p {
-            font-size: 24px;
-            color: #333;
+            font-size: 22px;
+            margin: 20px 0;
+        }
+        p1 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #ff00d0;
         }
         a {
-            font-size: 18px;
-            color: #007bff;
+            color: #00bfff;
             text-decoration: none;
         }
+        a:hover {
+            text-decoration: underline;
+        }
 
+        .gif-container img {
+            max-width: 275px;
+            border-radius: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .gif-container img:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        a {
+            display: inline-block;
+            margin-top: 40px;
+            color: #00bfff;
+            text-decoration: none;
+            font-size: 18px;
+        }
         .btn {
             margin-top: 50px; /* space between image and button */
             padding: 12px 24px;
-            background-color: #007bff;
+            background-color: #000000;
             color: white;
             font-size: 18px;
             border-radius: 8px;
             text-decoration: none;
             transition: background-color 0.3s;
         }
-    
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #cb0505;
         }
-
     </style>
 </head>
 <body>
+    <div class="header-gif">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnEwenlveGFtMGM0ejFtcnR5MzFxd3kwaHJqanY2Yml6cDhodmpzaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1n4iuWZFnTeN6qvdpD/giphy.gif" alt="Header GIF">
+    </div>
     <h1>Landing Page</h1>
     <p>Welcome to our dumpster fire.</p>
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTViMWU3Y3pjOGdmeTVydml3cmNqMXFzMzhwM2V3cG01bGRsc255bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13871fiv9kBfkQ/giphy.gif" alt="What have we done?">
+    <div class="gif-container">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTViMWU3Y3pjOGdmeTVydml3cmNqMXFzMzhwM2V3cG01bGRsc255bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13871fiv9kBfkQ/giphy.gif" alt="What have we done?">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzg3Z2N5OHl0ZHQxYWp1OXFzcHZlejZjbTEzcW5pajc1ZGt2Y3h5cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bk8UGCysurqC2gmJ0o/giphy.gif">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6bnZyZmk5NHh0anNibHVodXI1MGl0b2hsZ3FuM3ppd3R2cXY3cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1Be4g2yeiJ1QfqaKvz/giphy.gif">
+    </div>
     <a href="/kasen" class="btn">Go To The Disaster</a>
+    <a href="/dave" class="btn">Go To Dave's Page</a>
+    <a href="/pokemon-ranked" class="btn">Pokemon Battles</a>
 </body>
 </html>
