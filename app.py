@@ -34,6 +34,23 @@ def home():
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
 
+@app.route('/random-weather')
+def weather():
+    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+    condition = random.choice(conditions)
+    temperature = f"{random.randint(-30, 50)}°C"
+    humidity = f"{random.randint(10, 100)}%"
+    return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
+
+@app.route('/dallin', methods=['POST'])
+def home11():
+    data = request.get_json(force=True, silent=True) or {}
+    user_input = str(data.get('confirm', '')).strip().lower()
+    if user_input == 'yes':
+        return jsonify({"message": "Deleting the internet... Goodbye world", "status": "deleted"})
+    else:
+        return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
+
 # Unlivable Realestate Endpoints
 @app.route('/api/chernobyl/properties', methods=['GET'])
 def get_chernobyl_properties():
@@ -114,22 +131,6 @@ def generate_pet_name():
     noun = random.choice(nouns)
     return f'{adj} {noun}'
 
-@app.route('/dallin')
-def home11():
-    user_input = input('Are you sure you want to delete the internet? (yes/no): ')
-    if user_input.lower() == 'yes':
-        return 'Deleting the internet... Goodbye world'
-    else:
-        return 'Operation canceled. For now.'
-
-@app.route('/weather')
-def weather():
-    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
-    condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
-    humidity = f"{random.randint(10, 100)}%"      # Random humidity between 10% and 100%
-    return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
-
 # In-memory storage for users and bets
 users = {
     "user1": {"balance": 1000},  # Starting fake currency
@@ -206,9 +207,6 @@ def roll_dice(sides):
     return jsonify({"sides": sides, "result": result})
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
-@app.route('/dallin')
-def dallin_lost():
-    return 'You are lost!'
 
 @app.route('/aaron')
 def aaron():
