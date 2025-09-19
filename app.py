@@ -11,7 +11,7 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
-
+app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 # Moved global variables to top for organization
@@ -26,43 +26,13 @@ restaurants = [
     "Panera Bread"
 ]
 
-def create_app():
-    # If a module-level `app` already exists (import time may have created
-    # it and later code attached many routes to it), return that instance
-    # so tests which call create_app() get the fully-configured app.
+@app.route('/')
+def home():
+    return render_template('index.html'), 200
 
-    app = Flask(__name__)
-
-    @app.route('/')
-    def home():
-        return render_template('index.html'), 200
-
-    @app.route('/pokemon')
-    def pokemon():
-        return jsonify({"pokemon": "Jigglypuff"})
-
-    @app.route('/drawAcard')
-    def drawAcard():
-        deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
-        card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
-        print("card", card)
-        return jsonify(card)
-    
-    @app.route('/pokerHandRankings')
-    def getpokerHandRankings():
-        with open('./import_resources/pokerHandRankings.json', 'r') as file:
-            data = json.load(file)
-        return jsonify(data)
-
-
-
-
-
-    return app
-
-app = create_app()
-
-
+@app.route('/pokemon')
+def pokemon():
+    return jsonify({"pokemon": "Jigglypuff"})
 
 # Unlivable Realestate Endpoints
 @app.route('/api/chernobyl/properties', methods=['GET'])
@@ -160,24 +130,51 @@ def weather():
     humidity = f"{random.randint(10, 100)}%"      # Random humidity between 10% and 100%
     return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
 
+# In-memory storage for users and bets
+users = {
+    "user1": {"balance": 1000},  # Starting fake currency
+}
+bets = []
 
-# List of fake hockey game results
-hockey_results = [
-    "Flames 3 - 2 Canuks",
-    "Panthers 1 - 4 Mammoth",
-    "Sharks 6 - 5 Penguins",
-    "Wild 2 - 0 Maple Leafs",
-    "Jets 6 - 3 Blues"
-]
+@app.route('/hockeybet', methods=['POST'])
+def place_bet():
+    data = request.get_json()
+    username = data.get('username')
+    game_id = data.get('game_id')
+    team = data.get('team')  # Team the user is betting on
+    amount = data.get('amount')
 
-@app.route('/api/hockey', methods=['GET'])
-def get_random_game():
-    result = random.choice(hockey_results)
-    return jsonify({"game_result": result})
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
 
-@app.route('/hockey')
-def hockey_page():
-    return render_template('hockey.html')
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "game_id": game_id,
+        "team": team,
+        "amount": amount
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+@app.route('/hockeybalance/<username>', methods=['GET'])
+def get_balance(username):
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"balance": users[username]['balance']}), 200
+
+
+@app.route('/drawAcard')
+def drawAcard():
+	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+	print("card", card)
+	return jsonify(card)
 
 @app.route('/aaron')
 def home12():
@@ -280,8 +277,6 @@ def placeBetSimple(betName=None, betOptions=None):
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
-
 
 @app.route('/rf')
 def home8():
@@ -409,7 +404,7 @@ def hellhole():
     message = {
         "location": "Hellhole",
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
-        #"fact": random.choice(hellhole_facts),
+        "fact": random.choice(hellhole_facts),
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
     return jsonify(message)
@@ -468,7 +463,6 @@ def create_deck():
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
     random.shuffle(deck)
     return deck
-
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route('/clint')
@@ -740,8 +734,6 @@ def reveal_cell(game_id):
 
 # blackjack_game()
 
-
-
 @mines_bp.post("/api/games/<game_id>/cashout")
 def cashout(game_id):
     try:
@@ -765,119 +757,13 @@ def cashout(game_id):
 app.register_blueprint(mines_bp)
 # =================== END MINES GAME (Blueprint) ===================
 
-# pokemon battles 
-
-pokemon_rankings = {
-    'mewtwo': 100,
-    'arceus': 98,
-    'rayquaza': 95,
-    'dialga': 92,
-    'palkia': 90,
-    'giratina': 88,
-    'kyogre': 85,
-    'groudon': 83,
-    'ho-oh': 80,
-    'lugia': 78,
-    'charizard': 75,
-    'dragonite': 72,
-    'tyranitar': 70,
-    'metagross': 68,
-    'garchomp': 65
-}
-
-@app.route('/pokemon-ranked', methods=['GET', 'POST'])
-def pokemon_battle():
-    if request.method == 'GET':
-        return render_template('pokemon_battle.html')
-    
-    # POST request handling
-    pokemon_name = request.form.get('pokemon', '').strip().lower()
-    power_rating = request.form.get('power_rating', '').strip()
-    
-    if not pokemon_name:
-        return render_template('pokemon_battle.html', error="Please enter a Pokemon name!")
-    
-    # Check if Pokemon exists in our rankings
-    if pokemon_name not in pokemon_rankings:
-        if not power_rating:
-            # Pokemon not found, ask for power rating
-            return render_template('pokemon_battle.html', 
-                                 pokemon_name=pokemon_name.title(),
-                                 needs_power=True)
-        
-        # Validate power rating
-        try:
-            power_rating = int(power_rating)
-            if not (1 <= power_rating <= 100):
-                return render_template('pokemon_battle.html',
-                                     pokemon_name=pokemon_name.title(),
-                                     needs_power=True,
-                                     error="Power rating must be between 1 and 100!")
-            
-            # Check if power rating is already used
-            if power_rating in pokemon_rankings.values():
-                return render_template('pokemon_battle.html',
-                                     pokemon_name=pokemon_name.title(),
-                                     needs_power=True,
-                                     error=f"Power rating {power_rating} is already taken! Choose a different score.")
-            
-            # Add new Pokemon to rankings
-            pokemon_rankings[pokemon_name] = power_rating
-            
-        except ValueError:
-            return render_template('pokemon_battle.html',
-                                 pokemon_name=pokemon_name.title(),
-                                 needs_power=True,
-                                 error="Power rating must be a valid number!")
-    
-    # Battle logic
-    user_pokemon = pokemon_name
-    user_score = pokemon_rankings[user_pokemon]
-    
-    # Computer picks random Pokemon (excluding user's Pokemon)
-    available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
-    computer_pokemon = random.choice(available_pokemon)
-    computer_score = pokemon_rankings[computer_pokemon]
-    
-    # Determine winner
-    if user_score > computer_score:
-        winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
-        result = "victory"
-    elif computer_score > user_score:
-        winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
-        result = "defeat"
-    else:
-        winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
-        result = "tie"
-    
-    battle_details = {
-        'user_pokemon': user_pokemon.title(),
-        'user_score': user_score,
-        'computer_pokemon': computer_pokemon.title(),
-        'computer_score': computer_score,
-        'winner': winner,
-        'result': result
-    }
-    
-    return render_template('pokemon_battle.html', battle=battle_details)
-@app.route('/bet/rps', methods=['GET'])
-def bet_rps():
-    moves = ['rock', 'paper', 'scissors']
-    player = request.args.get('player', '').lower()
-    amount = request.args.get('amount', type=int, default=0)
-    
-    if player not in moves or amount <= 0:
-        return jsonify({"error": "Invalid move or amount"}), 400
-
-    comp = random.choice(moves)
-    win = (player == 'rock' and comp == 'scissors') or \
-          (player == 'scissors' and comp == 'paper') or \
-          (player == 'paper' and comp == 'rock')
-
-    outcome = 'tie' if player == comp else 'win' if win else 'lose'
-    payout = amount if outcome == 'tie' else amount*2 if outcome == 'win' else 0
-
-    return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
+@app.route('/add_chips')
+def add_chips():
+    user_chips = []
+    chips_values = {'Gold': 100, 'Silver': 50, 'Bronze': 25}
+    for chip, value in chips_values.items():
+        user_chips.append({'type': chip, 'value': value})
+    return jsonify(user_chips)
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':

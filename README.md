@@ -199,6 +199,8 @@ This endpoint is a simple game that allows you to guess a randomly generated num
 
 You can test this endpoint like so: curl -X POST http://127.0.0.1:5000/numberguesser -d "guess=5"
 
-
 ## /gatcha
 Returns random results from a gatcha game
+
+## /add_chips
+Adds three different chips of different value to a currently unused list.
