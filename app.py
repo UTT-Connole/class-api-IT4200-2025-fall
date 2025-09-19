@@ -763,6 +763,7 @@ def reveal_cell(game_id):
         g.revealed.add(cell)
 
 
+
 @app.route('/clint')
 def spin_wheel():
     number = random.randint(0, 36)
@@ -835,6 +836,22 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+@app.route('/clint')
+prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
+roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
+suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
+titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
+
+def generate_wizard_name():
+    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
+    return f"{random.choice(titles)} {name.capitalize()}"
+
+# 🔮 Generate and display one name immediately
+print("✨ Your wizard name is:", generate_wizard_name())
 
 
 
