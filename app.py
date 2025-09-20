@@ -131,43 +131,33 @@ def generate_pet_name():
     noun = random.choice(nouns)
     return f'{adj} {noun}'
 
-# In-memory storage for users and bets
-users = {
-    "user1": {"balance": 1000},  # Starting fake currency
-}
-bets = []
+# List of fake hockey game results
+hockey_results1 = [
+    "Flames 3 - 2 Canuks",
+    "Panthers 1 - 4 Mammoth",
+    "Sharks 6 - 5 Penguins",
+    "Wild 2 - 0 Maple Leafs",
+    "Jets 6 - 3 Blues"
+]
 
-@app.route('/hockeybet', methods=['POST'])
-def place_bet():
-    data = request.get_json()
-    username = data.get('username')
-    game_id = data.get('game_id')
-    team = data.get('team')  # Team the user is betting on
-    amount = data.get('amount')
+hockey_results2 = [
+    "Oilers 5 - 2 Canuks",
+    "Avalanche 1 - 4 Senators",
+    "Bruins 6 - 2 Penguins",
+    "Islanders 2 - 3 Rangers",
+    "Jets 0 - 3 Stars"
+]
 
-    # Basic validation
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
-    if users[username]['balance'] < amount:
-        return jsonify({"error": "Insufficient balance"}), 400
+@app.route('/api/hockey', methods=['GET'])
+def get_random_game():
+    all_lists = [hockey_results1, hockey_results2]
+    selected_list = random.choice(all_lists)
+    result = random.choice(selected_list)
+    return jsonify({"game_result": result})
 
-    # Deduct amount and store bet
-    users[username]['balance'] -= amount
-    bet = {
-        "username": username,
-        "game_id": game_id,
-        "team": team,
-        "amount": amount
-    }
-    bets.append(bet)
-
-    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
-
-@app.route('/hockeybalance/<username>', methods=['GET'])
-def get_balance(username):
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
-    return jsonify({"balance": users[username]['balance']}), 200
+@app.route('/hockey')
+def hockey_page():
+    return render_template('hockey.html')
 
 #================ plant betting =================
 @app.route('/plantbet', methods=['POST'])
