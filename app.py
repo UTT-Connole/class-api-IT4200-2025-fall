@@ -34,6 +34,23 @@ def home():
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
 
+@app.route('/random-weather')
+def weather():
+    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+    condition = random.choice(conditions)
+    temperature = f"{random.randint(-30, 50)}°C"
+    humidity = f"{random.randint(10, 100)}%"
+    return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
+
+@app.route('/dallin', methods=['POST'])
+def home11():
+    data = request.get_json(force=True, silent=True) or {}
+    user_input = str(data.get('confirm', '')).strip().lower()
+    if user_input == 'yes':
+        return jsonify({"message": "Deleting the internet... Goodbye world", "status": "deleted"})
+    else:
+        return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
+
 # Unlivable Realestate Endpoints
 @app.route('/api/chernobyl/properties', methods=['GET'])
 def get_chernobyl_properties():
@@ -114,22 +131,6 @@ def generate_pet_name():
     noun = random.choice(nouns)
     return f'{adj} {noun}'
 
-@app.route('/dallin')
-def home11():
-    user_input = input('Are you sure you want to delete the internet? (yes/no): ')
-    if user_input.lower() == 'yes':
-        return 'Deleting the internet... Goodbye world'
-    else:
-        return 'Operation canceled. For now.'
-
-@app.route('/weather')
-def weather():
-    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
-    condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
-    humidity = f"{random.randint(10, 100)}%"      # Random humidity between 10% and 100%
-    return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
-
 # In-memory storage for users and bets
 users = {
     "user1": {"balance": 1000},  # Starting fake currency
@@ -168,7 +169,43 @@ def get_balance(username):
         return jsonify({"error": "User not found"}), 404
     return jsonify({"balance": users[username]['balance']}), 200
 
+#================ plant betting =================
+@app.route('/plantbet', methods=['POST'])
+def place_plant_bet():
+    data = request.get_json()
+    username = data.get('username')
+    plant_id = data.get('plant_id')
+    amount = data.get('amount')
 
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    # Example plant database
+    plants = {
+        1: {"name": "Rose", "value": 100},
+        2: {"name": "Tulip", "value": 50},
+        3: {"name": "Cactus", "value": 30},
+    }
+
+    if plant_id not in plants:
+        return jsonify({"error": "Invalid plant ID"}), 400
+
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "plant_id": plant_id,
+        "amount": amount,
+        "plant_name": plants[plant_id]["name"]
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Plant bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+# ===========end of plant betting ======
 @app.route('/drawAcard')
 def drawAcard():
 	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
@@ -206,9 +243,6 @@ def roll_dice(sides):
     return jsonify({"sides": sides, "result": result})
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
-@app.route('/dallin')
-def dallin_lost():
-    return 'You are lost!'
 
 @app.route('/aaron')
 def aaron():
@@ -369,7 +403,11 @@ def get_weather():
 @app.route('/music')
 def music():
     genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae']
-    return f"You should listen to some: {random.choice(genres)}"
+
+    count = request.args.get("count", default=1, type=int)
+    if count <= 1:
+        return {"recommendation": random.choice(genres)}
+    return {"recommendations": random.sample(genres, min(count, len(genres)))}
 
 @app.route('/roulette', methods=['GET'])
 def roulette():
