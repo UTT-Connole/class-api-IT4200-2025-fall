@@ -169,7 +169,43 @@ def get_balance(username):
         return jsonify({"error": "User not found"}), 404
     return jsonify({"balance": users[username]['balance']}), 200
 
+#================ plant betting =================
+@app.route('/plantbet', methods=['POST'])
+def place_plant_bet():
+    data = request.get_json()
+    username = data.get('username')
+    plant_id = data.get('plant_id')
+    amount = data.get('amount')
 
+    # Basic validation
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    if users[username]['balance'] < amount:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    # Example plant database
+    plants = {
+        1: {"name": "Rose", "value": 100},
+        2: {"name": "Tulip", "value": 50},
+        3: {"name": "Cactus", "value": 30},
+    }
+
+    if plant_id not in plants:
+        return jsonify({"error": "Invalid plant ID"}), 400
+
+    # Deduct amount and store bet
+    users[username]['balance'] -= amount
+    bet = {
+        "username": username,
+        "plant_id": plant_id,
+        "amount": amount,
+        "plant_name": plants[plant_id]["name"]
+    }
+    bets.append(bet)
+
+    return jsonify({"message": "Plant bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+
+# ===========end of plant betting ======
 @app.route('/drawAcard')
 def drawAcard():
 	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
@@ -856,8 +892,6 @@ def generate_wizard_name():
 print("✨ Your wizard name is:", generate_wizard_name())
 
 
-
-    return jsonify(g.to_public())
 
 # blackjack_game()
 
