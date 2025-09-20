@@ -906,7 +906,7 @@ def reveal_cell(game_id):
         print("🤝 It's a tie!")
         g.revealed.add(cell)
 
-
+    return jsonify(g.to_public())
 
 @app.route('/clint')
 def spin_wheel():
@@ -982,6 +982,13 @@ def main():
 
 @app.route('/clint')
 
+
+prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
+roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
+suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
+titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
+
+
 def generate_wizard_name():
 	prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
 	roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
@@ -995,6 +1002,9 @@ def generate_wizard_name():
 
 
 
+
+
+    
 
 
 # blackjack_game()
