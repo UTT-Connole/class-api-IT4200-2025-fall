@@ -766,6 +766,7 @@ def reveal_cell(game_id):
 
 
 @app.route('/clint')
+
 prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
 roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
 suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
