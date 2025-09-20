@@ -1,7 +1,11 @@
 # test /hockey endpoint
 import unittest
 import json
+import sys
 
+# not sure how other people are able to run their tests in this directory without appending '..' to get to app.py
+
+sys.path.append('..')
 from app import app
 
 
