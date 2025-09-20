@@ -13,6 +13,73 @@ import requests
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+pp = Flask(__name__)
+
+def create_app():
+
+    app = Flask(__name__)
+
+    @app.route('/')
+    def home():
+        return render_template('index.html'), 200
+
+    @app.route('/api/chernobyl/properties', methods=['GET'])
+    def get_chernobyl_properties():
+        """Get Chernobyl real estate listings"""
+        properties = [
+            {
+                "id": 1,
+                "address": "Pripyat Central Square, Apartment Block #1",
+                "price": 0,
+                "radiation_level": "15,000 mSv/year",
+                "distance_from_reactor": "3 km",
+                "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+                "warnings": ["Protective gear required", "May cause mutations"]
+            },
+            {
+                "id": 2,
+                "address": "Reactor 4 Penthouse Suite",
+                "price": -1000000,
+                "radiation_level": "Over 9000 mSv/year",
+                "distance_from_reactor": "0 km",
+                "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+                "warnings": ["Immediate death likely", "GPS stops working"]
+            }
+        ]
+    
+        return jsonify({
+            "message": "Chernobyl Real Estate - Where your problems glow away!",
+            "properties": properties
+        })
+    @app.route('/api/mars/properties', methods=['GET'])
+    def get_mars_properties():
+        """Mars Real Estate - Red planet, red hot deals!"""
+        properties = [
+            {
+                "id": 1,
+                "address": "Olympus Mons Base Camp",
+                "price": 2000000,
+                "oxygen_level": "0%",
+                "temperature": "-80°C to 20°C",
+                "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+                "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+            },
+            {
+                "id": 2,
+                "address": "Valles Marineris Canyon Penthouse",
+                "price": 1500000,
+                "oxygen_level": "0%",
+                "temperature": "-120°C",
+                "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+                "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+            }
+        ]
+        
+        return jsonify({
+            "message": "Mars Realty - Out of this world properties!",
+            "properties": properties
+        })
+    return app
 
 # Moved global variables to top for organization
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
@@ -33,6 +100,23 @@ def home():
 @app.route('/pokemon')
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
+
+@app.route('/random-weather')
+def weather():
+    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+    condition = random.choice(conditions)
+    temperature = f"{random.randint(-30, 50)}°C"
+    humidity = f"{random.randint(10, 100)}%"
+    return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
+
+@app.route('/dallin', methods=['POST'])
+def home11():
+    data = request.get_json(force=True, silent=True) or {}
+    user_input = str(data.get('confirm', '')).strip().lower()
+    if user_input == 'yes':
+        return jsonify({"message": "Deleting the internet... Goodbye world", "status": "deleted"})
+    else:
+        return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
 
 # Unlivable Realestate Endpoints
 @app.route('/api/chernobyl/properties', methods=['GET'])
@@ -63,7 +147,36 @@ def get_chernobyl_properties():
         "message": "Chernobyl Real Estate - Where your problems glow away!",
         "properties": properties
     })
+
+@app.route('/api/mars/properties', methods=['GET'])
+def get_mars_properties():
+    """Mars Real Estate - Red planet, red hot deals!"""
+    properties = [
+        {
+            "id": 1,
+            "address": "Olympus Mons Base Camp",
+            "price": 2000000,
+            "oxygen_level": "0%",
+            "temperature": "-80°C to 20°C",
+            "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+            "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+        },
+        {
+            "id": 2,
+            "address": "Valles Marineris Canyon Penthouse",
+            "price": 1500000,
+            "oxygen_level": "0%",
+            "temperature": "-120°C",
+            "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+            "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+        }
+    ]
     
+    return jsonify({
+        "message": "Mars Realty - Out of this world properties!",
+        "properties": properties
+    })
+
 @app.route('/api/underwater/properties', methods=['GET'])
 def get_underwater_properties():
     """Get underwater real estate listings"""
@@ -114,34 +227,40 @@ def generate_pet_name():
     noun = random.choice(nouns)
     return f'{adj} {noun}'
 
-@app.route('/dallin')
-def home11():
-    user_input = input('Are you sure you want to delete the internet? (yes/no): ')
-    if user_input.lower() == 'yes':
-        return 'Deleting the internet... Goodbye world'
-    else:
-        return 'Operation canceled. For now.'
+# List of fake hockey game results
+hockey_results1 = [
+    "Flames 3 - 2 Canuks",
+    "Panthers 1 - 4 Mammoth",
+    "Sharks 6 - 5 Penguins",
+    "Wild 2 - 0 Maple Leafs",
+    "Jets 6 - 3 Blues"
+]
 
-@app.route('/weather')
-def weather():
-    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
-    condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}°C"  # Random temperature between -30 and 50
-    humidity = f"{random.randint(10, 100)}%"      # Random humidity between 10% and 100%
-    return json.dumps({"condition": condition, "temperature": temperature, "humidity": humidity})
+hockey_results2 = [
+    "Oilers 5 - 2 Canuks",
+    "Avalanche 1 - 4 Senators",
+    "Bruins 6 - 2 Penguins",
+    "Islanders 2 - 3 Rangers",
+    "Jets 0 - 3 Stars"
+]
 
-# In-memory storage for users and bets
-users = {
-    "user1": {"balance": 1000},  # Starting fake currency
-}
-bets = []
+@app.route('/api/hockey', methods=['GET'])
+def get_random_game():
+    all_lists = [hockey_results1, hockey_results2]
+    selected_list = random.choice(all_lists)
+    result = random.choice(selected_list)
+    return jsonify({"game_result": result})
 
-@app.route('/hockeybet', methods=['POST'])
-def place_bet():
+@app.route('/hockey')
+def hockey_page():
+    return render_template('hockey.html')
+
+#================ plant betting =================
+@app.route('/plantbet', methods=['POST'])
+def place_plant_bet():
     data = request.get_json()
     username = data.get('username')
-    game_id = data.get('game_id')
-    team = data.get('team')  # Team the user is betting on
+    plant_id = data.get('plant_id')
     amount = data.get('amount')
 
     # Basic validation
@@ -150,25 +269,29 @@ def place_bet():
     if users[username]['balance'] < amount:
         return jsonify({"error": "Insufficient balance"}), 400
 
+    # Example plant database
+    plants = {
+        1: {"name": "Rose", "value": 100},
+        2: {"name": "Tulip", "value": 50},
+        3: {"name": "Cactus", "value": 30},
+    }
+
+    if plant_id not in plants:
+        return jsonify({"error": "Invalid plant ID"}), 400
+
     # Deduct amount and store bet
     users[username]['balance'] -= amount
     bet = {
         "username": username,
-        "game_id": game_id,
-        "team": team,
-        "amount": amount
+        "plant_id": plant_id,
+        "amount": amount,
+        "plant_name": plants[plant_id]["name"]
     }
     bets.append(bet)
 
-    return jsonify({"message": "Bet placed successfully", "remaining_balance": users[username]['balance']}), 200
+    return jsonify({"message": "Plant bet placed successfully", "remaining_balance": users[username]['balance']}), 200
 
-@app.route('/hockeybalance/<username>', methods=['GET'])
-def get_balance(username):
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
-    return jsonify({"balance": users[username]['balance']}), 200
-
-
+# ===========end of plant betting ======
 @app.route('/drawAcard')
 def drawAcard():
 	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
@@ -206,9 +329,6 @@ def roll_dice(sides):
     return jsonify({"sides": sides, "result": result})
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
-@app.route('/dallin')
-def dallin_lost():
-    return 'You are lost!'
 
 @app.route('/aaron')
 def aaron():
@@ -272,6 +392,26 @@ def generatePassword(Length=None, Complexity='simple'):
 def placeBetSimple(betName=None, betOptions=None):
     # Leaving as-is; this route uses input() and is interactive in terminal
     return jsonify({"message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."})
+
+@app.route('/bingo')
+def generate_bingo_card():
+    card = {}
+    ranges = {
+        "B": range(1,16),
+        "I": range(16,31),
+        "N": range(31,46),
+        "G": range(46,61),
+        "O": range(61,76)
+    }
+
+    for letter, num_range in ranges.items():
+        card[letter] = random.sample(num_range, 5)
+    card["N"][2] = "FREE"
+    return card
+
+def create_card():
+    card = generate_bingo_card()
+    return jsonify(card), 200
 
 @app.route('/randomRestaurant')
 def choose():
@@ -349,7 +489,11 @@ def get_weather():
 @app.route('/music')
 def music():
     genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae']
-    return f"You should listen to some: {random.choice(genres)}"
+
+    count = request.args.get("count", default=1, type=int)
+    if count <= 1:
+        return {"recommendation": random.choice(genres)}
+    return {"recommendations": random.sample(genres, min(count, len(genres)))}
 
 @app.route('/roulette', methods=['GET'])
 def roulette():
@@ -764,23 +908,104 @@ def reveal_cell(game_id):
 
     return jsonify(g.to_public())
 
+@app.route('/clint')
+def spin_wheel():
+    number = random.randint(0, 36)
+    color = 'Green' if number == 0 else ('Red' if number % 2 == 0 else 'Black')
+    return number, color
+
+def get_payout(bet_type, bet_value, result_number, result_color):
+    if bet_type == 'number':
+        return 35 if bet_value == result_number else -1
+    elif bet_type == 'color':
+        return 1 if bet_value.lower() == result_color.lower() else -1
+    else:
+        return -1
+
+def main():
+    print("🎲 Welcome to Python Roulette!")
+    balance = 100
+
+    while balance > 0:
+        print(f"\nYour current balance: ${balance}")
+        bet_type = input("Bet on 'number' or 'color': ").strip().lower()
+
+        if bet_type == 'number':
+            try:
+                bet_value = int(input("Choose a number between 0 and 36: "))
+                if not 0 <= bet_value <= 36:
+                    print("Invalid number. Try again.")
+                    continue
+            except ValueError:
+                print("Invalid input. Try again.")
+                continue
+        elif bet_type == 'color':
+            bet_value = input("Choose a color (Red/Black): ").strip().capitalize()
+            if bet_value not in ['Red', 'Black']:
+                print("Invalid color. Try again.")
+                continue
+        else:
+            print("Invalid bet type. Try again.")
+            continue
+
+        try:
+            wager = int(input("Enter your wager amount: "))
+            if wager > balance or wager <= 0:
+                print("Invalid wager. Try again.")
+                continue
+        except ValueError:
+            print("Invalid input. Try again.")
+            continue
+
+        result_number, result_color = spin_wheel()
+        print(f"\n🎡 The wheel landed on {result_number} ({result_color})")
+
+        payout_multiplier = get_payout(bet_type, bet_value, result_number, result_color)
+        winnings = wager * payout_multiplier if payout_multiplier > 0 else 0
+        balance += winnings - wager
+
+        if payout_multiplier > 0:
+            print(f"🎉 You won ${winnings}!")
+        else:
+            print("😢 You lost your wager.")
+
+        if balance <= 0:
+            print("💸 You're out of money! Game over.")
+            break
+
+        play_again = input("Play again? (y/n): ").strip().lower()
+        if play_again != 'y':
+            print("Thanks for playing!")
+            break
+
+
 
 @app.route('/clint')
+
 
 prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
 roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
 suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
 titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
 
+
 def generate_wizard_name():
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
+	prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
+	roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
+	suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
+	titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
+	name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
+	return f"{random.choice(titles)} {name.capitalize()}"
 
 # 🔮 Generate and display one name immediately
-print("✨ Your wizard name is:", generate_wizard_name())
+#print("✨ Your wizard name is:", generate_wizard_name())
+
+
+
 
 
     
+
 
 # blackjack_game()
 
