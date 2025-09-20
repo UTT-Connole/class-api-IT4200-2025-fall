@@ -273,6 +273,26 @@ def placeBetSimple(betName=None, betOptions=None):
     # Leaving as-is; this route uses input() and is interactive in terminal
     return jsonify({"message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."})
 
+@app.route('/bingo')
+def generate_bingo_card():
+    card = {}
+    ranges = {
+        "B": range(1,16),
+        "I": range(16,31),
+        "N": range(31,46),
+        "G": range(46,61),
+        "O": range(61,76)
+    }
+
+    for letter, num_range in ranges.items():
+        card[letter] = random.sample(num_range, 5)
+    card["N"][2] = "FREE"
+    return card
+
+def create_card():
+    card = generate_bingo_card()
+    return jsonify(card), 200
+
 @app.route('/randomRestaurant')
 def choose():
     restaurant = random.choice(restaurants)
@@ -834,28 +854,24 @@ def main():
             print("Thanks for playing!")
             break
 
-if __name__ == "__main__":
-    main()
-
-
 
 
 @app.route('/clint')
-prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
-roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
-suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
-titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
 
 def generate_wizard_name():
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
+	prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
+	roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
+	suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
+	titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
+	name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
+	return f"{random.choice(titles)} {name.capitalize()}"
 
 # 🔮 Generate and display one name immediately
-print("✨ Your wizard name is:", generate_wizard_name())
+#print("✨ Your wizard name is:", generate_wizard_name())
 
 
 
-    return jsonify(g.to_public())
+
 
 # blackjack_game()
 
