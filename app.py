@@ -762,7 +762,7 @@ def reveal_cell(game_id):
         print("🤝 It's a tie!")
         g.revealed.add(cell)
 
-
+    return jsonify(g.to_public())
 
 
 @app.route('/clint')
@@ -779,7 +779,7 @@ def generate_wizard_name():
 print("✨ Your wizard name is:", generate_wizard_name())
 
 
-    return jsonify(g.to_public())
+    
 
 # blackjack_game()
 
