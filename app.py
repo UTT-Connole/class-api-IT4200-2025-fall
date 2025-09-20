@@ -13,6 +13,73 @@ import requests
 
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+pp = Flask(__name__)
+
+def create_app():
+
+    app = Flask(__name__)
+
+    @app.route('/')
+    def home():
+        return render_template('index.html'), 200
+
+    @app.route('/api/chernobyl/properties', methods=['GET'])
+    def get_chernobyl_properties():
+        """Get Chernobyl real estate listings"""
+        properties = [
+            {
+                "id": 1,
+                "address": "Pripyat Central Square, Apartment Block #1",
+                "price": 0,
+                "radiation_level": "15,000 mSv/year",
+                "distance_from_reactor": "3 km",
+                "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+                "warnings": ["Protective gear required", "May cause mutations"]
+            },
+            {
+                "id": 2,
+                "address": "Reactor 4 Penthouse Suite",
+                "price": -1000000,
+                "radiation_level": "Over 9000 mSv/year",
+                "distance_from_reactor": "0 km",
+                "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+                "warnings": ["Immediate death likely", "GPS stops working"]
+            }
+        ]
+    
+        return jsonify({
+            "message": "Chernobyl Real Estate - Where your problems glow away!",
+            "properties": properties
+        })
+    @app.route('/api/mars/properties', methods=['GET'])
+    def get_mars_properties():
+        """Mars Real Estate - Red planet, red hot deals!"""
+        properties = [
+            {
+                "id": 1,
+                "address": "Olympus Mons Base Camp",
+                "price": 2000000,
+                "oxygen_level": "0%",
+                "temperature": "-80°C to 20°C",
+                "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+                "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+            },
+            {
+                "id": 2,
+                "address": "Valles Marineris Canyon Penthouse",
+                "price": 1500000,
+                "oxygen_level": "0%",
+                "temperature": "-120°C",
+                "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+                "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+            }
+        ]
+        
+        return jsonify({
+            "message": "Mars Realty - Out of this world properties!",
+            "properties": properties
+        })
+    return app
 
 # Moved global variables to top for organization
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
@@ -80,7 +147,36 @@ def get_chernobyl_properties():
         "message": "Chernobyl Real Estate - Where your problems glow away!",
         "properties": properties
     })
+
+@app.route('/api/mars/properties', methods=['GET'])
+def get_mars_properties():
+    """Mars Real Estate - Red planet, red hot deals!"""
+    properties = [
+        {
+            "id": 1,
+            "address": "Olympus Mons Base Camp",
+            "price": 2000000,
+            "oxygen_level": "0%",
+            "temperature": "-80°C to 20°C",
+            "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+            "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+        },
+        {
+            "id": 2,
+            "address": "Valles Marineris Canyon Penthouse",
+            "price": 1500000,
+            "oxygen_level": "0%",
+            "temperature": "-120°C",
+            "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+            "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+        }
+    ]
     
+    return jsonify({
+        "message": "Mars Realty - Out of this world properties!",
+        "properties": properties
+    })
+
 @app.route('/api/underwater/properties', methods=['GET'])
 def get_underwater_properties():
     """Get underwater real estate listings"""
