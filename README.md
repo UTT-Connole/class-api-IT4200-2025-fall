@@ -204,6 +204,21 @@ This endpoint is a simple game that allows you to guess a randomly generated num
 
 You can test this endpoint like so: curl -X POST http://127.0.0.1:5000/numberguesser -d "guess=5"
 
-
 ## /gatcha
 Returns random results from a gatcha game
+
+## /add_chips
+Adds three different chips of different value to a currently unused list.
+
+## /music
+Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1
+
+## Properties endpoints
+
+- `GET /api/chernobyl/properties?limit=N`
+- `GET /api/mars/properties?limit=N`
+
+`limit` is optional. If provided, it returns only the first `N` properties (clamped to available items).
+If `limit` is not an integer, the API returns HTTP 400.
+
+## Running tests
