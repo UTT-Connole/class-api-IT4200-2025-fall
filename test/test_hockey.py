@@ -24,6 +24,13 @@ class TestHockeyAPI(unittest.TestCase):
             "Islanders 2 - 3 Rangers",
             "Jets 0 - 3 Stars"
         ]
+    def test_hockey_lists_exist(self):
+        # Test that the hockey results lists exist and are not empty
+        import app  
+        self.assertTrue(hasattr(app, "hockey_results1"))
+        self.assertTrue(hasattr(app, "hockey_results2"))
+        self.assertGreater(len(app.hockey_results1), 0)
+        self.assertGreater(len(app.hockey_results2), 0)
 
     def test_returning_json(self):
         #check that output is json
