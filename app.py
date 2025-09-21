@@ -11,17 +11,21 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
+try:
+    users
+except NameError:
+    users = {}
+
+
+
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
-pp = Flask(__name__)
 
 def create_app():
-
-    app = Flask(__name__)
-
     @app.route('/')
     def home():
         return render_template('index.html'), 200
+
 
     @app.route('/api/chernobyl/properties', methods=['GET'])
     def get_chernobyl_properties():
@@ -51,6 +55,19 @@ def create_app():
             "message": "Chernobyl Real Estate - Where your problems glow away!",
             "properties": properties
         })
+    raw = request.args.get("limit")
+    if raw is not None:
+        try:
+            n = int(raw)
+        except ValueError:
+            return jsonify({"error": "limit must be an integer"}), 400
+        n = max(1, min(len(properties), n))
+        properties = properties[:n]
+
+    return jsonify({
+        "message": "Chernobyl Real Estate - Where your problems glow away!",
+        "properties": properties
+    }), 200
     @app.route('/api/mars/properties', methods=['GET'])
     def get_mars_properties():
         """Mars Real Estate - Red planet, red hot deals!"""
@@ -141,35 +158,6 @@ def home11():
         return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
 
 # Unlivable Realestate Endpoints
-@app.route('/api/chernobyl/properties', methods=['GET'])
-def get_chernobyl_properties():
-    """Get Chernobyl real estate listings"""
-    properties = [
-        {
-            "id": 1,
-            "address": "Pripyat Central Square, Apartment Block #1",
-            "price": 0,
-            "radiation_level": "15,000 mSv/year",
-            "distance_from_reactor": "3 km",
-            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-            "warnings": ["Protective gear required", "May cause mutations"]
-        },
-        {
-            "id": 2,
-            "address": "Reactor 4 Penthouse Suite",
-            "price": -1000000,
-            "radiation_level": "Over 9000 mSv/year",
-            "distance_from_reactor": "0 km",
-            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-            "warnings": ["Immediate death likely", "GPS stops working"]
-        }
-    ]
-
-    return jsonify({
-        "message": "Chernobyl Real Estate - Where your problems glow away!",
-        "properties": properties
-    })
-
 @app.route('/api/mars/properties', methods=['GET'])
 def get_mars_properties():
     """Mars Real Estate - Red planet, red hot deals!"""
@@ -1095,6 +1083,49 @@ def plants_match():
         "compatibility": score,
         "note": note
     }), 200
+
+
+from flask import jsonify, request  # already present in your file; ok to repeat
+
+@app.route('/api/chernobyl/properties', methods=['GET'])
+def get_chernobyl_properties():
+    properties = [
+        {
+            "id": 1,
+            "address": "Pripyat Central Square, Apartment Block #1",
+            "price": 0,
+            "radiation_level": "15,000 mSv/year",
+            "distance_from_reactor": "3 km",
+            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+            "warnings": ["Protective gear required", "May cause mutations"]
+        },
+        {
+            "id": 2,
+            "address": "Reactor 4 Penthouse Suite",
+            "price": -1000000,
+            "radiation_level": "Over 9000 mSv/year",
+            "distance_from_reactor": "0 km",
+            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+            "warnings": ["Immediate death likely", "GPS stops working"]
+        }
+    ]
+    raw = request.args.get("limit")
+    if raw is not None:
+        try:
+            n = int(raw)
+        except ValueError:
+            return jsonify({"error": "limit must be an integer"}), 400
+        n = max(1, min(len(properties), n))
+        properties = properties[:n]
+
+    return jsonify({
+        "message": "Chernobyl Real Estate - Where your problems glow away!",
+        "properties": properties
+    }), 200
+
+
+def create_app():
+    return app
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
