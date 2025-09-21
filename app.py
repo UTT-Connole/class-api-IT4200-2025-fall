@@ -439,9 +439,24 @@ def chips():
             denominations = [100, 25, 10, 5, 1]
             chips = {}
             remaining = amount
+
+            # Initialize all denominations to 0
             for denom in denominations:
-                chips[str(denom)] = remaining // denom
-                remaining = remaining % denom
+                chips[str(denom)] = 0
+
+            # First pass: distribute evenly across all denominations
+            while remaining >= min(denominations) * len(denominations):
+                for denom in denominations:
+                    if remaining >= denom:
+                        chips[str(denom)] += 1
+                        remaining -= denom
+
+            # Second pass: handle any remaining amount using largest possible denominations
+            for denom in denominations:
+                while remaining >= denom:
+                    chips[str(denom)] += 1
+                    remaining -= denom
+
         except (ValueError, KeyError):
             chips = None
     return render_template('chips.html', amount=amount, chips=chips)
