@@ -207,3 +207,13 @@ Adds three different chips of different value to a currently unused list.
 
 ## /music
 Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1
+
+## Properties endpoints
+
+- `GET /api/chernobyl/properties?limit=N`
+- `GET /api/mars/properties?limit=N`
+
+`limit` is optional. If provided, it returns only the first `N` properties (clamped to available items).
+If `limit` is not an integer, the API returns HTTP 400.
+
+## Running tests
