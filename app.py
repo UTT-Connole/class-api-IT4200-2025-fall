@@ -886,6 +886,41 @@ def bet_rps():
 
     return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
 
+@app.get("/plants/match")
+def plants_match():
+    """
+    Returns a compatibility score (0–100) for two plants.
+    Example: /plants/match?plant_a=Rose&plant_b=Cactus
+    """
+    plant_a = (request.args.get("plant_a") or "").strip()
+    plant_b = (request.args.get("plant_b") or "").strip()
+
+    if not plant_a or not plant_b:
+        return jsonify({
+            "ok": False,
+            "error": "Provide both query params: plant_a and plant_b. Example: /plants/match?plant_a=Rose&plant_b=Cactus"
+        }), 400
+
+    seed = sum(ord(c) for c in (plant_a.lower() + plant_b.lower()))
+    score = (seed * 73) % 101
+
+    if score > 80:
+        note = "High compatibility"
+    elif score > 50:
+        note = "Moderate compatibility"
+    elif score > 25:
+        note = "Low compatibility"
+    else:
+        note = "Very low compatibility"
+
+    return jsonify({
+        "ok": True,
+        "pair": [plant_a, plant_b],
+        "compatibility": score,
+        "note": note
+    }), 200
+
+
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8000, debug=True)
