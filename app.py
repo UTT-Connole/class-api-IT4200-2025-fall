@@ -867,7 +867,7 @@ def pokemon_battle():
     }
     
     return render_template('pokemon_battle.html', battle=battle_details)
-@app.route('/bet/rps', methods=['GET'])
+@app.route('/bet_rps', methods=['GET'])
 def bet_rps():
     moves = ['rock', 'paper', 'scissors']
     player = request.args.get('player', '').lower()
@@ -885,6 +885,23 @@ def bet_rps():
     payout = amount if outcome == 'tie' else amount*2 if outcome == 'win' else 0
 
     return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
+@app.route("/bet_slots")
+def bet_slots():
+    import random
+    amount = request.args.get('amount', type=int, default=0)
+    if amount <= 0:
+        return jsonify({"error": "Invalid amount"}), 400
+
+    symbols = ['🍒', '🍋', '🍊', '⭐']
+    result = [random.choice(symbols) for _ in range(3)]
+
+    payout = 0
+    if len(set(result)) == 1:        # Three of a kind
+        payout = amount * 10
+    elif len(set(result)) == 2:      # Two of a kind
+        payout = amount * 3
+
+    return jsonify({"result": result, "payout": payout})
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
