@@ -333,8 +333,25 @@ def get_fortune():
 def roll_dice(sides):
     if sides < 2:
         return jsonify({"error": "Number of sides must be 2 or greater"}), 400
+
     result = random.randint(1, sides)
-    return jsonify({"sides": sides, "result": result})
+
+    # Updates to code
+    if result == 1:
+        message = "Critical Fail!"
+    elif result == sides:
+        message = "Critical Success!"
+    elif result % 2 == 0:
+        message = "Even roll."
+    else:
+        message = "Odd roll."
+
+    return jsonify({
+        "sides": sides,
+        "result": result,
+        "message": message,
+        "is_even": result % 2 == 0
+    })
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
