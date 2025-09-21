@@ -15,9 +15,7 @@ try:
     users
 except NameError:
     users = {}
-
-
-
+    
 app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
