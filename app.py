@@ -1129,6 +1129,51 @@ def get_chernobyl_properties():
         try:
             n = int(raw)
         except ValueError:
+ add-rps-tests
+            return render_template('pokemon_battle.html',
+                                 pokemon_name=pokemon_name.title(),
+                                 needs_power=True,
+                                 error="Power rating must be a valid number!")
+    
+    # Battle logic
+    user_pokemon = pokemon_name
+    user_score = pokemon_rankings[user_pokemon]
+    
+    # Computer picks random Pokemon (excluding user's Pokemon)
+    available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
+    computer_pokemon = random.choice(available_pokemon)
+    computer_score = pokemon_rankings[computer_pokemon]
+    
+    # Determine winner
+    if user_score > computer_score:
+        winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
+        result = "victory"
+    elif computer_score > user_score:
+        winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
+        result = "defeat"
+    else:
+        winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
+        result = "tie"
+    
+    battle_details = {
+        'user_pokemon': user_pokemon.title(),
+        'user_score': user_score,
+        'computer_pokemon': computer_pokemon.title(),
+        'computer_score': computer_score,
+        'winner': winner,
+        'result': result
+    }
+    
+    return render_template('pokemon_battle.html', battle=battle_details)
+@app.route('/bet_rps', methods=['GET'])
+def bet_rps():
+    moves = ['rock', 'paper', 'scissors']
+    player = request.args.get('player', '').lower()
+    amount = request.args.get('amount', type=int, default=0)
+    
+    if player not in moves or amount <= 0:
+        return jsonify({"error": "Invalid move or amount"}), 400
+
             return jsonify({"error": "limit must be an integer"}), 400
         n = max(1, min(len(properties), n))
         properties = properties[:n]
@@ -1137,11 +1182,32 @@ def get_chernobyl_properties():
         "message": "Chernobyl Real Estate - Where your problems glow away!",
         "properties": properties
     }), 200
+ main
 
 
 def create_app():
     return app
 
+ add-rps-tests
+    return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
+@app.route("/bet_slots")
+def bet_slots():
+    import random
+    amount = request.args.get('amount', type=int, default=0)
+    if amount <= 0:
+        return jsonify({"error": "Invalid amount"}), 400
+
+    symbols = ['🍒', '🍋', '🍊', '⭐']
+    result = [random.choice(symbols) for _ in range(3)]
+
+    payout = 0
+    if len(set(result)) == 1:        # Three of a kind
+        payout = amount * 10
+    elif len(set(result)) == 2:      # Two of a kind
+        payout = amount * 3
+
+    return jsonify({"result": result, "payout": payout})
+ main
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
