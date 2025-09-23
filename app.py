@@ -1129,7 +1129,6 @@ def get_chernobyl_properties():
         try:
             n = int(raw)
         except ValueError:
- add-rps-tests
             return render_template('pokemon_battle.html',
                                  pokemon_name=pokemon_name.title(),
                                  needs_power=True,
@@ -1174,21 +1173,15 @@ def bet_rps():
     if player not in moves or amount <= 0:
         return jsonify({"error": "Invalid move or amount"}), 400
 
-            return jsonify({"error": "limit must be an integer"}), 400
-        n = max(1, min(len(properties), n))
-        properties = properties[:n]
-
     return jsonify({
         "message": "Chernobyl Real Estate - Where your problems glow away!",
         "properties": properties
     }), 200
- main
 
 
 def create_app():
     return app
 
- add-rps-tests
     return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
 @app.route("/bet_slots")
 def bet_slots():
@@ -1207,7 +1200,6 @@ def bet_slots():
         payout = amount * 3
 
     return jsonify({"result": result, "payout": payout})
- main
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
