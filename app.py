@@ -1190,7 +1190,7 @@ def bet_slots():
     if amount <= 0:
         return jsonify({"error": "Invalid amount"}), 400
 
-    symbols = ['🍒', '🍋', '🍊', '⭐']
+    symbols = ['cherry', 'limon', 'orange', 'star']
     result = [random.choice(symbols) for _ in range(3)]
 
     payout = 0
