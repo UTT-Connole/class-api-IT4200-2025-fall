@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ "Action-test" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "Action-test" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -31,4 +31,4 @@ jobs:
     - name: Test with pytest
       working-directory: test
       run: |
-        pytest 
+        pytest test_webpage.py
