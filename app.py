@@ -107,6 +107,21 @@ def create_app():
             "original_bet": bet,
             "winnings": winnings
         })
+    
+    @app.get('/drawAcard')
+    def drawAcard():
+        deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+        card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+        print("card", card)
+        return jsonify(card)
+
+    @app.get('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
+
+
 
 
     return app # <== ALSO DON'T DELETE
@@ -298,12 +313,6 @@ def place_plant_bet():
     return jsonify({"message": "Plant bet placed successfully", "remaining_balance": users[username]['balance']}), 200
 
 # ===========end of plant betting ======
-@app.route('/drawAcard')
-def drawAcard():
-	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
-	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
-	print("card", card)
-	return jsonify(card)
 
 @app.route('/aaron')
 def home12():
