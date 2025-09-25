@@ -307,9 +307,6 @@ def drawAcard():
 	print("card", card)
 	return jsonify(card)
 
-@app.route('/aaron')
-def home12():
-    return 'What? again what?'
 
 @app.route('/brayden')
 def brayden():
@@ -355,9 +352,7 @@ def roll_dice(sides):
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
-@app.route('/aaron')
-def aaron():
-    return 'Skoden'
+
 
 @app.route('/Skylands')
 def home6():
@@ -545,6 +540,15 @@ def sandals_fortune():
     chosen = random.choice(fortunes)
     chosen["date"] = str(date.today())
     return jsonify(chosen)
+
+@app.route('/breakfest')
+def breakfest():
+    breakfest_options = [
+        "Pancakes", "Waffles", "Omelette", "Cereal", "Fruit Salad", "Yogurt Parfait",
+        "Avocado Toast", "Breakfast Burrito", "French Toast", "Bagel with Cream Cheese"
+    ]
+    choice = random.choice(breakfest_options)
+    return jsonify({"breakfest": choice})
 
 @app.route('/dinner')
 def dinner():
