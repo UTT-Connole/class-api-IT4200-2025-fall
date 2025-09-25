@@ -12,14 +12,16 @@ from user_agents import parse
 import requests
 
 try:
-    users
+    users # What is this supposed to be?
 except NameError:
     users = {}
     
-app = Flask(__name__)
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
 def create_app():
+
+    app = Flask(__name__) # <== DON'T DELETE
+
     @app.route('/')
     def home():
         return render_template('index.html'), 200
@@ -53,19 +55,7 @@ def create_app():
             "message": "Chernobyl Real Estate - Where your problems glow away!",
             "properties": properties
         })
-    raw = request.args.get("limit")
-    if raw is not None:
-        try:
-            n = int(raw)
-        except ValueError:
-            return jsonify({"error": "limit must be an integer"}), 400
-        n = max(1, min(len(properties), n))
-        properties = properties[:n]
 
-    return jsonify({
-        "message": "Chernobyl Real Estate - Where your problems glow away!",
-        "properties": properties
-    }), 200
     @app.route('/api/mars/properties', methods=['GET'])
     def get_mars_properties():
         """Mars Real Estate - Red planet, red hot deals!"""
@@ -94,6 +84,7 @@ def create_app():
             "message": "Mars Realty - Out of this world properties!",
             "properties": properties
         })
+    
     @app.route("/api/gamble", methods=["POST"])
     def gamble():
         """Simple gambling endpoint"""
@@ -116,7 +107,29 @@ def create_app():
             "original_bet": bet,
             "winnings": winnings
         })
-    return app
+    
+    @app.get('/drawAcard')
+    def drawAcard():
+        deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
+        card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
+        print("card", card)
+        return jsonify(card)
+
+    @app.get('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
+
+
+
+
+    return app # <== ALSO DON'T DELETE
+
+
+app = create_app() # <== ALSO ALSO DON'T DELETE
+
+
 
 # Moved global variables to top for organization
 adjectives = ['Fluffy', 'Silly', 'Happy', 'Sleepy', 'Grumpy', 'Bouncy', 'Lazy', 'Sweet']
@@ -130,9 +143,9 @@ restaurants = [
     "Panera Bread"
 ]
 
-@app.route('/')
-def home():
-    return render_template('index.html'), 200
+# @app.route('/')
+# def home():
+#     return render_template('index.html'), 200
 
 @app.route('/pokemon')
 def pokemon():
@@ -156,34 +169,34 @@ def home11():
         return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
 
 # Unlivable Realestate Endpoints
-@app.route('/api/mars/properties', methods=['GET'])
-def get_mars_properties():
-    """Mars Real Estate - Red planet, red hot deals!"""
-    properties = [
-        {
-            "id": 1,
-            "address": "Olympus Mons Base Camp",
-            "price": 2000000,
-            "oxygen_level": "0%",
-            "temperature": "-80°C to 20°C",
-            "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
-            "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
-        },
-        {
-            "id": 2,
-            "address": "Valles Marineris Canyon Penthouse",
-            "price": 1500000,
-            "oxygen_level": "0%",
-            "temperature": "-120°C",
-            "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
-            "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
-        }
-    ]
+# @app.route('/api/mars/properties', methods=['GET'])
+# def get_mars_properties():
+#     """Mars Real Estate - Red planet, red hot deals!"""
+#     properties = [
+#         {
+#             "id": 1,
+#             "address": "Olympus Mons Base Camp",
+#             "price": 2000000,
+#             "oxygen_level": "0%",
+#             "temperature": "-80°C to 20°C",
+#             "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+#             "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+#         },
+#         {
+#             "id": 2,
+#             "address": "Valles Marineris Canyon Penthouse",
+#             "price": 1500000,
+#             "oxygen_level": "0%",
+#             "temperature": "-120°C",
+#             "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+#             "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+#         }
+#     ]
     
-    return jsonify({
-        "message": "Mars Realty - Out of this world properties!",
-        "properties": properties
-    })
+#     return jsonify({
+#         "message": "Mars Realty - Out of this world properties!",
+#         "properties": properties
+#     })
 
 @app.route('/api/underwater/properties', methods=['GET'])
 def get_underwater_properties():
@@ -300,12 +313,6 @@ def place_plant_bet():
     return jsonify({"message": "Plant bet placed successfully", "remaining_balance": users[username]['balance']}), 200
 
 # ===========end of plant betting ======
-@app.route('/drawAcard')
-def drawAcard():
-	deck = requests.get('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').json()
-	card = requests.get(f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1').json()
-	print("card", card)
-	return jsonify(card)
 
 @app.route('/aaron')
 def home12():
@@ -1014,25 +1021,6 @@ def generate_wizard_name():
 	name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
 	return f"{random.choice(titles)} {name.capitalize()}"
 
-prefixes = ['Thal', 'Eld', 'Zyn', 'Mor', 'Alar', 'Xan', 'Vor', 'Gal', 'Ser']
-roots = ['drak', 'mir', 'vyn', 'zar', 'quor', 'lith', 'mael', 'gorn', 'ther']
-suffixes = ['ion', 'ar', 'ius', 'en', 'or', 'eth', 'azar', 'em', 'yx']
-titles = ['Archmage', 'Sorcerer', 'Seer', 'Mystic', 'Enchanter', 'Spellbinder']
-
-
-
-
-# 🔮 Generate and display one name immediately
-#print("✨ Your wizard name is:", generate_wizard_name())
-
-
-
-
-
-    
-
-
-# blackjack_game()
 
 @mines_bp.post("/api/games/<game_id>/cashout")
 def cashout(game_id):
@@ -1100,70 +1088,69 @@ def plants_match():
     }), 200
 
 
-from flask import jsonify, request  # already present in your file; ok to repeat
+# @app.route('/api/chernobyl/properties', methods=['GET'])
+# def get_chernobyl_properties():
+#     properties = [
+#         {
+#             "id": 1,
+#             "address": "Pripyat Central Square, Apartment Block #1",
+#             "price": 0,
+#             "radiation_level": "15,000 mSv/year",
+#             "distance_from_reactor": "3 km",
+#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+#             "warnings": ["Protective gear required", "May cause mutations"]
+#         },
+#         {
+#             "id": 2,
+#             "address": "Reactor 4 Penthouse Suite",
+#             "price": -1000000,
+#             "radiation_level": "Over 9000 mSv/year",
+#             "distance_from_reactor": "0 km",
+#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+#             "warnings": ["Immediate death likely", "GPS stops working"]
+#         }
+#     ]
+#     raw = request.args.get("limit")
+#     if raw is not None:
+#         try:
+#             n = int(raw)
+#         except ValueError:
+#             return render_template('pokemon_battle.html',
+#                                  pokemon_name=pokemon_name.title(),
+#                                  needs_power=True,
+#                                  error="Power rating must be a valid number!")
+    
+#     # Battle logic
+#     user_pokemon = pokemon_name
+#     user_score = pokemon_rankings[user_pokemon]
+    
+#     # Computer picks random Pokemon (excluding user's Pokemon)
+#     available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
+#     computer_pokemon = random.choice(available_pokemon)
+#     computer_score = pokemon_rankings[computer_pokemon]
+    
+#     # Determine winner
+#     if user_score > computer_score:
+#         winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
+#         result = "victory"
+#     elif computer_score > user_score:
+#         winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
+#         result = "defeat"
+#     else:
+#         winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
+#         result = "tie"
+    
+#     battle_details = {
+#         'user_pokemon': user_pokemon.title(),
+#         'user_score': user_score,
+#         'computer_pokemon': computer_pokemon.title(),
+#         'computer_score': computer_score,
+#         'winner': winner,
+#         'result': result
+#     }
+    
+#     return render_template('pokemon_battle.html', battle=battle_details)
 
-@app.route('/api/chernobyl/properties', methods=['GET'])
-def get_chernobyl_properties():
-    properties = [
-        {
-            "id": 1,
-            "address": "Pripyat Central Square, Apartment Block #1",
-            "price": 0,
-            "radiation_level": "15,000 mSv/year",
-            "distance_from_reactor": "3 km",
-            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-            "warnings": ["Protective gear required", "May cause mutations"]
-        },
-        {
-            "id": 2,
-            "address": "Reactor 4 Penthouse Suite",
-            "price": -1000000,
-            "radiation_level": "Over 9000 mSv/year",
-            "distance_from_reactor": "0 km",
-            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-            "warnings": ["Immediate death likely", "GPS stops working"]
-        }
-    ]
-    raw = request.args.get("limit")
-    if raw is not None:
-        try:
-            n = int(raw)
-        except ValueError:
-            return render_template('pokemon_battle.html',
-                                 pokemon_name=pokemon_name.title(),
-                                 needs_power=True,
-                                 error="Power rating must be a valid number!")
-    
-    # Battle logic
-    user_pokemon = pokemon_name
-    user_score = pokemon_rankings[user_pokemon]
-    
-    # Computer picks random Pokemon (excluding user's Pokemon)
-    available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
-    computer_pokemon = random.choice(available_pokemon)
-    computer_score = pokemon_rankings[computer_pokemon]
-    
-    # Determine winner
-    if user_score > computer_score:
-        winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
-        result = "victory"
-    elif computer_score > user_score:
-        winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
-        result = "defeat"
-    else:
-        winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
-        result = "tie"
-    
-    battle_details = {
-        'user_pokemon': user_pokemon.title(),
-        'user_score': user_score,
-        'computer_pokemon': computer_pokemon.title(),
-        'computer_score': computer_score,
-        'winner': winner,
-        'result': result
-    }
-    
-    return render_template('pokemon_battle.html', battle=battle_details)
 @app.route('/bet_rps', methods=['GET'])
 def bet_rps():
     moves = ['rock', 'paper', 'scissors']
@@ -1179,10 +1166,6 @@ def bet_rps():
     }), 200
 
 
-def create_app():
-    return app
-
-    return jsonify({"player": player, "computer": comp, "outcome": outcome, "payout": payout})
 @app.route("/bet_slots")
 def bet_slots():
     import random
