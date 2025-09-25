@@ -264,7 +264,7 @@ def hockey_page():
     return render_template('hockey.html')
 
 #================ plant betting =================
-@app.route('/plantbet', methods=['POST'])
+@app.route('/place_plant_bet', methods=['POST'])
 def place_plant_bet():
     data = request.get_json()
     username = data.get('username')
