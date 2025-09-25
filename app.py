@@ -1124,6 +1124,10 @@ def get_chernobyl_properties():
             "warnings": ["Immediate death likely", "GPS stops working"]
         }
     ]
+    return jsonify({
+            "message": "Chernobyl Real Estate - Where your problems glow away!",
+            "properties": properties
+        })
     raw = request.args.get("limit")
     if raw is not None:
         try:
