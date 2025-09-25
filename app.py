@@ -94,28 +94,28 @@ def create_app():
             "message": "Mars Realty - Out of this world properties!",
             "properties": properties
         })
-    @app.route("/api/gamble", methods=["POST"])
-    def gamble():
-        """Simple gambling endpoint"""
-        data = request.get_json()
-        bet = data.get("bet", 0)
+@app.route("/api/gamble", methods=["POST"])
+def gamble():
+    """Simple gambling endpoint"""
+    data = request.get_json()
+    bet = data.get("bet", 0)
 
-        if bet <= 0:
-            return jsonify({"error": "Bet must be greater than zero"}), 400
+    if bet <= 0:
+        return jsonify({"error": "Bet must be greater than zero"}), 400
 
-        # Simulate a 50/50 gamble
-        if random.choice([True, False]):
-            winnings = bet * 2
-            result = "win"
-        else:
-            winnings = 0
-            result = "lose"
+    # Simulate a 50/50 gamble
+    if random.choice([True, False]):
+        winnings = bet * 2
+        result = "win"
+    else:
+        winnings = 0
+        result = "lose"
 
-        return jsonify({
-            "result": result,
-            "original_bet": bet,
-            "winnings": winnings
-        })
+    return jsonify({
+        "result": result,
+        "original_bet": bet,
+        "winnings": winnings
+    })
     return app
 
 # Moved global variables to top for organization
