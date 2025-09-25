@@ -277,7 +277,7 @@ def hockey_page():
     return render_template('hockey.html')
 
 #================ plant betting =================
-@app.route('/plantbet', methods=['POST'])
+@app.route('/place_plant_bet', methods=['POST'])
 def place_plant_bet():
     data = request.get_json()
     username = data.get('username')
@@ -641,7 +641,7 @@ def guess_number():
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
 
-
+"""
 @app.route('/blackjack')
 def get_card_count_value(card):
     if card in [2, 3, 4, 5, 6]:
@@ -652,7 +652,7 @@ def get_card_count_value(card):
         return -1
     else:
         return 0
-
+"""
 def create_deck():
 
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
@@ -958,13 +958,13 @@ def reveal_cell(game_id):
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
-
+"""
 @app.route('/clint')
 def spin_wheel():
     number = random.randint(0, 36)
     color = 'Green' if number == 0 else ('Red' if number % 2 == 0 else 'Black')
     return number, color
-
+"""
 def get_payout(bet_type, bet_value, result_number, result_color):
     if bet_type == 'number':
         return 35 if bet_value == result_number else -1
@@ -1169,6 +1169,34 @@ def plants_match():
 #     }
     
 #     return render_template('pokemon_battle.html', battle=battle_details)
+
+#@app.route('/api/chernobyl/properties', methods=['GET'])
+# def get_chernobyl_properties():
+#     properties = [
+#         {
+#             "id": 1,
+#             "address": "Pripyat Central Square, Apartment Block #1",
+#             "price": 0,
+#             "radiation_level": "15,000 mSv/year",
+#             "distance_from_reactor": "3 km",
+#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+#             "warnings": ["Protective gear required", "May cause mutations"]
+#         },
+#         {
+#             "id": 2,
+#             "address": "Reactor 4 Penthouse Suite",
+#             "price": -1000000,
+#             "radiation_level": "Over 9000 mSv/year",
+#             "distance_from_reactor": "0 km",
+#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+#             "warnings": ["Immediate death likely", "GPS stops working"]
+#         }
+#     ]
+#     return jsonify({
+#             "message": "Chernobyl Real Estate - Where your problems glow away!",
+#             "properties": properties
+#         })
+
 
 @app.route('/bet_rps', methods=['GET'])
 def bet_rps():
