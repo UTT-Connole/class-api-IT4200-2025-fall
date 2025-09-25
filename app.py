@@ -958,13 +958,7 @@ def reveal_cell(game_id):
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
-"""
-@app.route('/clint')
-def spin_wheel():
-    number = random.randint(0, 36)
-    color = 'Green' if number == 0 else ('Red' if number % 2 == 0 else 'Black')
-    return number, color
-"""
+
 def get_payout(bet_type, bet_value, result_number, result_color):
     if bet_type == 'number':
         return 35 if bet_value == result_number else -1
