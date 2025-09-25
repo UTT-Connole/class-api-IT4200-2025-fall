@@ -26,6 +26,47 @@ def create_app():
     def home():
         return render_template('index.html'), 200
 
+    @app.route('/chips', methods=['GET', 'POST'])
+    def chips():
+        chips = None
+        amount = None
+        if request.method == 'POST':
+            try:
+                amount = int(request.form['amount'])
+                denominations = [100, 25, 10, 5, 1]
+                chips = {}
+                remaining = amount
+
+                # Initialize all denominations to 0
+                for denom in denominations:
+                    chips[str(denom)] = 0
+
+                # First pass: distribute evenly across all denominations
+                while remaining >= min(denominations) * len(denominations):
+                    for denom in denominations:
+                        if remaining >= denom:
+                            chips[str(denom)] += 1
+                            remaining -= denom
+
+                # Second pass: handle any remaining amount using largest possible denominations
+                for denom in denominations:
+                    while remaining >= denom:
+                        chips[str(denom)] += 1
+                        remaining -= denom
+
+            except (ValueError, KeyError):
+                chips = None
+
+        return render_template('chips.html', amount=amount, chips=chips)
+
+    @app.route('/Tucson')
+    def Tucson():
+        message = {
+            "Location": "Tucson, Arizona",
+            "Description": "We don't take about it"
+        }
+        return jsonify(message)
+
 
     @app.route('/api/chernobyl/properties', methods=['GET'])
     def get_chernobyl_properties():
@@ -589,45 +630,7 @@ def hellhole():
     }
     return jsonify(message)
 
-@app.route('/Tucson')
-def Tucson():
-    message = {
-        "Location": "Tucson, Arizona",
-        "Description": "We don't take about it"
-    }
-    return jsonify(message)
 
-@app.route('/chips', methods=['GET', 'POST'])
-def chips():
-    chips = None
-    amount = None
-    if request.method == 'POST':
-        try:
-            amount = int(request.form['amount'])
-            denominations = [100, 25, 10, 5, 1]
-            chips = {}
-            remaining = amount
-
-            # Initialize all denominations to 0
-            for denom in denominations:
-                chips[str(denom)] = 0
-
-            # First pass: distribute evenly across all denominations
-            while remaining >= min(denominations) * len(denominations):
-                for denom in denominations:
-                    if remaining >= denom:
-                        chips[str(denom)] += 1
-                        remaining -= denom
-
-            # Second pass: handle any remaining amount using largest possible denominations
-            for denom in denominations:
-                while remaining >= denom:
-                    chips[str(denom)] += 1
-                    remaining -= denom
-
-        except (ValueError, KeyError):
-            chips = None
-    return render_template('chips.html', amount=amount, chips=chips)
 
 @app.route('/numberguesser', methods=['GET', 'POST'])
 def guess_number():
@@ -641,18 +644,6 @@ def guess_number():
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
 
-"""
-@app.route('/blackjack')
-def get_card_count_value(card):
-    if card in [2, 3, 4, 5, 6]:
-        return 1
-    elif card in [7, 8, 9]:
-        return 0
-    elif card in [10, 'J', 'Q', 'K', 'A']:
-        return -1
-    else:
-        return 0
-"""
 def create_deck():
 
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
@@ -846,37 +837,6 @@ def _find_game(game_id: str) -> Game:
         raise KeyError("Game not found")
     return g
 
-@app.route('/slots', methods=['POST'])
-def slots():
-    symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
-    bet = request.json.get('bet', 1)
-    username = request.json.get('username', 'user1')
-
-    if username not in users or users[username]['balance'] < bet:
-        return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-    # Spin the reels
-    result = [random.choice(symbols) for _ in range(3)]
-
-    # Determine payout
-    if result.count(result[0]) == 3:
-        payout = bet * 10  # Jackpot
-        message = "Jackpot! All symbols match."
-    elif len(set(result)) == 2:
-        payout = bet * 2   # Two match
-        message = "Two symbols match! Small win."
-    else:
-        payout = 0
-        message = "No match. Try again!"
-
-    users[username]['balance'] += payout - bet
-
-    return jsonify({
-        "result": result,
-        "message": message,
-        "payout": payout,
-        "balance": users[username]['balance']
-    })
 
 # ---------- UI (serves a static file) ----------
 @mines_bp.get("/")

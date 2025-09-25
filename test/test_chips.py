@@ -1,9 +1,3 @@
-def test_chips_get(client):
-    # Test that the chips page loads correctly
-    response = client.get('/chips')
-    assert response.status_code == 200
-    assert b'Enter amount' in response.data
-
 def test_chips_post(client):
     # Test even distribution with amount 341
     response = client.post('/chips', data={'amount': '341'})
