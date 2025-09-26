@@ -467,7 +467,7 @@ def guess_number():
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
 
-
+"""
 @app.route('/blackjack')
 def get_card_count_value(card):
     if card in [2, 3, 4, 5, 6]:
@@ -478,7 +478,7 @@ def get_card_count_value(card):
         return -1
     else:
         return 0
-
+"""
 def create_deck():
 
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'] * 4
@@ -785,6 +785,71 @@ def reveal_cell(game_id):
 
     return jsonify(g.to_public())
 
+def get_payout(bet_type, bet_value, result_number, result_color):
+    if bet_type == 'number':
+        return 35 if bet_value == result_number else -1
+    elif bet_type == 'color':
+        return 1 if bet_value.lower() == result_color.lower() else -1
+    else:
+        return -1
+
+def main():
+    print("🎲 Welcome to Python Roulette!")
+    balance = 100
+
+    while balance > 0:
+        print(f"\nYour current balance: ${balance}")
+        bet_type = input("Bet on 'number' or 'color': ").strip().lower()
+
+        if bet_type == 'number':
+            try:
+                bet_value = int(input("Choose a number between 0 and 36: "))
+                if not 0 <= bet_value <= 36:
+                    print("Invalid number. Try again.")
+                    continue
+            except ValueError:
+                print("Invalid input. Try again.")
+                continue
+        elif bet_type == 'color':
+            bet_value = input("Choose a color (Red/Black): ").strip().capitalize()
+            if bet_value not in ['Red', 'Black']:
+                print("Invalid color. Try again.")
+                continue
+        else:
+            print("Invalid bet type. Try again.")
+            continue
+
+        try:
+            wager = int(input("Enter your wager amount: "))
+            if wager > balance or wager <= 0:
+                print("Invalid wager. Try again.")
+                continue
+        except ValueError:
+            print("Invalid input. Try again.")
+            continue
+
+        result_number, result_color = spin_wheel()
+        print(f"\n🎡 The wheel landed on {result_number} ({result_color})")
+
+        payout_multiplier = get_payout(bet_type, bet_value, result_number, result_color)
+        winnings = wager * payout_multiplier if payout_multiplier > 0 else 0
+        balance += winnings - wager
+
+        if payout_multiplier > 0:
+            print(f"🎉 You won ${winnings}!")
+        else:
+            print("😢 You lost your wager.")
+
+        if balance <= 0:
+            print("💸 You're out of money! Game over.")
+            break
+
+        play_again = input("Play again? (y/n): ").strip().lower()
+        if play_again != 'y':
+            print("Thanks for playing!")
+            break
+
+
 
 @app.route('/clint')
 
@@ -918,32 +983,32 @@ def plants_match():
     
 #     return render_template('pokemon_battle.html', battle=battle_details)
 
-@app.route('/api/chernobyl/properties', methods=['GET'])
-def get_chernobyl_properties():
-    properties = [
-        {
-            "id": 1,
-            "address": "Pripyat Central Square, Apartment Block #1",
-            "price": 0,
-            "radiation_level": "15,000 mSv/year",
-            "distance_from_reactor": "3 km",
-            "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-            "warnings": ["Protective gear required", "May cause mutations"]
-        },
-        {
-            "id": 2,
-            "address": "Reactor 4 Penthouse Suite",
-            "price": -1000000,
-            "radiation_level": "Over 9000 mSv/year",
-            "distance_from_reactor": "0 km",
-            "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-            "warnings": ["Immediate death likely", "GPS stops working"]
-        }
-    ]
-    return jsonify({
-            "message": "Chernobyl Real Estate - Where your problems glow away!",
-            "properties": properties
-        })
+#@app.route('/api/chernobyl/properties', methods=['GET'])
+# def get_chernobyl_properties():
+#     properties = [
+#         {
+#             "id": 1,
+#             "address": "Pripyat Central Square, Apartment Block #1",
+#             "price": 0,
+#             "radiation_level": "15,000 mSv/year",
+#             "distance_from_reactor": "3 km",
+#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
+#             "warnings": ["Protective gear required", "May cause mutations"]
+#         },
+#         {
+#             "id": 2,
+#             "address": "Reactor 4 Penthouse Suite",
+#             "price": -1000000,
+#             "radiation_level": "Over 9000 mSv/year",
+#             "distance_from_reactor": "0 km",
+#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
+#             "warnings": ["Immediate death likely", "GPS stops working"]
+#         }
+#     ]
+#     return jsonify({
+#             "message": "Chernobyl Real Estate - Where your problems glow away!",
+#             "properties": properties
+#         })
 
 
 @app.route('/bet_rps', methods=['GET'])
