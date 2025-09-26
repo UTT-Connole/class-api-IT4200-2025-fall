@@ -785,6 +785,7 @@ def reveal_cell(game_id):
 
     return jsonify(g.to_public())
 
+
 def get_payout(bet_type, bet_value, result_number, result_color):
     if bet_type == 'number':
         return 35 if bet_value == result_number else -1
@@ -851,7 +852,8 @@ def main():
 
 
 
-@app.route('/clint')
+
+
 
 
 @mines_bp.post("/api/games/<game_id>/cashout")
