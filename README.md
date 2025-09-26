@@ -15,7 +15,7 @@ python app.py
 
 # open http://127.0.0.1:8000/mines
 
-
+# this documentation is a disaster and we should fix it
 
 ## Bulid as of latest commit by DaveTheFave is Runnable
 Please be aware of the following problems that prevent running that needed to be fixed to run:
@@ -170,11 +170,11 @@ Not too hungry today
 ## /Weather-current
 This give the current weather for St. George 
 
-## /dallin
-This endpoint gives you the option to delete the internet if you wish. 
-
 ## /weather
 This endpoint returns a truely random weather condition. 
+
+## /hazardous-conditions
+This endpoint calls the /weather endpoint, and decides if it is a hazardous condition or not. It returns the results. 
 
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
