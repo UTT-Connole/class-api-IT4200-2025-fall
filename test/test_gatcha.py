@@ -2,7 +2,7 @@ def test_gatcha(client):
     response = client.get('/gatcha')
     assert response.status_code == 200
 
-    data = response.jason
+    data = response.json
     assert isinstance(data, list)
     assert len(data) == 3
 
