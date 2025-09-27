@@ -1,3 +1,6 @@
+import pytest
+from app import app
+
 def client():
     app.testing = True
     with app.test_client() as client:
