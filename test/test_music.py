@@ -1,6 +1,9 @@
 import unittest
 from app import app
 
+GENRES = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae', 'Psychedelic', 'Surf']
+
+
 class MusicTestCase(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
