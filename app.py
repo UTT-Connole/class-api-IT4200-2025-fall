@@ -121,6 +121,37 @@ def create_app():
             data = json.load(file)
         return jsonify(data)
 
+    import random
+
+    
+    @app.route('/chickenrace', methods=['GET', 'POST'])
+    def chicken_race():
+        chickens = {
+            "Colonel Sanders' Revenge": 2.0,
+            "McNugget Sprint": 3.0,
+            "Free Range Fury": 4.0,
+            "Scrambled Lightning": 5.0,
+            "Hen Solo": 8.0,
+            "Clucky Balboa": 10.0
+        }
+        
+        if request.method == 'GET':
+            return render_template('chickenrace.html', chickens=chickens)
+        
+        bet_amount = int(request.form.get('bet', 0))
+        chosen_chicken = request.form.get('chicken')
+        
+        winner = random.choices(list(chickens.keys()), 
+                            weights=[1/odd for odd in chickens.values()])[0]
+        
+        winnings = bet_amount * chickens[winner] if winner == chosen_chicken else 0
+        
+        return jsonify({
+            "winner": winner,
+            "message": f"{winner} crosses the finish line in a cloud of feathers!",
+            "winnings": winnings,
+            "odds": chickens[chosen_chicken]
+        })
 
     @app.route('/Skylands')
     def home6():
@@ -162,6 +193,7 @@ def create_app():
             "payout": payout,
             "balance": users[username]['balance']
         })
+
 
 
 
