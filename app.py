@@ -26,7 +26,15 @@ def create_app():
     def home():
         return render_template('index.html'), 200
 
-
+    @app.route('/gatcha')
+    def gatcha():
+        rarities = ['C', 'R', 'SR', 'SSR']
+        weights = [70, 20, 9, 1]
+        rarity = random.choices(rarities, weights=weights, k=1)[0]
+        prizes = {'C': 'A rock', 'R': 'A stick', 'SR': 'A diamond', 'SSR': 'A unicorn'}
+        pull = prizes[rarity]
+        return jsonify({"pull": pull})
+    
     @app.route('/api/chernobyl/properties', methods=['GET'])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
