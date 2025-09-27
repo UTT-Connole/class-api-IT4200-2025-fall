@@ -350,7 +350,12 @@ def hockey_page():
     return render_template('hockey.html')
 
 #================ plant betting =================
-@app.route('/place_plant_bet', methods=['POST'])
+users = {
+    "alice": {"balance": 100},
+    "bob": {"balance": 50},
+}
+bets = []
+@app.route("/plants/match", methods=["POST"])
 def place_plant_bet():
     data = request.get_json()
     username = data.get('username')
@@ -372,6 +377,7 @@ def place_plant_bet():
 
     if plant_id not in plants:
         return jsonify({"error": "Invalid plant ID"}), 400
+    
 
     # Deduct amount and store bet
     users[username]['balance'] -= amount
@@ -611,24 +617,6 @@ def sandals_fortune():
     chosen = random.choice(fortunes)
     chosen["date"] = str(date.today())
     return jsonify(chosen)
-
-@app.route('/breakfest')
-def breakfest():
-    breakfest_options = [
-        "Pancakes", "Waffles", "Omelette", "Cereal", "Fruit Salad", "Yogurt Parfait",
-        "Avocado Toast", "Breakfast Burrito", "French Toast", "Bagel with Cream Cheese"
-    ]
-    choice = random.choice(breakfest_options)
-    return jsonify({"breakfest": choice})
-
-@app.route('/dinner')
-def dinner():
-    dinner_options = [
-        "Pizza", "Tacos", "Spaghetti", "Sushi", "Burgers", "Salad",
-        "Stir Fry", "Chicken Alfredo", "BBQ Ribs", "Vegetable Curry"
-    ]
-    choice = random.choice(dinner_options)
-    return jsonify({"dinner": choice})
 
 @app.route('/fav_quote')
 def fav_quote():
