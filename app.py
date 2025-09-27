@@ -123,6 +123,7 @@ def create_app():
 
     import random
 
+    
     @app.route('/chickenrace', methods=['GET', 'POST'])
     def chicken_race():
         chickens = {
@@ -151,6 +152,49 @@ def create_app():
             "winnings": winnings,
             "odds": chickens[chosen_chicken]
         })
+
+    @app.route('/Skylands')
+    def home6():
+        user_input = input('Enter somthing: ')
+        if user_input == 'Conquretron':
+            return 'K. A. O. S.'
+        else:
+            return 'Wrong Answer'
+        
+
+    @app.route('/slots', methods=['POST'])
+    def slots():
+        symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
+        bet = request.json.get('bet', 1)
+        username = request.json.get('username', 'user1')
+
+        if username not in users or users[username]['balance'] < bet:
+            return jsonify({"error": "Insufficient balance or user not found."}), 400
+
+        # Spin the reels
+        result = [random.choice(symbols) for _ in range(3)]
+
+        # Determine payout
+        if result.count(result[0]) == 3:
+            payout = bet * 10  # Jackpot
+            message = "Jackpot! All symbols match."
+        elif len(set(result)) == 2:
+            payout = bet * 2   # Two match
+            message = "Two symbols match! Small win."
+        else:
+            payout = 0
+            message = "No match. Try again!"
+
+        users[username]['balance'] += payout - bet
+
+        return jsonify({
+            "result": result,
+            "message": message,
+            "payout": payout,
+            "balance": users[username]['balance']
+        })
+
+
 
 
     return app # <== ALSO DON'T DELETE
@@ -388,15 +432,6 @@ def roll_dice(sides):
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
-
-
-@app.route('/Skylands')
-def home6():
-    user_input = input('Enter somthing: ')
-    if user_input == 'Conquretron':
-        return 'K. A. O. S.'
-    else:
-        return 'Wrong Answer'
 
 @app.route('/porter')
 def home7():
@@ -875,37 +910,6 @@ def _find_game(game_id: str) -> Game:
         raise KeyError("Game not found")
     return g
 
-@app.route('/slots', methods=['POST'])
-def slots():
-    symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
-    bet = request.json.get('bet', 1)
-    username = request.json.get('username', 'user1')
-
-    if username not in users or users[username]['balance'] < bet:
-        return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-    # Spin the reels
-    result = [random.choice(symbols) for _ in range(3)]
-
-    # Determine payout
-    if result.count(result[0]) == 3:
-        payout = bet * 10  # Jackpot
-        message = "Jackpot! All symbols match."
-    elif len(set(result)) == 2:
-        payout = bet * 2   # Two match
-        message = "Two symbols match! Small win."
-    else:
-        payout = 0
-        message = "No match. Try again!"
-
-    users[username]['balance'] += payout - bet
-
-    return jsonify({
-        "result": result,
-        "message": message,
-        "payout": payout,
-        "balance": users[username]['balance']
-    })
 
 # ---------- UI (serves a static file) ----------
 @mines_bp.get("/")
