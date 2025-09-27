@@ -122,7 +122,64 @@ def create_app():
         return jsonify(data)
 
 
+    @app.route('/Skylands')
+    def home6():
+        user_input = input('Enter somthing: ')
+        if user_input == 'Conquretron':
+            return 'K. A. O. S.'
+        else:
+            return 'Wrong Answer'
+        
 
+    @app.route('/slots', methods=['POST'])
+    def slots():
+        symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
+        bet = request.json.get('bet', 1)
+        username = request.json.get('username', 'user1')
+
+        if username not in users or users[username]['balance'] < bet:
+            return jsonify({"error": "Insufficient balance or user not found."}), 400
+
+        # Spin the reels
+        result = [random.choice(symbols) for _ in range(3)]
+
+        # Determine payout
+        if result.count(result[0]) == 3:
+            payout = bet * 10  # Jackpot
+            message = "Jackpot! All symbols match."
+        elif len(set(result)) == 2:
+            payout = bet * 2   # Two match
+            message = "Two symbols match! Small win."
+        else:
+            payout = 0
+            message = "No match. Try again!"
+
+        users[username]['balance'] += payout - bet
+
+        return jsonify({
+            "result": result,
+            "message": message,
+            "payout": payout,
+            "balance": users[username]['balance']
+        })
+
+    @app.route('/craps')
+    def craps():
+        def roll():
+            return random.randint(1,6) + random.randint(1,6)
+        x = roll()
+        if x == 7 or x == 11:
+            return jsonify({"result": 1})
+        if x == 2 or x == 3 or x == 12:
+            return jsonify({"result": 0})
+        
+        point = x
+        while True:
+            x=roll()
+            if x == point:
+                return jsonify({"result": 1})
+            if x == 7:
+                return jsonify({"result": 0})
 
     return app # <== ALSO DON'T DELETE
 
@@ -359,15 +416,6 @@ def roll_dice(sides):
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
-
-
-@app.route('/Skylands')
-def home6():
-    user_input = input('Enter somthing: ')
-    if user_input == 'Conquretron':
-        return 'K. A. O. S.'
-    else:
-        return 'Wrong Answer'
 
 @app.route('/porter')
 def home7():
@@ -846,37 +894,6 @@ def _find_game(game_id: str) -> Game:
         raise KeyError("Game not found")
     return g
 
-@app.route('/slots', methods=['POST'])
-def slots():
-    symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
-    bet = request.json.get('bet', 1)
-    username = request.json.get('username', 'user1')
-
-    if username not in users or users[username]['balance'] < bet:
-        return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-    # Spin the reels
-    result = [random.choice(symbols) for _ in range(3)]
-
-    # Determine payout
-    if result.count(result[0]) == 3:
-        payout = bet * 10  # Jackpot
-        message = "Jackpot! All symbols match."
-    elif len(set(result)) == 2:
-        payout = bet * 2   # Two match
-        message = "Two symbols match! Small win."
-    else:
-        payout = 0
-        message = "No match. Try again!"
-
-    users[username]['balance'] += payout - bet
-
-    return jsonify({
-        "result": result,
-        "message": message,
-        "payout": payout,
-        "balance": users[username]['balance']
-    })
 
 # ---------- UI (serves a static file) ----------
 @mines_bp.get("/")
