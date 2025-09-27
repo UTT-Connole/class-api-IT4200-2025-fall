@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bingo Card</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            margin: auto;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            width: 60px;
+            height: 60px;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Bingo Card</h1>
+    <table>
+        <tr>
+            {% for header in ['B', 'I', 'N', 'G', 'O'] %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for i in range(5) %}
+        <tr>
+            {% for header in ['B', 'I', 'N', 'G', 'O'] %}
+                <td>{{ card[header][i] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
