@@ -38,10 +38,16 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertEqual(response.content_type, 'application/json')
 
     def test_random_game_result_is_valid(self):
-        #check that randomly returned game is in the list
+    # Check that the reconstructed result is in the list of valid results
         response = self.client.get('/api/hockey')
         data = json.loads(response.data)
-        result = data.get("game_result")
+
+        team1 = data.get("team1")
+        score1 = data.get("score1")
+        score2 = data.get("score2")
+        team2 = data.get("team2")
+
+        result = f"{team1} {score1} - {score2} {team2}"
         self.assertIn(result, self.valid_results)
 
     def test_api_hockey_status(self):

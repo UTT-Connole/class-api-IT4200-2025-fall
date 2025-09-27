@@ -266,11 +266,21 @@ hockey_results2 = [
 ]
 
 @app.route('/api/hockey', methods=['GET'])
-def get_random_game():
+def get_random_matchup():
     all_lists = [hockey_results1, hockey_results2]
     selected_list = random.choice(all_lists)
     result = random.choice(selected_list)
-    return jsonify({"game_result": result})
+
+    match = result.split(" - ")
+    team1_info = match[0].rsplit(" ", 1)
+    team2_info = match[1].split(" ", 1)
+
+    return jsonify({
+        "team1": team1_info[0],
+        "team2": team2_info[1],
+        "score1": team1_info[1],
+        "score2": team2_info[0]
+    })
 
 @app.route('/hockey')
 def hockey_page():
