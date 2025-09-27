@@ -579,6 +579,7 @@ def fav_quote():
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
 
+app = Flask(__name__)
 
 hellhole_facts = [
     "It’s said that the heat here can melt steel.",
@@ -604,19 +605,6 @@ descriptions = [
     "Flooding has ruined the foundation beyond repair.",
 ]
 
-@app.route('/hellhole')
-def hellhole():
-    # Generate a random number of unlivable homes (3 to 6 for example)
-    unlivable_homes = [generate_unlivable_home() for _ in range(random.randint(3, 6))]
-
-    message = {
-        "location": "Hellhole",
-        "description": "Hellhole is a great place to visit... if you're into nightmares.",
-        "fact": random.choice(hellhole_facts),
-        "unlivable_homes": unlivable_homes,
-        "timestamp": datetime.utcnow().isoformat() + "Z"
-    }
-
 def generate_unlivable_home():
     return {
         "location": random.choice(locations),
@@ -624,7 +612,20 @@ def generate_unlivable_home():
         "description": random.choice(descriptions),
     }
 
+@app.route('/hellhole')
+def hellhole():
+    # Generate a random number of unlivable homes (3 to 6 for example)
+    unlivable_homes = [generate_unlivable_home() for _ in range(random.randint(3, 6))]
+    message = {
+        "location": "Hellhole",
+        "description": "Hellhole is a great place to visit... if you're into nightmares.",
+        "fact": random.choice(hellhole_facts),
+        "unlivable_homes": unlivable_homes,
+        "timestamp": datetime.utcnow().isoformat() + "Z"
+    }
     return jsonify(message)
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/Tucson')
 def Tucson():
