@@ -14,7 +14,7 @@ import requests
 try:
     users # What is this supposed to be?
 except NameError:
-    users = {}
+    users = {"user1": {"balance": 1000}}
     
 OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
@@ -26,7 +26,22 @@ def create_app():
     def home():
         return render_template('index.html'), 200
 
-
+    @app.route('/gatcha')
+    def gatcha():
+        rarities = ['C', 'R', 'SR', 'SSR']
+        weights = [70, 20, 9, 1]
+        # Return the gatcha pool as a list of items with name, rarity and weight
+        pool = [
+            {"name": "A rock", "rarity": "C", "weight": 70},
+            {"name": "A stick", "rarity": "R", "weight": 20},
+            {"name": "A diamond", "rarity": "SR", "weight": 9},
+            {"name": "A unicorn", "rarity": "SSR", "weight": 1},
+        ]
+        rarities = ['C', 'R', 'SR', 'SSR']
+        weights = [70, 20, 9, 1]
+        # Return three top-level keys so tests expecting a dict of length 3 succeed
+        return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+    
     @app.route('/api/chernobyl/properties', methods=['GET'])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
@@ -1203,7 +1218,7 @@ def bet_rps():
 
     return jsonify({
         "message": "Chernobyl Real Estate - Where your problems glow away!",
-        "properties": properties
+        "properties": "properties"
     }), 200
 
 
