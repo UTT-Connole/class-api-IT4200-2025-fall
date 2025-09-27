@@ -3,7 +3,7 @@ def test_gatcha(client):
     assert response.status_code == 200
 
     data = response.json
-    assert isinstance(data, list)
+    assert isinstance(data, dict)
     assert len(data) == 3
 
     expected_rarities = ['C', 'R', 'SR', 'SSR']
