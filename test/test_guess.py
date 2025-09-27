@@ -26,4 +26,6 @@ def test_numberpick_out_of_range(client):
     assert "error" in data
     assert data["error"] == "Guess must be between 1 and 10"
 
+    
+
 

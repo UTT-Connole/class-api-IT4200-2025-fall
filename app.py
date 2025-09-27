@@ -1061,8 +1061,7 @@ def numberpick_page():
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
 
-def create_app():
-    return app
+
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
