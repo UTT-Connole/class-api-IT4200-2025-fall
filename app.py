@@ -121,7 +121,96 @@ def create_app():
             data = json.load(file)
         return jsonify(data)
 
+    import random
 
+    
+    @app.route('/chickenrace', methods=['GET', 'POST'])
+    def chicken_race():
+        chickens = {
+            "Colonel Sanders' Revenge": 2.0,
+            "McNugget Sprint": 3.0,
+            "Free Range Fury": 4.0,
+            "Scrambled Lightning": 5.0,
+            "Hen Solo": 8.0,
+            "Clucky Balboa": 10.0
+        }
+        
+        if request.method == 'GET':
+            return render_template('chickenrace.html', chickens=chickens)
+        
+        bet_amount = int(request.form.get('bet', 0))
+        chosen_chicken = request.form.get('chicken')
+        
+        winner = random.choices(list(chickens.keys()), 
+                            weights=[1/odd for odd in chickens.values()])[0]
+        
+        winnings = bet_amount * chickens[winner] if winner == chosen_chicken else 0
+        
+        return jsonify({
+            "winner": winner,
+            "message": f"{winner} crosses the finish line in a cloud of feathers!",
+            "winnings": winnings,
+            "odds": chickens[chosen_chicken]
+        })
+
+    @app.route('/Skylands')
+    def home6():
+        user_input = input('Enter somthing: ')
+        if user_input == 'Conquretron':
+            return 'K. A. O. S.'
+        else:
+            return 'Wrong Answer'
+        
+
+    @app.route('/slots', methods=['POST'])
+    def slots():
+        symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
+        bet = request.json.get('bet', 1)
+        username = request.json.get('username', 'user1')
+
+        if username not in users or users[username]['balance'] < bet:
+            return jsonify({"error": "Insufficient balance or user not found."}), 400
+
+        # Spin the reels
+        result = [random.choice(symbols) for _ in range(3)]
+
+        # Determine payout
+        if result.count(result[0]) == 3:
+            payout = bet * 10  # Jackpot
+            message = "Jackpot! All symbols match."
+        elif len(set(result)) == 2:
+            payout = bet * 2   # Two match
+            message = "Two symbols match! Small win."
+        else:
+            payout = 0
+            message = "No match. Try again!"
+
+        users[username]['balance'] += payout - bet
+
+        return jsonify({
+            "result": result,
+            "message": message,
+            "payout": payout,
+            "balance": users[username]['balance']
+        })
+
+    @app.route('/craps')
+    def craps():
+        def roll():
+            return random.randint(1,6) + random.randint(1,6)
+        x = roll()
+        if x == 7 or x == 11:
+            return jsonify({"result": 1})
+        if x == 2 or x == 3 or x == 12:
+            return jsonify({"result": 0})
+        
+        point = x
+        while True:
+            x=roll()
+            if x == point:
+                return jsonify({"result": 1})
+            if x == 7:
+                return jsonify({"result": 0})
 
 
     return app # <== ALSO DON'T DELETE
@@ -155,18 +244,49 @@ def pokemon():
 def weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
     condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}°C"
+    temperature = f"{random.randint(-30, 50)}C"
     humidity = f"{random.randint(10, 100)}%"
     return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
 
-@app.route('/dallin', methods=['POST'])
-def home11():
-    data = request.get_json(force=True, silent=True) or {}
-    user_input = str(data.get('confirm', '')).strip().lower()
-    if user_input == 'yes':
-        return jsonify({"message": "Deleting the internet... Goodbye world", "status": "deleted"})
+@app.route('/hazardous-conditions')
+def hazardous_conditions():
+    # Get the weather data
+    weather_data = weather() 
+
+    # Extract values
+    weather_data = weather_data.get_json()
+    condition = weather_data["condition"]
+    temperature = int(weather_data["temperature"].replace('C', ''))
+    humidity = int(weather_data["humidity"].replace('%', ''))
+
+    # Determine hazard based on actual conditions
+    if condition == "Snowy" and temperature < -10:
+        hazard = "Blizzard Warning"
+        severity = "Severe"
+    elif condition == "Rainy" and humidity > 95:
+        hazard = "Flood Advisory"
+        severity = "High"
+    elif temperature >= 45:
+        hazard = "Extreme Heat Warning"
+        severity = "Severe"
+    elif condition == "Windy" and temperature < -5:
+        hazard = "Wind Chill Advisory"
+        severity = "High"
+    elif temperature >= 40:
+        hazard = "Heat Advisory"
+        severity = "High"
     else:
-        return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
+        hazard = "No Hazardous Conditions"
+        severity = "None"
+
+    return jsonify({
+        "condition": condition,  # <== keep actual weather condition like "Snowy"
+        "temperature": weather_data["temperature"],
+        "humidity": weather_data["humidity"],
+        "hazardous_condition": hazard,
+        "severity": severity
+    })
+
 
 # Unlivable Realestate Endpoints
 # @app.route('/api/mars/properties', methods=['GET'])
@@ -359,15 +479,6 @@ def roll_dice(sides):
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
-
-
-@app.route('/Skylands')
-def home6():
-    user_input = input('Enter somthing: ')
-    if user_input == 'Conquretron':
-        return 'K. A. O. S.'
-    else:
-        return 'Wrong Answer'
 
 @app.route('/porter')
 def home7():
@@ -884,37 +995,6 @@ def _find_game(game_id: str) -> Game:
         raise KeyError("Game not found")
     return g
 
-@app.route('/slots', methods=['POST'])
-def slots():
-    symbols = ['🍒', '🍋', '🔔', '⭐', '7️⃣']
-    bet = request.json.get('bet', 1)
-    username = request.json.get('username', 'user1')
-
-    if username not in users or users[username]['balance'] < bet:
-        return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-    # Spin the reels
-    result = [random.choice(symbols) for _ in range(3)]
-
-    # Determine payout
-    if result.count(result[0]) == 3:
-        payout = bet * 10  # Jackpot
-        message = "Jackpot! All symbols match."
-    elif len(set(result)) == 2:
-        payout = bet * 2   # Two match
-        message = "Two symbols match! Small win."
-    else:
-        payout = 0
-        message = "No match. Try again!"
-
-    users[username]['balance'] += payout - bet
-
-    return jsonify({
-        "result": result,
-        "message": message,
-        "payout": payout,
-        "balance": users[username]['balance']
-    })
 
 # ---------- UI (serves a static file) ----------
 @mines_bp.get("/")
