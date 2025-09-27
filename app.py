@@ -228,18 +228,49 @@ def pokemon():
 def weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
     condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}°C"
+    temperature = f"{random.randint(-30, 50)}C"
     humidity = f"{random.randint(10, 100)}%"
     return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
 
-@app.route('/dallin', methods=['POST'])
-def home11():
-    data = request.get_json(force=True, silent=True) or {}
-    user_input = str(data.get('confirm', '')).strip().lower()
-    if user_input == 'yes':
-        return jsonify({"message": "Deleting the internet... Goodbye world", "status": "deleted"})
+@app.route('/hazardous-conditions')
+def hazardous_conditions():
+    # Get the weather data
+    weather_data = weather() 
+
+    # Extract values
+    weather_data = weather_data.get_json()
+    condition = weather_data["condition"]
+    temperature = int(weather_data["temperature"].replace('C', ''))
+    humidity = int(weather_data["humidity"].replace('%', ''))
+
+    # Determine hazard based on actual conditions
+    if condition == "Snowy" and temperature < -10:
+        hazard = "Blizzard Warning"
+        severity = "Severe"
+    elif condition == "Rainy" and humidity > 95:
+        hazard = "Flood Advisory"
+        severity = "High"
+    elif temperature >= 45:
+        hazard = "Extreme Heat Warning"
+        severity = "Severe"
+    elif condition == "Windy" and temperature < -5:
+        hazard = "Wind Chill Advisory"
+        severity = "High"
+    elif temperature >= 40:
+        hazard = "Heat Advisory"
+        severity = "High"
     else:
-        return jsonify({"message": "Operation canceled. For now.", "status": "canceled"})
+        hazard = "No Hazardous Conditions"
+        severity = "None"
+
+    return jsonify({
+        "condition": condition,  # <== keep actual weather condition like "Snowy"
+        "temperature": weather_data["temperature"],
+        "humidity": weather_data["humidity"],
+        "hazardous_condition": hazard,
+        "severity": severity
+    })
+
 
 # Unlivable Realestate Endpoints
 # @app.route('/api/mars/properties', methods=['GET'])
