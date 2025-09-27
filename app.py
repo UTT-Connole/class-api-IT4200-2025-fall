@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory, redirect
+from flask import Flask, render_template, jsonify, send_from_directory, redirect
 import random
+import requests
 import json
 import os
 from dataclasses import dataclass, field
@@ -9,8 +10,9 @@ from datetime import datetime, timedelta, date
 from typing import Set, Tuple, Dict, Optional
 from flask import Blueprint
 from user_agents import parse
-import requests
-from fastapi import APIRouter
+from flask import jsonify
+
+
 
 
 app = Flask(__name__)
@@ -1046,20 +1048,21 @@ def bet_slots():
 
     return jsonify({"result": result, "payout": payout})
 
-router = APIRouter()
-@app.route("/guess")
-def guess_number(user_guess: int):
-    """
-    guess between 1 and 10 
-    """
-    secret = random.randint(1, 10)
-    if user_guess == secret:
-        return {"result": "Correct!", "secret": secret}
-    else:
-        return {"result": "Wrong!", "secret": secret}
+@app.route('/numberguesser', methods=['GET', 'POST'])
+def numberguesser_page():
+    import random
+    target = random.randint(1, 10)
+    result = None
+    if request.method == 'POST':
+        user_guess = int(request.form['guess'])
+        if user_guess == target:
+            result = f"Congratulations! You guessed the number correctly. It was {target}!"
+        else:
+            result = f"Sorry, that's incorrect! The number was {target}. Try again!"
+    return jsonify(result=result)
 
-
-
+def create_app():
+    return app
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == '__main__':
