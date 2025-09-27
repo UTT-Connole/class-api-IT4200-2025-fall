@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, send_from_directory, redirect
+from flask import Flask, render_template, jsonify, request, send_from_directory, redirect
 import random
 import requests
 import json
@@ -1048,8 +1048,8 @@ def bet_slots():
 
     return jsonify({"result": result, "payout": payout})
 
-@app.route('/numberguesser', methods=['GET', 'POST'])
-def numberguesser_page():
+@app.route('/numberpick', methods=['GET', 'POST'])
+def numberpick_page():
     import random
     target = random.randint(1, 10)
     result = None

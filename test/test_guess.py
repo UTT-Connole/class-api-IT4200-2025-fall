@@ -1,6 +1,6 @@
 import random
 
-def test_guess_number_correct(monkeypatch, client):
+def test_numberpick_correct(monkeypatch, client):
     # Force secret to 5
     monkeypatch.setattr(random, "randint", lambda a, b: 5)
     resp = client.get("/guess?user_guess=5")
@@ -9,7 +9,7 @@ def test_guess_number_correct(monkeypatch, client):
     assert data["result"] == "Correct!"
     assert data["secret"] == 5
 
-def test_guess_number_wrong(monkeypatch, client):
+def test_numberpick_wrong(monkeypatch, client):
     # Force secret to 7
     monkeypatch.setattr(random, "randint", lambda a, b: 7)
     resp = client.get("/guess?user_guess=3")
@@ -18,7 +18,7 @@ def test_guess_number_wrong(monkeypatch, client):
     assert data["result"] == "Wrong!"
     assert data["secret"] == 7
 
-def test_guess_number_out_of_range(client):
+def test_numberpick_out_of_range(client):
     resp = client.get("/guess?user_guess=15")
     # Should reject with 400 status code
     assert resp.status_code == 400
