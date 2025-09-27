@@ -121,6 +121,23 @@ def create_app():
             data = json.load(file)
         return jsonify(data)
 
+    @app.route('/craps')
+    def craps():
+        def roll():
+            return random.randint(1,6) + random.randint(1,6)
+        x = roll()
+        if x == 7 or x == 11:
+            return jsonify({"result": 1})
+        if x == 2 or x == 3 or x == 12:
+            return jsonify({"result": 0})
+        
+        point = x
+        while True:
+            x=roll()
+            if x == point:
+                return jsonify({"result": 1})
+            if x == 7:
+                return jsonify({"result": 0})
 
 
 
