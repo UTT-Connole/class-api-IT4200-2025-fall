@@ -700,6 +700,31 @@ def russian_roulette():
         "probability_bang": f"1/{chambers}"
     })
 
+@app.route("/plant-battle", methods=["GET"])
+def plant_battle():
+    plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
+
+    bet = request.args.get("bet", default=10, type=int)
+    chosen_plant = request.args.get("plant", default=random.choice(plants))
+
+    if bet <= 0:
+        return jsonify({"error": "Bet must be a positive integer"}), 400
+
+    if chosen_plant not in plants:
+        return jsonify({"error": f"Plant must be one of {plants}"}), 400
+
+    winner = random.choice(plants)
+    won = (chosen_plant == winner)
+    winnings = bet * 2 if won else 0
+
+    return jsonify({
+        "plants": plants,
+        "chosen_plant": chosen_plant,
+        "winner": winner,
+        "bet": bet,
+        "result": "win" if won else "lose",
+        "winnings": winnings
+    })
 
 @app.route('/sandals-fortune', methods=['GET'])
 def sandals_fortune():
