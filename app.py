@@ -227,8 +227,19 @@ def create_app():
             if x == 7:
                 return jsonify({"result": 0})
             
-    # @app.get('')
-    # def  
+    @app.get('/magic8ball')
+    def magic8ball():
+        answers = [
+            "It is certain",
+            "Without a doubt",
+            "Most likely",
+            "Ask again later",
+            "Can't predict now",
+            "My sources say no",
+            "Outlook not so good",
+            "Don't count on it"
+        ]
+        return random.choice(answers)
 
 
     return app # <== ALSO DON'T DELETE
@@ -510,21 +521,6 @@ def roll_dice(sides):
     })
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
-
-
-@app.route('/magic8ball')
-def magic8ball():
-    answers = [
-        "It is certain",
-        "Without a doubt",
-        "Most likely",
-        "Ask again later",
-        "Can't predict now",
-        "My sources say no",
-        "Outlook not so good",
-        "Don't count on it"
-    ]
-    return answers[random.randrange(1, 9)]
 
 
 @app.route('/generatePassword')
