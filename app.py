@@ -564,25 +564,29 @@ def placeBetSimple(betName=None, betOptions=None):
     # Leaving as-is; this route uses input() and is interactive in terminal
     return jsonify({"message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."})
 
-@app.route('/bingo')
+@app.route('/bingo/generate')
 def generate_bingo_card():
-    card = {}
-    ranges = {
-        "B": range(1,16),
-        "I": range(16,31),
-        "N": range(31,46),
-        "G": range(46,61),
-        "O": range(61,76)
+    
+    card = {
+        "B": random.sample(range(1, 16), 5),
+        "I": random.sample(range(16, 31), 5),
+        "N": random.sample(range(31, 46), 5),
+        "G": random.sample(range(46, 61), 5),
+        "O": random.sample(range(61, 76), 5)
     }
 
-    for letter, num_range in ranges.items():
-        card[letter] = random.sample(num_range, 5)
     card["N"][2] = "FREE"
+    
     return card
 
+@app.route('/bingo')
 def create_card():
+    return jsonify(generate_bingo_card()), 200
+
+@app.route('/bingo/html')
+def bingo_html():
     card = generate_bingo_card()
-    return jsonify(card), 200
+    return render_template('bingo.html', card=card)
 
 @app.route('/randomRestaurant')
 def choose():
