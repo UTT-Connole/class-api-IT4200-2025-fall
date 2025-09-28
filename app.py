@@ -5,7 +5,7 @@ import os
 from dataclasses import dataclass, field
 from uuid import uuid4
 from secrets import SystemRandom
-from datetime import datetime, timedelta, date
+from datetime import datetime, timezone, timedelta, date
 from typing import Set, Tuple, Dict, Optional
 from flask import Blueprint
 from user_agents import parse
@@ -115,11 +115,11 @@ def create_app():
         print("card", card)
         return jsonify(card)
 
-    @app.get('/pokerHandRankings')
-    def getpokerHandRankings():
-        with open('./import_resources/pokerHandRankings.json', 'r') as file:
-            data = json.load(file)
-        return jsonify(data)
+    # @app.get('/pokerHandRankings')
+    # def getpokerHandRankings():
+    #     with open('./import_resources/pokerHandRankings.json', 'r') as file:
+    #         data = json.load(file)
+    #     return jsonify(data)
 
     @app.route("/sports", methods=["GET"])
     def sports():
@@ -736,15 +736,51 @@ def fav_quote():
     ]
     return jsonify({"fav_quote": random.choice(fav_quote)})
 
+#hellhole start
+hellhole_facts = [
+    "It’s said that the heat here can melt steel.",
+    "Legend says lost souls wander this place forever.",
+    "Despite the name, some rare flowers bloom here.",
+]
+
+locations = ["Detroit", "Bakersfield", "Albuquerque", "Cleveland", "Memphis"]
+issues = [
+    "Severe structural damage",
+    "Mold infestation",
+    "Faulty electrical wiring",
+    "Collapsed roof",
+    "Extensive water damage",
+    "Infestation of rodents",
+]
+
+descriptions = [
+    "The home has been abandoned for years and is unsafe to enter.",
+    "The structure is on the verge of collapse after recent storms.",
+    "Toxic mold has rendered this house uninhabitable.",
+    "Electrical fires have caused extensive damage inside.",
+    "Flooding has ruined the foundation beyond repair.",
+]
+
+def generate_unlivable_home():
+    return {
+        "location": random.choice(locations),
+        "issue": random.choice(issues),
+        "description": random.choice(descriptions),
+    }
+
 @app.route('/hellhole')
 def hellhole():
+    # Generate a random number of unlivable homes (3 to 6 for example)
+    unlivable_homes = [generate_unlivable_home() for _ in range(random.randint(3, 6))]
     message = {
         "location": "Hellhole",
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
         "fact": random.choice(hellhole_facts),
+        "unlivable_homes": unlivable_homes,
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
     return jsonify(message)
+#hellhole end
 
 @app.route('/Tucson')
 def Tucson():
