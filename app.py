@@ -683,6 +683,24 @@ def roulette():
     }
     return jsonify(result)
 
+
+@app.route('/russian-roulette', methods=['GET'])
+def russian_roulette():
+    chambers = 6
+    bullet_chamber = random.randrange(chambers)   # where the bullet is
+    fired_chamber  = random.randrange(chambers)   # where the it stops after a spin
+    bang = (bullet_chamber == fired_chamber)
+
+    return jsonify({
+        "chambers": chambers,
+        "fired_chamber": fired_chamber,
+        "bullet_chamber": bullet_chamber,
+        "survived": not bang,
+        "outcome": "bang" if bang else "click",
+        "probability_bang": f"1/{chambers}"
+    })
+
+
 @app.route('/sandals-fortune', methods=['GET'])
 def sandals_fortune():
     fortunes = [
