@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Random Hockey Game</title>
+    <title>Guess the Hockey Winner</title>
     <style>
         body {
-	    color: white;
-	    text-shadow: 1px 1px 3px black;
             font-family: Arial, sans-serif;
             background-color: #e0f7fa;
             text-align: center;
             padding-top: 50px;
+            transition: background-image 0.5s ease-in-out;
+            color: white;
+            text-shadow: 1px 1px 3px black;
         }
         h1 {
-            color: #00796b;
+            color: #ffffff;
+        }
+        #matchup {
+            font-size: 1.5em;
+            margin-top: 20px;
         }
         #result {
+            font-size: 1.2em;
             margin-top: 20px;
-            font-size: 1.5em;
-            color: #004d40;
         }
         button {
             padding: 10px 20px;
@@ -28,6 +31,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 10px;
         }
         button:hover {
             background-color: #004d40;
@@ -35,57 +39,69 @@
     </style>
 </head>
 <body>
-    <h1>🏒 Random Hockey Game Result</h1>
-    <button onclick="getGameResult()">Get Game Result</button>
+    <h1>🏒 Guess the Hockey Game Winner</h1>
+    <button onclick="fetchGame()">New Matchup</button>
+    <div id="matchup"></div>
+
+    <div>
+        <button onclick="revealWinner()">Reveal Winner</button>
+    </div>
     <div id="result"></div>
 
     <script>
-	const teamImages = {
-        "Flames": "/static/images/hockey_logos/Flames.png",
-        "Panthers": "/static/images/hockey_logos/Flames.png",
-	"Canuks": "/static/images/hockey_logos/Flames.png",
-	"Mammoth": "/static/images/hockey_logos/Flames.png",
-	"Sharks": "/static/images/hockey_logos/Flames.png",
-	"Penguins": "/static/images/hockey_logos/Flames.png",
-	"Wild": "/static/images/hockey_logos/Flames.png",
-	"Maple Leafs": "/static/images/hockey_logos/Flames.png",
-	"Jets": "/static/images/hockey_logos/Flames.png",
-	"Blues": "/static/images/hockey_logos/Flames.png",
-    };
+        const teamImages = {
+            "Flames": "/images/hockey_logos/Flames.jpg",
+            "Canuks": "/images/hockey_logos/Flames.jpg",
+            "Panthers": "/images/hockey_logos/Flames.jpg",
+            "Mammoth": "/images/hockey_logos/Flames.jpg",
+            "Sharks": "/images/hockey_logos/Flames.jpg",
+            "Penguins": "/images/hockey_logos/Flames.jpg",
+            "Wild": "/images/hockey_logos/Flames.jpg",
+            "Maple Leafs": "/images/hockey_logos/Flames.jpg",
+            "Jets": "/images/hockey_logos/Flames.jpg",
+            "Blues": "/images/hockey_logos/Flames.jpg",
+            "Oilers": "/images/hockey_logos/Flames.jpg",
+            "Avalanche": "/images/hockey_logos/Flames.jpg",
+            "Senators": "/images/hockey_logos/Flames.jpg",
+            "Bruins": "/images/hockey_logos/Flames.jpg",
+            "Islanders": "/images/hockey_logos/Flames.jpg",
+            "Rangers": "/images/hockey_logos/Flames.jpg",
+            "Stars": "/images/hockey_logos/Flames.jpg"
+        };
 
+        let currentMatch = null;
 
-    function getGameResult() {
-        fetch('/api/hockey')
-            .then(response => response.json())
-            .then(data => {
-                const result = data.game_result;
-                document.getElementById('result').textContent = result;
+        function fetchGame() {
+            fetch('/api/hockey')
+                .then(response => response.json())
+                .then(data => {
+                    currentMatch = data;
+                    document.getElementById('matchup').textContent = `${data.team1} vs ${data.team2}`;
+                    document.getElementById('result').textContent = "";
+                    document.body.style.backgroundImage = "";
+                })
+                .catch(error => {
+                    document.getElementById('matchup').textContent = "Error loading matchup.";
+                    console.error("Fetch error:", error);
+                });
+        }
 
-                const match = result.match(/(.+?) (\d+) - (\d+) (.+)/);
-                if (match) {
-                    const team1 = match[1].trim();
-                    const score1 = parseInt(match[2]);
-                    const score2 = parseInt(match[3]);
-                    const team2 = match[4].trim();
+        function revealWinner() {
+            if (!currentMatch) return;
 
-                    let winner = score1 > score2 ? team1 : score2 > score1 ? team2 : null;
+            const score1 = parseInt(currentMatch.score1);
+            const score2 = parseInt(currentMatch.score2);
+            let winner = score1 > score2 ? currentMatch.team1 :
+                         score2 > score1 ? currentMatch.team2 : "It's a tie!";
 
-                    if (winner && teamImages[winner]) {
-                        document.body.style.backgroundImage = `url('${teamImages[winner]}')`;
-                        document.body.style.backgroundSize = 'cover';
-                        document.body.style.backgroundPosition = 'center';
-                    } else {
-                        document.body.style.backgroundImage = '';
-		    }
-                }
-            })
-            .catch(error => {
-                document.getElementById('result').textContent = "Error fetching result.";
-                console.error("Fetch error:", error);
-            });
-    }
-</script>
+            document.getElementById('result').textContent = `🏆 Winner: ${winner} (${score1} - ${score2})`;
 
-
+            if (teamImages[winner]) {
+                document.body.style.backgroundImage = `url('${teamImages[winner]}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+            }
+        }
+    </script>
 </body>
 </html>
