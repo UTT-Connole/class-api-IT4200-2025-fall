@@ -581,9 +581,9 @@ def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
 
-@app.route('/breyton')
-def breyton():
-    return 'yo'
+@app.route('/rf')
+def home8():
+    return 'Sup Dawwg!'
 
 @app.route('/dadJoke')
 def dad_joke():
@@ -647,7 +647,7 @@ def get_weather():
 
 @app.route('/music')
 def music():
-    genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae']
+    genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae', 'Psychedelic', 'Surf']
 
     count = request.args.get("count", default=1, type=int)
     if count <= 1:
