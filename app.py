@@ -123,6 +123,23 @@ def create_app():
 
     import random
 
+    @app.route("/sports", methods=["GET"])
+    def sports():
+        teams = [
+        "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens",
+        "Packers", "Dolphins", "Lions", "Steelers", "Jets", "Chargers",
+        "Giants", "Patriots", "Bears", "Raiders"
+        ]
+        team1, team2 = random.sample(teams, 2)
+        winner = random.choice([team1, team2])
+        result = {
+        "matchup": f"{team1} vs {team2}",
+        "winner": winner,
+        "won_bet": random.choice([True, False])
+        }
+        return jsonify(result)
+
+
     
     @app.route('/chickenrace', methods=['GET', 'POST'])
     def chicken_race():
@@ -499,10 +516,6 @@ def roll_dice(sides):
 
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
-
-@app.route('/porter')
-def home7():
-    return 'Dope'
 
 @app.route('/magic8ball')
 def magic8ball():
