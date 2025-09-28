@@ -121,8 +121,6 @@ def create_app():
             data = json.load(file)
         return jsonify(data)
 
-    import random
-
     @app.route("/sports", methods=["GET"])
     def sports():
         teams = [
@@ -228,6 +226,9 @@ def create_app():
                 return jsonify({"result": 1})
             if x == 7:
                 return jsonify({"result": 0})
+            
+    # @app.get('')
+    # def  
 
 
     return app # <== ALSO DON'T DELETE
@@ -379,12 +380,6 @@ def home2():
     else:
         return 'You are doomed'
 
-@app.route('/pet-name')
-def generate_pet_name():
-    adj = random.choice(adjectives)
-    noun = random.choice(nouns)
-    return f'{adj} {noun}'
-
 #Start of '/hockey' endpoint code
 
 # List of fake hockey game results
@@ -531,9 +526,6 @@ def magic8ball():
     ]
     return answers[random.randrange(1, 9)]
 
-@app.route('/cam')
-def cam():
-    return 'Play Oneshot!'
 
 @app.route('/generatePassword')
 def generatePassword(Length=None, Complexity='simple'):
@@ -592,10 +584,6 @@ def bingo_html():
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
-@app.route('/rf')
-def home8():
-    return 'Sup Dawwg!'
 
 @app.route('/breyton')
 def breyton():
@@ -1326,7 +1314,6 @@ def bet_rps():
 
 @app.route("/bet_slots")
 def bet_slots():
-    import random
     amount = request.args.get('amount', type=int, default=0)
     if amount <= 0:
         return jsonify({"error": "Invalid amount"}), 400
