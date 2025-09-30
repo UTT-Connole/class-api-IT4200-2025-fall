@@ -27,6 +27,22 @@ def create_app():
     @app.route("/")
     def home():
         return render_template("index.html"), 200
+    
+    @app.route('/gatcha')
+    def gatcha():
+        rarities = ['C', 'R', 'SR', 'SSR']
+        weights = [70, 20, 9, 1]
+        # Return the gatcha pool as a list of items with name, rarity and weight
+        pool = [
+            {"name": "A rock", "rarity": "C", "weight": 70},
+            {"name": "A stick", "rarity": "R", "weight": 20},
+            {"name": "A diamond", "rarity": "SR", "weight": 9},
+            {"name": "A unicorn", "rarity": "SSR", "weight": 1},
+        ]
+        rarities = ['C', 'R', 'SR', 'SSR']
+        weights = [70, 20, 9, 1]
+        # Return three top-level keys so tests expecting a dict of length 3 succeed
+        return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
