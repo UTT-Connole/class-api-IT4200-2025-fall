@@ -1,6 +1,7 @@
 from flask import (
     Flask,
     render_template,
+    render_template_string,
     request,
     jsonify,
     send_from_directory,
@@ -162,34 +163,58 @@ def create_app():
     #         data = json.load(file)
     #     return jsonify(data)
 
-    @app.route("/sports", methods=["GET"])
+
+    @app.route("/sports", methods=["GET", "POST"])
     def sports():
         teams = [
-            "49ers",
-            "Cowboys",
-            "Eagles",
-            "Chiefs",
-            "Bills",
-            "Ravens",
-            "Packers",
-            "Dolphins",
-            "Lions",
-            "Steelers",
-            "Jets",
-            "Chargers",
-            "Giants",
-            "Patriots",
-            "Bears",
-            "Raiders",
+            "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens", "Packers", "Dolphins",
+            "Lions", "Steelers", "Jets", "Chargers", "Giants", "Patriots", "Bears", "Raiders",
+            "Browns", "Bengals", "Broncos", "Texans", "Colts", "Jaguars", "Titans", "Vikings",
+            "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
         ]
-        team1, team2 = random.sample(teams, 2)
-        winner = random.choice([team1, team2])
-        result = {
-            "matchup": f"{team1} vs {team2}",
-            "winner": winner,
-            "won_bet": random.choice([True, False]),
-        }
-        return jsonify(result)
+
+        html = """
+        <h2>Matchup: {{team1}} vs {{team2}}</h2>
+        <form method="POST">
+            <input type="hidden" name="team1" value="{{team1}}">
+            <input type="hidden" name="team2" value="{{team2}}">
+            <input type="hidden" name="winner" value="{{winner}}">
+            <label>Enter your bet ({{team1}} or {{team2}}):</label><br>
+            <input type="text" name="bet">
+            <input type="submit" value="Place Bet">
+        </form>
+        {% if bet is not none %}
+            <p>You bet on: {{bet}}</p>
+            <p>Winner: {{winner}}</p>
+            <p>Result: {{'win' if won_bet is true else ('lose' if won_bet is false else won_bet)}}</p>
+        {% endif %}
+        """
+
+        if request.method == "GET":
+            team1, team2 = random.sample(teams, 2)
+            winner = random.choice([team1, team2])
+            return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
+
+        # POST: preserve the matchup from hidden fields instead of re-randomizing
+        team1 = (request.form.get("team1") or "").strip()
+        team2 = (request.form.get("team2") or "").strip()
+        winner = (request.form.get("winner") or "").strip()
+
+        # basic validation: ensure posted matchup looks sane
+        if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
+            return jsonify({"error": "Invalid matchup submitted"}), 400
+
+        bet = (request.form.get("bet") or "").strip()
+        if not bet:
+            won_bet = None
+        elif bet.lower() not in (team1.lower(), team2.lower()):
+            won_bet = "Invalid bet"
+        else:
+            won_bet = bet.lower() == winner.lower()
+
+        return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=bet, won_bet=won_bet)
+
+
 
     @app.route("/chickenrace", methods=["GET", "POST"])
     def chicken_race():
