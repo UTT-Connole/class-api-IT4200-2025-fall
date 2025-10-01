@@ -18,8 +18,6 @@ from flask import Blueprint
 from user_agents import parse
 import requests
 
-OWM_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
-
 
 def create_app():
 
@@ -775,28 +773,6 @@ def randompkmon():
 @app.route("/dave")
 def dave():
     return render_template("dave.html"), 200
-
-
-@app.route("/weather-current", methods=["GET"])
-def get_weather():
-    city = "Saint George, Utah, US"
-    url = "http://api.openweathermap.org/data/2.5/weather"
-    params = {"q": city, "appid": OWM_API_KEY, "units": "imperial"}  # Fahrenheit
-
-    resp = requests.get(url, params=params)
-    if not resp.ok:
-        return jsonify({"error": "Failed to fetch weather"}), resp.status_code
-
-    data = resp.json()
-
-    # Return only the essentials
-    result = {
-        "city": data.get("name"),
-        "date": str(date.today()),
-        "temp_f": data.get("main", {}).get("temp"),
-    }
-
-    return jsonify(result)
 
 
 @app.route("/music")
