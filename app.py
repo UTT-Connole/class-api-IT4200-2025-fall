@@ -44,6 +44,23 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+    
+    @app.route('/yatzy')
+    def yatzy():
+        result = []
+        for i in range(5):
+            result.append(random.randint(1, 6))
+        if len(set(result)) == 1:
+            message = "Yatzy! All five dice match."
+        elif len(set(result)) == 2:
+            message = "Full House! Three of a kind and a pair."
+        elif len(set(result)) == 3:
+            message = "Three of a kind!"
+        elif len(set(result)) == 4:
+            message = "One pair!"
+        else:
+            message = "No special combination."
+        return jsonify({"dice": result, "message": message})
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
@@ -247,14 +264,6 @@ def create_app():
                 "odds": chickens[chosen_chicken],
             }
         )
-
-    @app.route("/Skylands")
-    def home6():
-        user_input = input("Enter somthing: ")
-        if user_input == "Conquretron":
-            return "K. A. O. S."
-        else:
-            return "Wrong Answer"
 
     @app.route("/slots", methods=["POST"])
     def slots():
