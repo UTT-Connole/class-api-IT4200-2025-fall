@@ -380,10 +380,29 @@ def create_app():
             "Don't count on it",
         ]
         return random.choice(answers)
-    
+        
     @app.route("/baccarat", methods=["GET", "POST"])
     def baccarat():
           return "Baccarat endpoint is working!", 200
+
+    @app.route("/bingo/generate")
+    def generate_bingo_card():
+    #   generates 5x5 card as 1 list, each column adding 15 to the range
+        card = (
+            [{"value": n, "marked": False} for n in random.sample(range(1, 16), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(16, 31), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(31, 46), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(46, 61), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(61, 76), 5)]
+        )
+
+        card[get_bingo_index(2,2)]["value"] = "FREE"
+        card[get_bingo_index(2,2)]["marked"] = True
+        return card
+
+    @app.route("/bingo")
+    def create_card():
+        return jsonify({"card": generate_bingo_card()}), 200
 
     @app.route("/__endpoints", methods=["GET"])
     def list_endpoints():
@@ -753,7 +772,6 @@ def generatePassword(Length=None, Complexity="simple"):
         password += random.choice(characters)
     return jsonify({"password": password})
 
-
 @app.route("/placeBetPOC")
 def placeBetSimple(betName=None, betOptions=None):
     # Leaving as-is; this route uses input() and is interactive in terminal
@@ -763,33 +781,9 @@ def placeBetSimple(betName=None, betOptions=None):
         }
     )
 
-
-@app.route("/bingo/generate")
-def generate_bingo_card():
-
-    card = {
-        "B": random.sample(range(1, 16), 5),
-        "I": random.sample(range(16, 31), 5),
-        "N": random.sample(range(31, 46), 5),
-        "G": random.sample(range(46, 61), 5),
-        "O": random.sample(range(61, 76), 5),
-    }
-
-    card["N"][2] = "FREE"
-
-    return card
-
-
-@app.route("/bingo")
-def create_card():
-    return jsonify(generate_bingo_card()), 200
-
-
-@app.route("/bingo/html")
-def bingo_html():
-    card = generate_bingo_card()
-    return render_template("bingo.html", card=card)
-
+def get_bingo_index(x,y):
+#   5 is the width. 
+    return (y * 5) + x
 
 @app.route("/randomRestaurant")
 def choose():
