@@ -837,7 +837,14 @@ def dave():
 def music():
     genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae', 'Psychedelic', 'Surf']
 
+    genre = request.args.get("genre")
     count = request.args.get("count", default=1, type=int)
+
+    if genre:
+        if genre not in genres:
+            return {"error": "Genre not found"}, 404
+        return {"recommendation": genre}
+
     if count <= 1:
         return {"recommendation": random.choice(genres)}
     return {"recommendations": random.sample(genres, min(count, len(genres)))}
