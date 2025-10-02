@@ -6,6 +6,7 @@ from flask import (
     jsonify,
     send_from_directory,
     redirect,
+    Blueprint,
 )
 import random
 import os
@@ -14,7 +15,6 @@ from uuid import uuid4
 from secrets import SystemRandom
 from datetime import datetime, timedelta, date
 from typing import Set, Tuple, Dict, Optional
-from flask import Blueprint
 from user_agents import parse
 import requests
 from bank import bank_bp
