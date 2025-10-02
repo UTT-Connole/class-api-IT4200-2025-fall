@@ -234,12 +234,48 @@ def create_app():
     @app.route("/chickenrace", methods=["GET", "POST"])
     def chicken_race():
         chickens = {
-            "Colonel Sanders' Revenge": 2.0,
-            "McNugget Sprint": 3.0,
-            "Free Range Fury": 4.0,
-            "Scrambled Lightning": 5.0,
-            "Hen Solo": 8.0,
-            "Clucky Balboa": 10.0,
+            "Colonel Sanders Revenge": {
+                "odds": "5/10",
+                "speed": 7,
+                "stamina": 6,
+                "luck": 4,
+                "fun_fact": "Refuses to cross the finish line unless offered a secret blend of herbs and spices."
+            },
+            "McNugget Sprint": {
+                "odds": "6/10",
+                "speed": 8,
+                "stamina": 5,
+                "luck": 6,
+                "fun_fact": "Believes in speed eating mid-race… sometimes slows down to snack."
+            },
+            "Free Range Fury": {
+                "odds": "4/10",
+                "speed": 6,
+                "stamina": 8,
+                "luck": 5,
+                "fun_fact": "Will randomly stop to enjoy the view—mostly just staring at clouds."
+            },
+            "Scrambled Lightning": {
+                "odds": "7/10",
+                "speed": 9,
+                "stamina": 4,
+                "luck": 7,
+                "fun_fact": "Has a personal rivalry with every rooster named “Cluck Norris.”"
+            },
+            "Hen Solo": {
+                "odds": "5/10",
+                "speed": 7,
+                "stamina": 7,
+                "luck": 5,
+                "fun_fact": "Famous for doing barrel rolls mid-jump, confusing competitors."
+            },
+            "Clucky Balboa": {
+                "odds": "3/10",
+                "speed": 6,
+                "stamina": 9,
+                "luck": 3,
+                "fun_fact": "Trains by shadowboxing corn kernels in the barn every morning."
+            },
         }
 
         if request.method == "GET":
@@ -248,18 +284,28 @@ def create_app():
         bet_amount = int(request.form.get("bet", 0))
         chosen_chicken = request.form.get("chicken")
 
-        winner = random.choices(
-            list(chickens.keys()), weights=[1 / odd for odd in chickens.values()]
-        )[0]
+        # Calculate winner based on stats (example: sum of stats + randomness)
+        scores = {}
+        for name, stats in chickens.items():
+            score = (
+                stats["speed"] * random.uniform(0.8, 1.2) +
+                stats["stamina"] * random.uniform(0.8, 1.2) +
+                stats["luck"] * random.uniform(0.8, 1.2)
+            )
+            scores[name] = score
+        winner = max(scores, key=scores.get)
 
-        winnings = bet_amount * chickens[winner] if winner == chosen_chicken else 0
+        # Use odds as a float for payout (e.g., "5/10" -> 0.5)
+        odds_float = eval(chickens[chosen_chicken]["odds"])
+        winnings = int(bet_amount * odds_float) if winner == chosen_chicken else 0
 
         return jsonify(
             {
                 "winner": winner,
                 "message": f"{winner} crosses the finish line in a cloud of feathers!",
                 "winnings": winnings,
-                "odds": chickens[chosen_chicken],
+                "odds": chickens[chosen_chicken]["odds"],
+                "fun_fact": chickens[winner]["fun_fact"]
             }
         )
 
