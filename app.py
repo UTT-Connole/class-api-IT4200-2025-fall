@@ -1608,6 +1608,7 @@ if __name__ == "__main__":
         bank.init_bank_db()
     except Exception:
         # best-effort init; if it fails the app will still attempt to run
+        print("Warning: Failed to initialize banking database/tables")
         pass
 
     app.run(host="127.0.0.1", port=8000, debug=True)
