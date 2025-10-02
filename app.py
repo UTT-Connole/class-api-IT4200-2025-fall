@@ -722,16 +722,18 @@ def generatePassword(Length=None, Complexity="simple"):
         password += random.choice(characters)
     return jsonify({"password": password})
 
+@app.route("/placeBetPOC")
+def placeBetSimple(betName=None, betOptions=None):
+    # Leaving as-is; this route uses input() and is interactive in terminal
+    return jsonify(
+        {
+            "message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."
+        }
+    )
+
 def get_bingo_index(x,y):
 #   5 is the width. 
     return (y * 5) + x
-
-# html endpoint outdated for bingo, will fix and put in create_app later
-#@app.route("/bingo/html")
-#def bingo_html():
-#    card = generate_bingo_card()
-#    return render_template("bingo.html", card=card)
-
 
 @app.route("/randomRestaurant")
 def choose():

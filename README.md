@@ -137,10 +137,15 @@ This endpoint generates a random password with a set length and cmplexity level.
 Length: A number for how many characters long the password will be.
 Complexity: Basic, Simple, or Complex are the only valid options. Basic is only lowercase letters. Simple is lowercase letters and numbers. Complex is Lower and Uppercase letters, numbers, and symbols.
 
-## /placeBetPOC endpoint
-This is a proof of concept endpoint for placing bets. Eventually should be developed to use more variables to be more dynamic with other systems.
-This endpoint takes betName and betOptions: a string for what the bet is about and a list of options for what players can bet on.
-Currently assumes only 2 players will be betting.
+## /bingo endpoint
+Turns the /bingo/generate endpoint and turns it into a flask app.
+Is 2 different endpoints for testing, but will likely be combined in the future.
+
+## /bingo/generate endpoint
+This endpoint generates a 5x5 bingo card that is a list of dictionaries with random bingo numbers. 
+Each dictionary is a cell in the bingo card, storing the value and if the cell is marked.
+Every 5 cells increases the range of possible values by 15.
+Center space is always "FREE" and always marked.
 
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
