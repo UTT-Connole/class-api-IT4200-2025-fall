@@ -64,5 +64,3 @@ class TestGenerateCard(unittest.TestCase):
                 self.assertFalse(cell["marked"],
                                 f"Cell with value {cell['value']} should still be False")
 
-if __name__ == '__main__':
-    unittest.main()
