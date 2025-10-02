@@ -32,16 +32,17 @@ class TestGenerateCard(unittest.TestCase):
     def test_number_ranges(self):
         first = -14
         last = 1
-        test_pass = True
         for i in range(len(self.card)):
             if i % 5 == 0:
                 first += 15
                 last += 15
-            if i == 12 and self.card[i]["value"] == "FREE":
+            val = self.card[i]["value"]
+            if i == 12 and val == "FREE":
                 continue
-            if self.card[i]["value"] not in range(first, last + 1):
-                test_pass = False
-        self.assertEqual(test_pass, True)
+            self.assertTrue(
+            first <= val <= last,
+                f"Cell index {i} has value {val}, which is not in the expected range {first}-{last}"
+            )
 
     def test_marking_cells(self):
         # simulates 20 bingo pulls and marks card accordingly
