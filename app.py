@@ -380,6 +380,10 @@ def create_app():
             "Don't count on it",
         ]
         return random.choice(answers)
+    
+    @app.route("/baccarat", methods=["GET", "POST"])
+    def baccarat():
+          return "Baccarat endpoint is working!", 200
 
     @app.route("/__endpoints", methods=["GET"])
     def list_endpoints():
