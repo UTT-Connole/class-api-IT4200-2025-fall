@@ -1,6 +1,2 @@
-.venv/
-*.pyc
-__pycache__/
-.DS_Store
-class-api-IT4200-2025-fall.code-workspace
-.newv/
+# Ignore the local SQLite banking DB
+banking.db
