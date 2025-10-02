@@ -17,15 +17,20 @@ from typing import Set, Tuple, Dict, Optional
 from flask import Blueprint
 from user_agents import parse
 import requests
+from bank import bank_bp
+import bank
 
 
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
+    app.register_blueprint(bank_bp)
 
     @app.route("/")
     def home():
         return render_template("index.html"), 200
+    
+    
     
     @app.route('/gatcha')
     def gatcha():
@@ -353,6 +358,12 @@ def create_app():
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
 
+@app.route("/bank")
+def bank_page():
+    """Render a page that shows all user bank balances."""
+    return render_template("bank.html")
+
+
 # Moved global variables to top for organization
 adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
 nouns = ["Paws", "Whiskers", "Shadow", "Bean", "Muffin", "Cookie", "Nugget", "Pickle"]
@@ -365,9 +376,6 @@ restaurants = [
     "Panera Bread",
 ]
 
-# @app.route('/')
-# def home():
-#     return render_template('index.html'), 200
 
 
 @app.route("/pokemon")
@@ -384,6 +392,12 @@ def weather():
     return jsonify(
         {"condition": condition, "temperature": temperature, "humidity": humidity}
     )
+
+
+    @app.route("/bank")
+    def bank_page():
+        """Render a page that shows all user bank balances."""
+        return render_template("bank.html")
 
 
 @app.route("/hazardous-conditions")
@@ -990,20 +1004,6 @@ def guess_number():
     return jsonify(result=result)
 
 
-"""
-@app.route('/blackjack')
-def get_card_count_value(card):
-    if card in [2, 3, 4, 5, 6]:
-        return 1
-    elif card in [7, 8, 9]:
-        return 0
-    elif card in [10, 'J', 'Q', 'K', 'A']:
-        return -1
-    else:
-        return 0
-"""
-
-
 def create_deck():
 
     deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"] * 4
@@ -1603,4 +1603,12 @@ def bet_slots():
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == "__main__":
+    # Ensure the banking database and tables exist before starting
+    try:
+        bank.init_bank_db()
+    except Exception:
+        # best-effort init; if it fails the app will still attempt to run
+        print("Warning: Failed to initialize banking database/tables")
+        pass
+
     app.run(host="127.0.0.1", port=8000, debug=True)
