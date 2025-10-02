@@ -19,6 +19,7 @@ from user_agents import parse
 import requests
 from bank import bank_bp
 import bank
+import json
 
 
 def create_app():
@@ -177,11 +178,11 @@ def create_app():
         print("card", card)
         return jsonify(card)
 
-    # @app.get('/pokerHandRankings')
-    # def getpokerHandRankings():
-    #     with open('./import_resources/pokerHandRankings.json', 'r') as file:
-    #         data = json.load(file)
-    #     return jsonify(data)
+    @app.get('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
 
 
     @app.route("/sports", methods=["GET", "POST"])
