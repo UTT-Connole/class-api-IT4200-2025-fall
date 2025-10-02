@@ -211,7 +211,7 @@ Returns random results from a gatcha game
 Adds three different chips of different value to a currently unused list.
 
 ## /music
-Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1
+Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1. Now can check to see if genres are in the list. Provide a genre, don't forget to capitalize, and will return an error if genre is not found in the list.
 
 ## Properties endpoints
 

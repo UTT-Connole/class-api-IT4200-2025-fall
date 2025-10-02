@@ -44,3 +44,15 @@ class MusicTestCase(unittest.TestCase):
         data = response.get_json()
         self.assertIn("recommendation", data)
         self.assertIn(data["recommendation"], GENRES)
+
+    def test_valid_genre(self):
+        response = self.client.get('/music?genre=Jazz')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(data["recommendation"], "Jazz")
+
+    def test_invalid_genre(self):
+        response = self.client.get('/music?genre=Blues')
+        self.assertEqual(response.status_code, 404)
+        data = response.get_json()
+        self.assertIn("error", data)
