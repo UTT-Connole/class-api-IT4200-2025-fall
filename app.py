@@ -421,6 +421,57 @@ def create_app():
             rules.append({"rule": rule.rule, "endpoint": rule.endpoint, "methods": methods})
 
         return jsonify({"count": len(rules), "endpoints": rules}), 200
+    
+    @app.route("/random-weather")
+    def weather():
+        conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+        condition = random.choice(conditions)
+        temperature = f"{random.randint(-30, 50)}C"
+        humidity = f"{random.randint(10, 100)}%"
+        return jsonify(
+            {"condition": condition, "temperature": temperature, "humidity": humidity}
+        )
+    
+    @app.route("/hazardous-conditions")
+    def hazardous_conditions():
+        # Get the weather data
+        weather_data = weather()
+
+        # Extract values
+        weather_data = weather_data.get_json()
+        condition = weather_data["condition"]
+        temperature = int(weather_data["temperature"].replace("C", ""))
+        humidity = int(weather_data["humidity"].replace("%", ""))
+
+        # Determine hazard based on actual conditions
+        if condition == "Snowy" and temperature < -10:
+            hazard = "Blizzard Warning"
+            severity = "Severe"
+        elif condition == "Rainy" and humidity > 95:
+            hazard = "Flood Advisory"
+            severity = "High"
+        elif temperature >= 45:
+            hazard = "Extreme Heat Warning"
+            severity = "Severe"
+        elif condition == "Windy" and temperature < -5:
+            hazard = "Wind Chill Advisory"
+            severity = "High"
+        elif temperature >= 40:
+            hazard = "Heat Advisory"
+            severity = "High"
+        else:
+            hazard = "No Hazardous Conditions"
+            severity = "None"
+
+        return jsonify(
+            {
+                "condition": condition,  # <== keep actual weather condition like "Snowy"
+                "temperature": weather_data["temperature"],
+                "humidity": weather_data["humidity"],
+                "hazardous_condition": hazard,
+                "severity": severity,
+            }
+        )
 
     return app  # <== ALSO DON'T DELETE
 
@@ -445,66 +496,10 @@ restaurants = [
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
 
-
-@app.route("/random-weather")
-def weather():
-    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
-    condition = random.choice(conditions)
-    temperature = f"{random.randint(-30, 50)}C"
-    humidity = f"{random.randint(10, 100)}%"
-    return jsonify(
-        {"condition": condition, "temperature": temperature, "humidity": humidity}
-    )
-
-
 @app.route("/bank")
 def bank_page():
     """Render a page that shows all user bank balances."""
     return render_template("bank.html")
-
-
-@app.route("/hazardous-conditions")
-def hazardous_conditions():
-    # Get the weather data
-    weather_data = weather()
-
-    # Extract values
-    weather_data = weather_data.get_json()
-    condition = weather_data["condition"]
-    temperature = int(weather_data["temperature"].replace("C", ""))
-    humidity = int(weather_data["humidity"].replace("%", ""))
-
-    # Determine hazard based on actual conditions
-    if condition == "Snowy" and temperature < -10:
-        hazard = "Blizzard Warning"
-        severity = "Severe"
-    elif condition == "Rainy" and humidity > 95:
-        hazard = "Flood Advisory"
-        severity = "High"
-    elif temperature >= 45:
-        hazard = "Extreme Heat Warning"
-        severity = "Severe"
-    elif condition == "Windy" and temperature < -5:
-        hazard = "Wind Chill Advisory"
-        severity = "High"
-    elif temperature >= 40:
-        hazard = "Heat Advisory"
-        severity = "High"
-    else:
-        hazard = "No Hazardous Conditions"
-        severity = "None"
-
-    return jsonify(
-        {
-            "condition": condition,  # <== keep actual weather condition like "Snowy"
-            "temperature": weather_data["temperature"],
-            "humidity": weather_data["humidity"],
-            "hazardous_condition": hazard,
-            "severity": severity,
-        }
-    )
-
-
 
 @app.route("/api/underwater/properties", methods=["GET"])
 def get_underwater_properties():
