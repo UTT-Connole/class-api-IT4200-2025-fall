@@ -388,7 +388,7 @@ def weather():
 
 @app.route("/hazardous-conditions")
 def hazardous_conditions():
-    # Get the weather data
+    # Get the random weather data
     weather_data = weather()
 
     # Extract values
@@ -419,7 +419,7 @@ def hazardous_conditions():
 
     return jsonify(
         {
-            "condition": condition,  # <== keep actual weather condition like "Snowy"
+            "condition": condition,
             "temperature": weather_data["temperature"],
             "humidity": weather_data["humidity"],
             "hazardous_condition": hazard,
@@ -427,6 +427,32 @@ def hazardous_conditions():
         }
     )
 
+@app.route("/real-weather")
+def real_weather():
+    url = "https://api.open-meteo.com/v1/forecast?latitude=37.1041&longitude=-113.5841&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_mean&current=temperature_2m,relative_humidity_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m&timezone=America%2FDenver&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit"
+
+    data = requests.get(url).json()
+    current_weather = data.get("current", {})
+    daily_data = data.get("daily", {})
+
+    current_data = {
+        "time": current_weather.get("time"),
+        "temperature": current_weather.get("temperature_2m"),
+        "humidity": current_weather.get("relative_humidity_2m"),
+        "windspeed": current_weather.get("wind_speed_10m"),
+        "winddirection": current_weather.get("wind_direction_10m"),
+    }
+
+    daily_data = {
+        "sunrise": daily_data.get("sunrise"),
+        "sunset": daily_data.get("sunset"),
+        "temperature_min": daily_data.get("temperature_2m_min"),
+        "temperature_max": daily_data.get("temperature_2m_max"),
+        "precipitation_probability": daily_data.get("precipitation_probability_mean")
+
+    }
+
+    return jsonify(current_data, daily_data)
 
 # Unlivable Realestate Endpoints
 # @app.route('/api/mars/properties', methods=['GET'])
