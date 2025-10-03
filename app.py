@@ -427,13 +427,6 @@ def create_app():
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
-
-@app.route("/bank")
-def bank_page():
-    """Render a page that shows all user bank balances."""
-    return render_template("bank.html")
-
-
 # Moved global variables to top for organization
 adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
 nouns = ["Paws", "Whiskers", "Shadow", "Bean", "Muffin", "Cookie", "Nugget", "Pickle"]
@@ -464,10 +457,10 @@ def weather():
     )
 
 
-    @app.route("/bank")
-    def bank_page():
-        """Render a page that shows all user bank balances."""
-        return render_template("bank.html")
+@app.route("/bank")
+def bank_page():
+    """Render a page that shows all user bank balances."""
+    return render_template("bank.html")
 
 
 @app.route("/hazardous-conditions")
@@ -511,36 +504,6 @@ def hazardous_conditions():
         }
     )
 
-
-# Unlivable Realestate Endpoints
-# @app.route('/api/mars/properties', methods=['GET'])
-# def get_mars_properties():
-#     """Mars Real Estate - Red planet, red hot deals!"""
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Olympus Mons Base Camp",
-#             "price": 2000000,
-#             "oxygen_level": "0%",
-#             "temperature": "-80°C to 20°C",
-#             "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
-#             "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Valles Marineris Canyon Penthouse",
-#             "price": 1500000,
-#             "oxygen_level": "0%",
-#             "temperature": "-120°C",
-#             "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
-#             "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
-#         }
-#     ]
-
-#     return jsonify({
-#         "message": "Mars Realty - Out of this world properties!",
-#         "properties": properties
-#     })
 
 
 @app.route("/api/underwater/properties", methods=["GET"])
@@ -698,24 +661,6 @@ def place_plant_bet():
 def brayden():
     return "SupDudes"
 
-
-@app.route("/fortune", methods=["GET"])
-def get_fortune():
-    fortunes = [
-        {
-            "fortune": "You will find someone merged right before you.",
-            "mood": "despair",
-        },
-        {"fortune": "Today is a good day to git merge --force.", "mood": "optimistic"},
-        {"fortune": "A new conflict will be upon you soon.", "mood": "mysterious"},
-        {"fortune": "You will have good luck with pull requests.", "mood": "motivated"},
-        {"fortune": "You should have a snack break.", "mood": "hungry"},
-    ]
-    chosen = random.choice(fortunes)
-    chosen["date"] = str(date.today())
-    return jsonify(chosen)
-
-
 @app.route("/roll/<int:sides>", methods=["GET"])
 def roll_dice(sides):
     if sides < 2:
@@ -773,15 +718,6 @@ def generatePassword(Length=None, Complexity="simple"):
         password += random.choice(characters)
     return jsonify({"password": password})
 
-@app.route("/placeBetPOC")
-def placeBetSimple(betName=None, betOptions=None):
-    # Leaving as-is; this route uses input() and is interactive in terminal
-    return jsonify(
-        {
-            "message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."
-        }
-    )
-
 def get_bingo_index(x,y):
 #   5 is the width. 
     return (y * 5) + x
@@ -790,16 +726,6 @@ def get_bingo_index(x,y):
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
-
-@app.route("/dadJoke")
-def dad_joke():
-    jokes = [
-        "Why don't skeletons fight each other? They don't have the guts.",
-        "I'm afraid for the calendar. Its days are numbered.",
-        "Why did the math book look sad? Because it had too many problems.",
-    ]
-    return jsonify({"joke": random.choice(jokes)})
 
 
 # This endpoint will return client data
@@ -832,16 +758,6 @@ def randompkmon():
 @app.route("/dave")
 def dave():
     return render_template("dave.html"), 200
-
-
-@app.route("/music")
-def music():
-    genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae', 'Psychedelic', 'Surf']
-
-    count = request.args.get("count", default=1, type=int)
-    if count <= 1:
-        return {"recommendation": random.choice(genres)}
-    return {"recommendations": random.sample(genres, min(count, len(genres)))}
 
 
 @app.route("/roulette", methods=["GET"])
@@ -1355,7 +1271,7 @@ def reveal_cell(game_id):
         g.is_bust = True
         g.cashout_amount = 0.0
     else:
-        print("🤝 It's a tie!")
+        print("It's a tie!")
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
@@ -1406,19 +1322,19 @@ def main():
             continue
 
         result_number, result_color = spin_wheel()
-        print(f"\n🎡 The wheel landed on {result_number} ({result_color})")
+        print(f"\n The wheel landed on {result_number} ({result_color})")
 
         payout_multiplier = get_payout(bet_type, bet_value, result_number, result_color)
         winnings = wager * payout_multiplier if payout_multiplier > 0 else 0
         balance += winnings - wager
 
         if payout_multiplier > 0:
-            print(f"🎉 You won ${winnings}!")
+            print(f"You won ${winnings}!")
         else:
-            print("😢 You lost your wager.")
+            print("You lost your wager.")
 
         if balance <= 0:
-            print("💸 You're out of money! Game over.")
+            print("You're out of money! Game over.")
             break
 
         play_again = input("Play again? (y/n): ").strip().lower()
@@ -1514,98 +1430,6 @@ def plants_match():
         ),
         200,
     )
-
-
-# @app.route('/api/chernobyl/properties', methods=['GET'])
-# def get_chernobyl_properties():
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Pripyat Central Square, Apartment Block #1",
-#             "price": 0,
-#             "radiation_level": "15,000 mSv/year",
-#             "distance_from_reactor": "3 km",
-#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-#             "warnings": ["Protective gear required", "May cause mutations"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Reactor 4 Penthouse Suite",
-#             "price": -1000000,
-#             "radiation_level": "Over 9000 mSv/year",
-#             "distance_from_reactor": "0 km",
-#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-#             "warnings": ["Immediate death likely", "GPS stops working"]
-#         }
-#     ]
-#     raw = request.args.get("limit")
-#     if raw is not None:
-#         try:
-#             n = int(raw)
-#         except ValueError:
-#             return render_template('pokemon_battle.html',
-#                                  pokemon_name=pokemon_name.title(),
-#                                  needs_power=True,
-#                                  error="Power rating must be a valid number!")
-
-#     # Battle logic
-#     user_pokemon = pokemon_name
-#     user_score = pokemon_rankings[user_pokemon]
-
-#     # Computer picks random Pokemon (excluding user's Pokemon)
-#     available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
-#     computer_pokemon = random.choice(available_pokemon)
-#     computer_score = pokemon_rankings[computer_pokemon]
-
-#     # Determine winner
-#     if user_score > computer_score:
-#         winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
-#         result = "victory"
-#     elif computer_score > user_score:
-#         winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
-#         result = "defeat"
-#     else:
-#         winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
-#         result = "tie"
-
-#     battle_details = {
-#         'user_pokemon': user_pokemon.title(),
-#         'user_score': user_score,
-#         'computer_pokemon': computer_pokemon.title(),
-#         'computer_score': computer_score,
-#         'winner': winner,
-#         'result': result
-#     }
-
-#     return render_template('pokemon_battle.html', battle=battle_details)
-
-# @app.route('/api/chernobyl/properties', methods=['GET'])
-# def get_chernobyl_properties():
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Pripyat Central Square, Apartment Block #1",
-#             "price": 0,
-#             "radiation_level": "15,000 mSv/year",
-#             "distance_from_reactor": "3 km",
-#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-#             "warnings": ["Protective gear required", "May cause mutations"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Reactor 4 Penthouse Suite",
-#             "price": -1000000,
-#             "radiation_level": "Over 9000 mSv/year",
-#             "distance_from_reactor": "0 km",
-#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-#             "warnings": ["Immediate death likely", "GPS stops working"]
-#         }
-#     ]
-#     return jsonify({
-#             "message": "Chernobyl Real Estate - Where your problems glow away!",
-#             "properties": properties
-#         })
-
 
 @app.route("/bet_rps", methods=["GET"])
 def bet_rps():
