@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Barnyard Racing Exchange</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff8e7;
+            color: #8b4513;
+            text-align: center;
+        }
+        
+        .ascii-art {
+            white-space: pre;
+            font-family: monospace;
+            text-align: center;
+            color: #d2691e;
+            margin: 20px auto;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .racing-form {
+            background-color: #fffaf0;
+            padding: 30px;
+            border: 3px solid #deb887;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.1);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        
+        h1 {
+            font-family: 'Impact', sans-serif;
+            text-align: center;
+            color: #d2691e;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .racing-select, .wager-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #deb887;
+            margin: 15px auto;
+            display: block;
+            max-width: 400px;
+        }
+        
+        .submit-button {
+            background-color: #d2691e;
+            color: white;
+            padding: 15px;
+            border: none;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: 'Impact', sans-serif;
+        }
+        
+        .submit-button:hover {
+            background-color: #8b4513;
+        }
+        
+        .results-panel {
+            background-color: #fffaf0;
+            padding: 20px;
+            margin: 20px auto;
+            border: 3px solid #deb887;
+            border-radius: 4px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        pre {
+            text-align: center;
+            margin: 5px auto;
+        }
+
+        p {
+            text-align: center;
+            margin: 10px auto;
+        }
+
+        .side-panel {
+            background-color: #fffaf0;
+            padding: 20px;
+            border: 3px solid #deb887;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.1);
+            margin: 20px;
+            max-width: 300px;
+            text-align: left;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .left-panel {
+            margin-right: 10px;
+        }
+
+        .right-panel {
+            margin-left: 10px;
+        }
+
+        .page-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="side-panel left-panel">
+            <h1 style="text-align: center;">Chickens</h1>
+            -------------------------------
+            <ul>
+                {% for chicken, stats in chickens.items() %}
+                <li>
+                    <h3>{{ chicken }}</h3>
+                    <strong>Odds:</strong> {{ stats.odds }}<br>
+                    <strong>Speed:</strong> {{ stats.speed }}<br>
+                    <strong>Stamina:</strong> {{ stats.stamina }}<br>
+                    <strong>Luck:</strong> {{ stats.luck }}<br>
+                    <strong>Fun-Fact:</strong> {{ stats.fun_fact }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="ascii-art">
+                                  
+                           _.-^-._    .--.
+                        .-'   _   '-. |__|
+                       /     |_|     \|  |
+                      /               \  |
+                     /|     _____     |\ |
+                      |    |==|==|    |  |
+  |---|---|---|---|---|    |--|--|    |  |
+  |---|---|---|---|---|    |==|==|    |  |
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            </div>
+            <h1>BARNYARD RACING EXCHANGE</h1>
+            <div class="racing-form">
+                <div class="ascii-art">
+                    
+                </div>
+                <form method="post" id="race-form">
+                    Choose your chicken:
+                     <select name="chicken" class="racing-select" required>
+                        {% for chicken, odds in chickens.items() %}
+                            <option value="{{ chicken }}">{{ chicken }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="bet" class="wager-input" min="1" required placeholder="Enter wager amount">
+                    <button type="submit" class="submit-button">RELEASE THE CHICKENS!</button>
+                </form>
+            </div>
+            
+            <div id="results" class="results-panel" style="display: none;">
+                <h2>Race Results</h2>
+                <div class="ascii-art">
+
+                </div>
+                <p id="winner"></p>
+                <p id="winnings"></p>
+            </div>
+
+            <script>
+                document.getElementById('race-form').onsubmit = async function(e) {
+                    e.preventDefault();
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = '';
+
+                    const lines = [
+                        'START()                                      FINISH',
+                        'START..()                                    FINISH',
+                        'START....()                                  FINISH',
+                        'START......()                                FINISH',
+                        'START........()                              FINISH',
+                        'START..........()                            FINISH',
+                        'START............()                          FINISH',
+                        'START..............()                        FINISH',
+                        'START................()                      FINISH',
+                        'START..................()                    FINISH',
+                        'START....................()                  FINISH',
+                        'START......................()                FINISH',
+                        'START........................()              FINISH',
+                        'START..........................()            FINISH',
+                        'START............................()          FINISH',
+                        'START..............................()        FINISH',
+                        'START................................()      FINISH',
+                        'START..................................()    FINISH',
+                        'START....................................()  FINISH',
+                        'START......................................()FINISH'
+                    ];
+
+                    // Function to delay execution
+                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+                    // Print each line with delay
+                    for (let line of lines) {
+                        const pre = document.createElement('pre');
+                        pre.textContent = line;
+                        resultsDiv.appendChild(pre);
+                        await delay(500); // 500ms delay between lines
+                    }
+
+                    // Process form data after animation
+                    const response = await fetch('/chickenrace', {
+                        method: 'POST',
+                        body: new FormData(e.target)
+                    });
+                    const data = await response.json();
+                    
+                    const winner = document.createElement('p');
+                    winner.textContent = data.message;
+                    const winnings = document.createElement('p');
+                    winnings.textContent = data.winnings > 0 
+                        ? `You won ${data.winnings} feed bags!` 
+                        : 'Better luck next time, farmer!';
+                    resultsDiv.appendChild(winner);
+                    resultsDiv.appendChild(winnings);
+                };
+            </script>
+        </div> 
+    </div>
+</body>
+</html>

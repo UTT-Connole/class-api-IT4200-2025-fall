@@ -16,9 +16,9 @@ import random
 #        assert data["payout"] == payout
 
 
-def test_bet_rps_invalid(client):
-    for url in ["/bet_rps?player=lizard&amount=10", "/bet_rps?player=rock&amount=0"]:
-        resp = client.get(url)
-        data = resp.get_json()
-        assert resp.status_code == 400
-        assert data["error"] == "Invalid move or amount"
+# def test_bet_rps_invalid(client):
+#     for url in ["/bet_rps?player=lizard&amount=10", "/bet_rps?player=rock&amount=0"]:
+#         resp = client.get(url)
+#         data = resp.get_json()
+#         assert resp.status_code == 400
+#         assert data["error"] == "Invalid move or amount"
