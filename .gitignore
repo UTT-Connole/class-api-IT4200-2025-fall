@@ -1,6 +1,17 @@
+# Ignore the local SQLite banking DB
+# Virtualenv
 .venv/
+
+# Python
 *.pyc
 __pycache__/
+
+# macOS
 .DS_Store
+
+# Workspace
 class-api-IT4200-2025-fall.code-workspace
 .newv/
+
+# Local runtime DB (do not commit)
+banking.db

@@ -1,83 +1,66 @@
-# import json
-# from deepdiff import DeepDiff
+import json
+import jsonschema
 
-# expected = {
-#     "hand_rankings": [
-#         {
-#             "rank": 1,
-#             "name": "Royal Flush",
-#             "description": "Ace, King, Queen, Jack, and Ten, all of the same suit.",
-#             "example": "A♥ K♥ Q♥ J♥ 10♥"
-#         },
-#         {
-#             "rank": 2,
-#             "name": "Straight Flush",
-#             "description": "Five cards in sequence, all of the same suit. A Royal Flush is the highest possible Straight Flush.",
-#             "example": "9♠ 8♠ 7♠ 6♠ 5♠"
-#         },
-#         {
-#             "rank": 3,
-#             "name": "Four of a Kind",
-#             "description": "Four cards of the same rank.",
-#             "example": "7♣ 7♠ 7♥ 7♦ 2♣"
-#         },
-#         {
-#             "rank": 4,
-#             "name": "Full House",
-#             "description": "Three cards of one rank and two cards of another rank.",
-#             "example": "Q♣ Q♠ Q♦ J♥ J♣"
-#         },
-#         {
-#             "rank": 5,
-#             "name": "Flush",
-#             "description": "Five cards of the same suit, not in sequence.",
-#             "example": "K♦ J♦ 7♦ 5♦ 3♦"
-#         },
-#         {
-#             "rank": 6,
-#             "name": "Straight",
-#             "description": "Five cards in sequence, but not of the same suit.",
-#             "example": "6♠ 5♠ 4♦ 3♦ 2♥"
-#         },
-#         {
-#             "rank": 7,
-#             "name": "Three of a Kind",
-#             "description": "Three cards of the same rank.",
-#             "example": "8♥ 8♠ 8♦ 5♣ 2♥"
-#         },
-#         {
-#             "rank": 8,
-#             "name": "Two Pair",
-#             "description": "Two separate pairs of cards of the same rank.",
-#             "example": "9♥ 9♣ 5♠ 5♦ 2♦"
-#         },
-#         {
-#             "rank": 9,
-#             "name": "One Pair",
-#             "description": "Two cards of the same rank.",
-#             "example": "A♠ A♣ 8♥ 4♦ 3♥"
-#         },
-#         {
-#             "rank": 10,
-#             "name": "High Card",
-#             "description": "When a hand does not meet any of the higher ranking combinations, the highest card determines the rank.",
-#             "example": "A♣ Q♦ J♠ 9♥ 7♣"
-#         }
-#     ]
-# }
+SCHEMA = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["hand_rankings"],
+    "additionalProperties": False,
+    "properties": {
+        "hand_rankings": {
+            "type": "array",
+            "minItems": 10,
+            "maxItems": 10,
+            "items": {
+                "type": "object",
+                "required": ["rank", "name", "description", "example"],
+                "additionalProperties": False,
+                "properties": {
+                    "rank": {"type": "integer", "minimum": 1, "maximum": 10},
+                    "name": {
+                        "type": "string",
+                        "enum": [
+                            "Royal Flush",
+                            "Straight Flush",
+                            "Four of a Kind",
+                            "Full House",
+                            "Flush",
+                            "Straight",
+                            "Three of a Kind",
+                            "Two Pair",
+                            "One Pair",
+                            "High Card"
+                        ]
+                    },
+                    "description": {"type": "string", "minLength": 5},
+                    "example": {
+                        "type": "string",
+                        # 5 tokens like "A♥ K♥ Q♥ J♥ 10♥" - adjust suits/ranks if needed
+                        "pattern": r"^(?:A|K|Q|J|10|[2-9])[♥♦♣♠](?:\s(?:A|K|Q|J|10|[2-9])[♥♦♣♠]){4}$"
+                    }
+                }
+            }
+        }
+    }
+}
 
+def test_pokerHandRankings_returns_200(client):
+    response = client.get('/pokerHandRankings')
+    assert response.status_code == 200
 
-# def test_pokerHandRankings(client):
-#     response = client.get('/pokerHandRankings')
-#     assert response.status_code == 200
+def test_pokerHandRankings_correct_response(client):
+    with open('./import_resources/pokerHandRankings.json', 'r') as file:
+        expected = json.load(file)
 
-#     data = response.get_json()
-#     if data != expected:
-#         print("Returned data:")
-#         print(json.dumps(data, indent=2, ensure_ascii=False))
-#         print("\nExpected data:")
-#         print(json.dumps(expected, indent=2, ensure_ascii=False))
+    response = client.get('/pokerHandRankings')
+    try:
+        jsonschema.validate(instance=response.json, schema=SCHEMA)
+    except jsonschema.exceptions.ValidationError as e:
+        print("Validation error:", e.message)
 
-    
-#     assert data == expected
+    data = response.json
+    assert data == expected
 
+def test_pokerHandRankings_returns_304_on_non_GET(client):
+    response = client.post('/pokerHandRankings')
+    assert response.status_code == 405

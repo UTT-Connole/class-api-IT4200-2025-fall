@@ -130,17 +130,21 @@ This endpoint deals two cards to the player and dealer, calculates scores, and r
 Roulette Endpoint
 This endpoint simulates a single spin of a European roulette wheel and returns the result.
 
-
 ## /generatePassword endpoint
 This endpoint generates a random password with a set length and cmplexity level.
 2 arguments: Length, Complexity
 Length: A number for how many characters long the password will be.
 Complexity: Basic, Simple, or Complex are the only valid options. Basic is only lowercase letters. Simple is lowercase letters and numbers. Complex is Lower and Uppercase letters, numbers, and symbols.
 
-## /placeBetPOC endpoint
-This is a proof of concept endpoint for placing bets. Eventually should be developed to use more variables to be more dynamic with other systems.
-This endpoint takes betName and betOptions: a string for what the bet is about and a list of options for what players can bet on.
-Currently assumes only 2 players will be betting.
+## /bingo endpoint
+Turns the /bingo/generate endpoint and turns it into a flask app.
+Is 2 different endpoints for testing, but will likely be combined in the future.
+
+## /bingo/generate endpoint
+This endpoint generates a 5x5 bingo card that is a list of dictionaries with random bingo numbers. 
+Each dictionary is a cell in the bingo card, storing the value and if the cell is marked.
+Every 5 cells increases the range of possible values by 15.
+Center space is always "FREE" and always marked.
 
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
@@ -209,7 +213,7 @@ Returns random results from a gatcha game
 Adds three different chips of different value to a currently unused list.
 
 ## /music
-Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1
+Gives a random music genre to listen to. Now added count to ask for multiple genres. If number exceeds list count, will just give the full list. If given no number, defaults to 1. Now can check to see if genres are in the list. Provide a genre, don't forget to capitalize, and will return an error if genre is not found in the list.
 
 ## Properties endpoints
 

@@ -6,6 +6,7 @@ from flask import (
     jsonify,
     send_from_directory,
     redirect,
+    Blueprint,
 )
 import random
 import os
@@ -14,18 +15,23 @@ from uuid import uuid4
 from secrets import SystemRandom
 from datetime import datetime, timedelta, date
 from typing import Set, Tuple, Dict, Optional
-from flask import Blueprint
 from user_agents import parse
 import requests
+from bank import bank_bp
+import bank
+import json
 
 
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
+    app.register_blueprint(bank_bp)
 
     @app.route("/")
     def home():
         return render_template("index.html"), 200
+    
+    
     
     @app.route('/gatcha')
     def gatcha():
@@ -172,11 +178,11 @@ def create_app():
         print("card", card)
         return jsonify(card)
 
-    # @app.get('/pokerHandRankings')
-    # def getpokerHandRankings():
-    #     with open('./import_resources/pokerHandRankings.json', 'r') as file:
-    #         data = json.load(file)
-    #     return jsonify(data)
+    @app.get('/pokerHandRankings')
+    def getpokerHandRankings():
+        with open('./import_resources/pokerHandRankings.json', 'r') as file:
+            data = json.load(file)
+        return jsonify(data)
 
 
     @app.route("/sports", methods=["GET", "POST"])
@@ -234,12 +240,48 @@ def create_app():
     @app.route("/chickenrace", methods=["GET", "POST"])
     def chicken_race():
         chickens = {
-            "Colonel Sanders' Revenge": 2.0,
-            "McNugget Sprint": 3.0,
-            "Free Range Fury": 4.0,
-            "Scrambled Lightning": 5.0,
-            "Hen Solo": 8.0,
-            "Clucky Balboa": 10.0,
+            "Colonel Sanders Revenge": {
+                "odds": "5/10",
+                "speed": 7,
+                "stamina": 6,
+                "luck": 4,
+                "fun_fact": "Refuses to cross the finish line unless offered a secret blend of herbs and spices."
+            },
+            "McNugget Sprint": {
+                "odds": "6/10",
+                "speed": 8,
+                "stamina": 5,
+                "luck": 6,
+                "fun_fact": "Believes in speed eating mid-race… sometimes slows down to snack."
+            },
+            "Free Range Fury": {
+                "odds": "4/10",
+                "speed": 6,
+                "stamina": 8,
+                "luck": 5,
+                "fun_fact": "Will randomly stop to enjoy the view—mostly just staring at clouds."
+            },
+            "Scrambled Lightning": {
+                "odds": "7/10",
+                "speed": 9,
+                "stamina": 4,
+                "luck": 7,
+                "fun_fact": "Has a personal rivalry with every rooster named “Cluck Norris.”"
+            },
+            "Hen Solo": {
+                "odds": "5/10",
+                "speed": 7,
+                "stamina": 7,
+                "luck": 5,
+                "fun_fact": "Famous for doing barrel rolls mid-jump, confusing competitors."
+            },
+            "Clucky Balboa": {
+                "odds": "3/10",
+                "speed": 6,
+                "stamina": 9,
+                "luck": 3,
+                "fun_fact": "Trains by shadowboxing corn kernels in the barn every morning."
+            },
         }
 
         if request.method == "GET":
@@ -248,18 +290,28 @@ def create_app():
         bet_amount = int(request.form.get("bet", 0))
         chosen_chicken = request.form.get("chicken")
 
-        winner = random.choices(
-            list(chickens.keys()), weights=[1 / odd for odd in chickens.values()]
-        )[0]
+        # Calculate winner based on stats (example: sum of stats + randomness)
+        scores = {}
+        for name, stats in chickens.items():
+            score = (
+                stats["speed"] * random.uniform(0.8, 1.2) +
+                stats["stamina"] * random.uniform(0.8, 1.2) +
+                stats["luck"] * random.uniform(0.8, 1.2)
+            )
+            scores[name] = score
+        winner = max(scores, key=scores.get)
 
-        winnings = bet_amount * chickens[winner] if winner == chosen_chicken else 0
+        # Use odds as a float for payout (e.g., "5/10" -> 0.5)
+        odds_float = eval(chickens[chosen_chicken]["odds"])
+        winnings = int(bet_amount * odds_float) if winner == chosen_chicken else 0
 
         return jsonify(
             {
                 "winner": winner,
                 "message": f"{winner} crosses the finish line in a cloud of feathers!",
                 "winnings": winnings,
-                "odds": chickens[chosen_chicken],
+                "odds": chickens[chosen_chicken]["odds"],
+                "fun_fact": chickens[winner]["fun_fact"]
             }
         )
 
@@ -329,6 +381,29 @@ def create_app():
             "Don't count on it",
         ]
         return random.choice(answers)
+        
+    @app.route("/baccarat", methods=["GET", "POST"])
+    def baccarat():
+          return "Baccarat endpoint is working!", 200
+
+    @app.route("/bingo/generate")
+    def generate_bingo_card():
+    #   generates 5x5 card as 1 list, each column adding 15 to the range
+        card = (
+            [{"value": n, "marked": False} for n in random.sample(range(1, 16), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(16, 31), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(31, 46), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(46, 61), 5)] +
+            [{"value": n, "marked": False} for n in random.sample(range(61, 76), 5)]
+        )
+
+        card[get_bingo_index(2,2)]["value"] = "FREE"
+        card[get_bingo_index(2,2)]["marked"] = True
+        return card
+
+    @app.route("/bingo")
+    def create_card():
+        return jsonify({"card": generate_bingo_card()}), 200
 
     @app.route("/__endpoints", methods=["GET"])
     def list_endpoints():
@@ -346,12 +421,62 @@ def create_app():
             rules.append({"rule": rule.rule, "endpoint": rule.endpoint, "methods": methods})
 
         return jsonify({"count": len(rules), "endpoints": rules}), 200
+    
+    @app.route("/random-weather")
+    def weather():
+        conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+        condition = random.choice(conditions)
+        temperature = f"{random.randint(-30, 50)}C"
+        humidity = f"{random.randint(10, 100)}%"
+        return jsonify(
+            {"condition": condition, "temperature": temperature, "humidity": humidity}
+        )
+    
+    @app.route("/hazardous-conditions")
+    def hazardous_conditions():
+        # Get the weather data
+        weather_data = weather()
+
+        # Extract values
+        weather_data = weather_data.get_json()
+        condition = weather_data["condition"]
+        temperature = int(weather_data["temperature"].replace("C", ""))
+        humidity = int(weather_data["humidity"].replace("%", ""))
+
+        # Determine hazard based on actual conditions
+        if condition == "Snowy" and temperature < -10:
+            hazard = "Blizzard Warning"
+            severity = "Severe"
+        elif condition == "Rainy" and humidity > 95:
+            hazard = "Flood Advisory"
+            severity = "High"
+        elif temperature >= 45:
+            hazard = "Extreme Heat Warning"
+            severity = "Severe"
+        elif condition == "Windy" and temperature < -5:
+            hazard = "Wind Chill Advisory"
+            severity = "High"
+        elif temperature >= 40:
+            hazard = "Heat Advisory"
+            severity = "High"
+        else:
+            hazard = "No Hazardous Conditions"
+            severity = "None"
+
+        return jsonify(
+            {
+                "condition": condition,  # <== keep actual weather condition like "Snowy"
+                "temperature": weather_data["temperature"],
+                "humidity": weather_data["humidity"],
+                "hazardous_condition": hazard,
+                "severity": severity,
+            }
+        )
 
     return app  # <== ALSO DON'T DELETE
 
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
-
 
 # Moved global variables to top for organization
 adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
@@ -365,14 +490,12 @@ restaurants = [
     "Panera Bread",
 ]
 
-# @app.route('/')
-# def home():
-#     return render_template('index.html'), 200
 
 
 @app.route("/pokemon")
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
+
 
 
 @app.route("/random-weather")
@@ -483,6 +606,12 @@ def real_weather():
 #         "message": "Mars Realty - Out of this world properties!",
 #         "properties": properties
 #     })
+
+
+@app.route("/bank")
+def bank_page():
+    """Render a page that shows all user bank balances."""
+    return render_template("bank.html")
 
 
 @app.route("/api/underwater/properties", methods=["GET"])
@@ -640,24 +769,6 @@ def place_plant_bet():
 def brayden():
     return "SupDudes"
 
-
-@app.route("/fortune", methods=["GET"])
-def get_fortune():
-    fortunes = [
-        {
-            "fortune": "You will find someone merged right before you.",
-            "mood": "despair",
-        },
-        {"fortune": "Today is a good day to git merge --force.", "mood": "optimistic"},
-        {"fortune": "A new conflict will be upon you soon.", "mood": "mysterious"},
-        {"fortune": "You will have good luck with pull requests.", "mood": "motivated"},
-        {"fortune": "You should have a snack break.", "mood": "hungry"},
-    ]
-    chosen = random.choice(fortunes)
-    chosen["date"] = str(date.today())
-    return jsonify(chosen)
-
-
 @app.route("/roll/<int:sides>", methods=["GET"])
 def roll_dice(sides):
     if sides < 2:
@@ -715,58 +826,14 @@ def generatePassword(Length=None, Complexity="simple"):
         password += random.choice(characters)
     return jsonify({"password": password})
 
-
-@app.route("/placeBetPOC")
-def placeBetSimple(betName=None, betOptions=None):
-    # Leaving as-is; this route uses input() and is interactive in terminal
-    return jsonify(
-        {
-            "message": "Proof-of-concept endpoint expects interactive console input; leaving unchanged."
-        }
-    )
-
-
-@app.route("/bingo/generate")
-def generate_bingo_card():
-
-    card = {
-        "B": random.sample(range(1, 16), 5),
-        "I": random.sample(range(16, 31), 5),
-        "N": random.sample(range(31, 46), 5),
-        "G": random.sample(range(46, 61), 5),
-        "O": random.sample(range(61, 76), 5),
-    }
-
-    card["N"][2] = "FREE"
-
-    return card
-
-
-@app.route("/bingo")
-def create_card():
-    return jsonify(generate_bingo_card()), 200
-
-
-@app.route("/bingo/html")
-def bingo_html():
-    card = generate_bingo_card()
-    return render_template("bingo.html", card=card)
-
+def get_bingo_index(x,y):
+#   5 is the width. 
+    return (y * 5) + x
 
 @app.route("/randomRestaurant")
 def choose():
     restaurant = random.choice(restaurants)
     return jsonify({"restaurant": restaurant})
-
-
-@app.route("/dadJoke")
-def dad_joke():
-    jokes = [
-        "Why don't skeletons fight each other? They don't have the guts.",
-        "I'm afraid for the calendar. Its days are numbered.",
-        "Why did the math book look sad? Because it had too many problems.",
-    ]
-    return jsonify({"joke": random.choice(jokes)})
 
 
 # This endpoint will return client data
@@ -799,16 +866,6 @@ def randompkmon():
 @app.route("/dave")
 def dave():
     return render_template("dave.html"), 200
-
-
-@app.route("/music")
-def music():
-    genres = ['Rock', 'Jazz', 'Indie', 'Hip-Hop', 'Funk', 'Reggae', 'Psychedelic', 'Surf']
-
-    count = request.args.get("count", default=1, type=int)
-    if count <= 1:
-        return {"recommendation": random.choice(genres)}
-    return {"recommendations": random.sample(genres, min(count, len(genres)))}
 
 
 @app.route("/roulette", methods=["GET"])
@@ -1014,20 +1071,6 @@ def guess_number():
         else:
             result = f"Sorry, that's incorrect! The number was {target}. Try again!"
     return jsonify(result=result)
-
-
-"""
-@app.route('/blackjack')
-def get_card_count_value(card):
-    if card in [2, 3, 4, 5, 6]:
-        return 1
-    elif card in [7, 8, 9]:
-        return 0
-    elif card in [10, 'J', 'Q', 'K', 'A']:
-        return -1
-    else:
-        return 0
-"""
 
 
 def create_deck():
@@ -1336,7 +1379,7 @@ def reveal_cell(game_id):
         g.is_bust = True
         g.cashout_amount = 0.0
     else:
-        print("🤝 It's a tie!")
+        print("It's a tie!")
         g.revealed.add(cell)
 
     return jsonify(g.to_public())
@@ -1387,19 +1430,19 @@ def main():
             continue
 
         result_number, result_color = spin_wheel()
-        print(f"\n🎡 The wheel landed on {result_number} ({result_color})")
+        print(f"\n The wheel landed on {result_number} ({result_color})")
 
         payout_multiplier = get_payout(bet_type, bet_value, result_number, result_color)
         winnings = wager * payout_multiplier if payout_multiplier > 0 else 0
         balance += winnings - wager
 
         if payout_multiplier > 0:
-            print(f"🎉 You won ${winnings}!")
+            print(f"You won ${winnings}!")
         else:
-            print("😢 You lost your wager.")
+            print("You lost your wager.")
 
         if balance <= 0:
-            print("💸 You're out of money! Game over.")
+            print("You're out of money! Game over.")
             break
 
         play_again = input("Play again? (y/n): ").strip().lower()
@@ -1496,98 +1539,6 @@ def plants_match():
         200,
     )
 
-
-# @app.route('/api/chernobyl/properties', methods=['GET'])
-# def get_chernobyl_properties():
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Pripyat Central Square, Apartment Block #1",
-#             "price": 0,
-#             "radiation_level": "15,000 mSv/year",
-#             "distance_from_reactor": "3 km",
-#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-#             "warnings": ["Protective gear required", "May cause mutations"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Reactor 4 Penthouse Suite",
-#             "price": -1000000,
-#             "radiation_level": "Over 9000 mSv/year",
-#             "distance_from_reactor": "0 km",
-#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-#             "warnings": ["Immediate death likely", "GPS stops working"]
-#         }
-#     ]
-#     raw = request.args.get("limit")
-#     if raw is not None:
-#         try:
-#             n = int(raw)
-#         except ValueError:
-#             return render_template('pokemon_battle.html',
-#                                  pokemon_name=pokemon_name.title(),
-#                                  needs_power=True,
-#                                  error="Power rating must be a valid number!")
-
-#     # Battle logic
-#     user_pokemon = pokemon_name
-#     user_score = pokemon_rankings[user_pokemon]
-
-#     # Computer picks random Pokemon (excluding user's Pokemon)
-#     available_pokemon = [name for name in pokemon_rankings.keys() if name != user_pokemon]
-#     computer_pokemon = random.choice(available_pokemon)
-#     computer_score = pokemon_rankings[computer_pokemon]
-
-#     # Determine winner
-#     if user_score > computer_score:
-#         winner = f"You win! {user_pokemon.title()} defeats {computer_pokemon.title()}!"
-#         result = "victory"
-#     elif computer_score > user_score:
-#         winner = f"Computer wins! {computer_pokemon.title()} defeats {user_pokemon.title()}!"
-#         result = "defeat"
-#     else:
-#         winner = f"It's a tie! Both {user_pokemon.title()} and {computer_pokemon.title()} are equally matched!"
-#         result = "tie"
-
-#     battle_details = {
-#         'user_pokemon': user_pokemon.title(),
-#         'user_score': user_score,
-#         'computer_pokemon': computer_pokemon.title(),
-#         'computer_score': computer_score,
-#         'winner': winner,
-#         'result': result
-#     }
-
-#     return render_template('pokemon_battle.html', battle=battle_details)
-
-# @app.route('/api/chernobyl/properties', methods=['GET'])
-# def get_chernobyl_properties():
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Pripyat Central Square, Apartment Block #1",
-#             "price": 0,
-#             "radiation_level": "15,000 mSv/year",
-#             "distance_from_reactor": "3 km",
-#             "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-#             "warnings": ["Protective gear required", "May cause mutations"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Reactor 4 Penthouse Suite",
-#             "price": -1000000,
-#             "radiation_level": "Over 9000 mSv/year",
-#             "distance_from_reactor": "0 km",
-#             "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-#             "warnings": ["Immediate death likely", "GPS stops working"]
-#         }
-#     ]
-#     return jsonify({
-#             "message": "Chernobyl Real Estate - Where your problems glow away!",
-#             "properties": properties
-#         })
-
-
 @app.route("/bet_rps", methods=["GET"])
 def bet_rps():
     moves = ["rock", "paper", "scissors"]
@@ -1629,4 +1580,12 @@ def bet_slots():
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == "__main__":
+    # Ensure the banking database and tables exist before starting
+    try:
+        bank.init_bank_db()
+    except Exception:
+        # best-effort init; if it fails the app will still attempt to run
+        print("Warning: Failed to initialize banking database/tables")
+        pass
+
     app.run(host="127.0.0.1", port=8000, debug=True)
