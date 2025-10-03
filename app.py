@@ -421,57 +421,6 @@ def create_app():
             rules.append({"rule": rule.rule, "endpoint": rule.endpoint, "methods": methods})
 
         return jsonify({"count": len(rules), "endpoints": rules}), 200
-    
-    @app.route("/random-weather")
-    def weather():
-        conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
-        condition = random.choice(conditions)
-        temperature = f"{random.randint(-30, 50)}C"
-        humidity = f"{random.randint(10, 100)}%"
-        return jsonify(
-            {"condition": condition, "temperature": temperature, "humidity": humidity}
-        )
-    
-    @app.route("/hazardous-conditions")
-    def hazardous_conditions():
-        # Get the weather data
-        weather_data = weather()
-
-        # Extract values
-        weather_data = weather_data.get_json()
-        condition = weather_data["condition"]
-        temperature = int(weather_data["temperature"].replace("C", ""))
-        humidity = int(weather_data["humidity"].replace("%", ""))
-
-        # Determine hazard based on actual conditions
-        if condition == "Snowy" and temperature < -10:
-            hazard = "Blizzard Warning"
-            severity = "Severe"
-        elif condition == "Rainy" and humidity > 95:
-            hazard = "Flood Advisory"
-            severity = "High"
-        elif temperature >= 45:
-            hazard = "Extreme Heat Warning"
-            severity = "Severe"
-        elif condition == "Windy" and temperature < -5:
-            hazard = "Wind Chill Advisory"
-            severity = "High"
-        elif temperature >= 40:
-            hazard = "Heat Advisory"
-            severity = "High"
-        else:
-            hazard = "No Hazardous Conditions"
-            severity = "None"
-
-        return jsonify(
-            {
-                "condition": condition,  # <== keep actual weather condition like "Snowy"
-                "temperature": weather_data["temperature"],
-                "humidity": weather_data["humidity"],
-                "hazardous_condition": hazard,
-                "severity": severity,
-            }
-        )
 
     return app  # <== ALSO DON'T DELETE
 
@@ -496,10 +445,123 @@ restaurants = [
 def pokemon():
     return jsonify({"pokemon": "Jigglypuff"})
 
+
+
+@app.route("/random-weather")
+def random_weather():
+    conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
+    condition = random.choice(conditions)
+    temperature = f"{random.randint(-30, 50)}C"
+    humidity = f"{random.randint(10, 100)}%"
+    return jsonify(
+        {"condition": condition, "temperature": temperature, "humidity": humidity}
+    )
+
+
+@app.route("/hazardous-conditions")
+def hazardous_conditions():
+    # Get the random weather data
+    weather_data = random_weather()
+
+    # Extract values
+    weather_data = weather_data.get_json()
+    condition = weather_data["condition"]
+    temperature = int(weather_data["temperature"].replace("C", ""))
+    humidity = int(weather_data["humidity"].replace("%", ""))
+
+    # Determine hazard based on actual conditions
+    if condition == "Snowy" and temperature < -10:
+        hazard = "Blizzard Warning"
+        severity = "Severe"
+    elif condition == "Rainy" and humidity > 95:
+        hazard = "Flood Advisory"
+        severity = "High"
+    elif temperature >= 45:
+        hazard = "Extreme Heat Warning"
+        severity = "Severe"
+    elif condition == "Windy" and temperature < -5:
+        hazard = "Wind Chill Advisory"
+        severity = "High"
+    elif temperature >= 40:
+        hazard = "Heat Advisory"
+        severity = "High"
+    else:
+        hazard = "No Hazardous Conditions"
+        severity = "None"
+
+    return jsonify(
+        {
+            "condition": condition,
+            "temperature": weather_data["temperature"],
+            "humidity": weather_data["humidity"],
+            "hazardous_condition": hazard,
+            "severity": severity,
+        }
+    )
+
+@app.route("/real-weather")
+def real_weather():
+    url = "https://api.open-meteo.com/v1/forecast?latitude=37.1041&longitude=-113.5841&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_mean&current=temperature_2m,relative_humidity_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m&timezone=America%2FDenver&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit"
+
+    data = requests.get(url).json()
+    current_weather = data.get("current", {})
+    daily_data = data.get("daily", {})
+
+    current_data = {
+        "time": current_weather.get("time"),
+        "temperature": current_weather.get("temperature_2m"),
+        "humidity": current_weather.get("relative_humidity_2m"),
+        "windspeed": current_weather.get("wind_speed_10m"),
+        "winddirection": current_weather.get("wind_direction_10m"),
+    }
+
+    daily_data = {
+        "sunrise": daily_data.get("sunrise"),
+        "sunset": daily_data.get("sunset"),
+        "temperature_min": daily_data.get("temperature_2m_min"),
+        "temperature_max": daily_data.get("temperature_2m_max"),
+        "precipitation_probability": daily_data.get("precipitation_probability_mean")
+
+    }
+
+    return jsonify(current_data, daily_data)
+
+# Unlivable Realestate Endpoints
+# @app.route('/api/mars/properties', methods=['GET'])
+# def get_mars_properties():
+#     """Mars Real Estate - Red planet, red hot deals!"""
+#     properties = [
+#         {
+#             "id": 1,
+#             "address": "Olympus Mons Base Camp",
+#             "price": 2000000,
+#             "oxygen_level": "0%",
+#             "temperature": "-80°C to 20°C",
+#             "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
+#             "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
+#         },
+#         {
+#             "id": 2,
+#             "address": "Valles Marineris Canyon Penthouse",
+#             "price": 1500000,
+#             "oxygen_level": "0%",
+#             "temperature": "-120°C",
+#             "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
+#             "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
+#         }
+#     ]
+
+#     return jsonify({
+#         "message": "Mars Realty - Out of this world properties!",
+#         "properties": properties
+#     })
+
+
 @app.route("/bank")
 def bank_page():
     """Render a page that shows all user bank balances."""
     return render_template("bank.html")
+
 
 @app.route("/api/underwater/properties", methods=["GET"])
 def get_underwater_properties():

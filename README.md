@@ -170,19 +170,17 @@ This endpoint is broken and should be disregarded.
 
 Not too hungry today
 
-
-## /Weather-current
-This give the current weather for St. George 
-
-## /weather
+## /random-weather
 This endpoint returns a truely random weather condition. 
 
 ## /hazardous-conditions
-This endpoint calls the /weather endpoint, and decides if it is a hazardous condition or not. It returns the results. 
+This endpoint calls the /random-weather endpoint, and decides if it is a hazardous condition or not. It returns the results. 
+
+## /current-weather
+This give the current weather for St. George using the Open-Meteo API. 
 
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
-
 
 ## /charger-facts
 is a page that talks about the 1969 dodge charger and returns cool stuff
