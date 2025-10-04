@@ -8,6 +8,16 @@ from flask import (
     redirect,
     Blueprint,
 )
+from flask import (
+    Flask,
+    render_template,
+    render_template_string,
+    request,
+    jsonify,
+    send_from_directory,
+    redirect,
+    Blueprint,
+)
 import random
 import os
 from dataclasses import dataclass, field
@@ -427,7 +437,10 @@ def create_app():
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
+
 # Moved global variables to top for organization
+adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
+nouns = ["Paws", "Whiskers", "Shadow", "Bean", "Muffin", "Cookie", "Nugget", "Pickle"]
 adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
 nouns = ["Paws", "Whiskers", "Shadow", "Bean", "Muffin", "Cookie", "Nugget", "Pickle"]
 restaurants = [
@@ -669,6 +682,7 @@ bets = []
 
 @app.route("/plants/match", methods=["POST"])
 def place_plant_bet():
+
     data = request.get_json()
     username = data.get("username")
     plant_id = data.get("plant_id")
@@ -679,16 +693,6 @@ def place_plant_bet():
         return jsonify({"error": "User not found"}), 404
     if users[username]["balance"] < amount:
         return jsonify({"error": "Insufficient balance"}), 400
-
-    # Example plant database
-    plants = {
-        1: {"name": "Rose", "value": 100},
-        2: {"name": "Tulip", "value": 50},
-        3: {"name": "Cactus", "value": 30},
-    }
-
-    if plant_id not in plants:
-        return jsonify({"error": "Invalid plant ID"}), 400
 
     # Deduct amount and store bet
     users[username]["balance"] -= amount
@@ -714,15 +718,28 @@ def place_plant_bet():
 # ===========end of plant betting ======
 
 
-@app.route("/brayden")
+@app.route('/brayden')
 def brayden():
-    return "SupDudes"
+    return 'SupDudes'
 
-@app.route("/roll/<int:sides>", methods=["GET"])
+@app.route('/fortune', methods=['GET'])
+def get_fortune():
+    fortunes = [
+        {"fortune": "You will find someone merged right before you.", "mood": "despair"},
+        {"fortune": "Today is a good day to git merge --force.", "mood": "optimistic"},
+        {"fortune": "A new conflict will be upon you soon.", "mood": "mysterious"},
+        {"fortune": "You will have good luck with pull requests.", "mood": "motivated"},
+        {"fortune": "You should have a snack break.", "mood": "hungry"}
+    ]
+    chosen = random.choice(fortunes)
+    chosen["date"] = str(date.today())
+    return jsonify(chosen)
+
+
+@app.route('/roll/<int:sides>', methods=['GET'])
 def roll_dice(sides):
     if sides < 2:
         return jsonify({"error": "Number of sides must be 2 or greater"}), 400
-
     result = random.randint(1, sides)
 
     # Updates to code
@@ -748,8 +765,39 @@ def roll_dice(sides):
 # ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
 
-@app.route("/generatePassword")
-def generatePassword(Length=None, Complexity="simple"):
+
+@app.route('/Skylands')
+def home6():
+    user_input = input('Enter somthing: ')
+    if user_input == 'Conquretron':
+        return 'K. A. O. S.'
+    else:
+        return 'Wrong Answer'
+
+@app.route('/porter')
+def home7():
+    return 'Dope'
+
+@app.route('/magic8ball')
+def magic8ball():
+    answers = [
+        "It is certain",
+        "Without a doubt",
+        "Most likely",
+        "Ask again later",
+        "Can't predict now",
+        "My sources say no",
+        "Outlook not so good",
+        "Don't count on it"
+    ]
+    return answers[random.randrange(1, 9)]
+
+@app.route('/cam')
+def cam():
+    return 'Play Oneshot!'
+
+@app.route('/generatePassword')
+def generatePassword(Length=None, Complexity='simple'):
     # Keeping signature but providing safe defaults to avoid TypeError
     letters = "abcdefghijklmnopqrstuvwxyz"
     numbers = "0123456789"
@@ -1408,6 +1456,14 @@ def generate_wizard_name():
     titles = ["Archmage", "Sorcerer", "Seer", "Mystic", "Enchanter", "Spellbinder"]
     name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
     return f"{random.choice(titles)} {name.capitalize()}"
+
+# Generate and display one name immediately
+print(" Your wizard name is:", generate_wizard_name())
+
+
+    
+
+# blackjack_game()
 
 
 @mines_bp.post("/api/games/<game_id>/cashout")
