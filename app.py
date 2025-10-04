@@ -714,18 +714,18 @@ def place_plant_bet():
 # ===========end of plant betting ======
 
 
-@app.route("/brayden")
-def brayden():
-    return "SupDudes"
-
-@app.route("/roll/<int:sides>", methods=["GET"])
+@app.route("/roll/<sides>", methods=["GET"])
 def roll_dice(sides):
+    try:
+        sides = int(sides)
+    except ValueError:
+        return jsonify({"error": "Silly goose, the number of sides must be a number!"}), 400
+    
     if sides < 2:
-        return jsonify({"error": "Number of sides must be 2 or greater"}), 400
+        return jsonify({"error": "Dice should have more than one side goober."}), 400
 
     result = random.randint(1, sides)
 
-    # Updates to code
     if result == 1:
         message = "Critical Fail!"
     elif result == sides:
@@ -743,9 +743,6 @@ def roll_dice(sides):
             "is_even": result % 2 == 0,
         }
     )
-
-
-# ---- Avoid duplicate 'home' endpoint name; keep route the same ----
 
 
 @app.route("/generatePassword")
