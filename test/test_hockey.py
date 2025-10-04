@@ -55,12 +55,6 @@ class TestHockeyAPI(unittest.TestCase):
        response = self.client.get('/api/hockey')
        self.assertEqual(response.status_code, 200)
     
-    def test_api_hockey_multiple_requests(self):
-        #test 100 requests
-        for n in range(100):
-            response = self.client.get('/api/hockey')
-            self.assertEqual(response.status_code, 200)
-
     def test_hockey_page_html(self):
         #check that html is working and configrued properly and check that '/hockey' is also returning 200
         response = self.client.get('/hockey')
@@ -69,3 +63,9 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertIn(b"<html", response.data)
         self.assertIn(b"Hockey", response.data)
 
+    def test_hockey_response_keys(self):
+        #test that the correct keys are being returned by '/api/hockey' in case someone changes that code
+        response = self.client.get('/api/hockey')
+        data = json.loads(response.data)
+        expected_keys = {"team1", "score1", "score2", "team2"}
+        self.assertTrue(expected_keys.issubset(data.keys()), f'Missing keys in response: /api/hockey not returning {"team1", "score1", "score2", "team2"}')
