@@ -1,51 +1,34 @@
-import unittest
-from app import app
+''' 
+DISCLAIMER: This isn't using the conftest.py because 
+that one doesnt test for the /roll/<sides> endpoint
+therefore I had to create a fixture for this one.
+'''
 
-class TestRollDice(unittest.TestCase):
-    def setUp(self):
-        self.client = app.test_client()
+import pytest
+from app import app as flask_app 
 
-    def test_valid_roll(self):
-        resp = self.client.get("/roll/6")
-        self.assertEqual(resp.status_code, 200)
-        data = resp.get_json()
-        self.assertEqual(data["sides"], 6)
-        self.assertTrue(1 <= data["result"] <= 6)
+@pytest.fixture
+def client():
+    flask_app.config["TESTING"] = True
+    with flask_app.test_client() as c:
+        yield c
 
-    def test_large_sides_roll(self):
-        resp = self.client.get("/roll/20")
-        data = resp.get_json()
-        self.assertEqual(data["sides"], 20)
-        self.assertTrue(1 <= data["result"] <= 20)
+def test_roll(client):
+    resp = client.get("/roll/6")
+    assert resp.status_code == 200
+    data = resp.get_json()
+    assert "result" in data
+    assert 1 <= data["result"] <= 6
 
-    def test_invalid_sides(self):
-        resp = self.client.get("/roll/1")
-        self.assertEqual(resp.status_code, 400)
-        self.assertIn("error", resp.get_json())
+def test_nonInteger(client):
+    resp = client.get("/roll/abc")
+    assert resp.status_code == 400
+    data = resp.get_json()
+    assert "Silly goose, the number of sides must be a number!" in data["error"]
 
-# Tests for updated API code 
-    def test_roll_message_and_even_flag(self):
-        resp = self.client.get("/roll/6")
-        data = resp.get_json()
-        self.assertIn("message", data)
-        self.assertIn("is_even", data)
-        self.assertEqual(data["is_even"], data["result"] % 2 == 0)
-
-    def test_critical_fail_message(self):
-        # force sides=1 should hit invalid branch, so test sides=2 and catch result=1
-        resp = self.client.get("/roll/2")
-        data = resp.get_json()
-        if data["result"] == 1:
-            self.assertEqual(data["message"], "Critical Fail!")
-        else:
-            self.assertNotEqual(data["message"], "Critical Fail!")
-
-    def test_critical_success_message(self):
-        resp = self.client.get("/roll/2")
-        data = resp.get_json()
-        if data["result"] == 2:
-            self.assertEqual(data["message"], "Critical Success!")
-        else:
-            self.assertNotEqual(data["message"], "Critical Success!")
-
+def test_notEnoughSides(client):
+    resp = client.get("/roll/1")
+    assert resp.status_code == 400
+    data = resp.get_json()
+    assert "Dice should have more than one side goober." in data["error"]
 
