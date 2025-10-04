@@ -382,9 +382,6 @@ def create_app():
         ]
         return random.choice(answers)
         
-    @app.route("/baccarat", methods=["GET", "POST"])
-    def baccarat():
-          return "Baccarat endpoint is working!", 200
 
     @app.route("/bingo/generate")
     def generate_bingo_card():
@@ -427,17 +424,6 @@ def create_app():
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
-# Moved global variables to top for organization
-adjectives = ["Fluffy", "Silly", "Happy", "Sleepy", "Grumpy", "Bouncy", "Lazy", "Sweet"]
-nouns = ["Paws", "Whiskers", "Shadow", "Bean", "Muffin", "Cookie", "Nugget", "Pickle"]
-restaurants = [
-    "Chipotle",
-    "Chick-fil-A",
-    "Subway",
-    "Olive Garden",
-    "Five Guys",
-    "Panera Bread",
-]
 
 
 
