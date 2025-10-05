@@ -744,6 +744,27 @@ users = {
 }
 bets = []
 
+@app.route("/stats/mean", methods=["GET"])
+def stats_mean():
+    """
+    GET /stats/mean?vals=1,2,3
+    Returns {"mean": 2.0}. Validates input and errors cleanly.
+    """
+    raw = request.args.get("vals", "")
+    if not raw:
+        return jsonify({"error": "missing vals"}), 400
+    try:
+        nums = [float(x.strip()) for x in raw.split(",") if x.strip() != ""]
+    except ValueError:
+        return jsonify({"error": "vals must be comma-separated numbers"}), 400
+    if not nums:
+        return jsonify({"error": "no numeric values provided"}), 400
+    mean_val = sum(nums) / len(nums)
+    return jsonify({"mean": mean_val}), 200
+
+
+
+
 
 @app.route("/plants/match", methods=["POST"])
 def place_plant_bet():
