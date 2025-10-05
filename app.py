@@ -421,6 +421,61 @@ def create_app():
             rules.append({"rule": rule.rule, "endpoint": rule.endpoint, "methods": methods})
 
         return jsonify({"count": len(rules), "endpoints": rules}), 200
+    
+    @app.route("/plant-battle", methods=["GET"])
+    def plant_battle():
+        plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
+
+        plant_stats = {
+            "Cactus": {"attack": 7, "defense": 9, "rarity": "Common"},
+            "Venus Flytrap": {"attack": 9, "defense": 6, "rarity": "Rare"},
+            "Sunflower": {"attack": 5, "defense": 8, "rarity": "Uncommon"},
+            "Bamboo": {"attack": 6, "defense": 7, "rarity": "Common"},
+            "Poison Ivy": {"attack": 8, "defense": 5, "rarity": "Rare"},
+        }
+
+        bet = request.args.get("bet", default=10, type=int)
+        chosen_plant = request.args.get("plant", default=random.choice(plants))
+
+        if bet <= 0:
+            return jsonify({"error": "Bet must be a positive integer"}), 400
+
+        if chosen_plant not in plants:
+            return jsonify({"error": f"Plant must be one of {plants}"}), 400
+
+        winner = random.choice(plants)
+        won = chosen_plant == winner
+        winnings = bet * 2 if won else 0
+
+        chosen_stats = plant_stats[chosen_plant]
+        winner_stats = plant_stats[winner]
+
+        if chosen_plant == winner:
+            message = f"{chosen_plant} used photosynthesis and triumphed gloriously!"
+        else:
+            if chosen_stats["attack"] > winner_stats["attack"]:
+                message = f"{chosen_plant} put up a strong fight but wilted in the end."
+            else:
+                message = f"{chosen_plant} was no match for {winner}'s power!"
+
+        environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
+        weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
+
+        return jsonify(
+            {
+                "plants": plants,
+                "chosen_plant": chosen_plant,
+                "winner": winner,
+                "bet": bet,
+                "result": "win" if won else "lose",
+                "winnings": winnings,
+                "message": message,
+                "battle_environment": environment,
+                "weather": weather,
+                "chosen_stats": chosen_stats,
+                "winner_stats": winner_stats,
+            }
+        )
 
     return app  # <== ALSO DON'T DELETE
 
@@ -847,35 +902,6 @@ def russian_roulette():
             "survived": not bang,
             "outcome": "bang" if bang else "click",
             "probability_bang": f"1/{chambers}",
-        }
-    )
-
-
-@app.route("/plant-battle", methods=["GET"])
-def plant_battle():
-    plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
-
-    bet = request.args.get("bet", default=10, type=int)
-    chosen_plant = request.args.get("plant", default=random.choice(plants))
-
-    if bet <= 0:
-        return jsonify({"error": "Bet must be a positive integer"}), 400
-
-    if chosen_plant not in plants:
-        return jsonify({"error": f"Plant must be one of {plants}"}), 400
-
-    winner = random.choice(plants)
-    won = chosen_plant == winner
-    winnings = bet * 2 if won else 0
-
-    return jsonify(
-        {
-            "plants": plants,
-            "chosen_plant": chosen_plant,
-            "winner": winner,
-            "bet": bet,
-            "result": "win" if won else "lose",
-            "winnings": winnings,
         }
     )
 
