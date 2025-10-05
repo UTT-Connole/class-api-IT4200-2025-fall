@@ -92,6 +92,43 @@ def create_app():
                 "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
                 "warnings": ["Immediate death likely", "GPS stops working"],
             },
+            {
+                "id": 3,
+                "address": "Red Forest Cabin, Woodland Retreat",
+                "price": 500,
+                "radiation_level": "8,000 mSv/year",
+                "distance_from_reactor": "10 km",
+                "amenities": [
+                    "Rustic charm",
+                    "Trees glow orange at night",
+                    "Wildlife included (mutated)",
+                    "Natural heating from decay"
+                ],
+                "warnings": [
+                    "Do not eat the berries",
+                    "Trees may be radioactive",
+                    "Strange animal sounds at night"
+                ]
+            },
+            {
+                "id": 4,
+                "address": "Hospital Corridor Suite, Building 126",
+                "price": 250,
+                "radiation_level": "12,000 mSv/year",
+                "distance_from_reactor": "2 km",
+                "amenities": [
+                    "Medical equipment included",
+                    "Basement access to firefighter gear",
+                    "Vintage Soviet decor",
+                    "Free X-rays from ambient radiation"
+                ],
+                "warnings": [
+                    "Basement is highly contaminated",
+                    "Avoid touching anything",
+                    "Former morgue nearby",
+                    "Asbestos present"
+                ]
+            }
         ]
 
         return jsonify(
