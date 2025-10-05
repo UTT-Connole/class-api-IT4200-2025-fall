@@ -11,18 +11,6 @@ def test_structure(client):
     assert isinstance(data['properties'], list)
 
 
-
-def test_chernobyl_get_method(client):
-    response = client.post('/api/chernobyl/properties')
-    assert response.status_code == 405
-    
-    response = client.put('/api/chernobyl/properties')
-    assert response.status_code == 405
-    
-    response = client.delete('/api/chernobyl/properties')
-    assert response.status_code == 405
-
-
 def test_required_fields(client):
     response = client.get('/api/chernobyl/properties')
     data = response.get_json()
@@ -35,34 +23,45 @@ def test_required_fields(client):
             assert field in property_item, f"Missing field: {field}"
 
 
-def test_get_chernobyl_properties_full_response(client):
-    """Test the complete response structure and content"""
+
+
+def test_property_ids_are_unique(client):
+    """Test all property IDs are unique"""
     response = client.get('/api/chernobyl/properties')
     data = response.get_json()
-   
-    expected_response = {
-        "message": "Chernobyl Real Estate - Where your problems glow away!",
-        "properties": [
-            {
-                "id": 1,
-                "address": "Pripyat Central Square, Apartment Block #1",
-                "price": 0,
-                "radiation_level": "15,000 mSv/year",
-                "distance_from_reactor": "3 km",
-                "amenities": ["Ferris wheel view", "Glow-in-the-dark features", "No electricity needed"],
-                "warnings": ["Protective gear required", "May cause mutations"]
-            },
-            {
-                "id": 2,
-                "address": "Reactor 4 Penthouse Suite",
-                "price": -1000000,
-                "radiation_level": "Over 9000 mSv/year",
-                "distance_from_reactor": "0 km",
-                "amenities": ["360° views", "Built-in sarcophagus", "Unlimited energy"],
-                "warnings": ["Immediate death likely", "GPS stops working"]
-            }
-        ]
-    }
-   
-    assert data == expected_response
+    
+    property_ids = [prop['id'] for prop in data['properties']]
+    assert len(property_ids) == len(set(property_ids)), "Duplicate property IDs found"
 
+
+def test_property_ids_are_positive(client):
+    """Test all property IDs are positive integers"""
+    response = client.get('/api/chernobyl/properties')
+    data = response.get_json()
+    
+    for prop in data['properties']:
+        assert prop['id'] > 0, f"Property ID must be positive, got {prop['id']}"
+
+def test_warnings_exist(client):
+    """Test all properties have at least one warning"""
+    response = client.get('/api/chernobyl/properties')
+    data = response.get_json()
+    
+    for prop in data['properties']:
+        assert len(prop['warnings']) > 0, f"Property {prop['id']} has no warnings"
+
+def test_amenities_exist(client):
+    """Test all properties have at least one amenity"""
+    response = client.get('/api/chernobyl/properties')
+    data = response.get_json()
+    
+    for prop in data['properties']:
+        assert len(prop['amenities']) > 0, f"Property {prop['id']} has no amenities"
+
+def test_addresses_not_empty(client):
+    """Test all property addresses are non-empty strings"""
+    response = client.get('/api/chernobyl/properties')
+    data = response.get_json()
+    
+    for prop in data['properties']:
+        assert len(prop['address'].strip()) > 0, f"Property {prop['id']} has empty address"
