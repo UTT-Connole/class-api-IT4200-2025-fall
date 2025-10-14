@@ -602,35 +602,7 @@ def real_weather():
 
     return jsonify(current_data, daily_data)
 
-# Unlivable Realestate Endpoints
-# @app.route('/api/mars/properties', methods=['GET'])
-# def get_mars_properties():
-#     """Mars Real Estate - Red planet, red hot deals!"""
-#     properties = [
-#         {
-#             "id": 1,
-#             "address": "Olympus Mons Base Camp",
-#             "price": 2000000,
-#             "oxygen_level": "0%",
-#             "temperature": "-80°C to 20°C",
-#             "amenities": ["Tallest mountain views", "Low gravity fun", "Dust storm entertainment"],
-#             "warnings": ["Bring your own atmosphere", "18-month commute", "No pizza delivery"]
-#         },
-#         {
-#             "id": 2,
-#             "address": "Valles Marineris Canyon Penthouse",
-#             "price": 1500000,
-#             "oxygen_level": "0%",
-#             "temperature": "-120°C",
-#             "amenities": ["Grand Canyon views (but bigger)", "Extreme sports opportunities", "Silence guarantee"],
-#             "warnings": ["Radiation exposure", "No neighbors for 35 million miles", "Elon Musk not included"]
-#         }
-#     ]
 
-#     return jsonify({
-#         "message": "Mars Realty - Out of this world properties!",
-#         "properties": properties
-#     })
 
 
 @app.route("/bank")
