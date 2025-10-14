@@ -30,9 +30,7 @@ def create_app():
     @app.route("/")
     def home():
         return render_template("index.html"), 200
-    
-    
-    
+
     @app.route('/gatcha')
     def gatcha():
         rarities = ['C', 'R', 'SR', 'SSR']
@@ -1039,39 +1037,6 @@ def hellhole():
 def Tucson():
     message = {"Location": "Tucson, Arizona", "Description": "We don't take about it"}
     return jsonify(message)
-
-
-@app.route("/chips", methods=["GET", "POST"])
-def chips():
-    chips = None
-    amount = None
-    if request.method == "POST":
-        try:
-            amount = int(request.form["amount"])
-            denominations = [100, 25, 10, 5, 1]
-            chips = {}
-            remaining = amount
-
-            # Initialize all denominations to 0
-            for denom in denominations:
-                chips[str(denom)] = 0
-
-            # First pass: distribute evenly across all denominations
-            while remaining >= min(denominations) * len(denominations):
-                for denom in denominations:
-                    if remaining >= denom:
-                        chips[str(denom)] += 1
-                        remaining -= denom
-
-            # Second pass: handle any remaining amount using largest possible denominations
-            for denom in denominations:
-                while remaining >= denom:
-                    chips[str(denom)] += 1
-                    remaining -= denom
-
-        except (ValueError, KeyError):
-            chips = None
-    return render_template("chips.html", amount=amount, chips=chips)
 
 
 @app.route("/numberguesser", methods=["GET", "POST"])
