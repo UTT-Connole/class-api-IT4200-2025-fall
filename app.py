@@ -906,9 +906,7 @@ def randompkmon():
     return redirect((f"https://www.pokemon.com/us/pokedex/{a}")), 302
 
 
-@app.route("/dave")
-def dave():
-    return render_template("dave.html"), 200
+
 
 
 @app.route("/roulette", methods=["GET"])
