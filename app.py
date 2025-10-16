@@ -1038,29 +1038,6 @@ def Tucson():
     message = {"Location": "Tucson, Arizona", "Description": "We don't take about it"}
     return jsonify(message)
 
-
-@app.route("/numberguesser", methods=["GET", "POST"])
-def guess_number():
-    target = random.randint(1, 10)  # Randomly pick a number between 1 and 10
-    result = None
-    if request.method == "POST":
-        user_guess = int(request.form["guess"])
-        if user_guess == target:
-            result = (
-                f"Congratulations! You guessed the number correctly. It was {target}!"
-            )
-        else:
-            result = f"Sorry, that's incorrect! The number was {target}. Try again!"
-    return jsonify(result=result)
-
-
-def create_deck():
-
-    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"] * 4
-    random.shuffle(deck)
-    return deck
-
-
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route("/clint")
 def coin_flip():
