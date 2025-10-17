@@ -647,7 +647,7 @@ def kasen():
     return render_template("kasen.html"), 200
 
 
-@app.route("/clint")
+@app.route("/hi")
 def home1():
     return "Hello, Clint!"
 
@@ -1010,7 +1010,7 @@ def Tucson():
     return jsonify(message)
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
-@app.route("/clint")
+@app.route("/coin")
 def coin_flip():
     result = random.choice(["heads", "tails"])
     return result
@@ -1380,7 +1380,7 @@ def main():
             break
 
 
-@app.route("/clint")
+@app.route("/wizard")
 def generate_wizard_name():
     prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
     roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
