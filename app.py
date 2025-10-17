@@ -875,6 +875,7 @@ def page_not_found(e):
 @app.route("/randompkmon")
 def randompkmon():
     a = random.randint(1, 1010)
+    print(f"Redirecting to Pokémon ID: {a}")
     return redirect((f"https://www.pokemon.com/us/pokedex/{a}")), 302
 
 
