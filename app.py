@@ -22,6 +22,7 @@ import bank
 import json
 
 
+
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
@@ -1011,7 +1012,7 @@ def Tucson():
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route("/clint")
 def coin_flip():
-    result = random.choice(["Heads", "Tails"])
+    result = random.choice(["heads", "tails"])
     return result
 
 
@@ -1504,6 +1505,9 @@ def bet_slots():
 
     return jsonify({"result": result, "payout": payout})
 
+@app.route("/house/<name>")
+def house_always_wins(name):
+    return f"Sorry, {name}. The house always wins!"
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
