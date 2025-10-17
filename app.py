@@ -418,7 +418,7 @@ def create_app():
         return random.choice(answers)
         
 
-    @app.route("/bingo/generate")
+    @app.route("/bingo")
     def generate_bingo_card():
     #   generates 5x5 card as 1 list, each column adding 15 to the range
         card = (
@@ -431,11 +431,7 @@ def create_app():
 
         card[get_bingo_index(2,2)]["value"] = "FREE"
         card[get_bingo_index(2,2)]["marked"] = True
-        return card
-
-    @app.route("/bingo")
-    def create_card():
-        return jsonify({"card": generate_bingo_card()}), 200
+        return jsonify({"card": card}), 200
 
     @app.route("/__endpoints", methods=["GET"])
     def list_endpoints():
