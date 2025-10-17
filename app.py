@@ -352,7 +352,7 @@ def create_app():
 
     @app.route("/slots", methods=["POST"])
     def slots():
-        symbols = ["🍒", "🍋", "🔔", "⭐", "7️⃣"]
+        symbols = ["CHERRY", "LEMON", "BELL", "STAR", "7"]
         bet = request.json.get("bet", 1)
         username = request.json.get("username", "user1")
 
