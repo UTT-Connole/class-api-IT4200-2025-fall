@@ -635,7 +635,7 @@ def get_underwater_properties():
 
     return jsonify(
         {
-            "message": " Underwater Real Estate – Live where others vacation!",
+            "message": "🌊 Underwater Real Estate – Live where others vacation!",
             "properties": properties,
         }
     )
@@ -1324,7 +1324,7 @@ def get_payout(bet_type, bet_value, result_number, result_color):
 
 
 def main():
-    print("Welcome to Python Roulette!")
+    print("🎲 Welcome to Python Roulette!")
     balance = 100
 
     while balance > 0:
