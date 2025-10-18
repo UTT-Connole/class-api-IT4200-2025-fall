@@ -338,6 +338,20 @@ def create_app():
                 "luck": 3,
                 "fun_fact": "Trains by shadowboxing corn kernels in the barn every morning."
             },
+            "Eggward Scissorbeak": {
+                "odds": "6/10",
+                "speed": 8,
+                "stamina": 6,
+                "luck": 6,
+                "fun_fact": "Once pecked through a barn door to win by a beak-length."
+                },
+            "Cluck Norris": {
+                "odds": "8/10",
+                "speed": 9,
+                "stamina": 6,
+                "luck": 8,
+                "fun_fact": "Wins races before they even start. The track moves for him."
+                }
         }
 
         if request.method == "GET":
