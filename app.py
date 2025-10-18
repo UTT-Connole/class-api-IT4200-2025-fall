@@ -297,7 +297,7 @@ def create_app():
 
 
 
-    @app.route("/chickenrace", methods=["GET", "POST"])
+    @app.route("/race", methods=["GET", "POST"])
     def chicken_race():
         chickens = {
             "Colonel Sanders Revenge": {
