@@ -55,12 +55,16 @@ def test_chickenrace_odds():
     assert b'4/10' in response.data
     assert b'7/10' in response.data
     assert b'3/10' in response.data
+    assert b'8/10' in response.data
 
 def test_chickenrace_get_chicken_stats_in_dropdown():
     """Test that chicken stats appear in the dropdown on GET"""
     client = app.test_client()
     response = client.get('/chickenrace')
     assert b'Hen Solo' in response.data
+    assert b'Colonel Sanders Revenge' in response.data
+    assert b'Cluck Norris' in response.data
+    assert b'Eggward Scissorbeak' in response.data
     assert b'Odds:' in response.data
     assert b'Speed:' in response.data
     assert b'Stamina:' in response.data
