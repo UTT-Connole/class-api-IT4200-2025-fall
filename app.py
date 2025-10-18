@@ -694,11 +694,6 @@ def get_underwater_properties():
 def kasen():
     return render_template("kasen.html"), 200
 
-
-@app.route("/hi")
-def home1():
-    return "Hello, Clint!"
-
 # Start of '/hockey' endpoint code
 
 # List of fake hockey game results
