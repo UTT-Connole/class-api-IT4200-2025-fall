@@ -24,6 +24,7 @@ import time
 
 
 
+
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
@@ -678,7 +679,7 @@ def kasen():
     return render_template("kasen.html"), 200
 
 
-@app.route("/clint")
+@app.route("/hi")
 def home1():
     return "Hello, Clint!"
 
@@ -1042,9 +1043,9 @@ def Tucson():
     return jsonify(message)
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
-@app.route("/clint")
+@app.route("/coin")
 def coin_flip():
-    result = random.choice(["Heads", "Tails"])
+    result = random.choice(["heads", "tails"])
     return result
 
 
@@ -1412,7 +1413,7 @@ def main():
             break
 
 
-@app.route("/clint")
+@app.route("/wizard")
 def generate_wizard_name():
     prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
     roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
@@ -1551,6 +1552,9 @@ def bet_slots():
 
     return jsonify({"result": result, "payout": payout})
 
+@app.route("/house/<name>")
+def house_always_wins(name):
+    return f"Sorry, {name}. The house always wins!"
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
