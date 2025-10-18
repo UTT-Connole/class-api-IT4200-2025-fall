@@ -1485,21 +1485,35 @@ def plants_match():
 @app.route("/bet_rps", methods=["GET"])
 def bet_rps():
     moves = ["rock", "paper", "scissors"]
-    player = request.args.get("player", "").lower()
+    player = (request.args.get("player") or "").lower()
     amount = request.args.get("amount", type=int, default=0)
 
     if player not in moves or amount <= 0:
         return jsonify({"error": "Invalid move or amount"}), 400
 
-    return (
-        jsonify(
-            {
-                "message": "Chernobyl Real Estate - Where your problems glow away!",
-                "properties": properties,
-            }
-        ),
-        200,
-    )
+    computer = random.choice(moves)
+
+    # rock beats scissors, scissors beats paper, paper beats rock
+    beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
+
+    if player == computer:
+        result = "tie"
+        payout = amount  # return original bet on tie
+    elif beats[player] == computer:
+        result = "win"
+        payout = amount * 2
+    else:
+        result = "lose"
+        payout = 0
+
+    return jsonify({
+        "player": player,
+        "computer": computer,
+        "amount": amount,
+        "result": result,
+        "payout": payout
+    }), 200
+
 
 
 @app.route("/bet_slots")
