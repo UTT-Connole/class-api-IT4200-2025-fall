@@ -1,0 +1,3 @@
+def test_hi_does_not_exist(client):
+    resp = client.get('/hi')
+    assert resp.status_code == 404

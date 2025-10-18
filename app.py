@@ -65,7 +65,11 @@ def create_app():
             message = "One pair!"
         else:
             message = "No special combination."
-        return jsonify({"dice": result, "message": message})
+        return jsonify({
+            "dice": result, 
+            "message": message,
+            "sum": sum(result)
+            })
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
@@ -293,7 +297,7 @@ def create_app():
 
 
 
-    @app.route("/chickenrace", methods=["GET", "POST"])
+    @app.route("/race", methods=["GET", "POST"])
     def chicken_race():
         chickens = {
             "Colonel Sanders Revenge": {
@@ -553,6 +557,7 @@ def create_app():
             {"title": "I Didn't Know", "artist": "Skinshape", "genre": "Soul / Funk", "year": 2018},
             {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
             {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
+            {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
         ]
 
         song = random.choice(songs)
@@ -706,11 +711,6 @@ def get_underwater_properties():
 @app.route("/kasen")
 def kasen():
     return render_template("kasen.html"), 200
-
-
-@app.route("/hi")
-def home1():
-    return "Hello, Clint!"
 
 # Start of '/hockey' endpoint code
 
