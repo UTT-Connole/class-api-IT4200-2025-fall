@@ -48,7 +48,37 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
-    
+#start of dice bets
+    @app.route("/api/dice/bet", methods=["POST"])
+    def dice_bet():
+        """User bets on which side of a dice will land (1-6)."""
+        if not request.is_json:
+            return jsonify({"error": "Request must be in JSON format"}), 400
+
+        data = request.get_json()
+        try:
+            bet_choice = int(data.get("choice"))
+            bet_amount = float(data.get("bet"))
+        except (TypeError, ValueError):
+            return jsonify({"error": "Invalid input types"}), 400
+
+        # Validate range and bet
+        if bet_choice not in range(1, 7):
+            return jsonify({"error": "Choice must be between 1 and 6"}), 400
+        if bet_amount <= 0:
+            return jsonify({"error": "Bet must be a positive number"}), 400
+
+        roll = random.randint(1, 6)
+        win = (roll == bet_choice)
+        winnings = bet_amount * 2 if win else 0
+
+        return jsonify({
+            "rolled": roll,
+            "choice": bet_choice,
+            "result": "win" if win else "lose",
+            "winnings": winnings
+        })
+
     @app.route('/yatzy')
     def yatzy():
         result = []
@@ -844,6 +874,7 @@ def roll_dice(sides):
             "is_even": result % 2 == 0,
         }
     )
+
 
 
 @app.route("/generatePassword")
