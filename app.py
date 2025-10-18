@@ -529,6 +529,21 @@ def create_app():
                 "winner_stats": winner_stats,
             }
         )
+    
+    @app.route("/jukebox", methods=["GET"])
+    def jukebox():
+        """Return a random song from the jukebox."""
+        songs = [
+            {"title": "Catamaran", "artist": "Allah-Las", "genre": "Psychedelic Rock", "year": 2012},
+            {"title": "Floating", "artist": "Marlin's Dreaming", "genre": "Indie Rock", "year": 2018},
+            {"title": "I Didn't Know", "artist": "Skinshape", "genre": "Soul / Funk", "year": 2018},
+            {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
+            {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
+        ]
+
+        song = random.choice(songs)
+        return jsonify({"success": True, "song": song})
+    
 
     return app  # <== ALSO DON'T DELETE
 
