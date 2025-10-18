@@ -12,6 +12,7 @@ __pycache__/
 # Workspace
 class-api-IT4200-2025-fall.code-workspace
 .newv/
+.vscode/
 
 # Local runtime DB (do not commit)
 banking.db
