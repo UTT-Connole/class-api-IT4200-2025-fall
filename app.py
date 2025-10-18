@@ -20,6 +20,8 @@ import requests
 from bank import bank_bp
 import bank
 import json
+import time
+
 
 
 def create_app():
@@ -514,6 +516,18 @@ def create_app():
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
+
+# --- begin /api/ping (MINOR) ---
+_started = time.time()
+
+@app.get("/api/ping")
+def ping():
+    now = time.time()
+    return jsonify({
+        "status": "ok",
+        "uptime_ms": int((now - _started) * 1000)
+    }), 200
+# --- end /api/ping ---
 
 
 
