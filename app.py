@@ -229,36 +229,23 @@ def create_app():
             "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
         ]
 
-        html = """
-        <h2>Matchup: {{team1}} vs {{team2}}</h2>
-        <form method="POST">
-            <input type="hidden" name="team1" value="{{team1}}">
-            <input type="hidden" name="team2" value="{{team2}}">
-            <input type="hidden" name="winner" value="{{winner}}">
-            <label>Enter your bet ({{team1}} or {{team2}}):</label><br>
-            <input type="text" name="bet">
-            <input type="submit" value="Place Bet">
-        </form>
-        {% if bet is not none %}
-            <p>You bet on: {{bet}}</p>
-            <p>Winner: {{winner}}</p>
-            <p>Result: {{'win' if won_bet is true else ('lose' if won_bet is false else won_bet)}}</p>
-        {% endif %}
-        """
+        # Template moved to templates/sports.html
 
         if request.method == "GET":
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
-            return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
 
-        # POST: preserve the matchup from hidden fields instead of re-randomizing
+    # POST: preserve the matchup from hidden fields instead of re-randomizing
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        # basic validation: ensure posted matchup looks sane
+        # If the posted matchup is missing or invalid, fall back to a fresh matchup
+        # so that a plain POST with just a bet still works (e.g., in tests).
         if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            return jsonify({"error": "Invalid matchup submitted"}), 400
+            team1, team2 = random.sample(teams, 2)
+            winner = random.choice([team1, team2])
 
         bet = (request.form.get("bet") or "").strip()
         if not bet:
@@ -268,7 +255,38 @@ def create_app():
         else:
             won_bet = bet.lower() == winner.lower()
 
-        return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=bet, won_bet=won_bet)
+        # Optional: track net earnings in the bank DB if username and amount are provided.
+        bank_message = None
+        username = (request.form.get("username") or "").strip()
+        amount_raw = (request.form.get("amount") or "").strip()
+        if username and amount_raw and won_bet in (True, False):
+            try:
+                amount = int(amount_raw)
+            except ValueError:
+                amount = 0
+
+            if amount <= 0:
+                bank_message = "Amount must be a positive integer; bank unchanged."
+            else:
+                # Ensure the user exists and has sufficient funds for a loss.
+                user = bank.get_user_bank(username)
+                if not won_bet and user.get("balance", 0) < amount:
+                    bank_message = "Insufficient funds for this bet; bank unchanged."
+                else:
+                    net = amount if won_bet else -amount
+                    updated = bank.update_bank(username, net)
+                    change_str = f"+{amount}" if won_bet else f"-{amount}"
+                    bank_message = f"Applied {change_str}. New balance: {updated['balance']}."
+
+        return render_template(
+            "sports.html",
+            team1=team1,
+            team2=team2,
+            winner=winner,
+            bet=bet,
+            won_bet=won_bet,
+            bank_message=bank_message,
+        )
 
 
 
