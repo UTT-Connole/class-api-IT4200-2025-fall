@@ -16,3 +16,8 @@ def test_jukebox(client):
     assert "song" in data
     assert "title" in data["song"]
     assert "artist" in data["song"]
+
+def test_jukebox_year_type(client):
+    response = client.get("/jukebox")
+    song = response.get_json()["song"]
+    assert isinstance(song["year"], int)
