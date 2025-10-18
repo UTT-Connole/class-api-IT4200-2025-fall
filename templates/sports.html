@@ -1,0 +1,31 @@
+<h2>Matchup: {{ team1 }} vs {{ team2 }}</h2>
+<form method="POST">
+    <input type="hidden" name="team1" value="{{ team1 }}">
+    <input type="hidden" name="team2" value="{{ team2 }}">
+    <input type="hidden" name="winner" value="{{ winner }}">
+
+    <label>Enter your bet ({{ team1 }} or {{ team2 }}):</label><br>
+    <input type="text" name="bet">
+    <br><br>
+
+    <label>Username (optional):</label><br>
+    <input type="text" name="username" placeholder="e.g., alice">
+    <br>
+
+    <label>Amount (optional, integer):</label><br>
+    <input type="number" name="amount" min="1" step="1" placeholder="10">
+
+    <input type="submit" value="Place Bet">
+  </form>
+
+{% if bet is not none %}
+  <p>You bet on: {{ bet }}</p>
+  <p>Winner: {{ winner }}</p>
+  <p>
+    Result:
+    {{ 'win' if won_bet is true else ('lose' if won_bet is false else won_bet) }}
+  </p>
+  {% if bank_message %}
+    <p><strong>Bank:</strong> {{ bank_message }}</p>
+  {% endif %}
+{% endif %}

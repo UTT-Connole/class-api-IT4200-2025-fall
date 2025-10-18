@@ -20,6 +20,9 @@ import requests
 from bank import bank_bp
 import bank
 import json
+import time
+
+
 
 
 def create_app():
@@ -62,7 +65,11 @@ def create_app():
             message = "One pair!"
         else:
             message = "No special combination."
-        return jsonify({"dice": result, "message": message})
+        return jsonify({
+            "dice": result, 
+            "message": message,
+            "sum": sum(result)
+            })
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
@@ -229,36 +236,23 @@ def create_app():
             "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
         ]
 
-        html = """
-        <h2>Matchup: {{team1}} vs {{team2}}</h2>
-        <form method="POST">
-            <input type="hidden" name="team1" value="{{team1}}">
-            <input type="hidden" name="team2" value="{{team2}}">
-            <input type="hidden" name="winner" value="{{winner}}">
-            <label>Enter your bet ({{team1}} or {{team2}}):</label><br>
-            <input type="text" name="bet">
-            <input type="submit" value="Place Bet">
-        </form>
-        {% if bet is not none %}
-            <p>You bet on: {{bet}}</p>
-            <p>Winner: {{winner}}</p>
-            <p>Result: {{'win' if won_bet is true else ('lose' if won_bet is false else won_bet)}}</p>
-        {% endif %}
-        """
+        # Template moved to templates/sports.html
 
         if request.method == "GET":
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
-            return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
 
-        # POST: preserve the matchup from hidden fields instead of re-randomizing
+    # POST: preserve the matchup from hidden fields instead of re-randomizing
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        # basic validation: ensure posted matchup looks sane
+        # If the posted matchup is missing or invalid, fall back to a fresh matchup
+        # so that a plain POST with just a bet still works (e.g., in tests).
         if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            return jsonify({"error": "Invalid matchup submitted"}), 400
+            team1, team2 = random.sample(teams, 2)
+            winner = random.choice([team1, team2])
 
         bet = (request.form.get("bet") or "").strip()
         if not bet:
@@ -268,11 +262,42 @@ def create_app():
         else:
             won_bet = bet.lower() == winner.lower()
 
-        return render_template_string(html, team1=team1, team2=team2, winner=winner, bet=bet, won_bet=won_bet)
+        # Optional: track net earnings in the bank DB if username and amount are provided.
+        bank_message = None
+        username = (request.form.get("username") or "").strip()
+        amount_raw = (request.form.get("amount") or "").strip()
+        if username and amount_raw and won_bet in (True, False):
+            try:
+                amount = int(amount_raw)
+            except ValueError:
+                amount = 0
+
+            if amount <= 0:
+                bank_message = "Amount must be a positive integer; bank unchanged."
+            else:
+                # Ensure the user exists and has sufficient funds for a loss.
+                user = bank.get_user_bank(username)
+                if not won_bet and user.get("balance", 0) < amount:
+                    bank_message = "Insufficient funds for this bet; bank unchanged."
+                else:
+                    net = amount if won_bet else -amount
+                    updated = bank.update_bank(username, net)
+                    change_str = f"+{amount}" if won_bet else f"-{amount}"
+                    bank_message = f"Applied {change_str}. New balance: {updated['balance']}."
+
+        return render_template(
+            "sports.html",
+            team1=team1,
+            team2=team2,
+            winner=winner,
+            bet=bet,
+            won_bet=won_bet,
+            bank_message=bank_message,
+        )
 
 
 
-    @app.route("/chickenrace", methods=["GET", "POST"])
+    @app.route("/race", methods=["GET", "POST"])
     def chicken_race():
         chickens = {
             "Colonel Sanders Revenge": {
@@ -317,6 +342,20 @@ def create_app():
                 "luck": 3,
                 "fun_fact": "Trains by shadowboxing corn kernels in the barn every morning."
             },
+            "Cluck Norris": {
+                "odds": "8/10",
+                "speed": 9,
+                "stamina": 6,
+                "luck": 8,
+                "fun_fact": "Wins races before they even start. The track moves for him."
+                },
+            "Eggward Scissorbeak": {
+                "odds": "6/10",
+                "speed": 8,
+                "stamina": 6,
+                "luck": 6,
+                "fun_fact": "Once pecked through a barn door to win by a beak-length."
+                }
         }
 
         if request.method == "GET":
@@ -508,12 +547,40 @@ def create_app():
                 "winner_stats": winner_stats,
             }
         )
+    
+    @app.route("/jukebox", methods=["GET"])
+    def jukebox():
+        """Return a random song from the jukebox."""
+        songs = [
+            {"title": "Catamaran", "artist": "Allah-Las", "genre": "Psychedelic Rock", "year": 2012},
+            {"title": "Floating", "artist": "Marlin's Dreaming", "genre": "Indie Rock", "year": 2018},
+            {"title": "I Didn't Know", "artist": "Skinshape", "genre": "Soul / Funk", "year": 2018},
+            {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
+            {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
+            {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
+        ]
+
+        song = random.choice(songs)
+        return jsonify({"success": True, "song": song})
+    
 
     return app  # <== ALSO DON'T DELETE
 
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
 
+
+# --- begin /api/ping (MINOR) ---
+_started = time.time()
+
+@app.get("/api/ping")
+def ping():
+    now = time.time()
+    return jsonify({
+        "status": "ok",
+        "uptime_ms": int((now - _started) * 1000)
+    }), 200
+# --- end /api/ping ---
 
 
 
@@ -635,7 +702,7 @@ def get_underwater_properties():
 
     return jsonify(
         {
-            "message": "🌊 Underwater Real Estate – Live where others vacation!",
+            "message": " Underwater Real Estate – Live where others vacation!",
             "properties": properties,
         }
     )
@@ -644,21 +711,6 @@ def get_underwater_properties():
 @app.route("/kasen")
 def kasen():
     return render_template("kasen.html"), 200
-
-
-@app.route("/clint")
-def home1():
-    return "Hello, Clint!"
-
-
-@app.route("/gill")
-def home2():
-    user_input = "We seek the Holy Grail"
-    if user_input == "We seek the Holy Grail":
-        return "You may pass"
-    else:
-        return "You are doomed"
-
 
 # Start of '/hockey' endpoint code
 
@@ -893,6 +945,7 @@ def page_not_found(e):
 @app.route("/randompkmon")
 def randompkmon():
     a = random.randint(1, 1010)
+    print(f"Redirecting to Pokémon ID: {a}")
     return redirect((f"https://www.pokemon.com/us/pokedex/{a}")), 302
 
 
@@ -1027,9 +1080,9 @@ def Tucson():
     return jsonify(message)
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
-@app.route("/clint")
+@app.route("/coin")
 def coin_flip():
-    result = random.choice(["Heads", "Tails"])
+    result = random.choice(["heads", "tails"])
     return result
 
 
@@ -1341,7 +1394,7 @@ def get_payout(bet_type, bet_value, result_number, result_color):
 
 
 def main():
-    print("🎲 Welcome to Python Roulette!")
+    print("Welcome to Python Roulette!")
     balance = 100
 
     while balance > 0:
@@ -1397,7 +1450,7 @@ def main():
             break
 
 
-@app.route("/clint")
+@app.route("/wizard")
 def generate_wizard_name():
     prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
     roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
@@ -1488,21 +1541,35 @@ def plants_match():
 @app.route("/bet_rps", methods=["GET"])
 def bet_rps():
     moves = ["rock", "paper", "scissors"]
-    player = request.args.get("player", "").lower()
+    player = (request.args.get("player") or "").lower()
     amount = request.args.get("amount", type=int, default=0)
 
     if player not in moves or amount <= 0:
         return jsonify({"error": "Invalid move or amount"}), 400
 
-    return (
-        jsonify(
-            {
-                "message": "Chernobyl Real Estate - Where your problems glow away!",
-                "properties": properties,
-            }
-        ),
-        200,
-    )
+    computer = random.choice(moves)
+
+    # rock beats scissors, scissors beats paper, paper beats rock
+    beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
+
+    if player == computer:
+        result = "tie"
+        payout = amount  # return original bet on tie
+    elif beats[player] == computer:
+        result = "win"
+        payout = amount * 2
+    else:
+        result = "lose"
+        payout = 0
+
+    return jsonify({
+        "player": player,
+        "computer": computer,
+        "amount": amount,
+        "result": result,
+        "payout": payout
+    }), 200
+
 
 
 @app.route("/bet_slots")
@@ -1522,6 +1589,9 @@ def bet_slots():
 
     return jsonify({"result": result, "payout": payout})
 
+@app.route("/house/<name>")
+def house_always_wins(name):
+    return f"Sorry, {name}. The house always wins!"
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
