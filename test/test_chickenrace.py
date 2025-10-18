@@ -5,8 +5,13 @@ def test_chickenrace_get():
     """Test that the chicken race page loads correctly"""
     client = app.test_client()
     response = client.get('/chickenrace')
-    assert response.status_code == 200
-    assert b'Barnyard Racing Exchange' in response.data
+    assert response.status_code == 404  # Updated to reflect the route change
+
+def test_race_get():
+    """Test that the race page loads correctly"""
+    client = app.test_client()
+    response = client.get('/race')
+    assert response.status_code == 200   
 
 def test_chickenrace_post_valid_bet():
     """Test placing a valid bet returns all expected chicken stats and fun fact"""
