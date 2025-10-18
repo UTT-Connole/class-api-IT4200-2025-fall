@@ -64,4 +64,7 @@ class TestGenerateCard(unittest.TestCase):
             else:
                 self.assertFalse(cell["marked"],
                                 f"Cell with value {cell['value']} should still be False")
-
+    
+    def test_bingo_generate_doesnt_exist(self):
+        response = self.client.get("/bingo/generate")
+        self.assertEqual(response.status_code, 404)
