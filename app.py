@@ -65,7 +65,11 @@ def create_app():
             message = "One pair!"
         else:
             message = "No special combination."
-        return jsonify({"dice": result, "message": message})
+        return jsonify({
+            "dice": result, 
+            "message": message,
+            "sum": sum(result)
+            })
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
