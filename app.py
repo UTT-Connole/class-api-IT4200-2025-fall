@@ -845,6 +845,24 @@ def get_bingo_index(x,y):
 #   5 is the width. 
     return (y * 5) + x
 
+@app.route("/bingo/check", methods=["POST"])
+def check_bingo():
+    data = request.get_json()
+    card = data.get("card")
+
+    if not card or len(card) != 25:
+        return jsonify({"error": "Invalid card"}), 400
+
+    for i in range(5):
+        
+
+    # Check diagonals
+    if is_marked([0, 6, 12, 18, 24]) or is_marked([4, 8, 12, 16, 20]):
+        return jsonify({"bingo": True})
+
+    return jsonify({"bingo": False})
+
+
 @app.route("/randomRestaurant")
 def choose():
     restaurant = random.choice(restaurants)
