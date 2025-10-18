@@ -698,16 +698,6 @@ def kasen():
 def home1():
     return "Hello, Clint!"
 
-
-@app.route("/gill")
-def home2():
-    user_input = "We seek the Holy Grail"
-    if user_input == "We seek the Holy Grail":
-        return "You may pass"
-    else:
-        return "You are doomed"
-
-
 # Start of '/hockey' endpoint code
 
 # List of fake hockey game results
