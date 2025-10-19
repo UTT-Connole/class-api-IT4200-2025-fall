@@ -624,7 +624,7 @@ def create_app():
         return jsonify({"success": True, "song": song})
     
     @app.get("/randomRestaurant")
-    def choose():
+    def choose_resturant():
         restaurants = [
             "Red Fort Cuisine Of India",
             "Painted Pony Restaurant",
@@ -988,7 +988,7 @@ def check_bingo():
             if card[j]['marked'] == False:
                 row_bingo = False
         if row_bingo == True:
-            return jsonify({"bingo": True})
+            return jsonify({"bingo": True}), 200
         r += 5
         
     #check columns
@@ -1000,7 +1000,7 @@ def check_bingo():
             if card[j]['marked'] == False:
                 column_bingo = False
         if column_bingo == True:
-            return jsonify({"bingo": True})
+            return jsonify({"bingo": True}), 200
         c += 1
         
     #check diagonals
@@ -1013,15 +1013,15 @@ def check_bingo():
         if card[i]['marked'] == False:
             down_bingo = False
     if down_bingo == True:
-        return jsonify({"bingo": True})
+        return jsonify({"bingo": True}), 200
     
     for i in up_diagonal:
         if card[i]['marked'] == False:
             up_bingo = False
     if up_bingo == True:
-        return jsonify({"bingo": True})
+        return jsonify({"bingo": True}), 200
 
-    return jsonify({"bingo": False})
+    return jsonify({"bingo": False}), 200
 
 @app.route("/randomRestaurant")
 def choose():
