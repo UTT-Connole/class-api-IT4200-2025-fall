@@ -623,6 +623,19 @@ def create_app():
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
     
+    @app.get("/randomRestaurant")
+    def choose():
+        restaurants = [
+            "Red Fort Cuisine Of India",
+            "Painted Pony Restaurant",
+            "Sakura Japanese Steakhouse",
+            "Rusty Crab Daddy",
+            "Mixed Greens",
+            "Cliffside Restaurant",
+            "Aubergine Kitchen"
+        ]
+        return random.choice(restaurants)
+    
 
     return app  # <== ALSO DON'T DELETE
 
@@ -957,11 +970,6 @@ def generatePassword(Length=None, Complexity="simple"):
 def get_bingo_index(x,y):
 #   5 is the width. 
     return (y * 5) + x
-
-@app.route("/randomRestaurant")
-def choose():
-    restaurant = random.choice(restaurants)
-    return jsonify({"restaurant": restaurant})
 
 
 # This endpoint will return client data
