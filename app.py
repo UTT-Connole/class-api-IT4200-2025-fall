@@ -82,9 +82,7 @@ def create_app():
 
     @app.route('/yatzy')
     def yatzy():
-        result = []
-        for i in range(5):
-            result.append(random.randint(1, 6))
+        result = [random.randint(1, 6) for _ in range(5)]
         if len(set(result)) == 1:
             message = "Yatzy! All five dice match."
         elif len(set(result)) == 2:
@@ -95,12 +93,15 @@ def create_app():
             message = "One pair!"
         else:
             message = "No special combination."
-        return jsonify({
-            "dice": result, 
-            "message": message,
-            "sum": sum(result)
-            })
 
+        return jsonify({
+            "stats": {
+                "dice_rolls": result,
+                "total": sum(result),
+            },
+            "summary": message
+        })
+    
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
