@@ -1,22 +1,13 @@
-from app import app
-import pytest
-
-
-def test_race_get():
-    """Test that the race page loads correctly"""
-    client = app.test_client()
+def test_race_get(client):
     response = client.get('/race')
     assert response.status_code == 200   
 
-def test_race_post_valid_bet():
-    """Test placing a valid bet returns all expected chicken stats and fun fact"""
-    client = app.test_client()
+def test_race_post_valid_bet(client):
     data = {
         'chicken': "Hen Solo",
         'bet': '10'
     }
     response = client.post('/race', data=data)
-    assert response.status_code == 200
     json_data = response.get_json()
     assert 'winner' in json_data
     assert 'message' in json_data
@@ -26,9 +17,7 @@ def test_race_post_valid_bet():
     assert isinstance(json_data['fun_fact'], str)
     assert isinstance(json_data['odds'], str)
 
-def test_race_post_invalid_bet():
-    """Test placing an invalid bet amount"""
-    client = app.test_client()
+def test_race_post_invalid_bet(client):
     data = {
         'chicken': "Colonel Sanders Revenge",     # The HTML handles the bet being larger than 0 so this 
         'bet': '0'                                 # test just ensures server handles it gracefully
@@ -36,19 +25,7 @@ def test_race_post_invalid_bet():
     response = client.post('/race', data=data)
     assert response.status_code == 200
 
-
-
-
-
-
-
-
-
-
-
-def test_race_odds():
-    """Test that odds are correctly set"""
-    client = app.test_client()
+def test_race_odds(client):
     response = client.get('/race')
     assert b'5/10' in response.data 
     assert b'6/10' in response.data
@@ -56,9 +33,7 @@ def test_race_odds():
     assert b'7/10' in response.data
     assert b'3/10' in response.data
 
-def test_race_get_chicken_stats_in_dropdown():
-    """Test that chicken stats appear in the dropdown on GET"""
-    client = app.test_client()
+def test_race_get_chicken_stats_in_dropdown(client):
     response = client.get('/race')
     assert b'Hen Solo' in response.data
     assert b'Odds:' in response.data
@@ -67,9 +42,7 @@ def test_race_get_chicken_stats_in_dropdown():
     assert b'Luck:' in response.data
 
 
-def test_race_form_elements():
-    """Check that the form elements exist on the page"""
-    client = app.test_client()
+def test_race_form_elements(client):
     response = client.get("/race")
     html = response.data.decode("utf-8")
     assert '<form' in html
