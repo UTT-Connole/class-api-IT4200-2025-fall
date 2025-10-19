@@ -181,6 +181,40 @@ def create_app():
                     "Elon Musk not included",
                 ],
             },
+            {
+                "id": 3,
+                "address": "Hellas Planitia Crater Lake Resort",
+                "price": 1750000,
+                "oxygen_level": "0%",
+                "temperature": "-100°C to -20°C",
+                "amenities": [
+                    "Ancient impact crater charm",
+                    "Potential ice deposits",
+                    "Sunrise over 7km deep basin",
+                ],
+                "warnings": [
+                    "Water not actually liquid",
+                    "Meteorite insurance recommended",
+                    "Zero Uber Eats coverage",
+                ],
+            },
+            {
+                "id": 4,
+                "address": "Gale Crater - Curiosity Rover's Neighborhood",
+                "price": 1200000,
+                "oxygen_level": "0%",
+                "temperature": "-90°C to 0°C",
+                "amenities": [
+                    "Celebrity robot neighbor",
+                    "Ancient lakebed property",
+                    "Layered rock formations",
+                ],
+                "warnings": [
+                    "Rover may photobomb your views",
+                    "No atmosphere means no barbecues",
+                    "NASA may knock on your door",
+                ],
+            },
         ]
 
         return jsonify(
