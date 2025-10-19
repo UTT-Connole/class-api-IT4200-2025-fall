@@ -624,7 +624,7 @@ def create_app():
         return jsonify({"success": True, "song": song})
     
     @app.get("/randomRestaurant")
-    def choose_resturant():
+    def choose():
         restaurants = [
             "Red Fort Cuisine Of India",
             "Painted Pony Restaurant",
@@ -1022,12 +1022,6 @@ def check_bingo():
         return jsonify({"bingo": True}), 200
 
     return jsonify({"bingo": False}), 200
-
-@app.route("/randomRestaurant")
-def choose():
-    restaurant = random.choice(restaurants)
-    return jsonify({"restaurant": restaurant})
-
 
 # This endpoint will return client data
 @app.route("/client")
