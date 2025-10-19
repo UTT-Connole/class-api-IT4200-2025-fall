@@ -101,8 +101,7 @@ def create_app():
             },
             "summary": message
         })
-
-
+    
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
