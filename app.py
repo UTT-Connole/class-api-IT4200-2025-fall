@@ -637,6 +637,13 @@ def create_app():
         ]
         return random.choice(restaurants)
     
+    @app.route("/add_chips")
+    def add_chips():
+        user_chips = []
+        chips_values = {"Gold": 100, "Silver": 50, "Bronze": 25}
+        for chip, value in chips_values.items():
+            user_chips.append({"type": chip, "value": value})
+        return jsonify(user_chips)
 
     return app  # <== ALSO DON'T DELETE
 
@@ -1525,16 +1532,6 @@ def cashout(game_id):
 # Register the blueprint with your existing app
 app.register_blueprint(mines_bp)
 # =================== END MINES GAME (Blueprint) ===================
-
-
-@app.route("/add_chips")
-def add_chips():
-    user_chips = []
-    chips_values = {"Gold": 100, "Silver": 50, "Bronze": 25}
-    for chip, value in chips_values.items():
-        user_chips.append({"type": chip, "value": value})
-    return jsonify(user_chips)
-
 
 @app.get("/plants/match")
 def plants_match():
