@@ -49,7 +49,37 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
-    
+#start of dice bets
+    @app.route("/api/dice/bet", methods=["POST"])
+    def dice_bet():
+        """User bets on which side of a dice will land (1-6)."""
+        if not request.is_json:
+            return jsonify({"error": "Request must be in JSON format"}), 400
+
+        data = request.get_json()
+        try:
+            bet_choice = int(data.get("choice"))
+            bet_amount = float(data.get("bet"))
+        except (TypeError, ValueError):
+            return jsonify({"error": "Invalid input types"}), 400
+
+        # Validate range and bet
+        if bet_choice not in range(1, 7):
+            return jsonify({"error": "Choice must be between 1 and 6"}), 400
+        if bet_amount <= 0:
+            return jsonify({"error": "Bet must be a positive number"}), 400
+
+        roll = random.randint(1, 6)
+        win = (roll == bet_choice)
+        winnings = bet_amount * 2 if win else 0
+
+        return jsonify({
+            "rolled": roll,
+            "choice": bet_choice,
+            "result": "win" if win else "lose",
+            "winnings": winnings
+        })
+
     @app.route('/yatzy')
     def yatzy():
         result = []
@@ -179,6 +209,40 @@ def create_app():
                     "Radiation exposure",
                     "No neighbors for 35 million miles",
                     "Elon Musk not included",
+                ],
+            },
+            {
+                "id": 3,
+                "address": "Hellas Planitia Crater Lake Resort",
+                "price": 1750000,
+                "oxygen_level": "0%",
+                "temperature": "-100°C to -20°C",
+                "amenities": [
+                    "Ancient impact crater charm",
+                    "Potential ice deposits",
+                    "Sunrise over 7km deep basin",
+                ],
+                "warnings": [
+                    "Water not actually liquid",
+                    "Meteorite insurance recommended",
+                    "Zero Uber Eats coverage",
+                ],
+            },
+            {
+                "id": 4,
+                "address": "Gale Crater - Curiosity Rover's Neighborhood",
+                "price": 1200000,
+                "oxygen_level": "0%",
+                "temperature": "-90°C to 0°C",
+                "amenities": [
+                    "Celebrity robot neighbor",
+                    "Ancient lakebed property",
+                    "Layered rock formations",
+                ],
+                "warnings": [
+                    "Rover may photobomb your views",
+                    "No atmosphere means no barbecues",
+                    "NASA may knock on your door",
                 ],
             },
         ]
@@ -457,7 +521,7 @@ def create_app():
         return random.choice(answers)
         
 
-    @app.route("/bingo/generate")
+    @app.route("/bingo")
     def generate_bingo_card():
     #   generates 5x5 card as 1 list, each column adding 15 to the range
         card = (
@@ -470,11 +534,7 @@ def create_app():
 
         card[get_bingo_index(2,2)]["value"] = "FREE"
         card[get_bingo_index(2,2)]["marked"] = True
-        return card
-
-    @app.route("/bingo")
-    def create_card():
-        return jsonify({"card": generate_bingo_card()}), 200
+        return jsonify({"card": card}), 200
 
     @app.route("/__endpoints", methods=["GET"])
     def list_endpoints():
@@ -562,6 +622,19 @@ def create_app():
 
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
+    
+    @app.get("/randomRestaurant")
+    def choose():
+        restaurants = [
+            "Red Fort Cuisine Of India",
+            "Painted Pony Restaurant",
+            "Sakura Japanese Steakhouse",
+            "Rusty Crab Daddy",
+            "Mixed Greens",
+            "Cliffside Restaurant",
+            "Aubergine Kitchen"
+        ]
+        return random.choice(restaurants)
     
 
     return app  # <== ALSO DON'T DELETE
@@ -866,6 +939,7 @@ def roll_dice(sides):
     )
 
 
+
 @app.route("/generatePassword")
 def generatePassword(Length=None, Complexity="simple"):
     # Keeping signature but providing safe defaults to avoid TypeError
@@ -1106,12 +1180,6 @@ def hellhole():
 
 
 # hellhole end
-
-
-@app.route("/Tucson")
-def Tucson():
-    message = {"Location": "Tucson, Arizona", "Description": "We don't take about it"}
-    return jsonify(message)
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route("/coin")

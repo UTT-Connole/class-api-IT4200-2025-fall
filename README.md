@@ -67,10 +67,6 @@ Length: A number for how many characters long the password will be.
 Complexity: Basic, Simple, or Complex are the only valid options. Basic is only lowercase letters. Simple is lowercase letters and numbers. Complex is Lower and Uppercase letters, numbers, and symbols.
 
 ## /bingo endpoint
-Turns the /bingo/generate endpoint and turns it into a flask app.
-Is 2 different endpoints for testing, but will likely be combined in the future.
-
-## /bingo/generate endpoint
 This endpoint generates a 5x5 bingo card that is a list of dictionaries with random bingo numbers. 
 Each dictionary is a cell in the bingo card, storing the value and if the cell is marked.
 Every 5 cells increases the range of possible values by 15.
