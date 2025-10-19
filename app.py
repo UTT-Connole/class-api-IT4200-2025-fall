@@ -971,6 +971,57 @@ def get_bingo_index(x,y):
 #   5 is the width. 
     return (y * 5) + x
 
+@app.route("/bingo/check", methods=["POST"])
+def check_bingo():
+    data = request.get_json()
+    card = data.get("card")
+
+    if not card or len(card) != 25:
+        return jsonify({"error": "Invalid card"}), 400
+
+    #check rows
+    r = 0
+    for i in range(5):
+        rows = [r,r+1,r+2,r+3,r+4]
+        row_bingo = True
+        for j in rows:
+            if card[j]['marked'] == False:
+                row_bingo = False
+        if row_bingo == True:
+            return jsonify({"bingo": True}), 200
+        r += 5
+        
+    #check columns
+    c = 0
+    for i in range(5):
+        columns = [c,c+5,c+10,c+15,c+20]
+        column_bingo = True
+        for j in columns:
+            if card[j]['marked'] == False:
+                column_bingo = False
+        if column_bingo == True:
+            return jsonify({"bingo": True}), 200
+        c += 1
+        
+    #check diagonals
+    down_diagonal = [0,6,12,18,24]
+    down_bingo = True
+    up_diagonal = [4,8,12,16,20]
+    up_bingo = True
+    
+    for i in down_diagonal:
+        if card[i]['marked'] == False:
+            down_bingo = False
+    if down_bingo == True:
+        return jsonify({"bingo": True}), 200
+    
+    for i in up_diagonal:
+        if card[i]['marked'] == False:
+            up_bingo = False
+    if up_bingo == True:
+        return jsonify({"bingo": True}), 200
+
+    return jsonify({"bingo": False}), 200
 
 # This endpoint will return client data
 @app.route("/client")
