@@ -905,15 +905,49 @@ def check_bingo():
     if not card or len(card) != 25:
         return jsonify({"error": "Invalid card"}), 400
 
+    #check rows
+    r = 0
     for i in range(5):
+        rows = [r,r+1,r+2,r+3,r+4]
+        row_bingo = True
+        for j in rows:
+            if card[j]['marked'] == False:
+                row_bingo = False
+        if row_bingo == True:
+            return jsonify({"bingo": True})
+        r += 5
         
-
-    # Check diagonals
-    if is_marked([0, 6, 12, 18, 24]) or is_marked([4, 8, 12, 16, 20]):
+    #check columns
+    c = 0
+    for i in range(5):
+        columns = [c,c+5,c+10,c+15,c+20]
+        column_bingo = True
+        for j in columns:
+            if card[j]['marked'] == False:
+                column_bingo = False
+        if column_bingo == True:
+            return jsonify({"bingo": True})
+        c += 1
+        
+    #check diagonals
+    down_diagonal = [0,6,12,18,24]
+    down_bingo = True
+    up_diagonal = [4,8,12,16,20]
+    up_bingo = True
+    
+    for i in down_diagonal:
+        if card[i]['marked'] == False:
+            down_bingo = False
+    if down_bingo == True:
+        return jsonify({"bingo": True})
+    
+    for i in up_diagonal:
+        if card[i]['marked'] == False:
+            up_bingo = False
+    if up_bingo == True:
         return jsonify({"bingo": True})
 
     return jsonify({"bingo": False})
-
 
 @app.route("/randomRestaurant")
 def choose():
