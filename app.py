@@ -1085,12 +1085,6 @@ def hellhole():
 
 # hellhole end
 
-
-@app.route("/Tucson")
-def Tucson():
-    message = {"Location": "Tucson, Arizona", "Description": "We don't take about it"}
-    return jsonify(message)
-
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 @app.route("/coin")
 def coin_flip():
