@@ -634,17 +634,18 @@ def create_app():
     def choose():
         restaurants = [
             "Red Fort Cuisine Of India",
-            "Painted Pony Restaurant",
-            "Sakura Japanese Steakhouse",
-            "Rusty Crab Daddy",
-            "Mixed Greens",
-            "Cliffside Restaurant",
-            "Aubergine Kitchen"
-            "Panda Express"
-            "Del Taco"
+            "Painted Pony Restaurant", 
+            "Sakura Japanese Steakhouse", 
+            "Rusty Crab Daddy", 
+            "Mixed Greens", 
+            "Cliffside Restaurant", 
+            "Aubergine Kitchen",
+            "Panda Express",
+            "Del Taco",
             "Chic-fil-a"
         ]
-        return random.choice(restaurants)
+        print(restaurants)
+        return jsonify(random.choice(restaurants))
     
     @app.route("/add_chips")
     def add_chips():
