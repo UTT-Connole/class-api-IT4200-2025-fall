@@ -20,6 +20,7 @@ def test_yatzy_yatzy(monkeypatch, client):
     data = resp.get_json()
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "Yatzy! All five dice match."
+    assert data["rarity"] == "0.077%"
 
 def test_yatzy_full_house(monkeypatch, client):
     # Three of one value and two of another -> Full House
@@ -30,6 +31,7 @@ def test_yatzy_full_house(monkeypatch, client):
     data = resp.get_json()
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "Full House! Three of a kind and a pair."
+    assert data["rarity"] == "3.858%"
 
 def test_yatzy_three_of_a_kind(monkeypatch, client):
     # Three same, two other different -> len(set) == 3
@@ -40,6 +42,7 @@ def test_yatzy_three_of_a_kind(monkeypatch, client):
     data = resp.get_json()
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "Three of a kind!"
+    assert data["rarity"] == "15.432%"
 
 def test_yatzy_one_pair(monkeypatch, client):
     # One pair -> len(set) == 4
@@ -50,6 +53,7 @@ def test_yatzy_one_pair(monkeypatch, client):
     data = resp.get_json()
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "One pair!"
+    assert data["rarity"] == "46.296%"
 
 def test_yatzy_no_special(monkeypatch, client):
     # All different -> len(set) == 5
@@ -60,10 +64,10 @@ def test_yatzy_no_special(monkeypatch, client):
     data = resp.get_json()
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "No special combination."
-
+    assert data["rarity"] == "9.259%"
 
 def test_yatzy_max_roll(client):
     resp = client.get('/yatzy')
     data = resp.get_json()
     assert data["stats"]["max_roll"]
-
+    assert 1 <= data["stats"]["max_roll"] <= 6
