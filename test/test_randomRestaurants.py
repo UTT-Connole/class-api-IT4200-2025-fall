@@ -9,6 +9,9 @@ possible_responses = [
     "Mixed Greens",
     "Cliffside Restaurant",
     "Aubergine Kitchen"
+    "Panda Express"
+    "Del Taco"
+    "Chic-fil-a"
 ]
 
 def test_randomRestaurant_returns_200(client):
