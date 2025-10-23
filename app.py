@@ -98,6 +98,7 @@ def create_app():
             "stats": {
                 "dice_rolls": result,
                 "total": sum(result),
+                "max_roll": max(result),
             },
             "summary": message
         })
