@@ -8,7 +8,7 @@ def _make_randint(seq):
     return _randint
 
 def test_yatzee_status(client):
-    resp = client.get('/yatzy')
+    resp = client.get('/yatzee')
     assert resp.status_code == 200
 
 def test_yatzee_yatzee(monkeypatch, client):
