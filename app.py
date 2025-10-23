@@ -80,11 +80,11 @@ def create_app():
             "winnings": winnings
         })
 
-    @app.route('/yatzy')
-    def yatzy():
+    @app.route('/yatzee')
+    def yatzee():
         result = [random.randint(1, 6) for _ in range(5)]
         if len(set(result)) == 1:
-            message = "Yatzy! All five dice match."
+            message = "Yatzee! All five dice match."
         elif len(set(result)) == 2:
             message = "Full House! Three of a kind and a pair."
         elif len(set(result)) == 3:
