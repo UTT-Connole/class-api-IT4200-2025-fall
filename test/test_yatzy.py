@@ -61,3 +61,9 @@ def test_yatzy_no_special(monkeypatch, client):
     assert data["stats"]["dice_rolls"] == seq
     assert data["summary"] == "No special combination."
 
+
+def test_yatzy_max_roll(client):
+    resp = client.get('/yatzy')
+    data = resp.get_json()
+    assert data["stats"]["max_roll"]
+
