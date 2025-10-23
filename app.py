@@ -1626,6 +1626,12 @@ def bet_slots():
 def house_always_wins(name):
     return f"Sorry, {name}. The house always wins!"
 
+@app.get("/color")
+def color():
+    """Return either 'black' or 'red' at random."""
+    choice = random.choice(["black", "red"])
+    return jsonify({"color": choice}), 200
+
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == "__main__":
