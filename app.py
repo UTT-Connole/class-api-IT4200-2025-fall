@@ -99,6 +99,7 @@ def create_app():
                 "dice_rolls": result,
                 "total": sum(result),
                 "max_roll": max(result),
+                "yahtzee_score": 50 if len(set(result)) == 1 else 0
             },
             "summary": message
         })
