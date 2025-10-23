@@ -649,6 +649,36 @@ def create_app():
         for chip, value in chips_values.items():
             user_chips.append({"type": chip, "value": value})
         return jsonify(user_chips)
+    
+    @app.route("/roll/<sides>", methods=["GET"])
+    def roll_dice(sides):
+        try:
+            sides = int(sides)
+        except ValueError:
+            return jsonify({"error": "Silly goose, the number of sides must be a number!"}), 400
+        
+        if sides < 2:
+            return jsonify({"error": "Dice should have more than one side goober."}), 400
+
+        result = random.randint(1, sides)
+
+        if result == 1:
+            message = "Critical Fail!"
+        elif result == sides:
+            message = "Critical Success!"
+        elif result % 2 == 0:
+            message = "Even roll."
+        else:
+            message = "Odd roll."
+
+        return jsonify(
+            {
+                "sides": sides,
+                "result": result,
+                "message": message,
+                "is_even": result % 2 == 0,
+            }
+        )
 
     return app  # <== ALSO DON'T DELETE
 
@@ -919,39 +949,6 @@ def place_plant_bet():
 
 
 # ===========end of plant betting ======
-
-
-@app.route("/roll/<sides>", methods=["GET"])
-def roll_dice(sides):
-    try:
-        sides = int(sides)
-    except ValueError:
-        return jsonify({"error": "Silly goose, the number of sides must be a number!"}), 400
-    
-    if sides < 2:
-        return jsonify({"error": "Dice should have more than one side goober."}), 400
-
-    result = random.randint(1, sides)
-
-    if result == 1:
-        message = "Critical Fail!"
-    elif result == sides:
-        message = "Critical Success!"
-    elif result % 2 == 0:
-        message = "Even roll."
-    else:
-        message = "Odd roll."
-
-    return jsonify(
-        {
-            "sides": sides,
-            "result": result,
-            "message": message,
-            "is_even": result % 2 == 0,
-        }
-    )
-
-
 
 @app.route("/generatePassword")
 def generatePassword(Length=None, Complexity="simple"):
