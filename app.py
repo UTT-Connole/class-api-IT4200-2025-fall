@@ -639,6 +639,9 @@ def create_app():
             "Mixed Greens",
             "Cliffside Restaurant",
             "Aubergine Kitchen"
+            "Panda Express"
+            "Del Taco"
+            "Chic-fil-a"
         ]
         return random.choice(restaurants)
     
