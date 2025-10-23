@@ -67,3 +67,21 @@ def test_yatzee_max_roll(client):
     data = resp.get_json()
     assert data["stats"]["max_roll"]
 
+def test_yatzee_score(monkeypatch, client):
+    seq = [6, 6, 6, 6, 6]
+    monkeypatch.setattr(random, "randint", _make_randint(seq))
+    resp = client.get('/yatzee')
+    assert resp.status_code == 200
+    data = resp.get_json()
+    assert data["stats"]["yahtzee_score"] == 50
+    
+    seq2 = [1, 2, 3, 4, 5]
+    monkeypatch.setattr(random, "randint", _make_randint(seq2))
+    resp = client.get('/yatzee')
+    assert resp.status_code == 200
+    data = resp.get_json()
+    assert data["stats"]["yahtzee_score"] == 0
+
+def test_yatzy_endpoint_not_found(client):
+    resp = client.get('/yatzy')
+    assert resp.status_code == 404
