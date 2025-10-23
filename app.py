@@ -1503,17 +1503,6 @@ def get_payout(bet_type, bet_value, result_number, result_color):
 
 
 
-
-@app.route("/wizard")
-def generate_wizard_name():
-    prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
-    roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
-    suffixes = ["ion", "ar", "ius", "en", "or", "eth", "azar", "em", "yx"]
-    titles = ["Archmage", "Sorcerer", "Seer", "Mystic", "Enchanter", "Spellbinder"]
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
-
-
 @mines_bp.post("/api/games/<game_id>/cashout")
 def cashout(game_id):
     try:
