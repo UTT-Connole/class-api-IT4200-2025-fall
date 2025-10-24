@@ -21,6 +21,7 @@ from bank import bank_bp
 import bank
 import json
 import time
+from flask_cors import CORS
 
 
 
@@ -1314,6 +1315,9 @@ def determine_winner(player_total, dealer_total):
 
 mines_bp = Blueprint("mines", __name__, url_prefix="/mines")
 
+# Enable CORS for the mines blueprint so browsers can call /mines and /mines/api/*
+CORS(mines_bp, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 RNG = SystemRandom()
 GAMES: Dict[str, "Game"] = {}
 GAME_TTL = timedelta(hours=6)
@@ -1416,15 +1420,15 @@ def mines_home():
     Serve UI. Place 'mines.html' next to app.py (same folder).
     If you prefer templates/, change to: return render_template('mines.html')
     """
-    return send_from_directory(BASE_DIR, "mines.html")
+    return send_from_directory(BASE_DIR, "templates/mines.html")
 
 
 # Optional: serve a mines.js if your HTML references it with <script src="/mines/mines.js">
 @mines_bp.get("/mines.js")
 def mines_js():
-    fp = os.path.join(BASE_DIR, "mines.js")
+    fp = os.path.join(BASE_DIR, "js/mines.js")
     if os.path.exists(fp):
-        return send_from_directory(BASE_DIR, "mines.js")
+        return send_from_directory(BASE_DIR, "js/mines.js")
     return jsonify({"error": "mines.js not found"}), 404
 
 
