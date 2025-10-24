@@ -80,31 +80,61 @@ def create_app():
             "result": "win" if win else "lose",
             "winnings": winnings
         })
-
-    @app.route('/yatzee')
-    def yatzee():
+    @app.route('/yatzy')
+    def yatzy():
         result = [random.randint(1, 6) for _ in range(5)]
-        if len(set(result)) == 1:
-            message = "Yatzee! All five dice match."
-        elif len(set(result)) == 2:
-            message = "Full House! Three of a kind and a pair."
-        elif len(set(result)) == 3:
-            message = "Three of a kind!"
-        elif len(set(result)) == 4:
+        unique_count = len(set(result))
+
+        # probabilities for each combination (single roll, 5 dice)
+        probabilities = {
+            "yahtzee": 0.0007716,      # 0.07716%
+            "four_kind": 0.01929,      # 1.929%
+            "full_house": 0.03858,     # 3.858%
+            "three_kind": 0.15432,     # 15.432%
+            "two_pairs": 0.23148,      # 23.148%
+            "one_pair": 0.46296,       # 46.296%
+            "all_different": 0.09259   # 9.259%
+        }
+        
+        message = "No special combination."
+        rarity = round(probabilities["all_different"] * 100, 3)  # %
+        
+        if unique_count == 1:
+            message = "Yatzy! All five dice match."
+            rarity = round(probabilities["yahtzee"] * 100, 3)
+        elif unique_count == 2:
+            counts = [result.count(x) for x in set(result)]
+            if 4 in counts:
+                message = "Four of a kind!"
+                rarity = round(probabilities["four_kind"] * 100, 3)
+            else:
+                message = "Full House! Three of a kind and a pair."
+                rarity = round(probabilities["full_house"] * 100, 3)
+        elif unique_count == 3:
+            counts = [result.count(x) for x in set(result)]
+            if 3 in counts:
+                message = "Three of a kind!"
+                rarity = round(probabilities["three_kind"] * 100, 3)
+            else:
+                message = "Two pairs!"
+                rarity = round(probabilities["two_pairs"] * 100, 3)
+        elif unique_count == 4:
             message = "One pair!"
+            rarity = round(probabilities["one_pair"] * 100, 3)
         else:
             message = "No special combination."
+            rarity = round(probabilities["all_different"] * 100, 3)
 
         return jsonify({
             "stats": {
                 "dice_rolls": result,
                 "total": sum(result),
                 "max_roll": max(result),
-                "yahtzee_score": 50 if len(set(result)) == 1 else 0
             },
-            "summary": message
+            "summary": message,
+            "rarity": f"{rarity}%"
         })
-    
+
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
@@ -668,7 +698,7 @@ def create_app():
                 "is_even": result % 2 == 0,
             }
         )
-
+    
     return app  # <== ALSO DON'T DELETE
 
 
