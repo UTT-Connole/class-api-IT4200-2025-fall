@@ -21,6 +21,7 @@ from bank import bank_bp
 import bank
 import json
 import time
+from flask_cors import CORS
 
 
 
@@ -79,6 +80,7 @@ def create_app():
             "result": "win" if win else "lose",
             "winnings": winnings
         })
+<<<<<<< HEAD
     @app.route('/yatzy')
     def yatzy():
         result = [random.randint(1, 6) for _ in range(5)]
@@ -119,6 +121,19 @@ def create_app():
                 message = "Two pairs!"
                 rarity = round(probabilities["two_pairs"] * 100, 3)
         elif unique_count == 4:
+=======
+
+    @app.route('/yatzee')
+    def yatzee():
+        result = [random.randint(1, 6) for _ in range(5)]
+        if len(set(result)) == 1:
+            message = "Yatzee! All five dice match."
+        elif len(set(result)) == 2:
+            message = "Full House! Three of a kind and a pair."
+        elif len(set(result)) == 3:
+            message = "Three of a kind!"
+        elif len(set(result)) == 4:
+>>>>>>> origin/main
             message = "One pair!"
             rarity = round(probabilities["one_pair"] * 100, 3)
         else:
@@ -130,6 +145,7 @@ def create_app():
                 "dice_rolls": result,
                 "total": sum(result),
                 "max_roll": max(result),
+                "yahtzee_score": 50 if len(set(result)) == 1 else 0
             },
             "summary": message,
             "rarity": f"{rarity}%"   # keep same key, but now it's a percentage string
@@ -666,17 +682,18 @@ def create_app():
     def choose():
         restaurants = [
             "Red Fort Cuisine Of India",
-            "Painted Pony Restaurant",
-            "Sakura Japanese Steakhouse",
-            "Rusty Crab Daddy",
-            "Mixed Greens",
-            "Cliffside Restaurant",
-            "Aubergine Kitchen"
-            "Panda Express"
-            "Del Taco"
+            "Painted Pony Restaurant", 
+            "Sakura Japanese Steakhouse", 
+            "Rusty Crab Daddy", 
+            "Mixed Greens", 
+            "Cliffside Restaurant", 
+            "Aubergine Kitchen",
+            "Panda Express",
+            "Del Taco",
             "Chic-fil-a"
         ]
-        return random.choice(restaurants)
+        print(restaurants)
+        return jsonify(random.choice(restaurants))
     
     @app.route("/add_chips")
     def add_chips():
@@ -1345,6 +1362,9 @@ def determine_winner(player_total, dealer_total):
 
 mines_bp = Blueprint("mines", __name__, url_prefix="/mines")
 
+# Enable CORS for the mines blueprint so browsers can call /mines and /mines/api/*
+CORS(mines_bp, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 RNG = SystemRandom()
 GAMES: Dict[str, "Game"] = {}
 GAME_TTL = timedelta(hours=6)
@@ -1447,15 +1467,15 @@ def mines_home():
     Serve UI. Place 'mines.html' next to app.py (same folder).
     If you prefer templates/, change to: return render_template('mines.html')
     """
-    return send_from_directory(BASE_DIR, "mines.html")
+    return send_from_directory(BASE_DIR, "templates/mines.html")
 
 
 # Optional: serve a mines.js if your HTML references it with <script src="/mines/mines.js">
 @mines_bp.get("/mines.js")
 def mines_js():
-    fp = os.path.join(BASE_DIR, "mines.js")
+    fp = os.path.join(BASE_DIR, "js/mines.js")
     if os.path.exists(fp):
-        return send_from_directory(BASE_DIR, "mines.js")
+        return send_from_directory(BASE_DIR, "js/mines.js")
     return jsonify({"error": "mines.js not found"}), 404
 
 
@@ -1534,17 +1554,6 @@ def get_payout(bet_type, bet_value, result_number, result_color):
     else:
         return -1
 
-
-
-
-@app.route("/wizard")
-def generate_wizard_name():
-    prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
-    roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
-    suffixes = ["ion", "ar", "ius", "en", "or", "eth", "azar", "em", "yx"]
-    titles = ["Archmage", "Sorcerer", "Seer", "Mystic", "Enchanter", "Spellbinder"]
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
 
 
 @mines_bp.post("/api/games/<game_id>/cashout")
