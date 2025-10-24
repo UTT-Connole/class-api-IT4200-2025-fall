@@ -630,23 +630,6 @@ def create_app():
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
     
-    @app.get("/randomRestaurant")
-    def choose():
-        restaurants = [
-            "Red Fort Cuisine Of India",
-            "Painted Pony Restaurant", 
-            "Sakura Japanese Steakhouse", 
-            "Rusty Crab Daddy", 
-            "Mixed Greens", 
-            "Cliffside Restaurant", 
-            "Aubergine Kitchen",
-            "Panda Express",
-            "Del Taco",
-            "Chic-fil-a"
-        ]
-        print(restaurants)
-        return jsonify(random.choice(restaurants))
-    
     @app.route("/add_chips")
     def add_chips():
         user_chips = []
