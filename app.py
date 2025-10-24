@@ -952,9 +952,11 @@ def roll_dice(sides):
 
 
 
-@app.route("/generatePassword")
-def generatePassword(Length=None, Complexity="simple"):
-    # Keeping signature but providing safe defaults to avoid TypeError
+@app.route("/generatePassword", methods=["GET"])
+def generatePassword():
+    Length = request.args.get("Length", 12)
+    Complexity = request.args.get("Complexity", "simple")
+
     letters = "abcdefghijklmnopqrstuvwxyz"
     numbers = "0123456789"
     symbols = "~!@#$%^&*()-_=+[{]}|;:,<.>/?"
