@@ -21,6 +21,7 @@ from bank import bank_bp
 import bank
 import json
 import time
+from flask_cors import CORS
 
 
 
@@ -79,29 +80,61 @@ def create_app():
             "result": "win" if win else "lose",
             "winnings": winnings
         })
-
     @app.route('/yatzy')
     def yatzy():
         result = [random.randint(1, 6) for _ in range(5)]
-        if len(set(result)) == 1:
+        unique_count = len(set(result))
+
+        # probabilities for each combination (single roll, 5 dice)
+        probabilities = {
+            "yahtzee": 0.0007716,      # 0.07716%
+            "four_kind": 0.01929,      # 1.929%
+            "full_house": 0.03858,     # 3.858%
+            "three_kind": 0.15432,     # 15.432%
+            "two_pairs": 0.23148,      # 23.148%
+            "one_pair": 0.46296,       # 46.296%
+            "all_different": 0.09259   # 9.259%
+        }
+        
+        message = "No special combination."
+        rarity = round(probabilities["all_different"] * 100, 3)  # %
+        
+        if unique_count == 1:
             message = "Yatzy! All five dice match."
-        elif len(set(result)) == 2:
-            message = "Full House! Three of a kind and a pair."
-        elif len(set(result)) == 3:
-            message = "Three of a kind!"
-        elif len(set(result)) == 4:
+            rarity = round(probabilities["yahtzee"] * 100, 3)
+        elif unique_count == 2:
+            counts = [result.count(x) for x in set(result)]
+            if 4 in counts:
+                message = "Four of a kind!"
+                rarity = round(probabilities["four_kind"] * 100, 3)
+            else:
+                message = "Full House! Three of a kind and a pair."
+                rarity = round(probabilities["full_house"] * 100, 3)
+        elif unique_count == 3:
+            counts = [result.count(x) for x in set(result)]
+            if 3 in counts:
+                message = "Three of a kind!"
+                rarity = round(probabilities["three_kind"] * 100, 3)
+            else:
+                message = "Two pairs!"
+                rarity = round(probabilities["two_pairs"] * 100, 3)
+        elif unique_count == 4:
             message = "One pair!"
+            rarity = round(probabilities["one_pair"] * 100, 3)
         else:
             message = "No special combination."
+            rarity = round(probabilities["all_different"] * 100, 3)
 
         return jsonify({
             "stats": {
                 "dice_rolls": result,
                 "total": sum(result),
+                "max_roll": max(result),
             },
-            "summary": message
+            "summary": message,
+            "rarity": f"{rarity}%"
         })
-    
+
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
         """Get Chernobyl real estate listings"""
@@ -628,19 +661,6 @@ def create_app():
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
     
-    @app.get("/randomRestaurant")
-    def choose():
-        restaurants = [
-            "Red Fort Cuisine Of India",
-            "Painted Pony Restaurant",
-            "Sakura Japanese Steakhouse",
-            "Rusty Crab Daddy",
-            "Mixed Greens",
-            "Cliffside Restaurant",
-            "Aubergine Kitchen"
-        ]
-        return random.choice(restaurants)
-    
     @app.route("/add_chips")
     def add_chips():
         user_chips = []
@@ -648,7 +668,37 @@ def create_app():
         for chip, value in chips_values.items():
             user_chips.append({"type": chip, "value": value})
         return jsonify(user_chips)
+    
+    @app.route("/roll/<sides>", methods=["GET"])
+    def roll_dice(sides):
+        try:
+            sides = int(sides)
+        except ValueError:
+            return jsonify({"error": "Silly goose, the number of sides must be a number!"}), 400
+        
+        if sides < 2:
+            return jsonify({"error": "Dice should have more than one side goober."}), 400
 
+        result = random.randint(1, sides)
+
+        if result == 1:
+            message = "Critical Fail!"
+        elif result == sides:
+            message = "Critical Success!"
+        elif result % 2 == 0:
+            message = "Even roll."
+        else:
+            message = "Odd roll."
+
+        return jsonify(
+            {
+                "sides": sides,
+                "result": result,
+                "message": message,
+                "is_even": result % 2 == 0,
+            }
+        )
+    
     return app  # <== ALSO DON'T DELETE
 
 
@@ -918,39 +968,6 @@ def place_plant_bet():
 
 
 # ===========end of plant betting ======
-
-
-@app.route("/roll/<sides>", methods=["GET"])
-def roll_dice(sides):
-    try:
-        sides = int(sides)
-    except ValueError:
-        return jsonify({"error": "Silly goose, the number of sides must be a number!"}), 400
-    
-    if sides < 2:
-        return jsonify({"error": "Dice should have more than one side goober."}), 400
-
-    result = random.randint(1, sides)
-
-    if result == 1:
-        message = "Critical Fail!"
-    elif result == sides:
-        message = "Critical Success!"
-    elif result % 2 == 0:
-        message = "Even roll."
-    else:
-        message = "Odd roll."
-
-    return jsonify(
-        {
-            "sides": sides,
-            "result": result,
-            "message": message,
-            "is_even": result % 2 == 0,
-        }
-    )
-
-
 
 @app.route("/generatePassword", methods=["GET"])
 def generatePassword():
@@ -1313,6 +1330,9 @@ def determine_winner(player_total, dealer_total):
 
 mines_bp = Blueprint("mines", __name__, url_prefix="/mines")
 
+# Enable CORS for the mines blueprint so browsers can call /mines and /mines/api/*
+CORS(mines_bp, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 RNG = SystemRandom()
 GAMES: Dict[str, "Game"] = {}
 GAME_TTL = timedelta(hours=6)
@@ -1415,15 +1435,15 @@ def mines_home():
     Serve UI. Place 'mines.html' next to app.py (same folder).
     If you prefer templates/, change to: return render_template('mines.html')
     """
-    return send_from_directory(BASE_DIR, "mines.html")
+    return send_from_directory(BASE_DIR, "templates/mines.html")
 
 
 # Optional: serve a mines.js if your HTML references it with <script src="/mines/mines.js">
 @mines_bp.get("/mines.js")
 def mines_js():
-    fp = os.path.join(BASE_DIR, "mines.js")
+    fp = os.path.join(BASE_DIR, "js/mines.js")
     if os.path.exists(fp):
-        return send_from_directory(BASE_DIR, "mines.js")
+        return send_from_directory(BASE_DIR, "js/mines.js")
     return jsonify({"error": "mines.js not found"}), 404
 
 
@@ -1502,17 +1522,6 @@ def get_payout(bet_type, bet_value, result_number, result_color):
     else:
         return -1
 
-
-
-
-@app.route("/wizard")
-def generate_wizard_name():
-    prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
-    roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
-    suffixes = ["ion", "ar", "ius", "en", "or", "eth", "azar", "em", "yx"]
-    titles = ["Archmage", "Sorcerer", "Seer", "Mystic", "Enchanter", "Spellbinder"]
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
 
 
 @mines_bp.post("/api/games/<game_id>/cashout")
@@ -1637,6 +1646,12 @@ def bet_slots():
 @app.route("/house/<name>")
 def house_always_wins(name):
     return f"Sorry, {name}. The house always wins!"
+
+@app.get("/color")
+def color():
+    """Return either 'black' or 'red' at random."""
+    choice = random.choice(["black", "red"])
+    return jsonify({"color": choice}), 200
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
