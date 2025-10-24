@@ -80,7 +80,6 @@ def create_app():
             "result": "win" if win else "lose",
             "winnings": winnings
         })
-<<<<<<< HEAD
     @app.route('/yatzy')
     def yatzy():
         result = [random.randint(1, 6) for _ in range(5)]
@@ -96,8 +95,7 @@ def create_app():
             "one_pair": 0.46296,       # 46.296%
             "all_different": 0.09259   # 9.259%
         }
-
-        # default values
+        
         message = "No special combination."
         rarity = round(probabilities["all_different"] * 100, 3)  # %
         
@@ -121,19 +119,6 @@ def create_app():
                 message = "Two pairs!"
                 rarity = round(probabilities["two_pairs"] * 100, 3)
         elif unique_count == 4:
-=======
-
-    @app.route('/yatzee')
-    def yatzee():
-        result = [random.randint(1, 6) for _ in range(5)]
-        if len(set(result)) == 1:
-            message = "Yatzee! All five dice match."
-        elif len(set(result)) == 2:
-            message = "Full House! Three of a kind and a pair."
-        elif len(set(result)) == 3:
-            message = "Three of a kind!"
-        elif len(set(result)) == 4:
->>>>>>> origin/main
             message = "One pair!"
             rarity = round(probabilities["one_pair"] * 100, 3)
         else:
@@ -145,12 +130,10 @@ def create_app():
                 "dice_rolls": result,
                 "total": sum(result),
                 "max_roll": max(result),
-                "yahtzee_score": 50 if len(set(result)) == 1 else 0
             },
             "summary": message,
-            "rarity": f"{rarity}%"   # keep same key, but now it's a percentage string
-        }) 
-
+            "rarity": f"{rarity}%"
+        })
 
     @app.route("/api/chernobyl/properties", methods=["GET"])
     def get_chernobyl_properties():
