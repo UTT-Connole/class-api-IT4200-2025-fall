@@ -334,20 +334,21 @@ def create_app():
             "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
         ]
 
-        # Template moved to templates/sports.html
+        # Check if reset is requested
+        if request.method == "GET" and request.args.get("reset") == "true":
+            team1, team2 = random.sample(teams, 2)
+            winner = random.choice([team1, team2])
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
 
         if request.method == "GET":
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
             return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
-
-    # POST: preserve the matchup from hidden fields instead of re-randomizing
+        
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        # If the posted matchup is missing or invalid, fall back to a fresh matchup
-        # so that a plain POST with just a bet still works (e.g., in tests).
         if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
@@ -360,7 +361,6 @@ def create_app():
         else:
             won_bet = bet.lower() == winner.lower()
 
-        # Optional: track net earnings in the bank DB if username and amount are provided.
         bank_message = None
         username = (request.form.get("username") or "").strip()
         amount_raw = (request.form.get("amount") or "").strip()
@@ -373,7 +373,7 @@ def create_app():
             if amount <= 0:
                 bank_message = "Amount must be a positive integer; bank unchanged."
             else:
-                # Ensure the user exists and has sufficient funds for a loss.
+                
                 user = bank.get_user_bank(username)
                 if not won_bet and user.get("balance", 0) < amount:
                     bank_message = "Insufficient funds for this bet; bank unchanged."
