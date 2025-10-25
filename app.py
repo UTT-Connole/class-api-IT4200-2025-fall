@@ -755,7 +755,30 @@ def real_weather():
 
     return jsonify(current_data, daily_data)
 
+@app.get("/system-info")
+def system_info():
+    import platform, socket, shutil, multiprocessing
 
+    # disk usage for root
+    try:
+        du = shutil.disk_usage("/")
+        disk_total_gb = round(du.total / (1024**3), 2)
+        disk_free_gb = round(du.free / (1024**3), 2)
+    except Exception:
+        disk_total_gb = disk_free_gb = None
+
+    info = {
+        "hostname": socket.gethostname(),
+        "os": platform.system(),
+        "os_release": platform.release(),
+        "architecture": platform.machine(),
+        "python_version": platform.python_version(),
+        "cpu_count": multiprocessing.cpu_count(),
+        "disk_total_gb": disk_total_gb,
+        "disk_free_gb": disk_free_gb
+        }
+
+    return jsonify(info), 200
 
 
 @app.route("/bank")
