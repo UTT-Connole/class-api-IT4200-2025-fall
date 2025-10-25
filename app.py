@@ -22,8 +22,6 @@ import bank
 import json
 import time
 from flask_cors import CORS
-import platform, socket, shutil, multiprocessing
-
 
 
 
