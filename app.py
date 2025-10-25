@@ -50,6 +50,31 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+    @app.route("/api/coinflip", methods=["POST"])
+    def coinflip():
+        """Flip a coin and bet on heads or tails."""
+        data = request.get_json()
+        choice = (data.get("choice") or "").lower()
+        bet = float(data.get("bet", 0))
+
+        if choice not in ["heads", "tails"]:
+            return jsonify({"error": "Choice must be 'heads' or 'tails'"}), 400
+        if bet <= 0:
+            return jsonify({"error": "Bet must be greater than zero"}), 400
+
+        result = random.choice(["heads", "tails"])
+        win = result == choice
+        winnings = bet * 2 if win else 0
+
+        return jsonify({
+            "choice": choice,
+            "result": result,
+            "outcome": "win" if win else "lose",
+            "winnings": winnings
+        })
+
+
+
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
@@ -726,7 +751,7 @@ def ping():
 
 @app.route("/pokemon")
 def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"})
+    return jsonify({"pokemon": "Jigglypuff"}), 200
 
 
 
@@ -1221,10 +1246,7 @@ def hellhole():
 # hellhole end
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
-@app.route("/coin")
-def coin_flip():
-    result = random.choice(["heads", "tails"])
-    return result
+
 
 
 @app.route("/blackjack", methods=["GET", "POST"])
