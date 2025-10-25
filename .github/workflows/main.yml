@@ -23,7 +23,7 @@ jobs:
           # Find test-like files outside the root tests dir
           mapfile -t test_files < <(find . \( -path "./.git" -o -path "./${ROOT_TEST_DIR}" \) -prune -o \
             -type f \( \
-              -name "test_*.py" -o -name "*_test.py" -print)
+              -name "test_*.py" -o -name "*_test.py" -print))
 
           if (( ${#test_files[@]} > 0 )); then
             echo "Found test-like files outside ${ROOT_TEST_DIR}:"
