@@ -606,7 +606,7 @@ def ping():
 
 @app.route("/pokemon")
 def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"})
+    return jsonify({"pokemon": "Jigglypuff"}), 200
 
 
 
