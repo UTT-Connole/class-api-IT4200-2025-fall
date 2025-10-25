@@ -15,21 +15,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ROOT_TEST_DIR="test"
+          ROOT_TEST_DIR="tests"
           violations=0
 
           echo "Checking for test-like files outside ./${ROOT_TEST_DIR} ..."
 
-          # Find test-like files outside the root tests dir
-          mapfile -t test_files < <(
-              find . $ 
-                -path "./.git" -o -path "./${ROOT_TEST_DIR}" 
-              $ -prune -o \
-              -type f $ 
-                -name "test_*.py" -o -name "*_test.py" 
-              $ -print
-            )
-
+          # Find test-like files outside the root tests dir (common conventions for JS/TS, Python, Go, Java, C#, Kotlin, Ruby, PHP)
+          mapfile -t test_files < <(find . \( -path "./.git" -o -path "./${ROOT_TEST_DIR}" \) -prune -o \
+            -type f \( \
+              -name "test_*.py" -o -name "*_test.py" -o
+            \) -print)
 
           if (( ${#test_files[@]} > 0 )); then
             echo "Found test-like files outside ${ROOT_TEST_DIR}:"
