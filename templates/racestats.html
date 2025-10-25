@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Barnyard Performance Report</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff8e7;
+            color: #8b4513;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Impact', sans-serif;
+            color: #d2691e;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stats-panel {
+            background-color: #fffaf0;
+            padding: 30px;
+            border: 3px solid #deb887;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.1);
+            margin: 20px auto;
+            max-width: 700px;
+            text-align: left;
+        }
+
+        .stat-line {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+
+        .ascii-art {
+            white-space: pre;
+            font-family: monospace;
+            text-align: center;
+            color: #d2691e;
+            margin: 20px auto;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .back-button {
+            background-color: #d2691e;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Impact', sans-serif;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #8b4513;
+        }
+
+        .highlight {
+            color: #d2691e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="ascii-art">
+        <pre>
+            
+                                  
+                           _.-^-._    .--.
+                        .-'   _   '-. |__|
+                       /     |_|     \|  |
+                      /               \  |
+                     /|     _____     |\ |
+                      |    |==|==|    |  |
+  |---|---|---|---|---|    |--|--|    |  |
+  |---|---|---|---|---|    |==|==|    |  |
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        </pre>
+    </div>
+
+    <h1>BARNYARD PERFORMANCE REPORT</h1>
+    <h2>Who to bet on ;)</h2>
+
+    <div class="stats-panel">
+        <p class="stat-line"> <strong>Top Speed:</strong> <span class="highlight">{{ stats.top_speed }}</span></p>
+        <p class="stat-line"> <strong>Top Stamina:</strong> <span class="highlight">{{ stats.top_stamina }}</span></p>
+        <p class="stat-line"> <strong>Luckiest Chicken:</strong> <span class="highlight">{{ stats.top_luck }}</span></p>
+        <p class="stat-line"> <strong>Best Pay Out Chicken:</strong> <span class="highlight">{{ stats.best_payout }}</span></p>
+    </div>
+
+    <button class="back-button" onclick="window.location.href='/race'">⬅ Back to Race</button>
+</body>
+</html>
