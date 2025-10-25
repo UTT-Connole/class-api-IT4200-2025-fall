@@ -718,7 +718,7 @@ hockey_results2 = [
 ]
 
 
-@app.route("/api/hockey", methods=["GET"])
+@app.route("/hockey_matchup", methods=["GET"])
 def get_random_matchup():
     all_lists = [hockey_results1, hockey_results2]
     selected_list = random.choice(all_lists)

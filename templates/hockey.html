@@ -53,7 +53,7 @@
         let currentMatch = null;
 
         function fetchGame() {
-            fetch('/api/hockey')
+            fetch('/hockey_matchup')
                 .then(response => response.json())
                 .then(data => {
                     currentMatch = data;

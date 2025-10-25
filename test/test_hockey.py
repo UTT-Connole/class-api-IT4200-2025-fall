@@ -34,12 +34,12 @@ class TestHockeyAPI(unittest.TestCase):
 
     def test_returning_json(self):
         #check that output is json
-        response = self.client.get('/api/hockey')
+        response = self.client.get('/hockey_matchup')
         self.assertEqual(response.content_type, 'application/json')
 
     def test_random_game_result_is_valid(self):
         # Check that the reconstructed result is in the list of valid results
-        response = self.client.get('/api/hockey')
+        response = self.client.get('/hockey_matchup')
         data = json.loads(response.data)
 
         team1 = data.get("team1")
@@ -52,7 +52,7 @@ class TestHockeyAPI(unittest.TestCase):
     
     def test_api_hockey_status(self):
        #check that the page is returning 200
-       response = self.client.get('/api/hockey')
+       response = self.client.get('/hockey_matchup')
        self.assertEqual(response.status_code, 200)
     
     def test_hockey_page_html(self):
@@ -64,8 +64,8 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertIn(b"Hockey", response.data)
 
     def test_hockey_response_keys(self):
-        #test that the correct keys are being returned by '/api/hockey' in case someone changes that code
-        response = self.client.get('/api/hockey')
+        #test that the correct keys are being returned by '/hockey_mathcup' in case someone changes that code
+        response = self.client.get('/hockey_matchup')
         data = json.loads(response.data)
         expected_keys = {"team1", "score1", "score2", "team2"}
-        self.assertTrue(expected_keys.issubset(data.keys()), f'Missing keys in response: /api/hockey not returning {"team1", "score1", "score2", "team2"}')
+        self.assertTrue(expected_keys.issubset(data.keys()), f'Missing keys in response: /hockey_matchup not returning {"team1", "score1", "score2", "team2"}')
