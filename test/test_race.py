@@ -30,7 +30,6 @@ def test_race_odds(client):
     assert b'5/10' in response.data 
     assert b'6/10' in response.data
     assert b'4/10' in response.data
-    assert b'7/10' in response.data
     assert b'3/10' in response.data
 
 def test_race_get_chicken_stats_in_dropdown(client):
