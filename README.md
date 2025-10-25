@@ -89,15 +89,99 @@ Place a bet on rock, paper, or scissors and see if you win against the computer.
 ## /steal_yo_name endpoint
 This endpoint will return one of 4 random names. Random name posibilty "La-a", "Abcde", "Quadraic", "Socrotent".
 
-## /random-weather
-This endpoint returns a truely random weather condition. 
+## **1. `/random-weather`**
+**Method:** `GET`  
+**Description:**  
+Generates random weather data for testing or demo purposes.
 
-## /hazardous-conditions
-This endpoint calls the /random-weather endpoint, and decides if it is a hazardous condition or not. It returns the results. 
+**Response Example:**
+```json
+{
+  "condition": "Sunny",
+  "temperature": "25C",
+  "humidity": "70%"
+}
+```
 
-## /current-weather
-This give the current weather for St. George using the Open-Meteo API. 
+---
 
+## **2. `/hazardous-conditions`**
+**Method:** `GET`  
+**Description:**  
+Determines hazardous weather conditions using randomly generated weather data.
+
+**Hazard Rules:**
+| Condition | Criteria | Hazard | Severity |
+|------------|-----------|---------|-----------|
+| Snowy | Temp < -10°C | Blizzard Warning | Severe |
+| Rainy | Humidity > 95% | Flood Advisory | High |
+| Any | Temp ≥ 45°C | Extreme Heat Warning | Severe |
+| Windy | Temp < -5°C | Wind Chill Advisory | High |
+| Any | Temp ≥ 40°C | Heat Advisory | High |
+| Otherwise | — | No Hazardous Conditions | None |
+
+**Response Example:**
+```json
+{
+  "condition": "Rainy",
+  "temperature": "15C",
+  "humidity": "98%",
+  "hazardous_condition": "Flood Advisory",
+  "severity": "High"
+}
+```
+
+---
+
+## **3. `/real-weather`**
+**Method:** `GET`  
+**Description:**  
+Fetches **real-time** and **daily** weather data from the [Open-Meteo API](https://open-meteo.com/).  
+Coordinates: **Latitude 37.1041**, **Longitude -113.5841** (St. George, Utah).  
+Units: Temperature in °F, wind speed in mph.
+
+**Response Example:**
+```json
+[
+  {
+    "time": "2025-10-25T14:00",
+    "temperature": 78.5,
+    "humidity": 35,
+    "windspeed": 5.2,
+    "winddirection": 180
+  },
+  {
+    "sunrise": ["2025-10-25T07:30"],
+    "sunset": ["2025-10-25T18:20"],
+    "temperature_min": [60.1],
+    "temperature_max": [82.4],
+    "precipitation_probability": [10]
+  }
+]
+```
+
+---
+
+### **4. `/system-info`**
+**Method:** `GET`  
+**Description:**  
+Returns system and environment information for the host running the Flask app.
+
+**Response Example:**
+```json
+{
+  "hostname": "server-01",
+  "os": "Linux",
+  "os_release": "5.15.0-107",
+  "architecture": "x86_64",
+  "python_version": "3.12.3",
+  "cpu_count": 8,
+  "disk_total_gb": 256.0,
+  "disk_free_gb": 180.5
+}
+```
+
+Response Example:
 ## /campus-locations
 Returns a random location on the Utah Tech Campus 
 
