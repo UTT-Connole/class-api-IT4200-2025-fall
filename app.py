@@ -710,8 +710,16 @@ def create_app():
                 "is_even": result % 2 == 0,
             }
         )
+
+
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
     
     return app  # <== ALSO DON'T DELETE
+
 
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
@@ -729,11 +737,6 @@ def ping():
     }), 200
 # --- end /api/ping ---
 
-
-
-@app.route("/pokemon")
-def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"})
 
 
 
