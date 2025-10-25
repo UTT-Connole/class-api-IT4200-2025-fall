@@ -663,6 +663,13 @@ def create_app():
             {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
         ]
 
+        genre_filter = request.args.get("genre")
+        if genre_filter:
+            filtered = [s for s in songs if s["genre"].lower() == genre_filter.lower()]
+            if not filtered:
+                return jsonify({"success": False, "error": "No songs found for that genre"}), 404
+            songs = filtered
+
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
     
