@@ -359,20 +359,21 @@ def create_app():
             "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
         ]
 
-        # Template moved to templates/sports.html
+        # Check if reset is requested
+        if request.method == "GET" and request.args.get("reset") == "true":
+            team1, team2 = random.sample(teams, 2)
+            winner = random.choice([team1, team2])
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
 
         if request.method == "GET":
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
             return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
-
-    # POST: preserve the matchup from hidden fields instead of re-randomizing
+        
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        # If the posted matchup is missing or invalid, fall back to a fresh matchup
-        # so that a plain POST with just a bet still works (e.g., in tests).
         if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
             team1, team2 = random.sample(teams, 2)
             winner = random.choice([team1, team2])
@@ -385,7 +386,6 @@ def create_app():
         else:
             won_bet = bet.lower() == winner.lower()
 
-        # Optional: track net earnings in the bank DB if username and amount are provided.
         bank_message = None
         username = (request.form.get("username") or "").strip()
         amount_raw = (request.form.get("amount") or "").strip()
@@ -398,7 +398,7 @@ def create_app():
             if amount <= 0:
                 bank_message = "Amount must be a positive integer; bank unchanged."
             else:
-                # Ensure the user exists and has sufficient funds for a loss.
+                
                 user = bank.get_user_bank(username)
                 if not won_bet and user.get("balance", 0) < amount:
                     bank_message = "Insufficient funds for this bet; bank unchanged."
@@ -639,6 +639,11 @@ def create_app():
         winner = random.choice(plants)
         won = chosen_plant == winner
         winnings = bet * 2 if won else 0
+        
+        rarity_bonus = 0
+        if plant_stats[chosen_plant]["rarity"] == "Rare" and won:
+            rarity_bonus = int(bet * 0.5) 
+            winnings += rarity_bonus
 
         chosen_stats = plant_stats[chosen_plant]
         winner_stats = plant_stats[winner]
@@ -681,7 +686,15 @@ def create_app():
             {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
             {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
             {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
+            {"title": "Vibrations", "artist": "Peach Fur", "genre": "Reggae Rock", "year": 2015}
         ]
+
+        genre_filter = request.args.get("genre")
+        if genre_filter:
+            filtered = [s for s in songs if s["genre"].lower() == genre_filter.lower()]
+            if not filtered:
+                return jsonify({"success": False, "error": "No songs found for that genre"}), 404
+            songs = filtered
 
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
@@ -723,8 +736,16 @@ def create_app():
                 "is_even": result % 2 == 0,
             }
         )
+
+
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
     
     return app  # <== ALSO DON'T DELETE
+
 
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
@@ -743,10 +764,6 @@ def ping():
 # --- end /api/ping ---
 
 
-
-@app.route("/pokemon")
-def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"}), 200
 
 
 
@@ -1190,20 +1207,6 @@ def sandals_fortune():
     return jsonify(chosen)
 
 
-@app.route("/fav_quote")
-def fav_quote():
-    fav_quote = [
-        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
-        "Opportunities don't happen, you create them. - Chris Grosser",
-        "If you can dream it, you can do it. - Walt Disney",
-        "The only way to do great work is to love what you do. - Steve Jobs",
-        "Why fit in when you were born to stand out? - Dr. Seuss"
-        "One day or day one. You decide. - Unknown"
-        "Slow is smooth, smooth is fast, fast is sexy. - Old Grunt",
-    ]
-    return jsonify({"fav_quote": random.choice(fav_quote)})
-
-
 # hellhole start
 hellhole_facts = [
     "It’s said that the heat here can melt steel.",
@@ -1247,7 +1250,7 @@ def hellhole():
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
         "fact": random.choice(hellhole_facts),
         "unlivable_homes": unlivable_homes,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": str(datetime.now()) + "Z",
     }
     return jsonify(message)
 
