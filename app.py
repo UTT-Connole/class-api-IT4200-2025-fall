@@ -1165,20 +1165,6 @@ def sandals_fortune():
     return jsonify(chosen)
 
 
-@app.route("/fav_quote")
-def fav_quote():
-    fav_quote = [
-        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
-        "Opportunities don't happen, you create them. - Chris Grosser",
-        "If you can dream it, you can do it. - Walt Disney",
-        "The only way to do great work is to love what you do. - Steve Jobs",
-        "Why fit in when you were born to stand out? - Dr. Seuss"
-        "One day or day one. You decide. - Unknown"
-        "Slow is smooth, smooth is fast, fast is sexy. - Old Grunt",
-    ]
-    return jsonify({"fav_quote": random.choice(fav_quote)})
-
-
 # hellhole start
 hellhole_facts = [
     "It’s said that the heat here can melt steel.",
