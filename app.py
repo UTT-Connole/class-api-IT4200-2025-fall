@@ -1213,7 +1213,7 @@ def hellhole():
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
         "fact": random.choice(hellhole_facts),
         "unlivable_homes": unlivable_homes,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": str(datetime.now()) + "Z",
     }
     return jsonify(message)
 
