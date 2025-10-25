@@ -69,3 +69,8 @@ class TestHockeyAPI(unittest.TestCase):
         data = json.loads(response.data)
         expected_keys = {"team1", "score1", "score2", "team2"}
         self.assertTrue(expected_keys.issubset(data.keys()), f'Missing keys in response: /hockey_matchup not returning {"team1", "score1", "score2", "team2"}')
+
+    def test_api_hockey(self):
+        #test that /api/hockey does not work
+        self.assertEqual(response.status_code, 404)
+
