@@ -21,3 +21,17 @@ def test_jukebox_year_type(client):
     response = client.get("/jukebox")
     song = response.get_json()["song"]
     assert isinstance(song["year"], int)
+
+def test_jukebox_genre_filter_success(client):
+    response = client.get("/jukebox?genre=Surf rock")
+    data = response.get_json()
+
+    assert response.status_code == 200
+    assert data["success"] is True
+    assert data["song"]["genre"] == "Surf rock"
+
+def test_jukebox_genre_filter_not_found(client):
+    response = client.get("/jukebox?genre=Jazz")
+    assert response.status_code == 404
+    data = response.get_json()
+    assert data["success"] is False
