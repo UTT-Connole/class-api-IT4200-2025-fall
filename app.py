@@ -614,6 +614,11 @@ def create_app():
         winner = random.choice(plants)
         won = chosen_plant == winner
         winnings = bet * 2 if won else 0
+        
+        rarity_bonus = 0
+        if plant_stats[chosen_plant]["rarity"] == "Rare" and won:
+            rarity_bonus = int(bet * 0.5) 
+            winnings += rarity_bonus
 
         chosen_stats = plant_stats[chosen_plant]
         winner_stats = plant_stats[winner]
