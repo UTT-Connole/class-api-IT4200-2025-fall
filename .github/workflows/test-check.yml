@@ -1,0 +1,33 @@
+name: Check Test Files Location
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  verify-test-file-location:
+    name: Ensure test files are only in ./test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find test files outside ./test directory
+        run: |
+          echo "Checking for misplaced test files..."
+          # Find any file matching *_test.* or test_*.* outside ./test
+          bad_files=$(find . -type f \
+            \( -name "*_test.*" -o -name "test_*.*" \) \
+            ! -path "./test/*" \
+            ! -path "./.git/*")
+
+          if [ -n "$bad_files" ]; then
+            echo "Found test files outside ./test directory:"
+            echo "$bad_files"
+            echo ""
+            echo "Please move them to the ./test directory."
+            exit 1
+          else
+            echo "No misplaced test files found."
+          fi
