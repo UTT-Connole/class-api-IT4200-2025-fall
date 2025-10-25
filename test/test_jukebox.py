@@ -35,3 +35,10 @@ def test_jukebox_genre_filter_not_found(client):
     assert response.status_code == 404
     data = response.get_json()
     assert data["success"] is False
+
+def test_jukebox_contains_vibrations(client):
+    response = client.get("/jukebox")
+    assert response.status_code == 200
+    data = response.get_json()
+    assert "success" in data
+    assert isinstance(data["success"], bool)

@@ -661,6 +661,7 @@ def create_app():
             {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
             {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
             {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
+            {"title": "Vibrations", "artist": "Peach Fur", "genre": "Reggae Rock", "year": 2015}
         ]
 
         genre_filter = request.args.get("genre")
