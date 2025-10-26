@@ -886,7 +886,6 @@ def get_underwater_properties():
 def kasen():
     return render_template("kasen.html"), 200
 
-# Start of '/hockey' endpoint code
 
 # List of fake hockey game results
 hockey_results1 = [
@@ -905,6 +904,24 @@ hockey_results2 = [
     "Jets 0 - 3 Stars",
 ]
 
+# start of '/hockey_teams' endpoint
+
+def extract_teams(results):
+    teams = set()
+    for result in results:
+        parts = result.split(" - ")
+        team1_info = parts[0].rsplit(" ", 1)[0]  # e.g., "Flames 3" → "Flames"
+        team2_info = parts[1].split(" ", 1)[1]   # e.g., "2 Canuks" → "Canuks"
+        teams.add(team1_info)
+        teams.add(team2_info)
+    return teams
+
+@app.route("/hockey_teams", methods=['GET'])
+def get_teams():
+    all_teams = extract_teams(hockey_results1).union(extract_teams(hockey_results2))
+    return jsonify({"teams": sorted(list(all_teams))})
+
+# Start of '/hockey' endpoint code
 
 @app.route("/api/hockey", methods=["GET"])
 def get_random_matchup():
