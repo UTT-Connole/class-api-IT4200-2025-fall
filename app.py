@@ -39,17 +39,24 @@ def create_app():
     def gatcha():
         rarities = ['C', 'R', 'SR', 'SSR']
         weights = [70, 20, 9, 1]
-        # Return the gatcha pool as a list of items with name, rarity and weight
+        
         pool = [
             {"name": "A rock", "rarity": "C", "weight": 70},
             {"name": "A stick", "rarity": "R", "weight": 20},
             {"name": "A diamond", "rarity": "SR", "weight": 9},
             {"name": "A unicorn", "rarity": "SSR", "weight": 1},
         ]
-        rarities = ['C', 'R', 'SR', 'SSR']
-        weights = [70, 20, 9, 1]
-        # Return three top-level keys so tests expecting a dict of length 3 succeed
-        return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+        
+        pulled_rarity = random.choices(rarities, weights=weights, k=1)[0]
+        pulled_item = next(item for item in pool if item["rarity"] == pulled_rarity)
+        
+        return jsonify({
+            "pool": pool, 
+            "rarities": rarities, 
+            "weights": weights,
+            "last_pull": pulled_item
+        })
+
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
