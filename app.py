@@ -494,6 +494,42 @@ def create_app():
             }
         )
 
+    @app.route("/race/stats", methods=["GET"])
+    def chicken_stats():
+        chickens = {
+            "Colonel Sanders Revenge": {"speed": 7, "stamina": 6, "luck": 4},
+            "McNugget Sprint": {"speed": 8, "stamina": 5, "luck": 6},
+            "Free Range Fury": {"speed": 6, "stamina": 8, "luck": 5},
+            "Scrambled Lightning": {"speed": 9, "stamina": 4, "luck": 7},
+            "Hen Solo": {"speed": 7, "stamina": 7, "luck": 5},
+            "Clucky Balboa": {"speed": 6, "stamina": 9, "luck": 3},
+            "Cluck Norris": {"speed": 9, "stamina": 6, "luck": 8},
+            "Eggward Scissorbeak": {"speed": 8, "stamina": 6, "luck": 6},
+        }
+
+        total = len(chickens)
+        avg_speed = sum(c["speed"] for c in chickens.values()) / total
+        avg_stamina = sum(c["stamina"] for c in chickens.values()) / total
+        avg_luck = sum(c["luck"] for c in chickens.values()) / total
+
+        top_speed = max(chickens, key=lambda c: chickens[c]["speed"])
+        top_stamina = max(chickens, key=lambda c: chickens[c]["stamina"])
+        top_luck = max(chickens, key=lambda c: chickens[c]["luck"])
+        best_payout = max(chickens, key=lambda c: eval(chickens[c]["odds"]) if "odds" in chickens[c] else 0)
+
+        stats = {
+            "total_chickens": total,
+            "average_speed": round(avg_speed, 2),
+            "average_stamina": round(avg_stamina, 2),
+            "average_luck": round(avg_luck, 2),
+            "top_speed": top_speed,
+            "top_stamina": top_stamina,
+            "top_luck": top_luck,
+            "best_payout": best_payout,
+        }
+
+        return render_template("racestats.html", stats=stats)
+
     @app.route("/slots", methods=["POST"])
     def slots():
         symbols = ["CHERRY", "LEMON", "BELL", "STAR", "7"]
