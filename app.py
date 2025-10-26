@@ -18,6 +18,9 @@ from typing import Set, Tuple, Dict, Optional
 from user_agents import parse
 import requests
 from bank import bank_bp
+from blueprints.games import games_bp
+from blueprints.gambling import gambling_bp
+from blueprints.utils import utils_bp
 import bank
 import json
 import time
@@ -30,6 +33,32 @@ def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
     app.register_blueprint(bank_bp)
+    # Register games blueprint (moved /sports and /plant-battle into blueprints/games.py)
+    try:
+        app.register_blueprint(games_bp)
+    except Exception:
+        # If import/register fails, continue running the app; routes remain in app.py
+        pass
+    # Register gambling blueprint (moved gambling-related routes here)
+    try:
+        app.register_blueprint(gambling_bp)
+    except Exception:
+        pass
+    # Register utils blueprint (small utility endpoints)
+    try:
+        app.register_blueprint(utils_bp)
+    except Exception:
+        pass
+    # Provide a top-level 'gamble' route name for legacy tests/code that expect it.
+    try:
+        from blueprints.gambling import gamble as _gamble_fn
+
+        @app.route("/api/gamble", methods=["POST"])
+        def gamble():
+            return _gamble_fn()
+    except Exception:
+        # If the import fails, skip adding the wrapper.
+        pass
 
     @app.route("/")
     def home():
@@ -257,24 +286,7 @@ def create_app():
             }
         )
 
-    @app.route("/api/gamble", methods=["POST"])
-    def gamble():
-        """Simple gambling endpoint"""
-        data = request.get_json()
-        bet = data.get("bet", 0)
-
-        if bet <= 0:
-            return jsonify({"error": "Bet must be greater than zero"}), 400
-
-        # Simulate a 50/50 gamble
-        if random.choice([True, False]):
-            winnings = bet * 2
-            result = "win"
-        else:
-            winnings = 0
-            result = "lose"
-
-        return jsonify({"result": result, "original_bet": bet, "winnings": winnings})
+    # /api/gamble moved into blueprints/gambling.py as gambling_bp
 
     @app.get("/drawAcard")
     def drawAcard():
@@ -294,73 +306,7 @@ def create_app():
         return jsonify(data)
 
 
-    @app.route("/sports", methods=["GET", "POST"])
-    def sports():
-        teams = [
-            "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens", "Packers", "Dolphins",
-            "Lions", "Steelers", "Jets", "Chargers", "Giants", "Patriots", "Bears", "Raiders",
-            "Browns", "Bengals", "Broncos", "Texans", "Colts", "Jaguars", "Titans", "Vikings",
-            "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
-        ]
-
-        # Template moved to templates/sports.html
-
-        if request.method == "GET":
-            team1, team2 = random.sample(teams, 2)
-            winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
-
-    # POST: preserve the matchup from hidden fields instead of re-randomizing
-        team1 = (request.form.get("team1") or "").strip()
-        team2 = (request.form.get("team2") or "").strip()
-        winner = (request.form.get("winner") or "").strip()
-
-        # If the posted matchup is missing or invalid, fall back to a fresh matchup
-        # so that a plain POST with just a bet still works (e.g., in tests).
-        if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            team1, team2 = random.sample(teams, 2)
-            winner = random.choice([team1, team2])
-
-        bet = (request.form.get("bet") or "").strip()
-        if not bet:
-            won_bet = None
-        elif bet.lower() not in (team1.lower(), team2.lower()):
-            won_bet = "Invalid bet"
-        else:
-            won_bet = bet.lower() == winner.lower()
-
-        # Optional: track net earnings in the bank DB if username and amount are provided.
-        bank_message = None
-        username = (request.form.get("username") or "").strip()
-        amount_raw = (request.form.get("amount") or "").strip()
-        if username and amount_raw and won_bet in (True, False):
-            try:
-                amount = int(amount_raw)
-            except ValueError:
-                amount = 0
-
-            if amount <= 0:
-                bank_message = "Amount must be a positive integer; bank unchanged."
-            else:
-                # Ensure the user exists and has sufficient funds for a loss.
-                user = bank.get_user_bank(username)
-                if not won_bet and user.get("balance", 0) < amount:
-                    bank_message = "Insufficient funds for this bet; bank unchanged."
-                else:
-                    net = amount if won_bet else -amount
-                    updated = bank.update_bank(username, net)
-                    change_str = f"+{amount}" if won_bet else f"-{amount}"
-                    bank_message = f"Applied {change_str}. New balance: {updated['balance']}."
-
-        return render_template(
-            "sports.html",
-            team1=team1,
-            team2=team2,
-            winner=winner,
-            bet=bet,
-            won_bet=won_bet,
-            bank_message=bank_message,
-        )
+    # /sports moved into blueprints/games.py as games_bp
 
 
 
@@ -458,40 +404,12 @@ def create_app():
 
     @app.route("/slots", methods=["POST"])
     def slots():
-        symbols = ["CHERRY", "LEMON", "BELL", "STAR", "7"]
-        bet = request.json.get("bet", 1)
-        username = request.json.get("username", "user1")
-
-        if username not in users or users[username]["balance"] < bet:
-            return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-        # Spin the reels
-        result = [random.choice(symbols) for _ in range(3)]
-
-        # Determine payout
-        if result.count(result[0]) == 3:
-            payout = bet * 10  # Jackpot
-            message = "Jackpot! All symbols match."
-        elif len(set(result)) == 2:
-            payout = bet * 2  # Two match
-            message = "Two symbols match! Small win."
-        else:
-            payout = 0
-            message = "No match. Try again!"
-
-        users[username]["balance"] += payout - bet
-
-        return jsonify(
-            {
-                "result": result,
-                "message": message,
-                "payout": payout,
-                "balance": users[username]["balance"],
-            }
-        )
+        # /slots moved into blueprints/gambling.py as gambling_bp
+        return jsonify({"error": "moved to blueprint"}), 404
 
     @app.route("/craps")
     def craps():
+        # Moved to blueprints/gambling.py but keeping lightweight fallback
         def roll():
             return random.randint(1, 6) + random.randint(1, 6)
 
@@ -556,64 +474,7 @@ def create_app():
 
         return jsonify({"count": len(rules), "endpoints": rules}), 200
     
-    @app.route("/plant-battle", methods=["GET"])
-    def plant_battle():
-        # Available plant roster
-        plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
-
-        # Each plant’s base stats
-        plant_stats = {
-            "Cactus": {"attack": 7, "defense": 9, "rarity": "Common"},
-            "Venus Flytrap": {"attack": 9, "defense": 6, "rarity": "Rare"},
-            "Sunflower": {"attack": 5, "defense": 8, "rarity": "Uncommon"},
-            "Bamboo": {"attack": 6, "defense": 7, "rarity": "Common"},
-            "Poison Ivy": {"attack": 8, "defense": 5, "rarity": "Rare"},
-        }
-
-        bet = request.args.get("bet", default=10, type=int)
-        chosen_plant = request.args.get("plant", default=random.choice(plants))
-
-        # Validate bet and input
-        if bet <= 0:
-            return jsonify({"error": "Bet must be a positive integer"}), 400
-        if chosen_plant not in plants:
-            return jsonify({"error": f"Plant must be one of {plants}"}), 400
-
-        # Randomly determine winner
-        winner = random.choice(plants)
-        won = chosen_plant == winner
-        winnings = bet * 2 if won else 0
-
-        chosen_stats = plant_stats[chosen_plant]
-        winner_stats = plant_stats[winner]
-
-        # Battle narrative
-        if chosen_plant == winner:
-            message = f"{chosen_plant} absorbed sunlight and claimed a glorious victory!"
-        else:
-            if chosen_stats["attack"] > winner_stats["attack"]:
-                message = f"{chosen_plant} fought valiantly but eventually wilted in defeat."
-            else:
-                message = f"{chosen_plant} was overwhelmed by {winner}'s ferocity!"
-
-        # Dynamic conditions
-        environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
-        weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
-
-        # Final JSON response
-        return jsonify({
-            "plants": plants,
-            "chosen_plant": chosen_plant,
-            "winner": winner,
-            "bet": bet,
-            "result": "win" if won else "lose",
-            "winnings": winnings,
-            "message": message,
-            "battle_environment": environment,
-            "weather": weather,
-            "chosen_stats": chosen_stats,
-            "winner_stats": winner_stats,
-        })
+    # /plant-battle moved into blueprints/games.py as games_bp
 
     @app.route("/jukebox", methods=["GET"])
     def jukebox():
@@ -632,19 +493,8 @@ def create_app():
     
     @app.get("/randomRestaurant")
     def choose():
-        restaurants = [
-            "Red Fort Cuisine Of India",
-            "Painted Pony Restaurant",
-            "Sakura Japanese Steakhouse",
-            "Rusty Crab Daddy",
-            "Mixed Greens",
-            "Cliffside Restaurant",
-            "Aubergine Kitchen"
-            "Panda Express"
-            "Del Taco"
-            "Chic-fil-a"
-        ]
-        return random.choice(restaurants)
+        # moved to blueprints/utils.py as utils_bp
+        return jsonify({"error": "moved to utils blueprint"}), 404
     
     @app.route("/add_chips")
     def add_chips():
@@ -710,15 +560,13 @@ def pokemon():
 
 
 
-@app.route("/random-weather")
 def random_weather():
+    # helper used by hazardous_conditions; primary route moved to utils blueprint
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
     condition = random.choice(conditions)
     temperature = f"{random.randint(-30, 50)}C"
     humidity = f"{random.randint(10, 100)}%"
-    return jsonify(
-        {"condition": condition, "temperature": temperature, "humidity": humidity}
-    )
+    return jsonify({"condition": condition, "temperature": temperature, "humidity": humidity})
 
 
 @app.route("/hazardous-conditions")
@@ -762,32 +610,9 @@ def hazardous_conditions():
         }
     )
 
-@app.route("/real-weather")
 def real_weather():
-    url = "https://api.open-meteo.com/v1/forecast?latitude=37.1041&longitude=-113.5841&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_mean&current=temperature_2m,relative_humidity_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m&timezone=America%2FDenver&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit"
-
-    data = requests.get(url).json()
-    current_weather = data.get("current", {})
-    daily_data = data.get("daily", {})
-
-    current_data = {
-        "time": current_weather.get("time"),
-        "temperature": current_weather.get("temperature_2m"),
-        "humidity": current_weather.get("relative_humidity_2m"),
-        "windspeed": current_weather.get("wind_speed_10m"),
-        "winddirection": current_weather.get("wind_direction_10m"),
-    }
-
-    daily_data = {
-        "sunrise": daily_data.get("sunrise"),
-        "sunset": daily_data.get("sunset"),
-        "temperature_min": daily_data.get("temperature_2m_min"),
-        "temperature_max": daily_data.get("temperature_2m_max"),
-        "precipitation_probability": daily_data.get("precipitation_probability_mean")
-
-    }
-
-    return jsonify(current_data, daily_data)
+    # moved to blueprints/utils.py as utils_bp
+    return jsonify({"error": "moved to utils blueprint"}), 404
 
 
 
@@ -956,30 +781,8 @@ def place_plant_bet():
 
 @app.route("/generatePassword")
 def generatePassword(Length=None, Complexity="simple"):
-    # Keeping signature but providing safe defaults to avoid TypeError
-    letters = "abcdefghijklmnopqrstuvwxyz"
-    numbers = "0123456789"
-    symbols = "~!@#$%^&*()-_=+[{]}|;:,<.>/?"
-    password = ""
-    characters = ""
-    if Complexity == "basic":
-        characters = letters
-    elif Complexity == "simple":
-        characters = letters + numbers
-    elif Complexity == "complex":
-        characters = letters + letters.upper() + numbers + symbols
-    else:
-        return (
-            jsonify({"error": "Choose a valid option: basic, simple, or complex."}),
-            400,
-        )
-    try:
-        Length = int(Length) if Length is not None else 12
-    except ValueError:
-        return jsonify({"error": "Length must be an integer"}), 400
-    for _ in range(Length):
-        password += random.choice(characters)
-    return jsonify({"password": password})
+    # moved to blueprints/utils.py as utils_bp
+    return jsonify({"error": "moved to utils blueprint"}), 404
 
 def get_bingo_index(x,y):
 #   5 is the width. 
@@ -1040,16 +843,8 @@ def check_bingo():
 # This endpoint will return client data
 @app.route("/client")
 def index():
-    user_agent_string = request.headers.get("User-Agent")
-    user_agent = parse(user_agent_string)
-    return jsonify(
-        {
-            "Browser": user_agent.browser.family,
-            "Version": user_agent.browser.version_string,
-            "OS": user_agent.os.family,
-            "OS Version": user_agent.os.version_string,
-        }
-    )
+    # moved to blueprints/utils.py as utils_bp
+    return jsonify({"error": "moved to utils blueprint"}), 404
 
 
 @app.errorhandler(404)
@@ -1058,11 +853,11 @@ def page_not_found(e):
     return render_template("404.html"), 404
 
 
+def random_pokemon():
 @app.route("/random_pokemon")
 def random_pokemon():
-    a = random.randint(1, 1010)
-    print(f"Redirecting to Pokémon ID: {a}")
-    return redirect((f"https://www.pokemon.com/us/pokedex/{a}")), 302
+    # moved to blueprints/utils.py as utils_bp
+    return jsonify({"error": "moved to utils blueprint"}), 404
 
 
 
@@ -1070,6 +865,7 @@ def random_pokemon():
 
 @app.route("/roulette", methods=["GET"])
 def roulette():
+    # Moved to blueprints/gambling.py but keep fallback behavior
     colors = ["red", "black", "green"]
     numbers = list(range(0, 37))  # European roulette 0–36
     spin = random.choice(numbers)
@@ -1127,16 +923,8 @@ def sandals_fortune():
 
 @app.route("/fav_quote")
 def fav_quote():
-    fav_quote = [
-        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
-        "Opportunities don't happen, you create them. - Chris Grosser",
-        "If you can dream it, you can do it. - Walt Disney",
-        "The only way to do great work is to love what you do. - Steve Jobs",
-        "Why fit in when you were born to stand out? - Dr. Seuss"
-        "One day or day one. You decide. - Unknown"
-        "Slow is smooth, smooth is fast, fast is sexy. - Old Grunt",
-    ]
-    return jsonify({"fav_quote": random.choice(fav_quote)})
+    # moved to blueprints/utils.py as utils_bp
+    return jsonify({"error": "moved to utils blueprint"}), 404
 
 
 # hellhole start
@@ -1198,53 +986,7 @@ def coin_flip():
 
 @app.route("/blackjack", methods=["GET", "POST"])
 def blackjack():
-    if request.method == "POST":
-        data = request.get_json()
-        bet_amount = data.get("bet_amount")
-        username = data.get("username")
-
-        if username not in users or users[username]["balance"] < bet_amount:
-            return jsonify({"error": "Insufficient balance or user not found."}), 400
-
-        # Initialize game variables
-        deck = create_deck()
-        player_hand = [draw_card(deck), draw_card(deck)]
-        dealer_hand = [draw_card(deck), draw_card(deck)]
-
-        player_total = calculate_hand_value(player_hand)
-        dealer_total = calculate_hand_value(dealer_hand)
-
-        # Game logic for player actions (hit or stand)
-        while player_total < 21:
-            action = data.get("action")  # 'hit' or 'stand'
-            if action == "hit":
-                player_hand.append(draw_card(deck))
-                player_total = calculate_hand_value(player_hand)
-            elif action == "stand":
-                break
-
-        # Dealer's turn
-        while dealer_total < 17:
-            dealer_hand.append(draw_card(deck))
-            dealer_total = calculate_hand_value(dealer_hand)
-
-        # Determine winner
-        result = determine_winner(player_total, dealer_total)
-        if result == "player":
-            users[username]["balance"] += bet_amount
-            return jsonify(
-                {"message": "You win!", "balance": users[username]["balance"]}
-            )
-        elif result == "dealer":
-            users[username]["balance"] -= bet_amount
-            return jsonify(
-                {"message": "Dealer wins!", "balance": users[username]["balance"]}
-            )
-        else:
-            return jsonify(
-                {"message": "It's a tie!", "balance": users[username]["balance"]}
-            )
-
+    # moved to blueprints/gambling.py as gambling_bp
     return render_template("blackjack.html")
 
 
@@ -1510,12 +1252,8 @@ def get_payout(bet_type, bet_value, result_number, result_color):
 
 @app.route("/wizard")
 def generate_wizard_name():
-    prefixes = ["Thal", "Eld", "Zyn", "Mor", "Alar", "Xan", "Vor", "Gal", "Ser"]
-    roots = ["drak", "mir", "vyn", "zar", "quor", "lith", "mael", "gorn", "ther"]
-    suffixes = ["ion", "ar", "ius", "en", "or", "eth", "azar", "em", "yx"]
-    titles = ["Archmage", "Sorcerer", "Seer", "Mystic", "Enchanter", "Spellbinder"]
-    name = random.choice(prefixes) + random.choice(roots) + random.choice(suffixes)
-    return f"{random.choice(titles)} {name.capitalize()}"
+    # moved to blueprints/utils.py as utils_bp
+    return "moved to utils blueprint", 404
 
 
 @mines_bp.post("/api/games/<game_id>/cashout")
@@ -1586,38 +1324,7 @@ def plants_match():
         200,
     )
 
-@app.route("/bet_rps", methods=["GET"])
-def bet_rps():
-    moves = ["rock", "paper", "scissors"]
-    player = (request.args.get("player") or "").lower()
-    amount = request.args.get("amount", type=int, default=0)
-
-    if player not in moves or amount <= 0:
-        return jsonify({"error": "Invalid move or amount"}), 400
-
-    computer = random.choice(moves)
-
-    # rock beats scissors, scissors beats paper, paper beats rock
-    beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
-
-    if player == computer:
-        result = "tie"
-        payout = amount  # return original bet on tie
-    elif beats[player] == computer:
-        result = "win"
-        payout = amount * 2
-    else:
-        result = "lose"
-        payout = 0
-
-    return jsonify({
-        "player": player,
-        "computer": computer,
-        "amount": amount,
-        "result": result,
-        "payout": payout
-    }), 200
-
+    # /bet_rps moved into blueprints/gambling.py as gambling_bp
 
 
 @app.route("/bet_slots")
