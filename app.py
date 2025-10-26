@@ -39,7 +39,7 @@ def create_app():
     def gatcha():
         rarities = ['C', 'R', 'SR', 'SSR']
         weights = [70, 20, 9, 1]
-        # Return the gatcha pool as a list of items with name, rarity and weight
+        
         pool = [
             {"name": "A rock", "rarity": "C", "weight": 70},
             {"name": "A stick", "rarity": "R", "weight": 20},
@@ -50,6 +50,15 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+        pulled_rarity = random.choices(rarities, weights=weights, k=1)[0]
+        pulled_item = next(item for item in pool if item["rarity"] == pulled_rarity)
+        
+        return jsonify({
+            "pool": pool, 
+            "rarities": rarities, 
+            "weights": weights,
+            "last_pull": pulled_item
+        })
     @app.route("/api/coinflip", methods=["POST"])
     def coinflip():
         """Flip a coin and bet on heads or tails."""
@@ -75,6 +84,11 @@ def create_app():
 
 
 
+
+        
+    
+
+      
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
@@ -352,29 +366,51 @@ def create_app():
 
     @app.route("/sports", methods=["GET", "POST"])
     def sports():
-        teams = [
-            "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens", "Packers", "Dolphins",
-            "Lions", "Steelers", "Jets", "Chargers", "Giants", "Patriots", "Bears", "Raiders",
-            "Browns", "Bengals", "Broncos", "Texans", "Colts", "Jaguars", "Titans", "Vikings",
-            "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
+        nfl_afc_teams = [
+            "Bills", "Dolphins", "Patriots", "Jets",
+            "Ravens", "Bengals", "Browns", "Steelers",
+            "Texans", "Colts", "Jaguars", "Titans",
+            "Broncos", "Chiefs", "Raiders", "Chargers"
         ]
 
-        # Template moved to templates/sports.html
+        nfl_nfc_teams = [
+            "Cowboys", "Giants", "Eagles", "Commanders",
+            "Bears", "Lions", "Packers", "Vikings",
+            "Falcons", "Panthers", "Saints", "Buccaneers",
+            "Cardinals", "Rams", "49ers", "Seahawks"
+        ]
+
+        nba_teams = [
+        "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers", "Mavericks",
+        "Nuggets", "Pistons", "Warriors", "Rockets", "Pacers", "Clippers",
+        "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans",
+        "Knicks", "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings",
+        "Spurs", "Raptors", "Jazz", "Wizards"
+        ]
+
+        league = request.args.get("league") or request.form.get("league") or "NFL"
+
+        if league.upper() == "NBA":
+            league_teams = nba_teams
+        else:
+            league_teams = nfl_afc_teams + nfl_nfc_teams
+
+        if request.method == "GET" and request.args.get("reset") == "true":
+            team1, team2 = random.sample(league_teams, 2)
+            winner = random.choice([team1, team2])
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
 
         if request.method == "GET":
-            team1, team2 = random.sample(teams, 2)
+            team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
 
-    # POST: preserve the matchup from hidden fields instead of re-randomizing
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        # If the posted matchup is missing or invalid, fall back to a fresh matchup
-        # so that a plain POST with just a bet still works (e.g., in tests).
-        if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            team1, team2 = random.sample(teams, 2)
+        if not team1 or not team2 or team1 not in league_teams or team2 not in league_teams or team1 == team2:
+            team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
 
         bet = (request.form.get("bet") or "").strip()
@@ -385,7 +421,6 @@ def create_app():
         else:
             won_bet = bet.lower() == winner.lower()
 
-        # Optional: track net earnings in the bank DB if username and amount are provided.
         bank_message = None
         username = (request.form.get("username") or "").strip()
         amount_raw = (request.form.get("amount") or "").strip()
@@ -398,7 +433,6 @@ def create_app():
             if amount <= 0:
                 bank_message = "Amount must be a positive integer; bank unchanged."
             else:
-                # Ensure the user exists and has sufficient funds for a loss.
                 user = bank.get_user_bank(username)
                 if not won_bet and user.get("balance", 0) < amount:
                     bank_message = "Insufficient funds for this bet; bank unchanged."
@@ -416,6 +450,7 @@ def create_app():
             bet=bet,
             won_bet=won_bet,
             bank_message=bank_message,
+            league=league,
         )
 
 
@@ -443,13 +478,6 @@ def create_app():
                 "stamina": 8,
                 "luck": 5,
                 "fun_fact": "Will randomly stop to enjoy the view—mostly just staring at clouds."
-            },
-            "Scrambled Lightning": {
-                "odds": "7/10",
-                "speed": 9,
-                "stamina": 4,
-                "luck": 7,
-                "fun_fact": "Has a personal rivalry with every rooster named “Cluck Norris.”"
             },
             "Hen Solo": {
                 "odds": "5/10",
@@ -511,6 +539,42 @@ def create_app():
                 "fun_fact": chickens[winner]["fun_fact"]
             }
         )
+
+    @app.route("/race/stats", methods=["GET"])
+    def chicken_stats():
+        chickens = {
+            "Colonel Sanders Revenge": {"speed": 7, "stamina": 6, "luck": 4},
+            "McNugget Sprint": {"speed": 8, "stamina": 5, "luck": 6},
+            "Free Range Fury": {"speed": 6, "stamina": 8, "luck": 5},
+            "Scrambled Lightning": {"speed": 9, "stamina": 4, "luck": 7},
+            "Hen Solo": {"speed": 7, "stamina": 7, "luck": 5},
+            "Clucky Balboa": {"speed": 6, "stamina": 9, "luck": 3},
+            "Cluck Norris": {"speed": 9, "stamina": 6, "luck": 8},
+            "Eggward Scissorbeak": {"speed": 8, "stamina": 6, "luck": 6},
+        }
+
+        total = len(chickens)
+        avg_speed = sum(c["speed"] for c in chickens.values()) / total
+        avg_stamina = sum(c["stamina"] for c in chickens.values()) / total
+        avg_luck = sum(c["luck"] for c in chickens.values()) / total
+
+        top_speed = max(chickens, key=lambda c: chickens[c]["speed"])
+        top_stamina = max(chickens, key=lambda c: chickens[c]["stamina"])
+        top_luck = max(chickens, key=lambda c: chickens[c]["luck"])
+        best_payout = max(chickens, key=lambda c: eval(chickens[c]["odds"]) if "odds" in chickens[c] else 0)
+
+        stats = {
+            "total_chickens": total,
+            "average_speed": round(avg_speed, 2),
+            "average_stamina": round(avg_stamina, 2),
+            "average_luck": round(avg_luck, 2),
+            "top_speed": top_speed,
+            "top_stamina": top_stamina,
+            "top_luck": top_luck,
+            "best_payout": best_payout,
+        }
+
+        return render_template("racestats.html", stats=stats)
 
     @app.route("/slots", methods=["POST"])
     def slots():
@@ -614,10 +678,7 @@ def create_app():
     
     @app.route("/plant-battle", methods=["GET"])
     def plant_battle():
-        # Available plant roster
         plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
-
-        # Each plant’s base stats
         plant_stats = {
             "Cactus": {"attack": 7, "defense": 9, "rarity": "Common"},
             "Venus Flytrap": {"attack": 9, "defense": 6, "rarity": "Rare"},
@@ -629,34 +690,34 @@ def create_app():
         bet = request.args.get("bet", default=10, type=int)
         chosen_plant = request.args.get("plant", default=random.choice(plants))
 
-        # Validate bet and input
         if bet <= 0:
             return jsonify({"error": "Bet must be a positive integer"}), 400
         if chosen_plant not in plants:
             return jsonify({"error": f"Plant must be one of {plants}"}), 400
 
-        # Randomly determine winner
         winner = random.choice(plants)
         won = chosen_plant == winner
         winnings = bet * 2 if won else 0
+        
+        rarity_bonus = 0
+        if plant_stats[chosen_plant]["rarity"] == "Rare" and won:
+            rarity_bonus = int(bet * 0.5) 
+            winnings += rarity_bonus
 
         chosen_stats = plant_stats[chosen_plant]
         winner_stats = plant_stats[winner]
 
-        # Battle narrative
         if chosen_plant == winner:
-            message = f"{chosen_plant} absorbed sunlight and claimed a glorious victory!"
+            message = f"{chosen_plant} basked in radiant sunlight and triumphed gloriously!"
         else:
             if chosen_stats["attack"] > winner_stats["attack"]:
                 message = f"{chosen_plant} fought valiantly but eventually wilted in defeat."
             else:
                 message = f"{chosen_plant} was overwhelmed by {winner}'s ferocity!"
 
-        # Dynamic conditions
         environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
         weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
 
-        # Final JSON response
         return jsonify({
             "plants": plants,
             "chosen_plant": chosen_plant,
@@ -681,7 +742,15 @@ def create_app():
             {"title": "Double Vision", "artist": "Ocean Alley", "genre": "Alternative Rock", "year": 2022},
             {"title": "Preoccupied", "artist": "Mac DeMarco", "genre": "Lo-fi Pop", "year": 2019},
             {"title": "Matador", "artist": "The Buttertones", "genre": "Surf rock", "year": 2017},
+            {"title": "Vibrations", "artist": "Peach Fur", "genre": "Reggae Rock", "year": 2015}
         ]
+
+        genre_filter = request.args.get("genre")
+        if genre_filter:
+            filtered = [s for s in songs if s["genre"].lower() == genre_filter.lower()]
+            if not filtered:
+                return jsonify({"success": False, "error": "No songs found for that genre"}), 404
+            songs = filtered
 
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
@@ -723,8 +792,16 @@ def create_app():
                 "is_even": result % 2 == 0,
             }
         )
+
+
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
     
     return app  # <== ALSO DON'T DELETE
+
 
 
 app = create_app()  # <== ALSO ALSO DON'T DELETE
@@ -742,11 +819,6 @@ def ping():
     }), 200
 # --- end /api/ping ---
 
-
-
-@app.route("/pokemon")
-def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"})
 
 
 
@@ -895,7 +967,6 @@ def get_underwater_properties():
 def kasen():
     return render_template("kasen.html"), 200
 
-# Start of '/hockey' endpoint code
 
 # List of fake hockey game results
 hockey_results1 = [
@@ -914,8 +985,26 @@ hockey_results2 = [
     "Jets 0 - 3 Stars",
 ]
 
+# start of '/hockey_teams' endpoint
 
-@app.route("/api/hockey", methods=["GET"])
+def extract_teams(results):
+    teams = set()
+    for result in results:
+        parts = result.split(" - ")
+        team1_info = parts[0].rsplit(" ", 1)[0]  # e.g., "Flames 3" → "Flames"
+        team2_info = parts[1].split(" ", 1)[1]   # e.g., "2 Canuks" → "Canuks"
+        teams.add(team1_info)
+        teams.add(team2_info)
+    return teams
+
+@app.route("/hockey_teams", methods=['GET'])
+def get_teams():
+    all_teams = extract_teams(hockey_results1).union(extract_teams(hockey_results2))
+    return jsonify({"teams": sorted(list(all_teams))})
+
+# Start of '/hockey' endpoint code
+
+@app.route("/hockey_matchup", methods=["GET"])
 def get_random_matchup():
     all_lists = [hockey_results1, hockey_results2]
     selected_list = random.choice(all_lists)
@@ -951,10 +1040,6 @@ bets = []
 
 @app.route("/stats/mean", methods=["GET"])
 def stats_mean():
-    """
-    GET /stats/mean?vals=1,2,3
-    Returns {"mean": 2.0}. Validates input and errors cleanly.
-    """
     raw = request.args.get("vals", "")
     if not raw:
         return jsonify({"error": "missing vals"}), 400
@@ -964,10 +1049,16 @@ def stats_mean():
         return jsonify({"error": "vals must be comma-separated numbers"}), 400
     if not nums:
         return jsonify({"error": "no numeric values provided"}), 400
+
     mean_val = sum(nums) / len(nums)
+
+    digits = request.args.get("round", type=int)
+    if digits is not None:
+        if digits < 0 or digits > 10:
+            return jsonify({"error": "round must be between 0 and 10"}), 400
+        mean_val = round(mean_val, digits)
+
     return jsonify({"mean": mean_val}), 200
-
-
 
 
 
@@ -1102,6 +1193,39 @@ def check_bingo():
 
     return jsonify({"bingo": False}), 200
 
+
+@app.route('/double_or_nothing', methods=['GET'])
+def double_or_nothing():
+    amount = request.args.get('amount', default=None, type=float)
+    if amount is None or amount <= 0:
+        return jsonify({
+            "error": "You must bet a positive number amount, e.g. /double_or_nothing?amount=50"
+        }), 400
+
+    result = random.choice(["win", "lose"])
+    if result == "win":
+        new_balance = amount * 2
+        message = random.choice([
+            "You doubled it! Luck is on your side (for now).",
+            "Winner winner, chicken dinner!",
+            "You actually won? The odds tremble before you!"
+        ])
+    else:
+        new_balance = 0
+        message = random.choice([
+            "Oof. You lost everything. Again.",
+            "The house always wins.",
+            "Better luck next refresh."
+        ])
+
+    return jsonify({
+        "bet": amount,
+        "outcome": result,
+        "new_balance": new_balance,
+        "message": message
+    })
+
+
 # This endpoint will return client data
 @app.route("/client")
 def index():
@@ -1190,20 +1314,6 @@ def sandals_fortune():
     return jsonify(chosen)
 
 
-@app.route("/fav_quote")
-def fav_quote():
-    fav_quote = [
-        "Just one small positive thought in the morning can change your whole day. - Dalai Lama",
-        "Opportunities don't happen, you create them. - Chris Grosser",
-        "If you can dream it, you can do it. - Walt Disney",
-        "The only way to do great work is to love what you do. - Steve Jobs",
-        "Why fit in when you were born to stand out? - Dr. Seuss"
-        "One day or day one. You decide. - Unknown"
-        "Slow is smooth, smooth is fast, fast is sexy. - Old Grunt",
-    ]
-    return jsonify({"fav_quote": random.choice(fav_quote)})
-
-
 # hellhole start
 hellhole_facts = [
     "It’s said that the heat here can melt steel.",
@@ -1247,7 +1357,7 @@ def hellhole():
         "description": "Hellhole is a great place to visit... if you're into nightmares.",
         "fact": random.choice(hellhole_facts),
         "unlivable_homes": unlivable_homes,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": str(datetime.now()) + "Z",
     }
     return jsonify(message)
 
@@ -1695,6 +1805,29 @@ def color():
     """Return either 'black' or 'red' at random."""
     choice = random.choice(["black", "red"])
     return jsonify({"color": choice}), 200
+
+@app.route("/stats/median", methods=["GET"])
+def stats_median():
+    raw = request.args.get("vals", "")
+    if not raw:
+        return jsonify({"error": "missing vals"}), 400
+    try:
+        nums = [float(x.strip()) for x in raw.split(",") if x.strip() != ""]
+    except ValueError:
+        return jsonify({"error": "vals must be comma-separated numbers"}), 400
+    if not nums:
+        return jsonify({"error": "no numeric values provided"}), 400
+
+    nums.sort()
+    n = len(nums)
+    mid = n // 2
+    if n % 2 == 1:
+        med = nums[mid]
+    else:
+        med = (nums[mid - 1] + nums[mid]) / 2.0
+
+    return jsonify({"median": med}), 200
+
 
 
 # ---- Keep this at the bottom. Change port if you like. ----
