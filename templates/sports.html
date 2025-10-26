@@ -55,7 +55,8 @@
         }
 
         input[type="text"],
-        input[type="number"] {
+        input[type="number"],
+        select {
             padding: 10px;
             border: 1px solid var(--primary-color);
             border-radius: var(--border-radius);
@@ -123,8 +124,17 @@
 </head>
 <body>
     <div class="container">
-        <h2>Matchup: {{ team1 }} vs {{ team2 }}</h2>
+        <form method="GET" action="/sports">
+            <label for="league">Choose a League:</label>
+            <select name="league" id="league" onchange="this.form.submit()">
+                <option value="NFL" {% if league == 'NFL' %}selected{% endif %}>NFL</option>
+                <option value="NBA" {% if league == 'NBA' %}selected{% endif %}>NBA</option>
+            </select>
+        </form>
+
+        <h2>{{ league }} Matchup: {{ team1 }} vs {{ team2 }}</h2>
         <form method="POST">
+            <input type="hidden" name="league" value="{{ league }}">
             <input type="hidden" name="team1" value="{{ team1 }}">
             <input type="hidden" name="team2" value="{{ team2 }}">
             <input type="hidden" name="winner" value="{{ winner }}">
@@ -140,7 +150,7 @@
 
             <div class="button-row">
                 <input type="submit" value="Place Bet">
-                <button type="button" onclick="window.location.href='/sports?reset=true';">Reset</button>
+                <button type="button" onclick="window.location.href='/sports?reset=true&league={{ league }}';">Reset</button>
             </div>
         </form>
 
