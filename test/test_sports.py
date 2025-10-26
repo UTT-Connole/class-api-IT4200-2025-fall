@@ -2,6 +2,37 @@ import re
 import pytest
 from app import app  # assuming app is created at import time
 
+def test_sports_expected_teams(client):
+    # Expected AFC and NFC teams
+    afc_teams = {
+        "Bills", "Dolphins", "Patriots", "Jets",  # AFC East
+        "Ravens", "Bengals", "Browns", "Steelers",  # AFC North
+        "Texans", "Colts", "Jaguars", "Titans",  # AFC South
+        "Broncos", "Chiefs", "Raiders", "Chargers"  # AFC West
+    }
+
+    nfc_teams = {
+        "Cowboys", "Giants", "Eagles", "Commanders",  # NFC East
+        "Bears", "Lions", "Packers", "Vikings",  # NFC North
+        "Falcons", "Panthers", "Saints", "Buccaneers",  # NFC South
+        "Cardinals", "Rams", "49ers", "Seahawks"  # NFC West
+    }
+    resp = client.get("/sports")
+
+    # Parse the response HTML to extract the teams
+    html = resp.get_data(as_text=True)
+    assert "Matchup:" in html, "Response does not contain a matchup"
+
+    # Extract the teams from the matchup
+    import re
+    match = re.search(r"Matchup:\s*([A-Za-z0-9' \-\.]+)\s+vs\s+([A-Za-z0-9' \-\.]+)", html)
+    assert match, "Could not extract teams from the matchup"
+    team1, team2 = match.groups()
+
+    # Verify that the teams are in the expected AFC or NFC teams
+    assert team1 in afc_teams.union(nfc_teams), f"Team {team1} is not in the expected teams"
+    assert team2 in afc_teams.union(nfc_teams), f"Team {team2} is not in the expected teams"
+    
 def test_reset_button(client):
     # First GET request to get the initial matchup
     resp1 = client.get("/sports")

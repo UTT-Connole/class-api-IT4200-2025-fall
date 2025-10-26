@@ -334,30 +334,40 @@ def create_app():
 
     @app.route("/sports", methods=["GET", "POST"])
     def sports():
-        teams = [
-            "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens", "Packers", "Dolphins",
-            "Lions", "Steelers", "Jets", "Chargers", "Giants", "Patriots", "Bears", "Raiders",
-            "Browns", "Bengals", "Broncos", "Texans", "Colts", "Jaguars", "Titans", "Vikings",
-            "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
+        # Teams divided into AFC and NFC
+        afc_teams = [
+            "Bills", "Dolphins", "Patriots", "Jets",  # AFC East
+            "Ravens", "Bengals", "Browns", "Steelers",  # AFC North
+            "Texans", "Colts", "Jaguars", "Titans",  # AFC South
+            "Broncos", "Chiefs", "Raiders", "Chargers"  # AFC West
         ]
 
-        # Check if reset is requested
+        nfc_teams = [
+            "Cowboys", "Giants", "Eagles", "Commanders",  # NFC East
+            "Bears", "Lions", "Packers", "Vikings",  # NFC North
+            "Falcons", "Panthers", "Saints", "Buccaneers",  # NFC South
+            "Cardinals", "Rams", "49ers", "Seahawks"  # NFC West
+        ]
+
         if request.method == "GET" and request.args.get("reset") == "true":
-            team1, team2 = random.sample(teams, 2)
+            team1 = random.choice(afc_teams)
+            team2 = random.choice(nfc_teams)
             winner = random.choice([team1, team2])
             return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
 
         if request.method == "GET":
-            team1, team2 = random.sample(teams, 2)
+            team1 = random.choice(afc_teams)
+            team2 = random.choice(nfc_teams)
             winner = random.choice([team1, team2])
             return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
-        
+
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            team1, team2 = random.sample(teams, 2)
+        if not team1 or not team2 or team1 not in afc_teams + nfc_teams or team2 not in afc_teams + nfc_teams or team1 == team2:
+            team1 = random.choice(afc_teams)
+            team2 = random.choice(nfc_teams)
             winner = random.choice([team1, team2])
 
         bet = (request.form.get("bet") or "").strip()
