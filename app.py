@@ -334,30 +334,51 @@ def create_app():
 
     @app.route("/sports", methods=["GET", "POST"])
     def sports():
-        teams = [
-            "49ers", "Cowboys", "Eagles", "Chiefs", "Bills", "Ravens", "Packers", "Dolphins",
-            "Lions", "Steelers", "Jets", "Chargers", "Giants", "Patriots", "Bears", "Raiders",
-            "Browns", "Bengals", "Broncos", "Texans", "Colts", "Jaguars", "Titans", "Vikings",
-            "Saints", "Buccaneers", "Falcons", "Panthers", "Rams", "Seahawks", "Cardinals", "Commanders"
+        nfl_afc_teams = [
+            "Bills", "Dolphins", "Patriots", "Jets",
+            "Ravens", "Bengals", "Browns", "Steelers",
+            "Texans", "Colts", "Jaguars", "Titans",
+            "Broncos", "Chiefs", "Raiders", "Chargers"
         ]
 
-        # Check if reset is requested
+        nfl_nfc_teams = [
+            "Cowboys", "Giants", "Eagles", "Commanders",
+            "Bears", "Lions", "Packers", "Vikings",
+            "Falcons", "Panthers", "Saints", "Buccaneers",
+            "Cardinals", "Rams", "49ers", "Seahawks"
+        ]
+
+        nba_teams = [
+        "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers", "Mavericks",
+        "Nuggets", "Pistons", "Warriors", "Rockets", "Pacers", "Clippers",
+        "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans",
+        "Knicks", "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings",
+        "Spurs", "Raptors", "Jazz", "Wizards"
+        ]
+
+        league = request.args.get("league") or request.form.get("league") or "NFL"
+
+        if league.upper() == "NBA":
+            league_teams = nba_teams
+        else:
+            league_teams = nfl_afc_teams + nfl_nfc_teams
+
         if request.method == "GET" and request.args.get("reset") == "true":
-            team1, team2 = random.sample(teams, 2)
+            team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
 
         if request.method == "GET":
-            team1, team2 = random.sample(teams, 2)
+            team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None)
-        
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
+
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
         winner = (request.form.get("winner") or "").strip()
 
-        if not team1 or not team2 or team1 not in teams or team2 not in teams or team1 == team2:
-            team1, team2 = random.sample(teams, 2)
+        if not team1 or not team2 or team1 not in league_teams or team2 not in league_teams or team1 == team2:
+            team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
 
         bet = (request.form.get("bet") or "").strip()
@@ -380,7 +401,6 @@ def create_app():
             if amount <= 0:
                 bank_message = "Amount must be a positive integer; bank unchanged."
             else:
-                
                 user = bank.get_user_bank(username)
                 if not won_bet and user.get("balance", 0) < amount:
                     bank_message = "Insufficient funds for this bet; bank unchanged."
@@ -398,6 +418,7 @@ def create_app():
             bet=bet,
             won_bet=won_bet,
             bank_message=bank_message,
+            league=league,
         )
 
 
