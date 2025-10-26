@@ -1756,6 +1756,29 @@ def color():
     choice = random.choice(["black", "red"])
     return jsonify({"color": choice}), 200
 
+@app.route("/stats/median", methods=["GET"])
+def stats_median():
+    raw = request.args.get("vals", "")
+    if not raw:
+        return jsonify({"error": "missing vals"}), 400
+    try:
+        nums = [float(x.strip()) for x in raw.split(",") if x.strip() != ""]
+    except ValueError:
+        return jsonify({"error": "vals must be comma-separated numbers"}), 400
+    if not nums:
+        return jsonify({"error": "no numeric values provided"}), 400
+
+    nums.sort()
+    n = len(nums)
+    mid = n // 2
+    if n % 2 == 1:
+        med = nums[mid]
+    else:
+        med = (nums[mid - 1] + nums[mid]) / 2.0
+
+    return jsonify({"median": med}), 200
+
+
 
 # ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == "__main__":
