@@ -1093,6 +1093,39 @@ def check_bingo():
 
     return jsonify({"bingo": False}), 200
 
+
+@app.route('/double_or_nothing', methods=['GET'])
+def double_or_nothing():
+    amount = request.args.get('amount', default=None, type=float)
+    if amount is None or amount <= 0:
+        return jsonify({
+            "error": "You must bet a positive number amount, e.g. /double_or_nothing?amount=50"
+        }), 400
+
+    result = random.choice(["win", "lose"])
+    if result == "win":
+        new_balance = amount * 2
+        message = random.choice([
+            "You doubled it! Luck is on your side (for now).",
+            "Winner winner, chicken dinner!",
+            "You actually won? The odds tremble before you!"
+        ])
+    else:
+        new_balance = 0
+        message = random.choice([
+            "Oof. You lost everything. Again.",
+            "The house always wins.",
+            "Better luck next refresh."
+        ])
+
+    return jsonify({
+        "bet": amount,
+        "outcome": result,
+        "new_balance": new_balance,
+        "message": message
+    })
+
+
 # This endpoint will return client data
 @app.route("/client")
 def index():

@@ -72,6 +72,10 @@ Each dictionary is a cell in the bingo card, storing the value and if the cell i
 Every 5 cells increases the range of possible values by 15.
 Center space is always "FREE" and always marked.
 
+## /double_or_nothing
+Endpoint that has a 50/50 chance of doubling your money, or making you lose it all.
+Enter amount argument by adding ?amount=<number> in endpoint url.
+
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
 
