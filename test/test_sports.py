@@ -2,6 +2,33 @@ import re
 import pytest
 from app import app  # assuming app is created at import time
 
+def test_sports_league_switch(client):
+    # Define expected team sets
+    nfl_teams = {
+        "49ers", "Bears", "Bengals", "Bills", "Broncos", "Browns", "Buccaneers",
+        "Cardinals", "Chargers", "Chiefs", "Colts", "Commanders", "Cowboys",
+        "Dolphins", "Eagles", "Falcons", "Giants", "Jaguars", "Jets", "Lions",
+        "Packers", "Panthers", "Patriots", "Raiders", "Rams", "Ravens",
+        "Saints", "Seahawks", "Steelers", "Texans", "Titans", "Vikings"
+    }
+    nba_teams = {
+        "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers", "Mavericks",
+        "Nuggets", "Pistons", "Warriors", "Rockets", "Pacers", "Clippers",
+        "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans",
+        "Knicks", "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings",
+        "Spurs", "Raptors", "Jazz", "Wizards"
+    }
+
+    # 1️⃣ Test NFL
+    resp_nfl = client.get("/sports?sport=nfl")
+    assert resp_nfl.status_code == 200
+    html_nfl = resp_nfl.get_data(as_text=True)
+    nfl_match = any(team in html_nfl for team in nfl_teams)
+    nba_match = any(team in html_nfl for team in nba_teams)
+    assert nfl_match, "Expected NFL team names when sport=nfl"
+    assert not nba_match, "Did not expect NBA teams when sport=nfl"
+
+
 def test_sports_expected_teams(client):
     # Expected AFC and NFC teams
     afc_teams = {
