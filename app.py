@@ -426,13 +426,6 @@ def create_app():
                 "luck": 5,
                 "fun_fact": "Will randomly stop to enjoy the view—mostly just staring at clouds."
             },
-            "Scrambled Lightning": {
-                "odds": "7/10",
-                "speed": 9,
-                "stamina": 4,
-                "luck": 7,
-                "fun_fact": "Has a personal rivalry with every rooster named “Cluck Norris.”"
-            },
             "Hen Solo": {
                 "odds": "5/10",
                 "speed": 7,
