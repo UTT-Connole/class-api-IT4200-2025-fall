@@ -959,10 +959,6 @@ bets = []
 
 @app.route("/stats/mean", methods=["GET"])
 def stats_mean():
-    """
-    GET /stats/mean?vals=1,2,3
-    Returns {"mean": 2.0}. Validates input and errors cleanly.
-    """
     raw = request.args.get("vals", "")
     if not raw:
         return jsonify({"error": "missing vals"}), 400
@@ -972,10 +968,16 @@ def stats_mean():
         return jsonify({"error": "vals must be comma-separated numbers"}), 400
     if not nums:
         return jsonify({"error": "no numeric values provided"}), 400
+
     mean_val = sum(nums) / len(nums)
+
+    digits = request.args.get("round", type=int)
+    if digits is not None:
+        if digits < 0 or digits > 10:
+            return jsonify({"error": "round must be between 0 and 10"}), 400
+        mean_val = round(mean_val, digits)
+
     return jsonify({"mean": mean_val}), 200
-
-
 
 
 
