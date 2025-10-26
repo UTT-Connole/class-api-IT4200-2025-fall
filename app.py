@@ -596,10 +596,7 @@ def create_app():
     
     @app.route("/plant-battle", methods=["GET"])
     def plant_battle():
-        # Available plant roster
         plants = ["Cactus", "Venus Flytrap", "Sunflower", "Bamboo", "Poison Ivy"]
-
-        # Each plant’s base stats
         plant_stats = {
             "Cactus": {"attack": 7, "defense": 9, "rarity": "Common"},
             "Venus Flytrap": {"attack": 9, "defense": 6, "rarity": "Rare"},
@@ -611,13 +608,11 @@ def create_app():
         bet = request.args.get("bet", default=10, type=int)
         chosen_plant = request.args.get("plant", default=random.choice(plants))
 
-        # Validate bet and input
         if bet <= 0:
             return jsonify({"error": "Bet must be a positive integer"}), 400
         if chosen_plant not in plants:
             return jsonify({"error": f"Plant must be one of {plants}"}), 400
 
-        # Randomly determine winner
         winner = random.choice(plants)
         won = chosen_plant == winner
         winnings = bet * 2 if won else 0
@@ -630,20 +625,17 @@ def create_app():
         chosen_stats = plant_stats[chosen_plant]
         winner_stats = plant_stats[winner]
 
-        # Battle narrative
         if chosen_plant == winner:
-            message = f"{chosen_plant} absorbed sunlight and claimed a glorious victory!"
+            message = f"{chosen_plant} basked in radiant sunlight and triumphed gloriously!"
         else:
             if chosen_stats["attack"] > winner_stats["attack"]:
                 message = f"{chosen_plant} fought valiantly but eventually wilted in defeat."
             else:
                 message = f"{chosen_plant} was overwhelmed by {winner}'s ferocity!"
 
-        # Dynamic conditions
         environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
         weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
 
-        # Final JSON response
         return jsonify({
             "plants": plants,
             "chosen_plant": chosen_plant,
