@@ -1,6 +1,5 @@
 # class-api-IT4200-2025-fall
 ---
-<
 ## The Coding Commandments
 
 - Thou shalt not set before the API any emojis, nor bow down unto them.
@@ -8,6 +7,18 @@
 - Thou shalt not comment out code; thou shalt purge it utterly.
 - Thou shalt not duplicate endpoints, lest confusion multiply in the land.
 - Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
+
+---
+## Dockerfile Config Instructions
+
+1. Install Docker [Here](https://www.docker.com/)
+2. Make sure the user running Docker has permissions to run Docker
+3. Navigate to this repo directory and run `docker build -t api_image .`
+4. Then run `docker run -d -p 8000:8000 --name api_container api_image`
+5. From any browser, access [http://localhost:8000](http://localhost:8000)
+
+You should be able to access the landing page, and access the rest of our endpoints.
+
 
 ## DYLAN's MINES GAMBLING GAME W UI
 Run this really cool mine game.
