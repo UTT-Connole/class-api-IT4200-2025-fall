@@ -2,11 +2,12 @@
 ---
 ## The Coding Commandments
 
-- Thou shalt not set before the API any emojis, nor bow down unto them.
-- Honor thy professor, and submit to his benevolent dominion over this work.
-- Thou shalt not comment out code; thou shalt purge it utterly.
-- Thou shalt not duplicate endpoints, lest confusion multiply in the land.
-- Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
+1. Thou shalt not set before the API any emojis, nor bow down unto them.
+1. Honor thy professor, and submit to his benevolent dominion over this work.
+1. Thou shalt not comment out code; thou shalt purge it utterly.
+1. Thou shalt not duplicate endpoints, lest confusion multiply in the land.
+1. Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
+1. Thou shalt not lay heavy burdens upon the tests; keep them swift of foot and free of sloth.
 
 ---
 ## Dockerfile Config Instructions
