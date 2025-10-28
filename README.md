@@ -20,6 +20,24 @@
 
 You should be able to access the landing page, and access the rest of our endpoints.
 
+## Pylint:
+Pylint is the tool that will check for sins committed against the Coding Commandments every time you push or pull code. 
+
+## What is .pylintrc?
+The .pylintrc file is the configuration file for our Pylint. 
+It tells Pylint which rules to check, ignore, or adjust. 
+This will be our “rules list”/"coding commandments".
+
+Please update the README when checks are added to the pylint code:
+* Missing or extra spaces
+* Unused variables or imports
+* Code that doesn’t follow standard Python style
+* Potential bugs or bad practices
+  
+Run pylint yourself to test your code like so (This tests the app.py and code in the test folder):
+```
+pylint app.py test
+```
 
 ## DYLAN's MINES GAMBLING GAME W UI
 Run this really cool mine game.
