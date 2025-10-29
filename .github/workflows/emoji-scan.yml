@@ -27,4 +27,4 @@ jobs:
       - name: Run emoji scan
         run: |
           . .venv/bin/activate
-          python /class-api-IT4200-2025-fall/.github/workflows/scripts/emoji_scan.py
+          python ./.github/workflows/scripts/emoji_scan.py
