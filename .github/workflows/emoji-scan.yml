@@ -87,11 +87,10 @@ jobs:
                                 for i, line in enumerate(fh, start=1):
                                     if any(e in line for e in emojis) or EMOJI_REGEX.search(line):
                                         emoji_hits.append(f"{path}: line {i}: {line.strip()}")
-                EOF
 
                     if emoji_hits:
                         raise AssertionError("\n".join(emoji_hits))
 
                 if __name__ == "__main__":
                     test_no_emojis_in_repo()
-                    EOF
+                EOF
