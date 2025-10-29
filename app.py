@@ -23,9 +23,11 @@ import json
 import time
 from flask_cors import CORS
 
+### 😄 
+## ❤️
+test= "😘😘😘😘😘😘"
 
-
-
+test = "😘😘😘"
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
