@@ -1,26 +1,20 @@
 [MASTER]
-# Ignore typical build or virtual environment folders
 ignore=venv,.venv,__pycache__,build,dist
 
 [MESSAGES CONTROL]
-# Disable all message types except real errors (E)
 disable=all
 enable=E
 
 [REPORTS]
-# Make output clean and prevent unnecessary info
 output-format=colorized
 reports=no
 score=no
 
 [FORMAT]
-# Optional formatting rules (not enforced since disabled)
 max-line-length=100
 
 [TYPECHECK]
-# Ignore missing imports to prevent false positives in CI
 ignored-modules=requests,flask
 
 [LOGGING]
-# Prevent logging-format warnings
 disable=logging-fstring-interpolation
