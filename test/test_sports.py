@@ -19,7 +19,7 @@ def test_sports_league_switch(client):
         "Spurs", "Raptors", "Jazz", "Wizards"
     }
 
-    # 1️⃣ Test NFL
+    # 1️ Test NFL
     resp_nfl = client.get("/sports?sport=nfl")
     assert resp_nfl.status_code == 200
     html_nfl = resp_nfl.get_data(as_text=True)
