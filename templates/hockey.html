@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    <h1>🏒 Guess the Hockey Game Winner</h1>
+    <h1>Guess the Hockey Game Winner</h1>
     <button onclick="fetchGame()">New Matchup</button>
     <div id="matchup"></div>
 
@@ -75,7 +75,7 @@
             let winner = score1 > score2 ? currentMatch.team1 :
                          score2 > score1 ? currentMatch.team2 : "It's a tie!";
 
-            document.getElementById('result').textContent = `🏆 Winner: ${winner} (${score1} - ${score2})`;
+            document.getElementById('result').textContent = `Winner: ${winner} (${score1} - ${score2})`;
 
             if (teamImages[winner]) {
                 document.body.style.backgroundImage = `url('${teamImages[winner]}')`;
