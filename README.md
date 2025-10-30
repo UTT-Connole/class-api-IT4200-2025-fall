@@ -27,7 +27,7 @@ There is a GitHub action, you can find it [here](./.github/workflows/bump-semver
 
 ## Emoji Scanner
 
-There is GitHub action called Emoji Scan. The action scans all of our production files for the use of those diabolical emojis. This action is triggered upon pull request and pushes.
+There is GitHub action called Emoji Scan. The action scans all of our production files for the use of those diabolical emojis. This action is triggered upon pull requests.
 
 If you like to run the scan outside of those cases, run this command : python ./.github/workflows/scripts/emoji_scan.py
 

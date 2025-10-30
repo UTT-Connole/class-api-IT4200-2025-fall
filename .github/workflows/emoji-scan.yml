@@ -1,7 +1,6 @@
 name: Emoji Scan
 
 on:
-  push:
   pull_request:
 
 jobs:
