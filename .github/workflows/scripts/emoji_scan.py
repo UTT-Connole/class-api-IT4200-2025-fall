@@ -51,7 +51,7 @@ def test_no_emojis_in_repo():
             path = os.path.join(root, f)
             if (
                 f.startswith(".")
-                or not f.endswith((".py", ".txt", ".md", ".json", ".yaml", ".yml", ".html",".db", ".csv", ".js"))
+                or not f.endswith((".py", ".txt", ".md", ".json", ".yaml", ".yml", ".html", ".db", ".csv", ".js"))
                 or any(excluded in path for excluded in EXCLUDED_PATHS)
             ):
                 continue
@@ -63,4 +63,20 @@ def test_no_emojis_in_repo():
                         emoji_hits.append(f"{path}: line {i}: {line.strip()}")
 
     if emoji_hits:
-        raise AssertionError("\n".join(emoji_hits))
+        print("Emojis detected:")
+        for hit in emoji_hits:
+            print(hit)
+        raise AssertionError(f"{len(emoji_hits)} emoji-containing lines found.")
+    else:
+        print("No emojis found in repository.")
+
+
+if __name__ == "__main__":
+    try:
+        test_no_emojis_in_repo()
+    except AssertionError as e:
+        print(str(e))
+        exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
+        exit(2)
