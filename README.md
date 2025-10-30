@@ -1,13 +1,35 @@
 # class-api-IT4200-2025-fall
 ---
-<
 ## The Coding Commandments
 
-- Thou shalt not set before the API any emojis, nor bow down unto them.
-- Honor thy professor, and submit to his benevolent dominion over this work.
-- Thou shalt not comment out code; thou shalt purge it utterly.
-- Thou shalt not duplicate endpoints, lest confusion multiply in the land.
-- Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
+1. Thou shalt not set before the API any emojis, nor bow down unto them.
+1. Honor thy professor, and submit to his benevolent dominion over this work.
+1. Thou shalt not comment out code; thou shalt purge it utterly.
+1. Thou shalt not duplicate endpoints, lest confusion multiply in the land.
+1. Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
+1. Thou shalt not lay heavy burdens upon the tests; keep them swift of foot and free of sloth.
+
+---
+## Dockerfile Config Instructions
+
+1. Install Docker [Here](https://www.docker.com/)
+2. Make sure the user running Docker has permissions to run Docker
+3. Navigate to this repo directory and run `docker build -t api_image .`
+4. Then run `docker run -d -p 8000:8000 --name api_container api_image`
+5. From any browser, access [http://localhost:8000](http://localhost:8000)
+
+You should be able to access the landing page, and access the rest of our endpoints.
+
+## Auto Bump Semantic Versioning
+
+There is a GitHub action, you can find it [here](./.github/workflows/bump-semver.yml), that will auto increment our semantic versioning. All you have to do is add `#major`, `#minor`, or `#patch` in your **MERGE COMMIT** message title and it will create the correct tag attached to that merge commit. This is triggered on PR's closed and merged, so when you merge a PR, add it then. If no tag is included, it will default to a minor change. 
+> Worked on as part of issue #278
+
+## Emoji Scanner
+
+There is GitHub action called Emoji Scan. The action scans all of our production files for the use of those diabolical emojis. This action is triggered upon pull requests.
+
+If you like to run the scan outside of those cases, run this command : python ./.github/workflows/scripts/emoji_scan.py
 
 ## DYLAN's MINES GAMBLING GAME W UI
 Run this really cool mine game.
@@ -71,6 +93,10 @@ This endpoint generates a 5x5 bingo card that is a list of dictionaries with ran
 Each dictionary is a cell in the bingo card, storing the value and if the cell is marked.
 Every 5 cells increases the range of possible values by 15.
 Center space is always "FREE" and always marked.
+
+## /double_or_nothing
+Endpoint that has a 50/50 chance of doubling your money, or making you lose it all.
+Enter amount argument by adding ?amount=<number> in endpoint url.
 
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings

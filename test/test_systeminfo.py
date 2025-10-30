@@ -1,12 +1,8 @@
-from app import app
-
-def test_system_info_status_code():
-    with app.test_client() as client:
+def test_system_info_status_code(client):
         resp = client.get("/system-info")
         assert resp.status_code == 200, f"GET /system-info returned {resp.status_code}: {resp.get_data(as_text=True)}"
 
-def test_system_info_keys_and_types():
-    with app.test_client() as client:
+def test_system_info_keys_and_types(client):
         resp = client.get("/system-info")
         data = resp.get_json()
         assert isinstance(data, dict), f"Response JSON is not an object: {resp.get_data(as_text=True)}"

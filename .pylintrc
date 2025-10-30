@@ -1,0 +1,28 @@
+[MASTER]
+# Pylint should check both app.py and everything inside the 'test' folder
+ignore=venv,__pycache__,.git
+load-plugins=
+extension-pkg-whitelist=pkg_resources
+
+[MESSAGES CONTROL]
+# Disable some common Flask/test-related warnings
+disable=
+    C0114,  ; missing-module-docstring
+    C0115,  ; missing-class-docstring
+    C0116,  ; missing-function-docstring
+    R0903,  ; too-few-public-methods
+    W0613,  ; unused-argument (common in test functions)
+    W0621,  ; redefined-outer-name (common in pytest fixtures)
+    W1514,  ; using open without encoding (Flask templates)
+    R0801,  ; duplicate code (can trigger on repeated test patterns)
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+
+[TYPECHECK]
+ignored-classes=flask.Blueprint
+generated-members=request.*,jsonify,render_template
+
+[REPORTS]
+output-format=colorized
