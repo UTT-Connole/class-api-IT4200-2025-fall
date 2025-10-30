@@ -32,6 +32,36 @@ def create_app():
     def home():
         return render_template("index.html"), 200
 
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
+    @app.get("/system-info")
+    def system_info():
+        import platform, socket, shutil, multiprocessing
+
+        # disk usage for root
+        try:
+            du = shutil.disk_usage("/")
+            disk_total_gb = round(du.total / (1024**3), 2)
+            disk_free_gb = round(du.free / (1024**3), 2)
+        except Exception:
+            disk_total_gb = disk_free_gb = None
+
+        info = {
+            "hostname": socket.gethostname(),
+            "os": platform.system(),
+            "os_release": platform.release(),
+            "architecture": platform.machine(),
+            "python_version": platform.python_version(),
+            "cpu_count": multiprocessing.cpu_count(),
+            "disk_total_gb": disk_total_gb,
+            "disk_free_gb": disk_free_gb
+            }
+
+        return jsonify(info), 200
+
     @app.route('/gatcha')
     def gatcha():
         rarities = ['C', 'R', 'SR', 'SSR']
@@ -713,7 +743,7 @@ def create_app():
                 message = f"{chosen_plant} was overwhelmed by {winner}'s ferocity!"
 
         environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
-        weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
+        weather = random_weather()
 
         return jsonify({
             "plants": plants,
@@ -724,7 +754,7 @@ def create_app():
             "winnings": winnings,
             "message": message,
             "battle_environment": environment,
-            "weather": weather,
+            "weather": weather["condition"],
             "chosen_stats": chosen_stats,
             "winner_stats": winner_stats,
         })
@@ -790,37 +820,6 @@ def create_app():
             }
         )
     
-    @app.route("/pokemon")
-    def pokemon():
-        return jsonify({"pokemon": "Jigglypuff"})
-    
-    @app.get("/system-info")
-    def system_info():
-        import platform, socket, shutil, multiprocessing
-
-        # disk usage for root
-        try:
-            du = shutil.disk_usage("/")
-            disk_total_gb = round(du.total / (1024**3), 2)
-            disk_free_gb = round(du.free / (1024**3), 2)
-        except Exception:
-            disk_total_gb = disk_free_gb = None
-
-        info = {
-            "hostname": socket.gethostname(),
-            "os": platform.system(),
-            "os_release": platform.release(),
-            "architecture": platform.machine(),
-            "python_version": platform.python_version(),
-            "cpu_count": multiprocessing.cpu_count(),
-            "disk_total_gb": disk_total_gb,
-            "disk_free_gb": disk_free_gb
-            }
-
-        return jsonify(info), 200
-
-
-    
     return app  # <== ALSO DON'T DELETE
 
 
@@ -841,31 +840,23 @@ def ping():
 # --- end /api/ping ---
 
 
-
-
 @app.route("/random-weather")
 def random_weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
     condition = random.choice(conditions)
     temperature = f"{random.randint(-30, 50)}C"
     humidity = f"{random.randint(10, 100)}%"
-    return jsonify(
-        {"condition": condition, "temperature": temperature, "humidity": humidity}
-    )
-
+    weather = {"condition": condition, "temperature": temperature, "humidity": humidity}
+    return weather
 
 @app.route("/hazardous-conditions")
 def hazardous_conditions():
-    # Get the random weather data
     weather_data = random_weather()
-
-    # Extract values
-    weather_data = weather_data.get_json()
+    
     condition = weather_data["condition"]
     temperature = int(weather_data["temperature"].replace("C", ""))
     humidity = int(weather_data["humidity"].replace("%", ""))
 
-    # Determine hazard based on actual conditions
     if condition == "Snowy" and temperature < -10:
         hazard = "Blizzard Warning"
         severity = "Severe"
@@ -885,15 +876,14 @@ def hazardous_conditions():
         hazard = "No Hazardous Conditions"
         severity = "None"
 
-    return jsonify(
-        {
-            "condition": condition,
-            "temperature": weather_data["temperature"],
-            "humidity": weather_data["humidity"],
-            "hazardous_condition": hazard,
-            "severity": severity,
+    hazardous_conditions = {
+        "condition": condition,
+        "temperature": weather_data["temperature"],
+        "humidity": weather_data["humidity"],
+        "hazardous_condition": hazard,
+        "severity": severity,
         }
-    )
+    return hazardous_conditions
 
 @app.route("/real-weather")
 def real_weather():
