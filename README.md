@@ -9,14 +9,6 @@
 1. Thou shalt keep the tests within the tests/ folder, and tend them with diligence.
 1. Thou shalt not lay heavy burdens upon the tests; keep them swift of foot and free of sloth.
 
-
-😄
-😄
-😄
-
-😄
-😄
-😄😄😄😄😄😄😄😄😄😄😄
 ---
 ## Dockerfile Config Instructions
 
@@ -31,7 +23,13 @@ You should be able to access the landing page, and access the rest of our endpoi
 ## Auto Bump Semantic Versioning
 
 There is a GitHub action, you can find it [here](./.github/workflows/bump-semver.yml), that will auto increment our semantic versioning. All you have to do is add `#major`, `#minor`, or `#patch` in your **MERGE COMMIT** message title and it will create the correct tag attached to that merge commit. This is triggered on PR's closed and merged, so when you merge a PR, add it then. If no tag is included, it will default to a minor change. 
-> Worked on as part of issue #278 
+> Worked on as part of issue #278
+
+## Emoji Scanner
+
+There is GitHub action called Emoji Scan. The action scans all of our production files for the use of those diabolical emojis. This action is triggered upon pull request and pushes.
+
+If you like to run the scan outside of those cases, run this command : python ./.github/workflows/scripts/emoji_scan.py
 
 ## DYLAN's MINES GAMBLING GAME W UI
 Run this really cool mine game.

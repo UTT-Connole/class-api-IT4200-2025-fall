@@ -68,8 +68,7 @@ def test_no_emojis_in_repo():
             print(hit)
         raise AssertionError(f"{len(emoji_hits)} emoji-containing lines found.")
     else:
-        print("No emojis found in repository.")
-
+        print("Congrats! There are no filthy emojis in the repository!")
 
 if __name__ == "__main__":
     try:
