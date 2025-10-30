@@ -32,6 +32,36 @@ def create_app():
     def home():
         return render_template("index.html"), 200
 
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
+    @app.get("/system-info")
+    def system_info():
+        import platform, socket, shutil, multiprocessing
+
+        # disk usage for root
+        try:
+            du = shutil.disk_usage("/")
+            disk_total_gb = round(du.total / (1024**3), 2)
+            disk_free_gb = round(du.free / (1024**3), 2)
+        except Exception:
+            disk_total_gb = disk_free_gb = None
+
+        info = {
+            "hostname": socket.gethostname(),
+            "os": platform.system(),
+            "os_release": platform.release(),
+            "architecture": platform.machine(),
+            "python_version": platform.python_version(),
+            "cpu_count": multiprocessing.cpu_count(),
+            "disk_total_gb": disk_total_gb,
+            "disk_free_gb": disk_free_gb
+            }
+
+        return jsonify(info), 200
+
     @app.route('/gatcha')
     def gatcha():
         rarities = ['C', 'R', 'SR', 'SSR']
@@ -810,10 +840,6 @@ def ping():
 # --- end /api/ping ---
 
 
-@app.route("/pokemon")
-def pokemon():
-    return jsonify({"pokemon": "Jigglypuff"})
-
 @app.route("/random-weather")
 def random_weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
@@ -885,31 +911,6 @@ def real_weather():
     }
 
     return jsonify(current_data, daily_data)
-
-@app.get("/system-info")
-def system_info():
-    import platform, socket, shutil, multiprocessing
-
-    # disk usage for root
-    try:
-        du = shutil.disk_usage("/")
-        disk_total_gb = round(du.total / (1024**3), 2)
-        disk_free_gb = round(du.free / (1024**3), 2)
-    except Exception:
-        disk_total_gb = disk_free_gb = None
-
-    info = {
-        "hostname": socket.gethostname(),
-        "os": platform.system(),
-        "os_release": platform.release(),
-        "architecture": platform.machine(),
-        "python_version": platform.python_version(),
-        "cpu_count": multiprocessing.cpu_count(),
-        "disk_total_gb": disk_total_gb,
-        "disk_free_gb": disk_free_gb
-        }
-
-    return jsonify(info), 200
 
 @app.route("/bank")
 def bank_page():
