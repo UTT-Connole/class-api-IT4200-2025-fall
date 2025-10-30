@@ -47,6 +47,7 @@ def create_app():
         weights = [70, 20, 9, 1]
         # Return three top-level keys so tests expecting a dict of length 3 succeed
         return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+
         pulled_rarity = random.choices(rarities, weights=weights, k=1)[0]
         pulled_item = next(item for item in pool if item["rarity"] == pulled_rarity)
         
@@ -82,10 +83,6 @@ def create_app():
 
 
 
-        
-    
-
-      
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
@@ -843,6 +840,7 @@ def ping():
 
 
 
+
 @app.route("/random-weather")
 def random_weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
@@ -1360,6 +1358,7 @@ def hellhole():
 # hellhole end
 
 # ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
+
 
 @app.route("/blackjack", methods=["GET", "POST"])
 def blackjack():
