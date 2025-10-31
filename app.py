@@ -1210,6 +1210,48 @@ def double_or_nothing():
         "message": message
     })
 
+def generate_minesweeper_grid(difficulty):
+    if difficulty == 'beginner':
+        rows = 9
+        columns = 9
+        mines = 10
+    elif difficulty == 'intermediate':
+        rows = 16
+        columns = 16
+        mines = 40
+    elif difficulty == 'expert':
+        rows = 16
+        columns = 30
+        mines = 99
+    else:
+        return 'Error: invalid difficulty argument. Use "beginner", "intermediate", or "expert" difficulty'
+    
+    grid = [[0 for _ in range(columns)] for _ in range(rows)]
+
+    mine_positions = set()
+    while len(mine_positions) < mines:
+        r = random.randint(0, rows - 1)
+        c = random.randint(0, columns - 1)
+        mine_positions.add((r, c))
+
+    for (r, c) in mine_positions:
+        grid[r][c] = -1
+
+    for (r, c) in mine_positions:
+        for dr in [-1, 0, 1]:
+            for dc in [-1, 0, 1]:
+                nr, nc = r + dr, c + dc
+                if (dr == 0 and dc == 0) or not (0 <= nr < rows and 0 <= nc < columns):
+                    continue
+                if grid[nr][nc] != -1:
+                    grid[nr][nc] += 1
+    #grid[5][5] += 1
+    return grid
+
+@app.route("/minesweeper", methods=['GET'])
+def minesweeper_grid():
+    difficulty = request.args.get('difficulty', default='expert')
+    return jsonify({"grid":generate_minesweeper_grid(difficulty)})
 
 # This endpoint will return client data
 @app.route("/client")
