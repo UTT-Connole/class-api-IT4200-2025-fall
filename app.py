@@ -1245,7 +1245,6 @@ def generate_minesweeper_grid(difficulty):
                     continue
                 if grid[nr][nc] != -1:
                     grid[nr][nc] += 1
-    #grid[5][5] += 1
     return grid
 
 @app.route("/minesweeper", methods=['GET'])
