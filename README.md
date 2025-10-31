@@ -98,6 +98,10 @@ Center space is always "FREE" and always marked.
 Endpoint that has a 50/50 chance of doubling your money, or making you lose it all.
 Enter amount argument by adding ?amount=<number> in endpoint url.
 
+## /minesweeper
+Endpoint generates a minesweeper board and displays it as a dictionary.
+Currently only generates a fully completed board. Is not playable in current state.
+
 ## /Fortune endpoint (Bryson Francis)
 Selects a predetermined fortune from a list of fortunes. Contains untold developer wisdom and mood readings
 
