@@ -364,16 +364,15 @@ def create_app():
             result = "lose"
 
         return jsonify({"result": result, "original_bet": bet, "winnings": winnings})
-
-    @app.get("/drawAcard")
-    def drawAcard():
-        deck = requests.get(
-            "https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1"
-        ).json()
-        card = requests.get(
-            f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1'
-        ).json()
-        print("card", card)
+    
+    @app.route('/drawCard', methods=['GET'])
+    def drawCard():
+        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+        card = {
+            "rank": random.choice(ranks),
+            "suit": random.choice(suits)
+        }
         return jsonify(card)
 
     @app.get('/pokerHandRankings')
