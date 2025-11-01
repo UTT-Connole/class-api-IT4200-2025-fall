@@ -7,6 +7,7 @@ from flask import (
     send_from_directory,
     redirect,
     Blueprint,
+    send_file
 )
 import random
 import os
@@ -61,6 +62,11 @@ def create_app():
             }
 
         return jsonify(info), 200
+    
+    @app.route('/music')
+    def play_m4a():
+        audio_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "wip.m4a")
+        return send_file(audio_path, mimetype='audio/mp4')
 
     @app.route('/gatcha')
     def gatcha():
