@@ -86,6 +86,7 @@ def create_app():
             "weights": weights,
             "last_pull": pulled_item
         })
+
     @app.route("/api/coinflip", methods=["POST"])
     def coinflip():
         """Flip a coin and bet on heads or tails."""
@@ -109,13 +110,6 @@ def create_app():
             "winnings": winnings
         })
 
-
-
-
-        
-    
-
-      
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
