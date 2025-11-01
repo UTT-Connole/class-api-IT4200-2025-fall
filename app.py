@@ -771,6 +771,18 @@ def create_app():
                 return jsonify({"success": False, "error": "No songs found for that genre"}), 404
             songs = filtered
 
+        year_filter = request.args.get("year")
+        if year_filter:
+            try:
+                year_filter = int(year_filter)
+            except ValueError:
+                return jsonify({"success": False, "error": "Year must be a number"}), 400
+
+            filtered = [s for s in songs if s["year"] == year_filter]
+            if not filtered:
+                return jsonify({"success": False, "error": "No songs found for that year"}), 404
+            songs = filtered
+
         song = random.choice(songs)
         return jsonify({"success": True, "song": song})
     

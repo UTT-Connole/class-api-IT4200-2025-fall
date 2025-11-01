@@ -36,9 +36,24 @@ def test_jukebox_genre_filter_not_found(client):
     data = response.get_json()
     assert data["success"] is False
 
-def test_jukebox_contains_vibrations(client):
+def test_jukebox_reponse_structure(client):
     response = client.get("/jukebox")
     assert response.status_code == 200
     data = response.get_json()
     assert "success" in data
     assert isinstance(data["success"], bool)
+
+def test_jukebox_year_valid(client):
+    response = client.get("/jukebox?year=2018")
+    data = response.get_json()
+    assert response.status_code == 200
+    assert data["success"] is True
+    assert data["song"]["year"] == 2018
+
+def test_jukebox_year_invalid_format(client):
+    response = client.get("/jukebox?year=abcd")
+    assert response.status_code == 400
+
+def test_jukebox_year_not_found(client):
+    response = client.get("/jukebox?year=1999")
+    assert response.status_code == 404
