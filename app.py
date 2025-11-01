@@ -590,6 +590,8 @@ def create_app():
         top_luck = max(chickens, key=lambda c: chickens[c]["luck"])
         best_payout = max(chickens, key=lambda c: eval(chickens[c]["odds"]) if "odds" in chickens[c] else 0)
 
+        predicted_winner = max(chickens, key=lambda c: chickens[c]["speed"] + chickens[c]["stamina"] + chickens[c]["luck"])
+
         stats = {
             "total_chickens": total,
             "average_speed": round(avg_speed, 2),
@@ -599,6 +601,7 @@ def create_app():
             "top_stamina": top_stamina,
             "top_luck": top_luck,
             "best_payout": best_payout,
+            "predicted_winner": predicted_winner
         }
 
         return render_template("racestats.html", stats=stats)
