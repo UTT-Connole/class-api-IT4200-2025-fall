@@ -1,4 +1,4 @@
-'''def test_gatcha(client):
+def test_gatcha(client):
     response = client.get('/gatcha')
     assert response.status_code == 200
 
@@ -29,4 +29,4 @@
     assert isinstance(last_pull, dict)
     assert 'name' in last_pull and 'rarity' in last_pull and 'weight' in last_pull
     assert last_pull['rarity'] in expected_rarities
-    assert last_pull['weight'] in expected_weights'''
+    assert last_pull['weight'] in expected_weights
