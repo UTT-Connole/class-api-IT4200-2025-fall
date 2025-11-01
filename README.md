@@ -20,6 +20,25 @@
 
 You should be able to access the landing page, and access the rest of our endpoints.
 
+
+## Pylint:
+Pylint is the tool that will check for sins committed against the Coding Commandments every time you push or pull code.
+
+## What is .pylintrc?
+The .pylintrc file is the configuration file for our Pylint.
+It tells Pylint which rules to check, ignore, or adjust.
+This will be our “rules list”/"coding commandments".
+
+Please update the README when checks are added to the pylint code:
+* Missing or extra spaces
+* Unused variables or imports
+* Code that doesn’t follow standard Python style
+* Potential bugs or bad practices
+  
+Run pylint yourself to test your code like so (This tests the app.py and code in the test folder):
+```
+pylint app.py test
+```
 ## Auto Bump Semantic Versioning
 
 There is a GitHub action, you can find it [here](./.github/workflows/bump-semver.yml), that will auto increment our semantic versioning. All you have to do is add `#major`, `#minor`, or `#patch` in your **MERGE COMMIT** message title and it will create the correct tag attached to that merge commit. This is triggered on PR's closed and merged, so when you merge a PR, add it then. If no tag is included, it will default to a minor change. 
