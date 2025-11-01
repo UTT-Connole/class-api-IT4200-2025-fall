@@ -23,9 +23,6 @@ import json
 import time
 from flask_cors import CORS
 
-
-
-
 def create_app():
 
     app = Flask(__name__)  # <== DON'T DELETE
@@ -34,6 +31,36 @@ def create_app():
     @app.route("/")
     def home():
         return render_template("index.html"), 200
+
+    @app.route("/pokemon")
+    def pokemon():
+        return jsonify({"pokemon": "Jigglypuff"})
+
+
+    @app.get("/system-info")
+    def system_info():
+        import platform, socket, shutil, multiprocessing
+
+        # disk usage for root
+        try:
+            du = shutil.disk_usage("/")
+            disk_total_gb = round(du.total / (1024**3), 2)
+            disk_free_gb = round(du.free / (1024**3), 2)
+        except Exception:
+            disk_total_gb = disk_free_gb = None
+
+        info = {
+            "hostname": socket.gethostname(),
+            "os": platform.system(),
+            "os_release": platform.release(),
+            "architecture": platform.machine(),
+            "python_version": platform.python_version(),
+            "cpu_count": multiprocessing.cpu_count(),
+            "disk_total_gb": disk_total_gb,
+            "disk_free_gb": disk_free_gb
+            }
+
+        return jsonify(info), 200
 
     @app.route('/gatcha')
     def gatcha():
@@ -46,10 +73,8 @@ def create_app():
             {"name": "A diamond", "rarity": "SR", "weight": 9},
             {"name": "A unicorn", "rarity": "SSR", "weight": 1},
         ]
-        rarities = ['C', 'R', 'SR', 'SSR']
-        weights = [70, 20, 9, 1]
-        # Return three top-level keys so tests expecting a dict of length 3 succeed
-        return jsonify({"pool": pool, "rarities": rarities, "weights": weights})
+        
+        # Add a simulated pull
         pulled_rarity = random.choices(rarities, weights=weights, k=1)[0]
         pulled_item = next(item for item in pool if item["rarity"] == pulled_rarity)
         
@@ -59,6 +84,7 @@ def create_app():
             "weights": weights,
             "last_pull": pulled_item
         })
+
     @app.route("/api/coinflip", methods=["POST"])
     def coinflip():
         """Flip a coin and bet on heads or tails."""
@@ -82,13 +108,6 @@ def create_app():
             "winnings": winnings
         })
 
-
-
-
-        
-    
-
-      
 #start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
@@ -345,16 +364,15 @@ def create_app():
             result = "lose"
 
         return jsonify({"result": result, "original_bet": bet, "winnings": winnings})
-
-    @app.get("/drawAcard")
-    def drawAcard():
-        deck = requests.get(
-            "https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1"
-        ).json()
-        card = requests.get(
-            f'https://www.deckofcardsapi.com/api/deck/{deck["deck_id"]}/draw/?count=1'
-        ).json()
-        print("card", card)
+    
+    @app.route('/drawCard', methods=['GET'])
+    def drawCard():
+        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+        card = {
+            "rank": random.choice(ranks),
+            "suit": random.choice(suits)
+        }
         return jsonify(card)
 
     @app.get('/pokerHandRankings')
@@ -716,7 +734,7 @@ def create_app():
                 message = f"{chosen_plant} was overwhelmed by {winner}'s ferocity!"
 
         environment = random.choice(["Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"])
-        weather = random.choice(["Sunny", "Rainy", "Windy", "Cloudy"])
+        weather = random_weather()
 
         return jsonify({
             "plants": plants,
@@ -727,7 +745,7 @@ def create_app():
             "winnings": winnings,
             "message": message,
             "battle_environment": environment,
-            "weather": weather,
+            "weather": weather["condition"],
             "chosen_stats": chosen_stats,
             "winner_stats": winner_stats,
         })
@@ -750,6 +768,18 @@ def create_app():
             filtered = [s for s in songs if s["genre"].lower() == genre_filter.lower()]
             if not filtered:
                 return jsonify({"success": False, "error": "No songs found for that genre"}), 404
+            songs = filtered
+
+        year_filter = request.args.get("year")
+        if year_filter:
+            try:
+                year_filter = int(year_filter)
+            except ValueError:
+                return jsonify({"success": False, "error": "Year must be a number"}), 400
+
+            filtered = [s for s in songs if s["year"] == year_filter]
+            if not filtered:
+                return jsonify({"success": False, "error": "No songs found for that year"}), 404
             songs = filtered
 
         song = random.choice(songs)
@@ -792,13 +822,6 @@ def create_app():
                 "is_even": result % 2 == 0,
             }
         )
-
-
-    @app.route("/pokemon")
-    def pokemon():
-        return jsonify({"pokemon": "Jigglypuff"})
-
-
     
     return app  # <== ALSO DON'T DELETE
 
@@ -820,31 +843,23 @@ def ping():
 # --- end /api/ping ---
 
 
-
-
 @app.route("/random-weather")
 def random_weather():
     conditions = ["Sunny", "Rainy", "Windy", "Cloudy", "Snowy"]
     condition = random.choice(conditions)
     temperature = f"{random.randint(-30, 50)}C"
     humidity = f"{random.randint(10, 100)}%"
-    return jsonify(
-        {"condition": condition, "temperature": temperature, "humidity": humidity}
-    )
-
+    weather = {"condition": condition, "temperature": temperature, "humidity": humidity}
+    return weather
 
 @app.route("/hazardous-conditions")
 def hazardous_conditions():
-    # Get the random weather data
     weather_data = random_weather()
-
-    # Extract values
-    weather_data = weather_data.get_json()
+    
     condition = weather_data["condition"]
     temperature = int(weather_data["temperature"].replace("C", ""))
     humidity = int(weather_data["humidity"].replace("%", ""))
 
-    # Determine hazard based on actual conditions
     if condition == "Snowy" and temperature < -10:
         hazard = "Blizzard Warning"
         severity = "Severe"
@@ -864,15 +879,14 @@ def hazardous_conditions():
         hazard = "No Hazardous Conditions"
         severity = "None"
 
-    return jsonify(
-        {
-            "condition": condition,
-            "temperature": weather_data["temperature"],
-            "humidity": weather_data["humidity"],
-            "hazardous_condition": hazard,
-            "severity": severity,
+    hazardous_conditions = {
+        "condition": condition,
+        "temperature": weather_data["temperature"],
+        "humidity": weather_data["humidity"],
+        "hazardous_condition": hazard,
+        "severity": severity,
         }
-    )
+    return hazardous_conditions
 
 @app.route("/real-weather")
 def real_weather():
@@ -900,32 +914,6 @@ def real_weather():
     }
 
     return jsonify(current_data, daily_data)
-
-@app.get("/system-info")
-def system_info():
-    import platform, socket, shutil, multiprocessing
-
-    # disk usage for root
-    try:
-        du = shutil.disk_usage("/")
-        disk_total_gb = round(du.total / (1024**3), 2)
-        disk_free_gb = round(du.free / (1024**3), 2)
-    except Exception:
-        disk_total_gb = disk_free_gb = None
-
-    info = {
-        "hostname": socket.gethostname(),
-        "os": platform.system(),
-        "os_release": platform.release(),
-        "architecture": platform.machine(),
-        "python_version": platform.python_version(),
-        "cpu_count": multiprocessing.cpu_count(),
-        "disk_total_gb": disk_total_gb,
-        "disk_free_gb": disk_free_gb
-        }
-
-    return jsonify(info), 200
-
 
 @app.route("/bank")
 def bank_page():
@@ -1225,6 +1213,47 @@ def double_or_nothing():
         "message": message
     })
 
+def generate_minesweeper_grid(difficulty):
+    if difficulty == 'beginner':
+        rows = 9
+        columns = 9
+        mines = 10
+    elif difficulty == 'intermediate':
+        rows = 16
+        columns = 16
+        mines = 40
+    elif difficulty == 'expert':
+        rows = 16
+        columns = 30
+        mines = 99
+    else:
+        return 'Error: invalid difficulty argument. Use "beginner", "intermediate", or "expert" difficulty'
+    
+    grid = [[0 for _ in range(columns)] for _ in range(rows)]
+
+    mine_positions = set()
+    while len(mine_positions) < mines:
+        r = random.randint(0, rows - 1)
+        c = random.randint(0, columns - 1)
+        mine_positions.add((r, c))
+
+    for (r, c) in mine_positions:
+        grid[r][c] = -1
+
+    for (r, c) in mine_positions:
+        for dr in [-1, 0, 1]:
+            for dc in [-1, 0, 1]:
+                nr, nc = r + dr, c + dc
+                if (dr == 0 and dc == 0) or not (0 <= nr < rows and 0 <= nc < columns):
+                    continue
+                if grid[nr][nc] != -1:
+                    grid[nr][nc] += 1
+    return grid
+
+@app.route("/minesweeper", methods=['GET'])
+def minesweeper_grid():
+    difficulty = request.args.get('difficulty', default='expert')
+    return jsonify({"grid":generate_minesweeper_grid(difficulty)})
 
 # This endpoint will return client data
 @app.route("/client")

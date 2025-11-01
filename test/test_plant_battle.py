@@ -84,7 +84,7 @@ def test_message_changes_on_win_or_lose(client):
 
 def test_environment_and_weather_are_from_known_options(client):
     valid_envs = {"Greenhouse", "Jungle", "Desert", "Swamp", "Backyard"}
-    valid_weather = {"Sunny", "Rainy", "Windy", "Cloudy"}
+    valid_weather = {"Sunny", "Rainy", "Windy", "Cloudy", "Snowy"}
 
     resp = client.get("/plant-battle?bet=20&plant=Poison%20Ivy")
     data = resp.get_json()
