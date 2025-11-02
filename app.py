@@ -108,7 +108,7 @@ def create_app():
             "winnings": winnings
         })
 
-#start of dice bets
+# start of dice bets
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
         """User bets on which side of a dice will land (1-6)."""
@@ -1993,22 +1993,6 @@ def bet_rps():
 
 
 
-@app.route("/bet_slots")
-def bet_slots():
-    amount = request.args.get("amount", type=int, default=0)
-    if amount <= 0:
-        return jsonify({"error": "Invalid amount"}), 400
-
-    symbols = ["cherry", "limon", "orange", "star"]
-    result = [random.choice(symbols) for _ in range(3)]
-
-    payout = 0
-    if len(set(result)) == 1:  # Three of a kind
-        payout = amount * 10
-    elif len(set(result)) == 2:  # Two of a kind
-        payout = amount * 3
-
-    return jsonify({"result": result, "payout": payout})
 
 @app.route("/house/<name>")
 def house_always_wins(name):
