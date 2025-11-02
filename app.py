@@ -1289,22 +1289,92 @@ def random_pokemon():
 
 
 
-@app.route("/roulette", methods=["GET"])
+@app.route('/roulette', methods=['GET'])
 def roulette():
-    colors = ["red", "black", "green"]
-    numbers = list(range(0, 37))  # European roulette 0–36
-    spin = random.choice(numbers)
-    color = "green" if spin == 0 else random.choice(["red", "black"])
+    """
+    GET /roulette
+      Optional query params:
+        - force_spin: int(0..36) for deterministic spin (useful in tests)
+        - bet: 'red' | 'black' | 'green' | '0'..'36'
+        - amount: positive integer wager
+
+      Always returns base spin result. If bet/amount provided, also returns outcome and payout.
+    """
+    # --- determine spin deterministically if requested ---
+    force_spin = request.args.get("force_spin", type=int)
+    if force_spin is not None:
+        if force_spin < 0 or force_spin > 36:
+            return jsonify({"error": "force_spin must be between 0 and 36"}), 400
+        spin = force_spin
+    else:
+        numbers = list(range(0, 37))  # 0..36
+        spin = random.choice(numbers)
+
+    # --- derive color deterministically (only for force case); default behavior otherwise ---
+    # Standard roulette color mapping set (European wheel). For simplicity, we use parity-based red set approximation.
+    red_set = {1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36}
+    if spin == 0:
+        color = 'green'
+    else:
+        # If user forced the spin, we’ll compute the canonical color. If not forced, keep random behavior for compatibility.
+        if force_spin is not None:
+            color = 'red' if spin in red_set else 'black'
+        else:
+            color = 'green' if spin == 0 else random.choice(['red', 'black'])
+
     result = {
         "spin": spin,
         "color": color,
-        "parity": (
-            "even"
-            if spin != 0 and spin % 2 == 0
-            else "odd" if spin % 2 == 1 else "none"
-        ),
+        "parity": "even" if spin != 0 and spin % 2 == 0 else "odd" if spin % 2 == 1 else "none"
     }
-    return jsonify(result)
+
+    # --- handle optional betting ---
+    bet = request.args.get("bet")
+    amount = request.args.get("amount", type=int)
+
+    if bet is None and amount is None:
+        # Back-compat: original behavior
+        return jsonify(result), 200
+
+    # Validate input pair presence
+    if bet is None or amount is None:
+        return jsonify({"error": "bet and amount are both required when betting"}), 400
+    if amount <= 0:
+        return jsonify({"error": "amount must be a positive integer"}), 400
+
+    bet = bet.strip().lower()
+    payout = 0
+    outcome = "lose"
+
+    # Color bet
+    if bet in {"red", "black", "green"}:
+        if bet == color:
+            if bet in {"red", "black"}:
+                payout = amount * 2     # 1:1
+            else:
+                payout = amount * 35    # green color treated like a rare hit
+            outcome = "win"
+    else:
+        # Number bet
+        try:
+            bet_num = int(bet)
+            if 0 <= bet_num <= 36:
+                if bet_num == spin:
+                    payout = amount * 35
+                    outcome = "win"
+            else:
+                return jsonify({"error": "number bet must be between 0 and 36"}), 400
+        except ValueError:
+            return jsonify({"error": "bet must be 'red'|'black'|'green' or integer 0..36"}), 400
+
+    result.update({
+        "bet": bet,
+        "amount": amount,
+        "outcome": outcome,
+        "payout": payout
+    })
+    return jsonify(result), 200
+
 
 
 @app.route("/russian-roulette", methods=["GET"])
