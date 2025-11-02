@@ -1,17 +1,38 @@
-# filepath: test/test_sports.py
 import re
 import pytest
-from app import app  # assuming app is created at import time
+from app import app  
+
+def test_nba_east_teams(client):
+    """Test if the NBA East teams are correctly returned in the matchup."""
+    response = client.get("/sports?league=nba&conference=east")
+    assert response.status_code == 200
+
+    html = response.get_data(as_text=True)
+    nba_east_teams = [
+        "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers",
+        "Heat", "Bucks", "Knicks", "Magic", "76ers", "Raptors",
+        "Wizards", "Pacers", "Pistons"
+    ]
+
+    assert any(team in html for team in nba_east_teams), "No NBA East team found in the response."
 
 
-@pytest.fixture
-def client():
-    with app.test_client() as test_client:
-        yield test_client
+def test_nba_west_teams(client):
+    """Test if the NBA West teams are correctly returned in the matchup."""
+    response = client.get("/sports?league=nba&conference=west")
+    assert response.status_code == 200
+
+    html = response.get_data(as_text=True)
+    nba_west_teams = [
+        "Mavericks", "Nuggets", "Warriors", "Rockets", "Clippers", "Lakers",
+        "Grizzlies", "Timberwolves", "Pelicans", "Thunder", "Suns",
+        "Trail Blazers", "Kings", "Spurs", "Jazz"
+    ]
+
+    assert any(team in html for team in nba_west_teams), "No NBA West team found in the response."
 
 
 def test_sports_league_switch(client):
-    # Define expected team sets
     nfl_teams = {
         "49ers", "Bears", "Bengals", "Bills", "Broncos", "Browns", "Buccaneers",
         "Cardinals", "Chargers", "Chiefs", "Colts", "Commanders", "Cowboys",
@@ -27,7 +48,6 @@ def test_sports_league_switch(client):
         "Spurs", "Raptors", "Jazz", "Wizards"
     }
 
-    # 1) Test NFL
     resp_nfl = client.get("/sports?sport=nfl")
     assert resp_nfl.status_code == 200
     html_nfl = resp_nfl.get_data(as_text=True)
@@ -38,7 +58,6 @@ def test_sports_league_switch(client):
 
 
 def test_sports_expected_teams(client):
-    # Expected AFC and NFC teams
     afc_teams = {
         "Bills", "Dolphins", "Patriots", "Jets",
         "Ravens", "Bengals", "Browns", "Steelers",
@@ -68,27 +87,22 @@ def test_sports_expected_teams(client):
 
 
 def test_reset_button(client):
-    # First GET request to get the initial matchup
     resp1 = client.get("/sports")
     assert resp1.status_code == 200
     text1 = resp1.get_data(as_text=True)
 
-    # Extract the initial matchup
     match1 = re.search(r"Matchup:\s*([A-Za-z0-9' \-\.]+)\s+vs\s+([A-Za-z0-9' \-\.]+)", text1)
     assert match1, "Could not find initial matchup in response"
     team1_initial, team2_initial = match1.groups()
 
-    # GET request with reset=true to reset the matchup
     resp2 = client.get("/sports?reset=true")
     assert resp2.status_code == 200
     text2 = resp2.get_data(as_text=True)
 
-    # Extract the new matchup
     match2 = re.search(r"Matchup:\s*([A-Za-z0-9' \-\.]+)\s+vs\s+([A-Za-z0-9' \-\.]+)", text2)
     assert match2, "Could not find new matchup in response after reset"
     team1_new, team2_new = match2.groups()
 
-    # Ensure the matchup has changed
     assert (team1_initial, team2_initial) != (team1_new, team2_new), "Matchup did not reset"
 
 

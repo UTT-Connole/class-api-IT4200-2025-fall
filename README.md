@@ -101,6 +101,18 @@ This endpoint deals two cards to the player and dealer, calculates scores, and r
 Roulette Endpoint
 This endpoint simulates a single spin of a European roulette wheel and returns the result.
 
+## /sports
+Generates a random sports matchup between teams from the NFL or NBA.
+
+Query Parameters:
+league: nfl (default) or nba
+reset: true to reset the matchup
+POST Parameters:
+team1, team2, winner, bet, username (optional), amount (optional)
+Features:
+Randomly selects teams from the specified league.
+Allows betting on the outcome of the matchup.
+
 ## /generatePassword endpoint
 This endpoint generates a random password with a set length and cmplexity level.
 2 arguments: Length, Complexity
