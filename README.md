@@ -142,6 +142,7 @@ Rolls an "x" sided dice and returns the value of the rolled dice. It also return
 Place a bet on rock, paper, or scissors and see if you win against the computer.
 ## / Slot Machine endpoint
 - Virtual slot machine with three random symbols.
+- Must be positive bets
 - Payout rules:
   - 3 matching symbols: 10× your bet
   - 2 matching symbols: 3× your bet
