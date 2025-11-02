@@ -124,8 +124,8 @@ export default function MinesUI() {
     const disabled = (game?.is_over) || revealed || loading;
 
     let content = "";
-    if (game?.is_over && mine) content = "💣";
-    else if (revealed) content = "✅";
+    if (game?.is_over && mine) content = "BOMB";
+    else if (revealed) content = "OK";
 
     return (
       <button
@@ -162,7 +162,7 @@ export default function MinesUI() {
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-slate-100 text-slate-900">
       <div className="max-w-5xl mx-auto p-6">
         <header className="flex items-center justify-between gap-4 mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">💎 Mines — Play‑Money</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">DIAMOND Mines - Play‑Money</h1>
           <div className="flex items-center gap-2">
             <input
               className="px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-slate-300 text-sm w-64"
@@ -270,7 +270,7 @@ export default function MinesUI() {
                   <div className="text-slate-500">Status</div>
                   <div className="font-medium">{game.is_over ? (game.is_bust ? "Bust" : "Cashed Out") : "In progress"}</div>
                   <div className="text-slate-500">Payout</div>
-                  <div className="font-medium">{game.cashout_amount != null ? Number(game.cashout_amount).toFixed(4) : "—"}</div>
+                  <div className="font-medium">{game.cashout_amount != null ? Number(game.cashout_amount).toFixed(4) : "-"}</div>
                   <div className="text-slate-500">Created</div>
                   <div className="font-medium">{new Date(game.created_at).toLocaleString()}</div>
                 </div>
