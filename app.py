@@ -348,23 +348,41 @@ def create_app():
 
     @app.route("/api/gamble", methods=["POST"])
     def gamble():
-        """Simple gambling endpoint"""
-        data = request.get_json()
-        bet = data.get("bet", 0)
+        data = request.get_json(silent=True) or {}
+        try:
+            bet = float(data.get("bet", 0))
+        except (TypeError, ValueError):
+            return jsonify({"error": "Bet must be a number"}), 400
 
         if bet <= 0:
             return jsonify({"error": "Bet must be greater than zero"}), 400
 
-        # Simulate a 50/50 gamble
-        if random.choice([True, False]):
-            winnings = bet * 2
-            result = "win"
-        else:
-            winnings = 0
-            result = "lose"
+        try:
+            multiplier = float(data.get("payout_multiplier", 2))
+        except (TypeError, ValueError):
+            return jsonify({"error": "payout_multiplier must be a number"}), 400
+        if multiplier <= 1:
+            return jsonify({"error": "payout_multiplier must be greater than 1"}), 400
 
-        return jsonify({"result": result, "original_bet": bet, "winnings": winnings})
-    
+        force = (data.get("force_result") or "").strip().lower()
+        if force not in ("", "win", "lose"):
+            return jsonify({"error": "force_result must be 'win' or 'lose'"}), 400
+
+        if force:
+            did_win = (force == "win")
+        else:
+            did_win = random.choice([True, False])
+
+        result = "win" if did_win else "lose"
+        winnings = bet * multiplier if did_win else 0
+
+        return jsonify({
+            "result": result,
+            "original_bet": bet,
+            "winnings": winnings,
+            "multiplier": multiplier
+        }), 200
+   
     @app.route('/drawCard', methods=['GET'])
     def drawCard():
         suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
