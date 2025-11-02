@@ -124,8 +124,8 @@ export default function MinesUI() {
     const disabled = (game?.is_over) || revealed || loading;
 
     let content = "";
-    if (game?.is_over && mine) content = "💣";
-    else if (revealed) content = "✅";
+    if (game?.is_over && mine) content = "BOMB";
+    else if (revealed) content = "OK";
 
     return (
       <button

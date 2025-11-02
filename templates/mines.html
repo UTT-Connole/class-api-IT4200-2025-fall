@@ -88,7 +88,7 @@
   <div class="container">
     <header>
       <div>
-        <div class="title">💣 Mines — 99% quit before they hit it big! 💎</div>
+        <div class="title">BOMB Mines — 99% quit before they hit it big! DIAMOND</div>
         <div class="subtitle">Create a game, reveal tiles, cash out before you hit a mine.</div>
       </div>
       <div style="min-width:280px" class="panel">
@@ -221,11 +221,11 @@
 
           if (revealed.has(key)){
             btn.classList.add('revealed');
-            btn.textContent = '✓';
+            btn.textContent = 'OK';
           }
           if (isOver && mines.has(key)){
             btn.classList.add('mine');
-            btn.textContent = '💣';
+            btn.textContent = 'BOMB';
           }
 
           btn.addEventListener('click', () => reveal(ri, ci));
