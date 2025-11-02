@@ -638,6 +638,9 @@ def create_app():
         bet = request.json.get("bet", 1)
         username = request.json.get("username", "user1")
 
+        if bet <= 0:
+            return jsonify({"error": "Bet must be positive."}), 400
+
         if username not in users or users[username]["balance"] < bet:
             return jsonify({"error": "Insufficient balance or user not found."}), 400
 
