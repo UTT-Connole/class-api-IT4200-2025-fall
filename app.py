@@ -36,6 +36,34 @@ def create_app():
     def pokemon():
         return jsonify({"pokemon": "Jigglypuff"})
 
+    @app.route("/high_low", methods=["GET"])
+    def high_low():
+        guess = (request.args.get("guess") or "").lower()
+
+        if guess not in ["higher", "lower"]:
+            return jsonify({"error": "Guess must be 'higher' or 'lower'"}), 400
+
+        cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+        values = {r: i + 2 for i, r in enumerate(cards)}
+
+        first = random.choice(cards)
+        second = random.choice(cards)
+
+        if first == second:
+            outcome = "lose"
+        elif (guess == "higher" and values[second] > values[first]) or (
+            guess == "lower" and values[second] < values[first]
+        ):
+            outcome = "win"
+        else:
+            outcome = "lose"
+
+        return jsonify({
+            "first_card": first,
+            "second_card": second,
+            "guess": guess,
+            "outcome": outcome
+        }), 200
 
     @app.get("/system-info")
     def system_info():
