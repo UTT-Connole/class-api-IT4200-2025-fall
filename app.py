@@ -398,30 +398,45 @@ def create_app():
             "Cardinals", "Rams", "49ers", "Seahawks"
         ]
 
-        nba_teams = [
-        "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers", "Mavericks",
-        "Nuggets", "Pistons", "Warriors", "Rockets", "Pacers", "Clippers",
-        "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans",
-        "Knicks", "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings",
-        "Spurs", "Raptors", "Jazz", "Wizards"
+        nba_east_teams = [
+            "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers",
+            "Heat", "Bucks", "Knicks", "Magic", "76ers", "Raptors",
+            "Wizards", "Pacers", "Pistons", "Hawks"
+        ]
+
+        nba_west_teams = [
+            "Mavericks", "Nuggets", "Warriors", "Rockets", "Clippers", "Lakers",
+            "Grizzlies", "Timberwolves", "Pelicans", "Thunder", "Suns",
+            "Trail Blazers", "Kings", "Spurs", "Jazz"
         ]
 
         league = request.args.get("league") or request.form.get("league") or "NFL"
+        conference = request.args.get("conference") or request.form.get("conference")
 
         if league.upper() == "NBA":
-            league_teams = nba_teams
+            if conference and conference.upper() == "EAST":
+                league_teams = nba_east_teams
+            elif conference and conference.upper() == "WEST":
+                league_teams = nba_west_teams
+            else:
+                league_teams = nba_east_teams + nba_west_teams
         else:
-            league_teams = nfl_afc_teams + nfl_nfc_teams
+            if conference and conference.upper() == "AFC":
+                league_teams = nfl_afc_teams
+            elif conference and conference.upper() == "NFC":
+                league_teams = nfl_nfc_teams
+            else:
+                league_teams = nfl_afc_teams + nfl_nfc_teams
 
         if request.method == "GET" and request.args.get("reset") == "true":
             team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league, conference=conference)
 
         if request.method == "GET":
             team1, team2 = random.sample(league_teams, 2)
             winner = random.choice([team1, team2])
-            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league)
+            return render_template("sports.html", team1=team1, team2=team2, winner=winner, bet=None, won_bet=None, league=league, conference=conference)
 
         team1 = (request.form.get("team1") or "").strip()
         team2 = (request.form.get("team2") or "").strip()
@@ -469,7 +484,9 @@ def create_app():
             won_bet=won_bet,
             bank_message=bank_message,
             league=league,
+            conference=conference,
         )
+
 
 
 
