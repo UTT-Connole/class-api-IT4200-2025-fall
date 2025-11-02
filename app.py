@@ -650,6 +650,83 @@ def create_app():
             if x == 7:
                 return jsonify({"result": 0})
 
+    @app.route("/five_card_stud")
+    def five_card_stud():  
+        def make_deck():
+            deck = []
+            for i in range(52):
+                suit = i // 13
+                rank = i % 13
+                deck.append((suit, rank))
+            return deck
+
+        def deal_hand(deck):
+            hand = random.sample(deck, 5)
+            hand.sort(key=lambda card: card[1])
+            return hand
+
+        def get_values(hand):
+            return [card[1] for card in hand]
+
+        def is_flush(hand):
+            suits = [card[0] for card in hand]
+            return len(set(suits)) == 1 
+
+        def is_straight(hand):
+            card_values = get_values(hand)
+            if card_values == [0, 9, 10, 11, 12]:
+                return True    
+            for i in range(4):
+                if card_values[i + 1] != (card_values[i] + 1):
+                    return False
+            return True
+
+        def count(hand):
+            card_values = get_values(hand)
+            counts = {}
+            for value in card_values:
+                counts[value] = counts.get(value, 0) + 1
+            return counts
+
+        def pairs_kinds(hand):
+            counts = count(hand)
+            count_values = list(counts.values())
+            count_values.sort(reverse=True)
+            pair = count_values.count(2)
+            three = count_values.count(3)
+            four = count_values.count(4)
+            return pair, three, four
+
+        def check_hand(hand):
+            pair, three, four = pairs_kinds(hand)
+            flush = is_flush(hand)
+            straight = is_straight(hand)
+            ranks = get_values(hand)
+
+            if flush and ranks == [0, 9, 10, 11, 12]:
+                return "Royal Flush"
+            if flush and straight:
+                return "Straight Flush"
+            if four == 1:
+                return "Four of a Kind"
+            if three == 1 and pair == 1:
+                return "Full House"
+            if flush:
+                return "Flush"
+            if straight:
+                return "Straight"
+            if three == 1:
+                return "Three of a Kind"
+            if pair == 2:
+                return "Two Pair"
+            if pair == 1:
+                return "Pair"
+            return "High Card"
+    
+        deck = make_deck()
+        return jsonify(check_hand(deal_hand(deck)))
+
+
     @app.get("/magic8ball")
     def magic8ball():
         answers = [
