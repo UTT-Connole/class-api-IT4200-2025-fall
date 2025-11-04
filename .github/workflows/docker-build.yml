@@ -6,7 +6,7 @@ on:
 
 jobs:
     build-docker-container:
-        name: Make sure the Docker Image builds before merging into main
+        name: Build Docker Image
         runs-on: ubuntu-latest
 
         steps:
