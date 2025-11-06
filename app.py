@@ -26,7 +26,7 @@ from flask_cors import CORS
 
 def create_app():
 
-    app = Flask(__name__)  # <== DON'T DELETE
+    app = Flask(__name__) 
     app.register_blueprint(bank_bp)
 
     @app.route("/")
@@ -70,7 +70,7 @@ def create_app():
     def system_info():
         import platform, socket, shutil, multiprocessing
 
-        # disk usage for root
+        
         try:
             du = shutil.disk_usage("/")
             disk_total_gb = round(du.total / (1024**3), 2)
@@ -108,7 +108,7 @@ def create_app():
             {"name": "A unicorn", "rarity": "SSR", "weight": 1},
         ]
         
-        # Add a simulated pull
+       
         pulled_rarity = random.choices(rarities, weights=weights, k=1)[0]
         pulled_item = next(item for item in pool if item["rarity"] == pulled_rarity)
         
@@ -142,7 +142,7 @@ def create_app():
             "winnings": winnings
         })
 
-# start of dice bets
+
     @app.route("/api/dice/bet", methods=["POST"])
     def dice_bet():
         """User bets on which side of a dice will land (1-6)."""
@@ -156,7 +156,7 @@ def create_app():
         except (TypeError, ValueError):
             return jsonify({"error": "Invalid input types"}), 400
 
-        # Validate range and bet
+      
         if bet_choice not in range(1, 7):
             return jsonify({"error": "Choice must be between 1 and 6"}), 400
         if bet_amount <= 0:
@@ -177,19 +177,19 @@ def create_app():
         result = [random.randint(1, 6) for _ in range(5)]
         unique_count = len(set(result))
 
-        # probabilities for each combination (single roll, 5 dice)
+      
         probabilities = {
-            "yahtzee": 0.0007716,      # 0.07716%
-            "four_kind": 0.01929,      # 1.929%
-            "full_house": 0.03858,     # 3.858%
-            "three_kind": 0.15432,     # 15.432%
-            "two_pairs": 0.23148,      # 23.148%
-            "one_pair": 0.46296,       # 46.296%
-            "all_different": 0.09259   # 9.259%
+            "yahtzee": 0.0007716,     
+            "four_kind": 0.01929,      
+            "full_house": 0.03858,    
+            "three_kind": 0.15432,     
+            "two_pairs": 0.23148,     
+            "one_pair": 0.46296,       
+            "all_different": 0.09259  
         }
         
         message = "No special combination."
-        rarity = round(probabilities["all_different"] * 100, 3)  # %
+        rarity = round(probabilities["all_different"] * 100, 3) 
         
         if unique_count == 1:
             message = "Yatzy! All five dice match."
@@ -602,7 +602,7 @@ def create_app():
         bet_amount = int(request.form.get("bet", 0))
         chosen_chicken = request.form.get("chicken")
 
-        # Calculate winner based on stats (example: sum of stats + randomness)
+       
         scores = {}
         for name, stats in chickens.items():
             score = (
@@ -613,7 +613,7 @@ def create_app():
             scores[name] = score
         winner = max(scores, key=scores.get)
 
-        # Use odds as a float for payout (e.g., "5/10" -> 0.5)
+       
         odds_float = eval(chickens[chosen_chicken]["odds"])
         winnings = int(bet_amount * odds_float) if winner == chosen_chicken else 0
 
@@ -678,15 +678,15 @@ def create_app():
         if username not in users or users[username]["balance"] < bet:
             return jsonify({"error": "Insufficient balance or user not found."}), 400
 
-        # Spin the reels
+        
         result = [random.choice(symbols) for _ in range(3)]
 
-        # Determine payout
+       
         if result.count(result[0]) == 3:
-            payout = bet * 10  # Jackpot
+            payout = bet * 10  
             message = "Jackpot! All symbols match."
         elif len(set(result)) == 2:
-            payout = bet * 2  # Two match
+            payout = bet * 2 
             message = "Two symbols match! Small win."
         else:
             payout = 0
@@ -816,7 +816,7 @@ def create_app():
 
     @app.route("/bingo")
     def generate_bingo_card():
-    #   generates 5x5 card as 1 list, each column adding 15 to the range
+   
         card = (
             [{"value": n, "marked": False} for n in random.sample(range(1, 16), 5)] +
             [{"value": n, "marked": False} for n in random.sample(range(16, 31), 5)] +
@@ -837,10 +837,10 @@ def create_app():
         """
         rules = []
         for rule in sorted(app.url_map.iter_rules(), key=lambda r: (r.rule, r.methods)):
-            # skip static files
+           
             if rule.endpoint == "static":
                 continue
-            # we only want to show visible HTTP methods
+           
             methods = sorted([m for m in (rule.methods or []) if m not in ("HEAD", "OPTIONS")])
             rules.append({"rule": rule.rule, "endpoint": rule.endpoint, "methods": methods})
 
@@ -975,14 +975,14 @@ def create_app():
             }
         )
     
-    return app  # <== ALSO DON'T DELETE
+    return app  
 
 
 
-app = create_app()  # <== ALSO ALSO DON'T DELETE
+app = create_app()  
 
 
-# --- begin /api/ping (MINOR) ---
+
 _started = time.time()
 
 @app.get("/api/ping")
@@ -992,7 +992,7 @@ def ping():
         "status": "ok",
         "uptime_ms": int((now - _started) * 1000)
     }), 200
-# --- end /api/ping ---
+
 
 
 @app.route("/random-weather")
@@ -1108,7 +1108,7 @@ def kasen():
     return render_template("kasen.html"), 200
 
 
-# List of fake hockey game results
+
 hockey_results1 = [
     "Flames 3 - 2 Canuks",
     "Panthers 1 - 4 Mammoth",
@@ -1125,14 +1125,14 @@ hockey_results2 = [
     "Jets 0 - 3 Stars",
 ]
 
-# start of '/hockey_teams' endpoint
+
 
 def extract_teams(results):
     teams = set()
     for result in results:
         parts = result.split(" - ")
-        team1_info = parts[0].rsplit(" ", 1)[0]  # e.g., "Flames 3" → "Flames"
-        team2_info = parts[1].split(" ", 1)[1]   # e.g., "2 Canuks" → "Canuks"
+        team1_info = parts[0].rsplit(" ", 1)[0]  
+        team2_info = parts[1].split(" ", 1)[1]   
         teams.add(team1_info)
         teams.add(team2_info)
     return teams
@@ -1142,7 +1142,7 @@ def get_teams():
     all_teams = extract_teams(hockey_results1).union(extract_teams(hockey_results2))
     return jsonify({"teams": sorted(list(all_teams))})
 
-# Start of '/hockey' endpoint code
+
 
 @app.route("/hockey_matchup", methods=["GET"])
 def get_random_matchup():
@@ -1169,9 +1169,7 @@ def hockey_page():
     return render_template("hockey.html")
 
 
-# End of hocky endpoint
 
-# ================ plant betting =================
 users = {
     "alice": {"balance": 100},
     "bob": {"balance": 50},
@@ -1209,13 +1207,13 @@ def place_plant_bet():
     plant_id = data.get("plant_id")
     amount = data.get("amount")
 
-    # Basic validation
+
     if username not in users:
         return jsonify({"error": "User not found"}), 404
     if users[username]["balance"] < amount:
         return jsonify({"error": "Insufficient balance"}), 400
 
-    # Example plant database
+   
     plants = {
         1: {"name": "Rose", "value": 100},
         2: {"name": "Tulip", "value": 50},
@@ -1225,7 +1223,7 @@ def place_plant_bet():
     if plant_id not in plants:
         return jsonify({"error": "Invalid plant ID"}), 400
 
-    # Deduct amount and store bet
+    
     users[username]["balance"] -= amount
     bet = {
         "username": username,
@@ -1246,7 +1244,7 @@ def place_plant_bet():
     )
 
 
-# ===========end of plant betting ======
+
 
 @app.route("/generatePassword", methods=["GET"])
 def generatePassword():
@@ -1278,7 +1276,7 @@ def generatePassword():
     return jsonify({"password": password})
 
 def get_bingo_index(x,y):
-#   5 is the width. 
+ 
     return (y * 5) + x
 
 @app.route("/bingo/check", methods=["POST"])
@@ -1289,7 +1287,7 @@ def check_bingo():
     if not card or len(card) != 25:
         return jsonify({"error": "Invalid card"}), 400
 
-    #check rows
+    
     r = 0
     for i in range(5):
         rows = [r,r+1,r+2,r+3,r+4]
@@ -1301,7 +1299,7 @@ def check_bingo():
             return jsonify({"bingo": True}), 200
         r += 5
         
-    #check columns
+    
     c = 0
     for i in range(5):
         columns = [c,c+5,c+10,c+15,c+20]
@@ -1313,7 +1311,7 @@ def check_bingo():
             return jsonify({"bingo": True}), 200
         c += 1
         
-    #check diagonals
+    
     down_diagonal = [0,6,12,18,24]
     down_bingo = True
     up_diagonal = [4,8,12,16,20]
@@ -1407,7 +1405,7 @@ def minesweeper_grid():
     difficulty = request.args.get('difficulty', default='expert')
     return jsonify({"grid":generate_minesweeper_grid(difficulty)})
 
-# This endpoint will return client data
+
 @app.route("/client")
 def index():
     user_agent_string = request.headers.get("User-Agent")
@@ -1449,23 +1447,19 @@ def roulette():
 
       Always returns base spin result. If bet/amount provided, also returns outcome and payout.
     """
-    # --- determine spin deterministically if requested ---
     force_spin = request.args.get("force_spin", type=int)
     if force_spin is not None:
         if force_spin < 0 or force_spin > 36:
             return jsonify({"error": "force_spin must be between 0 and 36"}), 400
         spin = force_spin
     else:
-        numbers = list(range(0, 37))  # 0..36
+        numbers = list(range(0, 37))  
         spin = random.choice(numbers)
 
-    # --- derive color deterministically (only for force case); default behavior otherwise ---
-    # Standard roulette color mapping set (European wheel). For simplicity, we use parity-based red set approximation.
     red_set = {1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36}
     if spin == 0:
         color = 'green'
     else:
-        # If user forced the spin, we’ll compute the canonical color. If not forced, keep random behavior for compatibility.
         if force_spin is not None:
             color = 'red' if spin in red_set else 'black'
         else:
@@ -1477,15 +1471,12 @@ def roulette():
         "parity": "even" if spin != 0 and spin % 2 == 0 else "odd" if spin % 2 == 1 else "none"
     }
 
-    # --- handle optional betting ---
     bet = request.args.get("bet")
     amount = request.args.get("amount", type=int)
 
     if bet is None and amount is None:
-        # Back-compat: original behavior
         return jsonify(result), 200
 
-    # Validate input pair presence
     if bet is None or amount is None:
         return jsonify({"error": "bet and amount are both required when betting"}), 400
     if amount <= 0:
@@ -1495,16 +1486,14 @@ def roulette():
     payout = 0
     outcome = "lose"
 
-    # Color bet
     if bet in {"red", "black", "green"}:
         if bet == color:
             if bet in {"red", "black"}:
-                payout = amount * 2     # 1:1
+                payout = amount * 2     
             else:
-                payout = amount * 35    # green color treated like a rare hit
+                payout = amount * 35    
             outcome = "win"
     else:
-        # Number bet
         try:
             bet_num = int(bet)
             if 0 <= bet_num <= 36:
@@ -1529,8 +1518,8 @@ def roulette():
 @app.route("/russian-roulette", methods=["GET"])
 def russian_roulette():
     chambers = 6
-    bullet_chamber = random.randrange(chambers)  # where the bullet is
-    fired_chamber = random.randrange(chambers)  # where the it stops after a spin
+    bullet_chamber = random.randrange(chambers)  
+    fired_chamber = random.randrange(chambers)  
     bang = bullet_chamber == fired_chamber
 
     return jsonify(
@@ -1565,7 +1554,6 @@ def sandals_fortune():
     return jsonify(chosen)
 
 
-# hellhole start
 hellhole_facts = [
     "It’s said that the heat here can melt steel.",
     "Legend says lost souls wander this place forever.",
@@ -1601,7 +1589,6 @@ def generate_unlivable_home():
 
 @app.route("/hellhole")
 def hellhole():
-    # Generate a random number of unlivable homes (3 to 6 for example)
     unlivable_homes = [generate_unlivable_home() for _ in range(random.randint(3, 6))]
     message = {
         "location": "Hellhole",
@@ -1613,9 +1600,7 @@ def hellhole():
     return jsonify(message)
 
 
-# hellhole end
 
-# ---- Note: You also have a second /clint below; keeping both as-is to avoid changing others' routes ----
 
 @app.route("/blackjack", methods=["GET", "POST"])
 def blackjack():
@@ -1627,7 +1612,6 @@ def blackjack():
         if username not in users or users[username]["balance"] < bet_amount:
             return jsonify({"error": "Insufficient balance or user not found."}), 400
 
-        # Initialize game variables
         deck = create_deck()
         player_hand = [draw_card(deck), draw_card(deck)]
         dealer_hand = [draw_card(deck), draw_card(deck)]
@@ -1635,21 +1619,18 @@ def blackjack():
         player_total = calculate_hand_value(player_hand)
         dealer_total = calculate_hand_value(dealer_hand)
 
-        # Game logic for player actions (hit or stand)
         while player_total < 21:
-            action = data.get("action")  # 'hit' or 'stand'
+            action = data.get("action")  
             if action == "hit":
                 player_hand.append(draw_card(deck))
                 player_total = calculate_hand_value(player_hand)
             elif action == "stand":
                 break
 
-        # Dealer's turn
         while dealer_total < 17:
             dealer_hand.append(draw_card(deck))
             dealer_total = calculate_hand_value(dealer_hand)
 
-        # Determine winner
         result = determine_winner(player_total, dealer_total)
         if result == "player":
             users[username]["balance"] += bet_amount
@@ -1702,11 +1683,11 @@ def calculate_hand_value(hand):
             value += 10
         elif rank == "Ace":
             aces += 1
-            value += 11  # Initially count Ace as 11
+            value += 11  
         else:
             value += int(rank)
 
-    # Adjust for Aces
+
     while value > 21 and aces:
         value -= 10
         aces -= 1
@@ -1725,16 +1706,10 @@ def determine_winner(player_total, dealer_total):
         return "tie"
 
 
-# ===================== MINES GAME (Blueprint) =====================
-# UI:  GET  /mines                 -> serves mines.html (must be next to app.py OR adjust to templates)
-# API: POST /mines/api/games
-#      GET  /mines/api/games/<game_id>
-#      POST /mines/api/games/<game_id>/reveal
-#      POST /mines/api/games/<game_id>/cashout
+
 
 mines_bp = Blueprint("mines", __name__, url_prefix="/mines")
 
-# Enable CORS for the mines blueprint so browsers can call /mines and /mines/api/*
 CORS(mines_bp, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 RNG = SystemRandom()
@@ -1770,7 +1745,6 @@ class Game:
         return len(self.revealed)
 
     def current_multiplier(self) -> float:
-        # Fair multiplier = Π (N - i) / (N - M - i), i = 0..k-1
         k = self.safe_revealed
         N = self.total_cells
         M = self.mines
@@ -1832,7 +1806,6 @@ def _find_game(game_id: str) -> Game:
     return g
 
 
-# ---------- UI (serves a static file) ----------
 @mines_bp.get("/")
 def mines_home():
     """
@@ -1842,7 +1815,6 @@ def mines_home():
     return send_from_directory(BASE_DIR, "templates/mines.html")
 
 
-# Optional: serve a mines.js if your HTML references it with <script src="/mines/mines.js">
 @mines_bp.get("/mines.js")
 def mines_js():
     fp = os.path.join(BASE_DIR, "js/mines.js")
@@ -1851,7 +1823,6 @@ def mines_js():
     return jsonify({"error": "mines.js not found"}), 404
 
 
-# ---------- API ----------
 @mines_bp.post("/api/games")
 def create_game():
     data = request.get_json(force=True, silent=True) or {}
@@ -1948,9 +1919,7 @@ def cashout(game_id):
     return jsonify(g.to_public())
 
 
-# Register the blueprint with your existing app
 app.register_blueprint(mines_bp)
-# =================== END MINES GAME (Blueprint) ===================
 
 @app.get("/plants/match")
 def plants_match():
@@ -2007,12 +1976,11 @@ def bet_rps():
 
     computer = random.choice(moves)
 
-    # rock beats scissors, scissors beats paper, paper beats rock
     beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
 
     if player == computer:
         result = "tie"
-        payout = amount  # return original bet on tie
+        payout = amount  
     elif beats[player] == computer:
         result = "win"
         payout = amount * 2
@@ -2065,13 +2033,10 @@ def stats_median():
 
 
 
-# ---- Keep this at the bottom. Change port if you like. ----
 if __name__ == "__main__":
-    # Ensure the banking database and tables exist before starting
     try:
         bank.init_bank_db()
     except Exception:
-        # best-effort init; if it fails the app will still attempt to run
         print("Warning: Failed to initialize banking database/tables")
         pass
 

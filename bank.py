@@ -2,7 +2,6 @@ import os
 import sqlite3
 from flask import Blueprint, request, jsonify
 
-# Allow tests to override the DB path via environment variable
 DB_PATH = os.environ.get("TEST_BANK_DB") or os.path.join(os.path.dirname(__file__), "banking.db")
 
 def init_bank_db():
@@ -27,7 +26,6 @@ def get_user_bank(username):
             return dict(zip(keys, row))
         else:
             conn.execute("INSERT INTO bank (username) VALUES (?)", (username,))
-            # Fetch the newly created user in the same connection
             row = conn.execute("SELECT * FROM bank WHERE username=?", (username,)).fetchone()
             keys = ["username", "balance", "last_gain", "last_loss", "total_gained", "total_lost"]
             return dict(zip(keys, row))

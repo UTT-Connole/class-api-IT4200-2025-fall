@@ -1,13 +1,10 @@
-# test/test_properties.py
 import unittest
 
 try:
-    # If the app exposes a factory:
     from app import create_app as _create_app
     app = _create_app()
 except Exception:
-    # Fallback: direct Flask instance in app.py
-    from app import app  # type: ignore
+    from app import app  
 
 class TestProperties(unittest.TestCase):
     def setUp(self):
@@ -21,7 +18,6 @@ class TestProperties(unittest.TestCase):
         self.assertIn("properties", data)
         self.assertIsInstance(data["properties"], list)
         self.assertGreaterEqual(len(data["properties"]), 2)
-        # spot-check first item keys
         first = data["properties"][0]
         for k in ("id", "address", "price", "radiation_level", "amenities", "warnings"):
             self.assertIn(k, first)

@@ -6,7 +6,6 @@ def test_bet_rps_invalid_params():
     assert resp.status_code == 400
 
 def test_bet_rps_win(monkeypatch):
-    # Force computer to choose scissors so rock wins
     monkeypatch.setattr("random.choice", lambda seq: "scissors")
     client = app.test_client()
     resp = client.get("/bet_rps?player=rock&amount=10")

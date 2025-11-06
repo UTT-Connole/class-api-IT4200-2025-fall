@@ -3,7 +3,7 @@ try:
     from app import create_app as _create_app
     app = _create_app()
 except Exception:
-    from app import app  # type: ignore
+    from app import app  
 
 class TestPropertiesBasic(unittest.TestCase):
     def setUp(self):

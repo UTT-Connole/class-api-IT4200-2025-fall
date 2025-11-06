@@ -19,8 +19,8 @@ def test_craps_returns_valid_result(client):
 @patch('random.randint')
 def test_craps_immediate_win_7(mock_randint, client):
     """Test immediate win with roll of 7"""
-    mock_randint.return_value = 3  # 3 + 3 = 6, but we need 7
-    mock_randint.side_effect = [3, 4]  # 3 + 4 = 7
+    mock_randint.return_value = 3 
+    mock_randint.side_effect = [3, 4] 
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -31,7 +31,7 @@ def test_craps_immediate_win_7(mock_randint, client):
 @patch('random.randint')
 def test_craps_immediate_win_11(mock_randint, client):
     """Test immediate win with roll of 11"""
-    mock_randint.side_effect = [5, 6]  # 5 + 6 = 11
+    mock_randint.side_effect = [5, 6]  
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -42,7 +42,7 @@ def test_craps_immediate_win_11(mock_randint, client):
 @patch('random.randint')
 def test_craps_immediate_loss_2(mock_randint, client):
     """Test immediate loss with roll of 2"""
-    mock_randint.side_effect = [1, 1]  # 1 + 1 = 2
+    mock_randint.side_effect = [1, 1] 
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -53,7 +53,7 @@ def test_craps_immediate_loss_2(mock_randint, client):
 @patch('random.randint')
 def test_craps_immediate_loss_3(mock_randint, client):
     """Test immediate loss with roll of 3"""
-    mock_randint.side_effect = [1, 2]  # 1 + 2 = 3
+    mock_randint.side_effect = [1, 2] 
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -64,7 +64,7 @@ def test_craps_immediate_loss_3(mock_randint, client):
 @patch('random.randint')
 def test_craps_immediate_loss_12(mock_randint, client):
     """Test immediate loss with roll of 12"""
-    mock_randint.side_effect = [6, 6]  # 6 + 6 = 12
+    mock_randint.side_effect = [6, 6]  
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -75,8 +75,7 @@ def test_craps_immediate_loss_12(mock_randint, client):
 @patch('random.randint')
 def test_craps_point_win(mock_randint, client):
     """Test winning by hitting the point"""
-    # First roll: 8 (point), second roll: 8 (win)
-    mock_randint.side_effect = [4, 4, 3, 5]  # 8, then 8 again
+    mock_randint.side_effect = [4, 4, 3, 5]  
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -87,8 +86,7 @@ def test_craps_point_win(mock_randint, client):
 @patch('random.randint')
 def test_craps_point_loss(mock_randint, client):
     """Test losing by rolling 7 before hitting point"""
-    # First roll: 8 (point), second roll: 7 (loss)
-    mock_randint.side_effect = [4, 4, 3, 4]  # 8, then 7
+    mock_randint.side_effect = [4, 4, 3, 4]  
     
     response = client.get('/craps')
     data = json.loads(response.data)
@@ -99,13 +97,12 @@ def test_craps_point_loss(mock_randint, client):
 @patch('random.randint')
 def test_craps_multiple_point_rolls(mock_randint, client):
     """Test multiple rolls before resolution"""
-    # Point: 6, then roll 5, 9, 10, 6 (win)
     mock_randint.side_effect = [
-        3, 3,  # First roll: 6 (point)
-        2, 3,  # Second roll: 5 (continue)
-        4, 5,  # Third roll: 9 (continue)
-        4, 6,  # Fourth roll: 10 (continue)
-        2, 4   # Fifth roll: 6 (win!)
+        3, 3,  
+        2, 3,  
+        4, 5,  
+        4, 6,  
+        2, 4   
     ]
     
     response = client.get('/craps')

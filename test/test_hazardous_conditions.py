@@ -10,7 +10,7 @@ def test_response_status_and_structure():
         assert data is not None
 
         expected_keys = [
-            "condition",             # changed from "weather_condition"
+            "condition",             
             "temperature",
             "humidity",
             "hazardous_condition",

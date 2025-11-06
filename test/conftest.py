@@ -2,14 +2,12 @@ import os
 import pathlib
 import pytest
 
-# Remove repository banking.db if present so tests start with a clean database
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 db_file = ROOT / "banking.db"
 if db_file.exists():
     try:
         db_file.unlink()
     except Exception:
-        # best-effort; if unlink fails tests may still pass if they override DB
         pass
 
 from app import create_app

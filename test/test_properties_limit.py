@@ -15,7 +15,7 @@ def test_mars_limit_too_big_clamps(client):
     data = r.get_json()
     props = data["properties"]
     assert isinstance(props, list)
-    assert len(props) >= 1  # list has at least one sample property
+    assert len(props) >= 1 
 
 
 def test_chernobyl_limit_bad_type(client):

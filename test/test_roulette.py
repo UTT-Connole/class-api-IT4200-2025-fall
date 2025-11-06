@@ -5,7 +5,6 @@ from app import app
 class RouletteTestCase(unittest.TestCase):
 
     def setUp(self):
-        # Create a test client for the Flask app
         self.client = app.test_client()
 
     def test_roulette_status_code(self):
