@@ -53,7 +53,8 @@ def test_roulette_number_bet_win():
         code, data = _get(client, "/roulette?force_spin=17&bet=17&amount=2")
         assert code == 200
         assert data["outcome"] == "win"
-        assert data["payout"] == 70  def test_roulette_invalid_amount_or_bet():
+        assert data["payout"] == 70 
+def test_roulette_invalid_amount_or_bet():
     with flask_app.test_client() as client:
         code, _ = _get(client, "/roulette?bet=red") 
         assert code == 400
