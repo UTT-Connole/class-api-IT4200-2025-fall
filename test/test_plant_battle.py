@@ -69,7 +69,6 @@ def test_message_changes_on_win_or_lose(client):
     import random
     win_msgs = set()
     lose_msgs = set()
-    # Use a fixed seed to ensure both win and lose outcomes are observed
     for i in range(10):
         random.seed(i)
         resp = client.get("/plant-battle?bet=5&plant=Bamboo")

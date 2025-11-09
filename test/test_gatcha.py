@@ -3,7 +3,6 @@ def test_gatcha(client):
     assert response.status_code == 200
 
     data = response.json
-    # The app returns a dict with four top-level keys: pool, rarities, weights, last_pull
     assert isinstance(data, dict)
     assert len(data) == 4
 
@@ -12,11 +11,9 @@ def test_gatcha(client):
     expected_rarities = ['C', 'R', 'SR', 'SSR']
     expected_weights = [70, 20, 9, 1]
 
-    # Validate the rarities and weights arrays
     assert data['rarities'] == expected_rarities
     assert data['weights'] == expected_weights
 
-    # Validate each pool item has the expected shape
     pool = data['pool']
     assert isinstance(pool, list)
     for item in pool:

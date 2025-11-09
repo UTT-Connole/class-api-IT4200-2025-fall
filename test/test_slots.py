@@ -2,7 +2,7 @@ import re
 
 def test_emoji_removed(client):
     from app import users
-    users["user1"] = {"balance": 100}  # ensure valid test user
+    users["user1"] = {"balance": 100}  
 
     response = client.post('/slots', json={"bet": 1, "username": "user1"})
     assert response.status_code == 200, f"Unexpected status: {response.status_code}"

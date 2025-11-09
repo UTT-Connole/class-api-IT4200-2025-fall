@@ -9,18 +9,17 @@ EXCLUDED_PATHS = {
     EMOJI_SOURCE,
 }
 
-# full Unicode emoji pattern (covers everything to Unicode 15+)
 EMOJI_REGEX = re.compile(
     "["
-    "\U0001F300-\U0001F5FF"  # symbols & pictographs
-    "\U0001F600-\U0001F64F"  # emoticons
-    "\U0001F680-\U0001F6FF"  # transport & map
-    "\U0001F700-\U0001F77F"  # alchemical
-    "\U0001F900-\U0001F9FF"  # supplemental symbols & pictographs
-    "\U0001FA70-\U0001FAFF"  # extended-A emojis
-    "\U00002600-\U000026FF"  # misc emoji symbols
-    "\U00002700-\U000027BF"  # dingbats (some emoji)
-    "\U0001F1E6-\U0001F1FF"  # regional flags
+    "\U0001F300-\U0001F5FF"  
+    "\U0001F600-\U0001F64F"  
+    "\U0001F680-\U0001F6FF"  
+    "\U0001F700-\U0001F77F"  
+    "\U0001F900-\U0001F9FF"  
+    "\U0001FA70-\U0001FAFF"  
+    "\U00002600-\U000026FF"  
+    "\U00002700-\U000027BF"  
+    "\U0001F1E6-\U0001F1FF"  
     "]+",
     flags=re.UNICODE,
 )
@@ -28,7 +27,7 @@ EMOJI_REGEX = re.compile(
 def load_emojis_from_source(path):
     """Extract emoji characters from the rich _emoji_codes.py file."""
     emojis = set()
-    pattern = re.compile(r'":\s*"(.+?)"')  # match the emoji value
+    pattern = re.compile(r'":\s*"(.+?)"')  
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             for match in pattern.findall(line):
@@ -58,7 +57,6 @@ def test_no_emojis_in_repo():
 
             with open(path, "r", encoding="utf-8", errors="ignore") as fh:
                 for i, line in enumerate(fh, start=1):
-                    # check against both the source list and regex
                     if any(e in line for e in emojis) or EMOJI_REGEX.search(line):
                         emoji_hits.append(f"{path}: line {i}: {line.strip()}")
 

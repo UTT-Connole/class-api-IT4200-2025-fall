@@ -41,7 +41,6 @@ def test_yatzee_three_of_a_kind(monkeypatch, client):
     assert data["rarity"] == "15.432%"
 
 def test_yatzee_one_pair(monkeypatch, client):
-    # One pair -> len(set) == 4
     seq = [1, 1, 2, 3, 4]
     monkeypatch.setattr(random, "randint", _make_randint(seq))
     resp = client.get('/yatzy')
@@ -52,7 +51,6 @@ def test_yatzee_one_pair(monkeypatch, client):
     assert data["rarity"] == "46.296%"
 
 def test_yatzee_no_special(monkeypatch, client):
-    # All different -> len(set) == 5
     seq = [1, 2, 3, 4, 5]
     monkeypatch.setattr(random, "randint", _make_randint(seq))
     resp = client.get('/yatzy')

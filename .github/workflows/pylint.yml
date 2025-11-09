@@ -25,6 +25,5 @@ jobs:
           pip install -r requirements.txt
           pip install pylint
 
-#Testing app.py and test folder, add other files if needed
       - name: Run Pylint
         run: pylint app.py test

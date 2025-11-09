@@ -9,7 +9,6 @@ def client():
 
 def test_create_user_and_get_balance(client):
     username = "pytestuser"
-    # Ensure user does not exist yet
     resp = client.get(f"/api/bank/{username}")
     assert resp.status_code == 200
     data = resp.get_json()
@@ -27,7 +26,6 @@ def test_add_value(client):
 
 def test_remove_value(client):
     username = "pytestuser"
-    # Add first to ensure sufficient balance
     client.post(f"/api/bank/{username}/add", json={"amount": 30})
     resp = client.post(f"/api/bank/{username}/remove", json={"amount": 20})
     assert resp.status_code == 200
@@ -37,7 +35,6 @@ def test_remove_value(client):
 
 def test_remove_too_much(client):
     username = "pytestuser"
-    # Try to remove more than available
     resp = client.post(f"/api/bank/{username}/remove", json={"amount": 100000})
     assert resp.status_code == 400
     data = resp.get_json()

@@ -19,8 +19,8 @@ def test_race_post_valid_bet(client):
 
 def test_race_post_invalid_bet(client):
     data = {
-        'chicken': "Colonel Sanders Revenge",     # The HTML handles the bet being larger than 0 so this 
-        'bet': '0'                                 # test just ensures server handles it gracefully
+        'chicken': "Colonel Sanders Revenge",    
+        'bet': '0'                                 
     }
     response = client.post('/race', data=data)
     assert response.status_code == 200
@@ -46,4 +46,4 @@ def test_race_form_elements(client):
     html = response.data.decode("utf-8")
     assert '<form' in html
     assert 'type="submit"' in html
-    assert 'name="bet"' in html  # check if input or select for betting exists
+    assert 'name="bet"' in html  

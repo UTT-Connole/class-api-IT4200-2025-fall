@@ -6,7 +6,6 @@ class TestGeneratePassword(unittest.TestCase):
         self.client = app.test_client()
 
     def get_password(self, length=None, complexity=None):
-        # Build query parameters dynamically
         params = []
         if length is not None:
             params.append(f"Length={length}")

@@ -17,7 +17,6 @@ class TestGenerateCard(unittest.TestCase):
         self.assertEqual(len(self.card), 25)
 
     def test_free_space(self):
-        # index 12 is the center square
         self.assertEqual(self.card[12]["value"], "FREE")
 
     def test_no_duplicates(self):
@@ -45,14 +44,12 @@ class TestGenerateCard(unittest.TestCase):
             )
 
     def test_marking_cells(self):
-        # simulates 20 bingo pulls and marks card accordingly
         pulled_nums = random.sample(range(1,76),20)
         for i in pulled_nums:
             for cell in self.card:
                 if i == cell["value"]:
                     cell["marked"] = True
 
-        # tests if the right numbers are marked
         for cell in self.card:
             if cell["value"] == "FREE":
                 self.assertTrue(cell["marked"],

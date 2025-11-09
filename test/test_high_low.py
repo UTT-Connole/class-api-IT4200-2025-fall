@@ -9,7 +9,7 @@ def test_high_low_higher_win(client, monkeypatch):
     Case: Player guesses 'higher' and wins.
     Mock random.choice to control card order.
     """
-    seq = ["5", "K"]  # 5 then King
+    seq = ["5", "K"]  
     monkeypatch.setattr("random.choice", lambda x: seq.pop(0))
     res = client.get("/high_low?guess=higher")
     data = res.get_json()

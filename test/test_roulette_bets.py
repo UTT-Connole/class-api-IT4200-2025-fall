@@ -22,8 +22,8 @@ def test_roulette_force_spin_and_color_mapping():
         code, data = _get(client, "/roulette?force_spin=1")
         assert code == 200
         assert data["spin"] == 1
-        assert data["color"] in {"red", "black"}  # deterministic via set; 1 is red in our mapping
-        # sanity: parity for 1 is odd
+        assert data["color"] in {"red", "black"}  
+       
         assert data["parity"] == "odd"
 
 def test_roulette_color_bet_win_red():
@@ -32,7 +32,7 @@ def test_roulette_color_bet_win_red():
         assert code == 200
         assert data["spin"] == 1
         assert data["outcome"] == "win"
-        assert data["payout"] == 20    # 1:1 => returns 2x amount
+        assert data["payout"] == 20  
 
 def test_roulette_color_bet_lose():
     with flask_app.test_client() as client:
@@ -46,21 +46,20 @@ def test_roulette_green_color_bet_win():
         code, data = _get(client, "/roulette?force_spin=0&bet=green&amount=5")
         assert code == 200
         assert data["outcome"] == "win"
-        assert data["payout"] == 175   # 35x
+        assert data["payout"] == 175  
 
 def test_roulette_number_bet_win():
     with flask_app.test_client() as client:
         code, data = _get(client, "/roulette?force_spin=17&bet=17&amount=2")
         assert code == 200
         assert data["outcome"] == "win"
-        assert data["payout"] == 70    # 35x
-
+        assert data["payout"] == 70 
 def test_roulette_invalid_amount_or_bet():
     with flask_app.test_client() as client:
-        code, _ = _get(client, "/roulette?bet=red")  # missing amount
+        code, _ = _get(client, "/roulette?bet=red") 
         assert code == 400
 
-        code, _ = _get(client, "/roulette?amount=10")  # missing bet
+        code, _ = _get(client, "/roulette?amount=10") 
         assert code == 400
 
         code, _ = _get(client, "/roulette?bet=notacolor&amount=10")

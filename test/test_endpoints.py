@@ -10,7 +10,6 @@ def test_list_endpoints_structure(client):
     assert "count" in data and isinstance(data["count"], int)
     assert "endpoints" in data and isinstance(data["endpoints"], list)
 
-    # Ensure there's at least one endpoint and that the root is present
     rules = [r.get("rule") for r in data["endpoints"]]
     assert "/" in rules
     assert "/__endpoints" in rules

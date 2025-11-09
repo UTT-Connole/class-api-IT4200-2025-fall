@@ -1,9 +1,7 @@
-# test /hockey endpoint
 import unittest
 import json
 import sys
 
-# not sure how other people are able to run their tests in this directory without appending '..' to get to app.py
 
 sys.path.append('..')
 from app import app
@@ -25,7 +23,6 @@ class TestHockeyAPI(unittest.TestCase):
             "Jets 0 - 3 Stars"
         ]
     def test_hockey_lists_exist(self):
-        # Test that the hockey results lists exist and are not empty
         import app  
         self.assertTrue(hasattr(app, "hockey_results1"))
         self.assertTrue(hasattr(app, "hockey_results2"))
@@ -33,12 +30,10 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertGreater(len(app.hockey_results2), 0)
 
     def test_returning_json(self):
-        #check that output is json
         response = self.client.get('/hockey_matchup')
         self.assertEqual(response.content_type, 'application/json')
 
     def test_random_game_result_is_valid(self):
-        # Check that the reconstructed result is in the list of valid results
         response = self.client.get('/hockey_matchup')
         data = json.loads(response.data)
 
@@ -51,12 +46,10 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertIn(result, self.valid_results)
     
     def test_api_hockey_status(self):
-       #check that the page is returning 200
        response = self.client.get('/hockey_matchup')
        self.assertEqual(response.status_code, 200)
     
     def test_hockey_page_html(self):
-        #check that html is working and configrued properly and check that '/hockey' is also returning 200
         response = self.client.get('/hockey')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content_type, 'text/html; charset=utf-8')
@@ -64,14 +57,12 @@ class TestHockeyAPI(unittest.TestCase):
         self.assertIn(b"Hockey", response.data)
 
     def test_hockey_response_keys(self):
-        #test that the correct keys are being returned by '/hockey_mathcup' in case someone changes that code
         response = self.client.get('/hockey_matchup')
         data = json.loads(response.data)
         expected_keys = {"team1", "score1", "score2", "team2"}
         self.assertTrue(expected_keys.issubset(data.keys()), f'Missing keys in response: /hockey_matchup not returning {"team1", "score1", "score2", "team2"}')
 
     def test_api_hockey(self):
-        #test that /api/hockey does not worki
         response = self.client.get('/api/hockey')
         self.assertEqual(response.status_code, 404)
 
