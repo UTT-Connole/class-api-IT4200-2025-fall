@@ -33,13 +33,9 @@ def test_temperature_ranges():
             min_temp = min_temp[0]
         if isinstance(max_temp, list):
             max_temp = max_temp[0]
-        # Test current temperature range
         assert isinstance(temperature, (int, float)) and 0 <= temperature <= 130, "Current temperature is out of expected range (0 to 130 F)"
-        # Test minimum temperature range
         assert isinstance(min_temp, (int, float)) and -100 <= min_temp <= 130, "Minimum temperature is out of expected range (-100 to 130 F)"
-        # Test maximum temperature range
         assert isinstance(max_temp, (int, float)) and -100 <= max_temp <= 130, "Maximum temperature is out of expected range (-100 to 130 F)"
-        # Ensure min is not greater than max
         assert min_temp <= max_temp, "Minimum temperature is greater than maximum temperature"
 
 def test_current_humidity_range():
