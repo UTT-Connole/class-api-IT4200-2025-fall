@@ -19,6 +19,32 @@ jobs:
         fetch-depth: '0'
 
     - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@v1 
+      id: bump
+      uses: anothrNick/github-tag-action@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get new version tag
+      id: get_version
+      run: echo "version=${{ steps.bump.outputs.new_tag }}" >> $GITHUB_OUTPUT
+
+    - name: Build Docker Image
+      run: |
+        VERSION=${{ steps.get_version.outputs.version }}
+        echo "Building Docker image with tag: $VERSION"
+        docker build -t class-api:$VERSION -t class-api:latest .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Push Docker Image
+      run: |
+        VERSION=${{ steps.get_version.outputs.version }}
+        IMAGE="qetzc/class-api-it4200-2025-fall"
+
+        echo "Pushing Docker image to $IMAGE:$VERSION"
+        docker tag class-api:$VERSION $IMAGE:$VERSION
+        docker tag class-api:latest $IMAGE:latest
+
+        docker push $IMAGE:$VERSION
+        docker push $IMAGE:latest
