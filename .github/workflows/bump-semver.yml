@@ -40,7 +40,7 @@ jobs:
     - name: Push Docker Image
       run: |
         VERSION=${{ steps.get_version.outputs.version }}
-        IMAGE="qetzc/class-api-it4200-2025-fall"
+        IMAGE="bubbaj/class-api-it4200-2025-fall"
 
         echo "Pushing Docker image to $IMAGE:$VERSION"
         docker tag class-api:$VERSION $IMAGE:$VERSION
