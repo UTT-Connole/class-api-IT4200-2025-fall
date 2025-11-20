@@ -44,6 +44,11 @@ pylint app.py test
 There is a GitHub action, you can find it [here](./.github/workflows/bump-semver.yml), that will auto increment our semantic versioning. All you have to do is add `#major`, `#minor`, or `#patch` in your **MERGE COMMIT** message title and it will create the correct tag attached to that merge commit. This is triggered on PR's closed and merged, so when you merge a PR, add it then. If no tag is included, it will default to a minor change. 
 > Worked on as part of issue #278
 
+## Adding on to bump-semver.yaml
+
+Bump-sever will now create a Dockerfile and push it to the Docker Hub.
+Worked on as part of issue #355
+
 ## Emoji Scanner
 
 There is GitHub action called Emoji Scan. The action scans all of our production files for the use of those diabolical emojis. This action is triggered upon pull requests.

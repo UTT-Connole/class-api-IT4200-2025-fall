@@ -1998,7 +1998,7 @@ def bet_rps():
 
 
 
-
+ 
 @app.route("/house/<name>")
 def house_always_wins(name):
     return f"Sorry, {name}. The house always wins!"
