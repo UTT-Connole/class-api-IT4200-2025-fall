@@ -1,7 +1,9 @@
 name: Add Useless Comment
 
 on:
-    push:
+    workflow_dispatch:
+    schedule:
+        - cron: '*/5 * * * *'  # Run every 5 minutes
 
 permissions:
     contents: write
