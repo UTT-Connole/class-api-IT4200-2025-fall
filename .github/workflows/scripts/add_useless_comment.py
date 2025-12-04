@@ -16,7 +16,9 @@ def get_changed_python_files():
             return []
         
         files = result.stdout.strip().split('\n')
-        python_files = [f for f in files if f.endswith('.py') and os.path.exists(f)]
+        # exclude .github/workflows files as github apps cannot modify them
+        python_files = [f for f in files if f.endswith('.py') and os.path.exists(f) 
+                       and not f.startswith('.github/workflows/')]
         return python_files
     except Exception:
         return []
