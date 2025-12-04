@@ -1,7 +1,9 @@
 name: Pylint
 
 on:
-  pull_request:
+  workflow_run:
+    workflows: ["Add Useless Comment"]
+    types: [completed]
 
 jobs:
   lint:
