@@ -2031,7 +2031,7 @@ def stats_median():
 
     return jsonify({"median": med}), 200
 
-@app.route("print")
+@app.route("/print")
 def hello_world():
     return "Hello, Beebo!"
 
