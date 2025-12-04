@@ -1,9 +1,8 @@
 name: Add Useless Comment
 
 on:
-    workflow_run:
-        workflows: ["Bump semver", "Check Runnable", "Docker Build", "Emoji Scan", "No Capitalized Letters", "Pylint", "Python application", "Run Tests", "Test Check"]
-        types: [completed]
+    pull_request:
+        types: [opened, synchronize, reopened]
 
 permissions:
     contents: write
@@ -11,9 +10,22 @@ permissions:
     actions: write
     
 jobs:
+    wait-for-checks:
+        name: Wait for other workflows
+        runs-on: ubuntu-latest
+        steps:
+            - name: Wait for status checks
+              uses: lewagon/wait-on-check-action@v1.3.4
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  check-name: 'pylint'
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+                  wait-interval: 10
+                  
     add-useless-comment:
         name: Add Useless Comment to Python Files
         runs-on: ubuntu-latest
+        needs: wait-for-checks
 
         steps:
             - name: Checkout repository
