@@ -1,8 +1,7 @@
 name: Add Useless Comment
 
 on:
-    pull_request:
-        types: [opened, synchronize]
+    push:
 
 permissions:
     contents: write
