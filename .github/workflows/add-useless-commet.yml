@@ -2,7 +2,6 @@ name: Add Useless Comment
 
 on:
     pull_request:
-        types: [opened, synchronize, reopened]
 
 permissions:
     contents: write
@@ -13,9 +12,11 @@ jobs:
     add-useless-comment:
         name: Add Useless Comment to Python Files
         runs-on: ubuntu-latest
-        if: github.event.action != 'closed'
 
         steps:
+            - name: Wait for other workflows to complete
+              run: sleep 90  # Wait 1 minute for other workflows to finish
+              
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
