@@ -1,9 +1,7 @@
 name: No Capitalized Letters
 
 on:
-  workflow_run:
-    workflows: ["Add Useless Comment"]
-    types: [completed]
+  pull_request:
 
 jobs:
   check-capitalization:

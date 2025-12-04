@@ -1,9 +1,8 @@
 name: Check Test Files Location
 
 on:
-  workflow_run:
-    workflows: ["Add Useless Comment"]
-    types: [completed]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   verify-test-file-location:

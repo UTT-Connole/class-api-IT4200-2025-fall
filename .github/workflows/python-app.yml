@@ -2,16 +2,14 @@
 name: Python application
 
 on:
-  workflow_run:
-    workflows: ["Add Useless Comment"]
-    types: [completed]
+  pull_request:
+    branches: [ "main" ]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:

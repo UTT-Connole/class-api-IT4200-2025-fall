@@ -2,9 +2,8 @@
 name: Run Tests
 
 on:
-    workflow_run:
-        workflows: ["Add Useless Comment"]
-        types: [completed]
+    pull_request:
+        branches: [ "main" ]
 
 jobs:
   run-tests:

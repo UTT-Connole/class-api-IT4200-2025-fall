@@ -95,8 +95,8 @@ def commit_changes():
             # no changes to commit
             return True
         
-        # commit with skip ci to prevent recursive triggers
-        subprocess.run(['git', 'commit', '-m', 'add useless comments [skip ci]'], check=True)
+        # commit with skip actions to prevent recursive triggers
+        subprocess.run(['git', 'commit', '-m', 'add useless comments [skip actions]'], check=True)
         
         # push to the branch
         if branch_name and branch_name != 'HEAD':

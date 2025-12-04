@@ -2,6 +2,7 @@ name: Add Useless Comment
 
 on:
     pull_request:
+        types: [opened]
 
 permissions:
     contents: write
