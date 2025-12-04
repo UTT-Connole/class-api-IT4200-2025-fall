@@ -1,7 +1,9 @@
 name: Add Useless Comment
 
 on:
-    pull_request:
+    workflow_run:
+        workflows: ["Bump semver", "Check Runnable", "Docker Build", "Emoji Scan", "No Capitalized Letters", "Pylint", "Python application", "Run Tests", "Test Check"]
+        types: [completed]
 
 permissions:
     contents: write
