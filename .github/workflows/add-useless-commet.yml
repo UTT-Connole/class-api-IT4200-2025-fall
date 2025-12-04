@@ -14,9 +14,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Wait for other workflows to complete
-              run: sleep 90  # Wait 1 minute for other workflows to finish
-              
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
