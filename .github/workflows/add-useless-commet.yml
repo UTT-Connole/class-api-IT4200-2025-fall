@@ -2,6 +2,10 @@ name: Add Useless Comment
 
 on:
     pull_request:
+
+permissions:
+    contents: write
+    pull-requests: write
     
 jobs:
     add-useless-comment:
@@ -11,6 +15,9 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
 
             - name: Set up Python
               uses: actions/setup-python@v5

@@ -70,6 +70,27 @@ def add_comment_to_file(file_path, comment_lines):
     except Exception:
         return False
 
+def commit_changes():
+    # commit the changes to avoid recursive workflow triggers
+    try:
+        # configure git user
+        subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
+        subprocess.run(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], check=True)
+        
+        # add all changes
+        subprocess.run(['git', 'add', '.'], check=True)
+        
+        # commit with skip ci to prevent recursive triggers
+        subprocess.run(['git', 'commit', '-m', 'add useless comments [skip ci]'], check=True)
+        
+        # push changes
+        subprocess.run(['git', 'push'], check=True)
+        
+        return True
+    except Exception as e:
+        print(f"error committing changes: {e}")
+        return False
+
 def main():
     # main function to add random comments to changed python files
     changed_files = get_changed_python_files()
@@ -87,8 +108,14 @@ def main():
         return 0
     
     # add comments to each changed python file
+    modified_files = 0
     for file_path in changed_files:
-        add_comment_to_file(file_path, comment_lines)
+        if add_comment_to_file(file_path, comment_lines):
+            modified_files += 1
+    
+    # if files were modified, commit the changes
+    if modified_files > 0:
+        commit_changes()
     
     return 0
 
