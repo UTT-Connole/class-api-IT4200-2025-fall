@@ -2,6 +2,9 @@ name: No Capitalized Letters
 
 on:
   pull_request:
+  push:
+    branches:
+      - nocap-ayden
 
 jobs:
   check-capitalization:
