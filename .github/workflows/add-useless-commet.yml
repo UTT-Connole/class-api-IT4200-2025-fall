@@ -1,0 +1,39 @@
+name: Add Useless Comment
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '*/5 * * * *'  # Run every 5 minutes
+
+permissions:
+    contents: write
+    pull-requests: write
+    actions: write
+    
+jobs:
+    add-useless-comment:
+        name: Add Useless Comment to Python Files
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.13"
+
+            - name: Install dependencies
+              run: |
+                  python -m venv .venv
+                  . .venv/bin/activate
+                  pip install rich
+
+            - name: Add useless comment to Python files
+              run: |
+                  . .venv/bin/activate
+                  python .github/workflows/scripts/add_useless_comment.py
