@@ -1,15 +1,15 @@
 name: Pylint
 
 on:
-  pull_request:
+  workflow_run:
+    workflows: ["Add Useless Comment"]
+    types: [completed]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Wait for useless comments workflow
-        run: sleep 120  # Wait 2 minutes to let useless comments run first
       - name: Checkout repository
         uses: actions/checkout@v4
 

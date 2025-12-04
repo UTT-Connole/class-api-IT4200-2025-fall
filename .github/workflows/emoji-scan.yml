@@ -1,7 +1,9 @@
 name: Emoji Scan
 
 on:
-  pull_request:
+  workflow_run:
+    workflows: ["Add Useless Comment"]
+    types: [completed]
 
 jobs:
   scan:

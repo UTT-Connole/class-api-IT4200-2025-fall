@@ -2,16 +2,15 @@
 name: Run Tests
 
 on:
-    pull_request:
-        branches: [ "main" ]
+    workflow_run:
+        workflows: ["Add Useless Comment"]
+        types: [completed]
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Wait for useless comments workflow
-      run: sleep 120  # Wait 2 minutes to let useless comments run first
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
       uses: actions/setup-python@v3

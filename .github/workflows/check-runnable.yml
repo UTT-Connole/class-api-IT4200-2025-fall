@@ -2,10 +2,9 @@
 name: Test HTTP Homepage and 404 Page
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Add Useless Comment"]
+    types: [completed]
 
 permissions:
   contents: read
