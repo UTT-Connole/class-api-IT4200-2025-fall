@@ -1,0 +1,29 @@
+name: No Capitalized Letters
+
+on:
+  pull_request:
+
+jobs:
+  check-capitalization:
+    name: Check for capitalized letters in repo **.py files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install rich
+
+      - name: Run capitalization check
+        run: |
+          . .venv/bin/activate
+          python .github/workflows/scripts/capitalization_check.py
