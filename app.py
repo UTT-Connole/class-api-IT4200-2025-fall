@@ -2031,7 +2031,9 @@ def stats_median():
 
     return jsonify({"median": med}), 200
 
-
+@app.route("print")
+def hello_world():
+    return "Hello, World!"
 
 if __name__ == "__main__":
     try:
