@@ -77,14 +77,24 @@ def commit_changes():
         subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
         subprocess.run(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], check=True)
         
+        # get current branch name
+        result = subprocess.run(['git', 'branch', '--show-current'], capture_output=True, text=True, check=True)
+        current_branch = result.stdout.strip()
+        
         # add all changes
         subprocess.run(['git', 'add', '.'], check=True)
+        
+        # check if there are changes to commit
+        result = subprocess.run(['git', 'diff', '--cached', '--quiet'], capture_output=True)
+        if result.returncode == 0:
+            # no changes to commit
+            return True
         
         # commit with skip ci to prevent recursive triggers
         subprocess.run(['git', 'commit', '-m', 'add useless comments [skip ci]'], check=True)
         
-        # push changes
-        subprocess.run(['git', 'push'], check=True)
+        # push to the current branch (pr branch)
+        subprocess.run(['git', 'push', 'origin', current_branch], check=True)
         
         return True
     except Exception as e:
