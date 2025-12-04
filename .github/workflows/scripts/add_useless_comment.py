@@ -77,9 +77,12 @@ def commit_changes():
         subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
         subprocess.run(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], check=True)
         
-        # get current branch name
-        result = subprocess.run(['git', 'branch', '--show-current'], capture_output=True, text=True, check=True)
-        current_branch = result.stdout.strip()
+        # get branch name from github environment or git
+        branch_name = os.environ.get('GITHUB_HEAD_REF') or os.environ.get('GITHUB_REF_NAME')
+        if not branch_name:
+            # fallback to git command
+            result = subprocess.run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], capture_output=True, text=True)
+            branch_name = result.stdout.strip() if result.returncode == 0 else 'main'
         
         # add all changes
         subprocess.run(['git', 'add', '.'], check=True)
@@ -93,8 +96,11 @@ def commit_changes():
         # commit with skip ci to prevent recursive triggers
         subprocess.run(['git', 'commit', '-m', 'add useless comments [skip ci]'], check=True)
         
-        # push to the current branch (pr branch)
-        subprocess.run(['git', 'push', 'origin', current_branch], check=True)
+        # push to the branch
+        if branch_name and branch_name != 'HEAD':
+            subprocess.run(['git', 'push', 'origin', f'HEAD:{branch_name}'], check=True)
+        else:
+            subprocess.run(['git', 'push'], check=True)
         
         return True
     except Exception as e:
